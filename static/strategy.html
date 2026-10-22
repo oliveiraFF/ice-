@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>账号策略 · ice运营台</title>
+<link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/icons.css"><link rel="stylesheet" href="/script.css"><link rel="stylesheet" href="/strategy.css">
+<script defer src="/icons.js"></script><script defer src="/site.js"></script><script defer src="/strategy.js"></script><link rel="stylesheet" href="/site.css">
+<link rel="stylesheet" href="/ice.css"><link rel="icon" href="/favicon.ico">
+</head>
+<body class="script-app strategy-app"><header class="topbar"></header>
+<main class="script-page">
+  <div class="breadcrumbs"><a href="/tools">工具管理</a> › 账号策略</div>
+  <div class="script-heading"><div><h1>账号策略</h1><p>用户确认后才能保存「正式任务」；未确认只允许研究草稿。</p></div></div>
+  <section class="script-form" aria-labelledby="strategyTitle">
+    <div class="script-section-head"><h2 id="strategyTitle">策略内容</h2><span id="strategyStatus" class="script-badge"></span></div>
+    <label>账号方向<textarea id="strategyDirection" rows="2" maxlength="300"></textarea></label>
+    <label>受众<textarea id="strategyAudience" rows="2" maxlength="300"></textarea></label>
+    <label>真实资源 / 证明<textarea id="strategyResources" rows="2" maxlength="500"></textarea></label>
+    <label>阶段目标<textarea id="strategyGoal" rows="2" maxlength="300"></textarea></label>
+    <label>内容原则<textarea id="strategyPrinciples" rows="2" maxlength="500"></textarea></label>
+    <label>排除项<textarea id="strategyExclusions" rows="2" maxlength="500"></textarea></label>
+    <label>承接方式<textarea id="strategyTakeover" rows="2" maxlength="300"></textarea></label>
+    <label class="script-confirm"><input type="checkbox" id="strategyExperiment"> 允许实验候选（需真实信号；假设/风险/指标/到期）</label>
+    <p id="strategyError" class="script-error" role="alert"></p>
+    <p id="strategyNotice" class="script-hint" role="status"></p>
+    <div class="script-actions">
+      <button class="primary" id="saveStrategy" type="button">保存草稿</button>
+      <button class="secondary" id="confirmStrategy" type="button" disabled>确认策略</button>
+    </div>
+    <div id="strategyConfirmPanel" class="script-source-detail" hidden></div>
+  </section>
+</main>
+</body></html>

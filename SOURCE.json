@@ -1,0 +1,1400 @@
+{
+  "build_id": "20261022-codex-ice-ui1-docs1",
+  "built_at": "2026-10-22T14:29:14.504459-04:00",
+  "edition": "owner-source",
+  "python_built_with": "3.12.14",
+  "radar_source": "C:\\Users\\25370\\Documents\\Codex\\2026-10-21\\m05-c-rework1-e-leida-build\\work\\ice-docs1\\source",
+  "ops_source": "package:_ops",
+  "ops_commit": "n/a (package _ops is authoritative)",
+  "ops_worktree_dirty": true,
+  "files": [
+    {
+      "file": "M05-使用说明.md",
+      "sha256": "8415e5f1960412cf84592b4133ec6b1d4d9d01643d27476e070add7ff33bd213",
+      "source": "radar"
+    },
+    {
+      "file": "README-内测说明.md",
+      "sha256": "6b2d9c0c71481f2812eddd1be69d81d207bf45568d3a01865b0c0f02e75fe42f",
+      "source": "radar"
+    },
+    {
+      "file": "_ops/fixtures/sample_facts.json",
+      "sha256": "96858277abad279bca788fb557f6d68992ca634a9422ae3506fbeaea19d4df0f",
+      "source": "ops"
+    },
+    {
+      "file": "_ops/fixtures/sample_posts.json",
+      "sha256": "b39ba811ba109e041670bc0dbff444f10801667a1004ad1fe286c233e8deffe6",
+      "source": "ops"
+    },
+    {
+      "file": "_ops/skills/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "ops"
+    },
+    {
+      "file": "_ops/skills/script_writing.py",
+      "sha256": "78655ef4cdd66cc2b795646ebc969c888bffc61a9b5dad65ecac57e2f529f877",
+      "source": "ops"
+    },
+    {
+      "file": "_ops/skills/topic_discovery.py",
+      "sha256": "e92f14c6d877427fd182ba7ef5da45fe30106b73e413c8d81279839541e31904",
+      "source": "ops"
+    },
+    {
+      "file": "_ops/tools/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "ops"
+    },
+    {
+      "file": "_ops/tools/facts.py",
+      "sha256": "68fcfc83ba6202bd18327b0ef507f574b453b2c829b813ac6ad369838f156692",
+      "source": "ops"
+    },
+    {
+      "file": "_ops/tools/fetch_douyin.py",
+      "sha256": "47c1f6ca085f0380311f91d643a943e4ac49350ae50b8fad4892a006cc93df09",
+      "source": "ops"
+    },
+    {
+      "file": "_ops/tools/llm_call.py",
+      "sha256": "797b6792c816155da1431657fcaee6fc18c3876e61610b957d59b9c49cc0b918",
+      "source": "ops"
+    },
+    {
+      "file": "_ops/tools/llm_script.py",
+      "sha256": "0b1270be1f79a8ee8461f11efa965a405367c6ae9a3842a6b701b96cc433322b",
+      "source": "ops"
+    },
+    {
+      "file": "_ops/tools/run_log.py",
+      "sha256": "5514fee568d8ff8a0e77be84dd47270b611ae519f4a987be2ad74157027e4e6e",
+      "source": "ops"
+    },
+    {
+      "file": "_ops/workflows/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "ops"
+    },
+    {
+      "file": "_ops/workflows/conversion_observation.py",
+      "sha256": "521d43911e1446d8fb3e55014d8981190704dcbf06f744da51143462c4441407",
+      "source": "ops"
+    },
+    {
+      "file": "_ops/workflows/draft_optimization.py",
+      "sha256": "8f7f8ab230bba8c394ca2d08f63e863f94adbcb936d113c45d681c6b13623b46",
+      "source": "ops"
+    },
+    {
+      "file": "_ops/workflows/industry_templates.py",
+      "sha256": "52a8e81911427fd839d403886f7785c88cddeefa9e4ba1a368b98de7d19da664",
+      "source": "ops"
+    },
+    {
+      "file": "_ops/workflows/keyword_to_topics.py",
+      "sha256": "e97f21fb86fc02e5c7f68853908fdeb709cf55fddf36f2f2ea61f0a4073cb852",
+      "source": "ops"
+    },
+    {
+      "file": "_ops/workflows/media_review.py",
+      "sha256": "f653fa3add73a1b3e27365e35a0a125ed256ab7d95bedceef2f5d913aef45fc7",
+      "source": "ops"
+    },
+    {
+      "file": "_ops/workflows/ops_advice.py",
+      "sha256": "1dad35614bf0efa775169afc9c44a007c2e3f3f538f34dea15c823740a3be290",
+      "source": "ops"
+    },
+    {
+      "file": "_ops/workflows/ops_reminders.py",
+      "sha256": "a66307fafb019451b9485a2eb4f4cbb82aea4b1a9a26a31f3ad41b996de79d48",
+      "source": "ops"
+    },
+    {
+      "file": "_ops/workflows/research.py",
+      "sha256": "441c811872f3f5768d2c3b3088ab7c47215e9bd112a7e9586904e533e132e288",
+      "source": "ops"
+    },
+    {
+      "file": "_ops/workflows/research_draft.py",
+      "sha256": "f7ce90b3ad61e312795c305544bb37c3cd4ab840bd145155b47a795c9f4130dd",
+      "source": "ops"
+    },
+    {
+      "file": "_ops/workflows/topic_to_script.py",
+      "sha256": "aed89ddf48915180d2bbc0a812c3e2b44b3057d41a8fb46ada059eac26dda041",
+      "source": "ops"
+    },
+    {
+      "file": "ai_directions.py",
+      "sha256": "8fb8e19e78a547f62e55ae0a88f13b886adc8d6e74bb7bf02e45ac3a6d175116",
+      "source": "radar"
+    },
+    {
+      "file": "app.py",
+      "sha256": "bbf7956dae61fe7abe3d063752c9f6c4d24edc8ff46cecb2b390396263faf8cc",
+      "source": "radar"
+    },
+    {
+      "file": "browser_collector.py",
+      "sha256": "c06739cd1d713ed95d555f4799a3d47da90b49110713fec4d5ffc2bf6bb67747",
+      "source": "radar"
+    },
+    {
+      "file": "build_desktop.py",
+      "sha256": "442eb2a7d334bb4eb577904d7f4c2367166aee8bb1ce60ab556c67906aeabee2",
+      "source": "radar"
+    },
+    {
+      "file": "build_release.py",
+      "sha256": "60dd7628e15e93bc21b2e385fea842102456c88a503a075c525c7a589e4eb671",
+      "source": "radar"
+    },
+    {
+      "file": "catalog.json",
+      "sha256": "3cdbf5a1a6e313a7dcc752c769c20b58a543a86801fe84efeb30d38020e6151a",
+      "source": "radar"
+    },
+    {
+      "file": "catalog.py",
+      "sha256": "f69a684b54f679d222dc15019b138f0672ebeafe13b6515db97f60378cd0b442",
+      "source": "radar"
+    },
+    {
+      "file": "client_credentials.py",
+      "sha256": "0837adbf1bc14b131dca0ec2b539eaa5b8993d33ef657633296af8ad1929a865",
+      "source": "radar"
+    },
+    {
+      "file": "customer_api.py",
+      "sha256": "6cbec638a23ce9a217e2074565e1d70b9b3825cda5bf4e905005556e51906221",
+      "source": "radar"
+    },
+    {
+      "file": "demo.py",
+      "sha256": "d15dd12ca4103d05c054d023cf0d2f05bd5d1ad32afcfbb1490f3d2b0a142568",
+      "source": "radar"
+    },
+    {
+      "file": "desktop.py",
+      "sha256": "6bad101ac6803d9b98953cac40e3baeabe5ba41dfdd77ff6dee9bd925b88ee34",
+      "source": "radar"
+    },
+    {
+      "file": "free_tools.py",
+      "sha256": "b685d73d4fd8168107372a30618b967c0d234e8bb1127b5fca7451b24782bc59",
+      "source": "radar"
+    },
+    {
+      "file": "ops.py",
+      "sha256": "3107c886e63ce652f91c3d72339f1fac13823780972fdce26635e6673e7b0df0",
+      "source": "radar"
+    },
+    {
+      "file": "radar.ico",
+      "sha256": "0fbbd2f3e15b76b0405138972e47ef602702243509c5ae124ac779293487e022",
+      "source": "radar"
+    },
+    {
+      "file": "release.marker",
+      "sha256": "d23211db7da52706f8d7db37a6c6a6980a2e84c1916caa5bbbf73afa7493dae9",
+      "source": "radar"
+    },
+    {
+      "file": "reviews.py",
+      "sha256": "a78066d5f61825a5619c518587c75ba7b9f0084f092b4650dbb7a740ef626bd1",
+      "source": "radar"
+    },
+    {
+      "file": "static/advice.css",
+      "sha256": "70363901d3efa54ae892170c8e072c1192c5613b90cfb796318a04d6319223b3",
+      "source": "radar"
+    },
+    {
+      "file": "static/advice.html",
+      "sha256": "f2c36b652ce26cade5dfadd0f304821840c29e2735d8a47387ad02c9d0d0adc5",
+      "source": "radar"
+    },
+    {
+      "file": "static/advice.js",
+      "sha256": "2023d4ad22349f50d7a8024e749be2601f0a064bc243af0389c353284c7d38b6",
+      "source": "radar"
+    },
+    {
+      "file": "static/app.js",
+      "sha256": "2fd2b4e17ad8feeda5129af1b0b7374da629e69688963a306b5840c246ab3b10",
+      "source": "radar"
+    },
+    {
+      "file": "static/browser-collector.zip",
+      "sha256": "4fd297a6eeeecc83b64b2e3014c5429b2f1c1d573d86d3765728d66ca7d3a2b5",
+      "source": "radar"
+    },
+    {
+      "file": "static/browser-import.css",
+      "sha256": "7b6f07b8f18e05a2e25c8293881f3ae7a9a67b164e76b60f2bb4837d2f3cbff7",
+      "source": "radar"
+    },
+    {
+      "file": "static/browser-import.html",
+      "sha256": "0a6bbebc36e920ad7c98eda5f9dae57e71ca74ad3af99ec0a524386950d90db3",
+      "source": "radar"
+    },
+    {
+      "file": "static/browser-import.js",
+      "sha256": "e26ff2822d6445b0a7427a6848cdecc4cc00e73590a5701defb23f16657c1f17",
+      "source": "radar"
+    },
+    {
+      "file": "static/client-site.css",
+      "sha256": "43315349e3ad0a535b907c353275630846112814cb1d24507427ee0880f31da9",
+      "source": "radar"
+    },
+    {
+      "file": "static/client-site.js",
+      "sha256": "a70b6e5b1275ac14dfce65577f28fd2361fcc12731caa36a470b65eee1f057f8",
+      "source": "radar"
+    },
+    {
+      "file": "static/creative-rules.txt",
+      "sha256": "b34ecdc9e82f49537cb121028137bff9e3884e394e8ac48ea9f7fed4b3d1b154",
+      "source": "radar"
+    },
+    {
+      "file": "static/creative.css",
+      "sha256": "4b843b9058ad79c106fa8dc59dcf61861748d539660f16768db9a7bc5b7932ef",
+      "source": "radar"
+    },
+    {
+      "file": "static/creative.html",
+      "sha256": "cdf90ca86bf2b2061d8c1641bbcfe69459cedc703604d708fc6b290a54a11c3f",
+      "source": "radar"
+    },
+    {
+      "file": "static/creative.js",
+      "sha256": "d4a4566a509041015178fa674dc007023e748ae51a72d1d7591dbfb0889ff2cd",
+      "source": "radar"
+    },
+    {
+      "file": "static/dashboard-data.js",
+      "sha256": "030a7a45c4ade5d24876853a9e030fd9a1b032813568b751d833e665c1190285",
+      "source": "radar"
+    },
+    {
+      "file": "static/dashboard.css",
+      "sha256": "33cabee20e996174fb527ee241a61832a817e96f2888e46fafcc4aa58e84e0ea",
+      "source": "radar"
+    },
+    {
+      "file": "static/dashboard.html",
+      "sha256": "cfa702a0118a8f5fba2ae93e99191dce4555b57f8658a2a06ca0e00841d2f7a8",
+      "source": "radar"
+    },
+    {
+      "file": "static/dashboard.js",
+      "sha256": "8ecbd829b7220bb0fbe432524173f18d39a86b24a6c6cb175fb0ae25f7e84792",
+      "source": "radar"
+    },
+    {
+      "file": "static/discovery.css",
+      "sha256": "c209df3176f494cbe0e32b9b3ee3c2a4a050d34c55cdde64f6ba7a4b6d7acc20",
+      "source": "radar"
+    },
+    {
+      "file": "static/draft.css",
+      "sha256": "fecca7bba93b9c5b245ca17767c3e88ae2f3bd62c077b1e61475d569ac4c4653",
+      "source": "radar"
+    },
+    {
+      "file": "static/draft.html",
+      "sha256": "459d1b552650526229285dadf013f5944f2b49a95e689880c846e517b9e46707",
+      "source": "radar"
+    },
+    {
+      "file": "static/draft.js",
+      "sha256": "19acb4e3772e6ebdf8af08039c7e78e4b98631aecdf103f10e46cf66046f0db7",
+      "source": "radar"
+    },
+    {
+      "file": "static/feedback.css",
+      "sha256": "43747ae4ebc57f133bfb87823f09d2841e7b83bcb4968593dcdee3e6adf4420b",
+      "source": "radar"
+    },
+    {
+      "file": "static/feedback.html",
+      "sha256": "0763e97d32a419c98b9a2553ced2e14f4baed0ab28a745045e2e662cf451d09a",
+      "source": "radar"
+    },
+    {
+      "file": "static/feedback.js",
+      "sha256": "54462db77f568e8971d5118d087ce43f041f43d988e7ad1fd79ceef8d4e4e70f",
+      "source": "radar"
+    },
+    {
+      "file": "static/free-tools-data.js",
+      "sha256": "98f615952fc3b51b46a5590913bf6da074776ea150b32421f52424010421167a",
+      "source": "radar"
+    },
+    {
+      "file": "static/ice-assets/LICENSE.txt",
+      "sha256": "eb2d28d2e565a0757e3d64e34ebb452e75a0cad87c0ab3faf4e08ba7596de902",
+      "source": "radar"
+    },
+    {
+      "file": "static/ice-assets/MapleMono-CN-Regular.ttf",
+      "sha256": "0fcc5139bfd5ab14ff989bb7dfd5236d0cafc10e60b9828569e6883613ab4085",
+      "source": "radar"
+    },
+    {
+      "file": "static/ice-assets/MapleMono-CN-SemiBold.ttf",
+      "sha256": "96ed7ae26ee7c50b02b2d2b2bc0f1a0cbabe45ae5d6e6abf6678e2177c415677",
+      "source": "radar"
+    },
+    {
+      "file": "static/ice-assets/avatar.jpg",
+      "sha256": "bd96473199dde1fbe602d37631044494289e66dbb4c13f8f64d3129cba3181ce",
+      "source": "radar"
+    },
+    {
+      "file": "static/ice-assets/ice.ico",
+      "sha256": "0fbbd2f3e15b76b0405138972e47ef602702243509c5ae124ac779293487e022",
+      "source": "radar"
+    },
+    {
+      "file": "static/ice.css",
+      "sha256": "85628b5a2bdf9b7c5f34ea3ba25ee78d2461f30b8033a4fa59f81e8f01592c05",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons.css",
+      "sha256": "9151a56b5f2d37436a0cfc196afe9475bbbe3aadba1c2e0c8830f3a76113f6aa",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons.js",
+      "sha256": "850e5eb34fcdd11538b2b59629106a96d1d510007203d2f8f71ee94e0c03a1c0",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/LUCIDE-LICENSE.txt",
+      "sha256": "b495047bd93a9b06913511076f504daba17d5bbeb3e0650f3bb53a4220329c57",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/SIMPLE-ICONS-LICENSE.txt",
+      "sha256": "9046848b63a5c92bff14e4accca80bd987e0623b74adf9226ce5198d312b79d5",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/SOURCES.json",
+      "sha256": "d381392345b131d83596ebdbbada79b12ba225f382de30414dc3434db34c179d",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/brand-bilibili.svg",
+      "sha256": "0b31005ccf765a9d37be2c42f1d36e44572ccadb088250626d9905ae5d4f3d21",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/brand-instagram.svg",
+      "sha256": "f53af2d1fc5292ba1433b5c1faf50005ce6a997fa302d1816989929f379a59dc",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/brand-kuaishou.svg",
+      "sha256": "6fd3afc958574cf6aafafa5a4085d7903dec61d20e0ee737f632b0c815da764e",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/brand-neteasecloudmusic.svg",
+      "sha256": "196b802a78e9e4645578ffd797577b853f3a700da0481f49d15f0d6b20ae60ed",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/brand-reddit.svg",
+      "sha256": "00e5008d56567543cf956561e61d5bf9bf629f520c7488a4d9a00164c29dd8ba",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/brand-sinaweibo.svg",
+      "sha256": "44facf47c6bfa06c312c28acda6aa2ed404ef7f68c2897c8f33ad51b6ba94059",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/brand-telegram.svg",
+      "sha256": "147fd8f8923e7e5f463fe98c0eb9913bead6b2ae59935728cda141002ec8a7c9",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/brand-threads.svg",
+      "sha256": "3511f687f9a5713a3700130627f8d3611fb4cd54d3a9757071c93652c7fe16e8",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/brand-tiktok.svg",
+      "sha256": "6f54ac8d325faacea8935bdc44cbed60206a6b408641799e5fea1cba7c1a0af7",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/brand-wechat.svg",
+      "sha256": "74b48b3d315337ce79cb644933b5f975e19996f564fcc4138ed67d45674c43ca",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/brand-x.svg",
+      "sha256": "693e68863eceb8dc9f72e2acd386ab9c20a10858dab2c076212f7084cb7a32fe",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/brand-xiaohongshu.svg",
+      "sha256": "847cacc807f5c236031a7477381daa67fd829d89f3f80c16a547ff2efe050794",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/brand-youtube.svg",
+      "sha256": "5038808acbbc4e6edda16cbeb1cc6dec80e4e4ee4e227e039c41229fa222aa8c",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/brand-zhihu.svg",
+      "sha256": "3c8d91d4f30d220a8655f17aa4e119f5be8c0d66f5fcf939aecaed8699c628ce",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-arrow-up-right.svg",
+      "sha256": "50b2503b9d11881142255466b7e3461d022b919735841c321d72003ac9959fe1",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-arrow-up.svg",
+      "sha256": "8c22c25874c80bb062bef985d207d8f1d4a4d7847237d0a8cf720a3235968518",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-bookmark.svg",
+      "sha256": "1d5023760db81f21c3b5a63f012ef540acc01932731c733e4645012a876d39f4",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-calendar-days.svg",
+      "sha256": "9330eb8d7c4989e97b6361314abbf02953243c602874725c9e58ceca00da3bd7",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-chart-no-axes-combined.svg",
+      "sha256": "2f8a708c357488cfde7428d9b055b9bb4a99c08dc71e9296da03ecc19291c4ab",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-circle-play.svg",
+      "sha256": "10b5deb7c8fa5587897a1eb3d7ffc3c6c2f7b1b7f9a5b5080050aa529e9eb9ae",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-compass.svg",
+      "sha256": "c5a4d147bf48424f48b514712dd61c1b07cb689612a7baef87c88870092c1659",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-download.svg",
+      "sha256": "3daeee13ded5a3afa2198b1bb4e2262d163922f97d96ac6ff9953e8ed4fe039d",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-ellipsis.svg",
+      "sha256": "4f495cc72013ffdfec677f03b33a150f7b4dd741979283fd6853a09024bca112",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-external-link.svg",
+      "sha256": "3891241b8c3bfc3a8a930078f26ffc5a7e9763da6d0162ace2050b28d4c1d1fe",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-eye.svg",
+      "sha256": "5bf90197dd7629cad64a2e48d1186a71559deb6121207d10e3dc5b19ebaffdcf",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-file-text.svg",
+      "sha256": "52ca55846c202335fb870c8aa23e9345630ec10489303756d62e750f7109605c",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-flame.svg",
+      "sha256": "cede1462a46a7a3b3daf9d101f0b59484b1d882a4c42a75670810a6d4f8d42fb",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-flask-conical.svg",
+      "sha256": "a2ce857c159bef4c128a6d9f0b6dcbd6504ecf1a2a670ee220efd14fd032b561",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-gift.svg",
+      "sha256": "bc0651476bc7fdefa8d033f7b7572f9c8712aaca3b9196488442e6b4e76ed2a4",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-globe.svg",
+      "sha256": "82c6b8fa0b8e8d775ec9becd86f74a4e50bff7bee4c81f7362de45348504f14d",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-hash.svg",
+      "sha256": "cd94af917b739ef26146d724613f6830ba3d702317fa4e60d92efea6133a1019",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-heart.svg",
+      "sha256": "70af5f30be9fcb500b852556b38dcdf8c04a4ba81fd262534fb0336bd39b3b52",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-info.svg",
+      "sha256": "bc977a64eb96f3e9c1041ffd09a3fceb70e3e65c02b571f76064062ed31f3cb9",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-layers.svg",
+      "sha256": "ce16d0a955e3581cda17f6b2fd5c5bc2034b405f9cecc31c8ebb8495b4afc1bb",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-layout-grid.svg",
+      "sha256": "b8903f61d09b1d75e55c71158277d26570962f69c2099446a251871e0a2d6678",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-link.svg",
+      "sha256": "4f3237183dcaabfac92f4e94c776a9a9e45c3c5e77a921061a6b34b61eb5413f",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-lock-keyhole.svg",
+      "sha256": "fc0b8b7590d1d9e9bb0112c5c2e15a78ade0bfeca6d6f8c79fbbe149236d74be",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-maximize.svg",
+      "sha256": "1f790856b0de805ab62e871609f1990b89d227d472022e57a11fde015aad4826",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-message-circle.svg",
+      "sha256": "146f39740fe50844394d56ae1f8821937655bcfff3842bf6fe8ffc0bcd324076",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-mic.svg",
+      "sha256": "9b940cd735d1ffa270ba670c4e677d9a09400f3fa81d6b3f405b12a3b67a59a8",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-minimize.svg",
+      "sha256": "7daa304bc3dccac1f100304e66a41139662cc6c0ba3eba67480d97466a9ce02b",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-mouse-pointer-click.svg",
+      "sha256": "18ecf709c32b55252ef3d2a83c7bf5eaa0065c3cb875d6309a55cf42d4d6627f",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-percent.svg",
+      "sha256": "580948bc2c69b84380f0d1e628d85227600886e3f1620effb1ae300b750a9dc0",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-plus.svg",
+      "sha256": "7f6af73bf1ff6c4bca3f18351c8d1bdec6749c0c2530c4de5da85d520c21df17",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-radar.svg",
+      "sha256": "b948d2b46e2605b0c0adf35b266a1b3cb4afa47ef3247e710f05e654b2c0a1cf",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-radio.svg",
+      "sha256": "e55ef723902350caaabb68c8814ba57c4c2d237e0747a5f0520624e6f2f8c861",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-refresh-cw.svg",
+      "sha256": "2e10dd403c85a24f163d59fc6151aa21147fe9402e1305dfc8979208caee8944",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-search.svg",
+      "sha256": "283d371c2e433817bb9c0c8310caa6c77fa4177c0f4f1168d9c83b97af7389dc",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-settings.svg",
+      "sha256": "0ae27fd0f81999229e3127ac96c5b32edfea448e291d509e76212b917551d66b",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-shield-check.svg",
+      "sha256": "8d4fcdbde5bba4abb1a2f6fe53e37ceb6343a1d5449a9d88f6f97c1971d26c4e",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-shopping-bag.svg",
+      "sha256": "24a161961b559234b7a31af904dab18b437507336ba2decff3fe6b7772495896",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-trending-up.svg",
+      "sha256": "c86a4afe20ceccd7a28e829a2cd83dbc40a8af51ffa9547332a9bac9a50a90ae",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-user-round-check.svg",
+      "sha256": "f9e893b8eb5bb11cbc25c2cc02bf2c675813e7be193b47f3a0ab45d0a459370e",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-user-round.svg",
+      "sha256": "84870f26f3faf8da45da84174517519e81b9e8f00319c78954fcbb74f50038a1",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-users.svg",
+      "sha256": "eeed488a1ec95ba730dd69996536fb65061d6ea273afb2429ae47e65eebf401c",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-wrench.svg",
+      "sha256": "b5f3bf792743edb9e81b543dd1b13ccc26d3afe1d33500a1cd8dee2e052d6197",
+      "source": "radar"
+    },
+    {
+      "file": "static/icons/lucide-x.svg",
+      "sha256": "4a9cdab38fbb96162e7dace28e33f4ca0e49d8963a6162abc3d4691b7d675117",
+      "source": "radar"
+    },
+    {
+      "file": "static/index.html",
+      "sha256": "902629ddaff0299157369c1a8583c94987a3c0420be35c7c874e13eed80f2147",
+      "source": "radar"
+    },
+    {
+      "file": "static/market-data.js",
+      "sha256": "fd4449a88f398a7d0811a7fcf108bc4668720147ab6c668473e7a57e35ae2a53",
+      "source": "radar"
+    },
+    {
+      "file": "static/market.css",
+      "sha256": "45811f1d6bceab95efbaf89cb4509c3c772479789b16765461df1e8eb6a94407",
+      "source": "radar"
+    },
+    {
+      "file": "static/market.html",
+      "sha256": "8d2a6759c70ef304ebcdb01fd0688e91a7cb96f44e757e51ec8639316c78f3d6",
+      "source": "radar"
+    },
+    {
+      "file": "static/market.js",
+      "sha256": "7f43afba00a223f0ce2651cc7d6eca05deee6517b196168e4606fc51233a7e71",
+      "source": "radar"
+    },
+    {
+      "file": "static/media-review.css",
+      "sha256": "7849fb03658a83d6bd42624e66d331127c36883f27115798a8ed3956be26ba31",
+      "source": "radar"
+    },
+    {
+      "file": "static/media-review.html",
+      "sha256": "a2aacd47f81ef83865bcb60b94cf9d1efea12d870f16027f475587bf1b3b4a53",
+      "source": "radar"
+    },
+    {
+      "file": "static/media-review.js",
+      "sha256": "b03117f3bfe4f91ccdbdd7a00372856d71d7da89592d4a29d33b1ac1b3a9fdb3",
+      "source": "radar"
+    },
+    {
+      "file": "static/radar-data.js",
+      "sha256": "75467fc25bf3b1120662cc4e94e695a7d60057bfacdc6b5b6502861ab2743f8c",
+      "source": "radar"
+    },
+    {
+      "file": "static/research.css",
+      "sha256": "34fcfafce42267c97ecc948b1bac642e24f8b090954816a3c34b149afb8774c0",
+      "source": "radar"
+    },
+    {
+      "file": "static/research.html",
+      "sha256": "f8fee1bda5302955a71dc38be16e75760a5b8bed9e87101cbdc068a54434fa4f",
+      "source": "radar"
+    },
+    {
+      "file": "static/research.js",
+      "sha256": "17419310c9f965c2a7beb86bc0ba497c9d8f467e636e58ecd15e294b3863ce27",
+      "source": "radar"
+    },
+    {
+      "file": "static/script.css",
+      "sha256": "333fbece3989438b40b23759d4771e592bbabe0f665f4fc852a51bd1ffeb400d",
+      "source": "radar"
+    },
+    {
+      "file": "static/script.html",
+      "sha256": "dba0cc7d4fa9400ed72d3bac5b8d22580a348d21d251519368d503e5bebb056a",
+      "source": "radar"
+    },
+    {
+      "file": "static/script.js",
+      "sha256": "307e21735560584e93025cbf7ad98712eb64159ef873d9fd3512fb8336af48f5",
+      "source": "radar"
+    },
+    {
+      "file": "static/site.css",
+      "sha256": "d4e579f21827f9129d25e4fd6f047f017c53f6f825839797e46f53cb82744ca1",
+      "source": "radar"
+    },
+    {
+      "file": "static/site.js",
+      "sha256": "00621d0edd2e494ba482bbe93cac8b10a73177bfc5f785a0a345b2ed353ab3cf",
+      "source": "radar"
+    },
+    {
+      "file": "static/strategy.css",
+      "sha256": "6a4552227a4e8bf707493927e382a5e8d972890d7d1f8f32efb1e0b7902e005a",
+      "source": "radar"
+    },
+    {
+      "file": "static/strategy.html",
+      "sha256": "2cd4f765ac8285111a57085c173ca414025de63515e8f2276051c6c6884843ed",
+      "source": "radar"
+    },
+    {
+      "file": "static/strategy.js",
+      "sha256": "f9aafd5f30046009bea40aa56542a6448b74832a93c4491152b83aba9af7191d",
+      "source": "radar"
+    },
+    {
+      "file": "static/style.css",
+      "sha256": "90bf445f8180db3256fbaabd438e20ea72b4ac5e05c024c8b54107f60b787f3e",
+      "source": "radar"
+    },
+    {
+      "file": "static/tools.css",
+      "sha256": "e5c5de7ce1ad063cca4433e5bba21b8b4cf0c3bf355f5fc6c20e153b67b0c5ab",
+      "source": "radar"
+    },
+    {
+      "file": "static/tools.html",
+      "sha256": "6eb13c0b3cdfdf5ef62cecfa561b1b9b293afb03cfba382c69d789dfa89c5115",
+      "source": "radar"
+    },
+    {
+      "file": "static/tools.js",
+      "sha256": "dd07649657eb6832d5945de2d23aaf7de9d18004de8b83bcf9827a318a47d9f2",
+      "source": "radar"
+    },
+    {
+      "file": "topics.py",
+      "sha256": "e0058c3f7f437c77ef92986af24887e873ce45ba0ca0547adf57959121c320b1",
+      "source": "radar"
+    },
+    {
+      "file": "video_creative.py",
+      "sha256": "7ffdd09bb3dccdbd2954afdd01b153217d5f3f7becf28633ffdbcc9577478ad1",
+      "source": "radar"
+    },
+    {
+      "file": "使用说明.txt",
+      "sha256": "24e8ad3879bc73fdf85ac89272ed8cf4ba728bc91ce902d30ffc5ae14368c4ba",
+      "source": "radar"
+    },
+    {
+      "file": "启动.bat",
+      "sha256": "abfe71b17946f60d336674a969b0dbd6e3506e530c5828282b7de0362fbaba23",
+      "source": "radar"
+    }
+  ],
+  "excluded": [
+    ".env and credentials",
+    "working databases",
+    "logs",
+    "downloads",
+    "browser profiles",
+    "backups",
+    "trial material",
+    "tests and build helpers"
+  ],
+  "parent_baseline": {
+    "build_id": "20261022-codex-ice-ui1",
+    "zip_sha256": "8b7fbb9c1340b224ca3f6431c89d4aaf60ce1888a116b63a8ace7313e282ad93",
+    "zip_bytes": 18427476
+  },
+  "ui_changes": [
+    {
+      "file": "static/site.css",
+      "sha256": "d4e579f21827f9129d25e4fd6f047f017c53f6f825839797e46f53cb82744ca1"
+    },
+    {
+      "file": "static/site.js",
+      "sha256": "611977bdc2f438f2f661ae7d07c0f8a15c8bc591c4768ad2c8c469b87eeb727a"
+    },
+    {
+      "file": "static/discovery.css",
+      "sha256": "c209df3176f494cbe0e32b9b3ee3c2a4a050d34c55cdde64f6ba7a4b6d7acc20"
+    },
+    {
+      "file": "static/draft.css",
+      "sha256": "7ed8507ca78d831b0c5163704b47abf9ae2d53add20eb1052c44c374c0f52955"
+    },
+    {
+      "file": "static/draft.html",
+      "sha256": "25f949c3209ff25fff14a2f3be0ea957c98b8de6103bf375f01edc7049807d36"
+    },
+    {
+      "file": "static/advice.html",
+      "sha256": "64c67976ee07b936457a9c8071c81f0cec15c1a4b6061e25448cfa1d2f3a91ab"
+    },
+    {
+      "file": "static/research.html",
+      "sha256": "d86ec42e16139268b92b66f2007842806376a6859d1c80b4deb1d32ecb3abda2"
+    },
+    {
+      "file": "static/media-review.html",
+      "sha256": "b1c29f8f990e6d1642038a9a2410a9b4576d572a4b3d22e798248aff2b2d958c"
+    },
+    {
+      "file": "static/script.html",
+      "sha256": "aadc9b9b51d97d27abbf6000a331bba52b6fe3a579cc4ab3252675c70b83c27f"
+    },
+    {
+      "file": "static/feedback.html",
+      "sha256": "92f34bb07e3987c82c35c70a29b55995f2aeebde066ed7df858022efddb34daa"
+    },
+    {
+      "file": "static/strategy.html",
+      "sha256": "905ecca4ee7a0869a7bc1a5a5fd0593bbeba38c48ba6e9d0b279abb9964d5d0c"
+    }
+  ],
+  "ui_note": "U2-REWORK1 R1-R4 fixes on U2-C; backend/OPS unchanged.",
+  "m05b_changes": [
+    {
+      "file": "_ops/workflows/research.py",
+      "baseline_sha256": "35af31696efc79d266713ec5a8f7f90d7bb8c0af73230b2c6f6c1f6aeb197443",
+      "sha256": "d6d5e04b7feeb04481497601ce1257e3390e7ef825f4cf055b1fa4f8b5613ef0"
+    },
+    {
+      "file": "_ops/workflows/research_draft.py",
+      "baseline_sha256": "ab5d135b291f534fef469e4f70500a367ae9f0cba0dd56c1785ed4bbc8c2b7c4",
+      "sha256": "6fd6ccca0ea8a38f6748297862ec33500546a4ec8f283ebfee4516f6a838d800"
+    },
+    {
+      "file": "app.py",
+      "baseline_sha256": "96d6fde1bf6ecc6226f75104b685f8f4a2d757ea91d8a62df3b0e8bf8b0dc647",
+      "sha256": "7656a5d6223b1686c0f1a03be94c342cf34e2d58b264662f2df959c95a50afd6"
+    },
+    {
+      "file": "static/draft.css",
+      "baseline_sha256": "7ed8507ca78d831b0c5163704b47abf9ae2d53add20eb1052c44c374c0f52955",
+      "sha256": "1066664af12ea8919e139ce23e3823638c45d58790d1721e7005024a89b12202"
+    },
+    {
+      "file": "static/draft.html",
+      "baseline_sha256": "25f949c3209ff25fff14a2f3be0ea957c98b8de6103bf375f01edc7049807d36",
+      "sha256": "49db5a28a623ba470b2bed1c109130afc7155f665838ed59650e7ce7d09bbacf"
+    },
+    {
+      "file": "static/draft.js",
+      "baseline_sha256": "3359482b6e080948557f7d8f14c94b77ad952cf900075295e691a72aef8c7b56",
+      "sha256": "c92231b07b2b840944e934b3cf5b1c5fdce4bdb45c00a73f1dc25465b3c59034"
+    },
+    {
+      "file": "static/research.css",
+      "baseline_sha256": "d653afceab661773804a093a1d47dde5a78b769a420b082349144de4c2e9d89a",
+      "sha256": "b12abff5fcc08ef664621753b2c0fe30dfe46dc7326c0a9571bd4a05f636c3c1"
+    },
+    {
+      "file": "static/research.html",
+      "baseline_sha256": "d86ec42e16139268b92b66f2007842806376a6859d1c80b4deb1d32ecb3abda2",
+      "sha256": "7f809bbe4d2f70a18d96d8b5bb1bf0b47fe2a194da655b72395d3823dc89df48"
+    },
+    {
+      "file": "static/research.js",
+      "baseline_sha256": "5188e73212f7fff9978cd6b9bb74c728216b3905fda4040adab17041f8f575da",
+      "sha256": "4b927960eb145717da3132fd7f951ebca3866f70fd532edb42ba8ebf9df1390a"
+    }
+  ],
+  "m05b_note": "M05-B semantic topics; no schema change; package _ops is authoritative; tests/evidence excluded.",
+  "m05b_rework_changes": [
+    {
+      "file": "app.py",
+      "parent_sha256": "7656a5d6223b1686c0f1a03be94c342cf34e2d58b264662f2df959c95a50afd6",
+      "sha256": "56cd3143be9587a0b06501360efcdd4928b78dad506e1dfc744e0e69c5bff749"
+    },
+    {
+      "file": "_ops/workflows/research.py",
+      "parent_sha256": "d6d5e04b7feeb04481497601ce1257e3390e7ef825f4cf055b1fa4f8b5613ef0",
+      "sha256": "947a796cc57e86ad6cf6e09f4d3e19bccb222b46ce778847033614d0a6cc39dc"
+    },
+    {
+      "file": "_ops/workflows/research_draft.py",
+      "parent_sha256": "6fd6ccca0ea8a38f6748297862ec33500546a4ec8f283ebfee4516f6a838d800",
+      "sha256": "722371a676a63f8fa0ecb72087be013eb2e012851e74156015b78c7ce8bf5b11"
+    },
+    {
+      "file": "static/research.html",
+      "parent_sha256": "7f809bbe4d2f70a18d96d8b5bb1bf0b47fe2a194da655b72395d3823dc89df48",
+      "sha256": "7f809bbe4d2f70a18d96d8b5bb1bf0b47fe2a194da655b72395d3823dc89df48"
+    },
+    {
+      "file": "static/research.js",
+      "parent_sha256": "4b927960eb145717da3132fd7f951ebca3866f70fd532edb42ba8ebf9df1390a",
+      "sha256": "39823acb7d66f98f9678a424520720c500582ceda23bc7dbc7c9b2498c11e3ba"
+    },
+    {
+      "file": "static/research.css",
+      "parent_sha256": "b12abff5fcc08ef664621753b2c0fe30dfe46dc7326c0a9571bd4a05f636c3c1",
+      "sha256": "b12abff5fcc08ef664621753b2c0fe30dfe46dc7326c0a9571bd4a05f636c3c1"
+    },
+    {
+      "file": "static/draft.html",
+      "parent_sha256": "49db5a28a623ba470b2bed1c109130afc7155f665838ed59650e7ce7d09bbacf",
+      "sha256": "49db5a28a623ba470b2bed1c109130afc7155f665838ed59650e7ce7d09bbacf"
+    },
+    {
+      "file": "static/draft.js",
+      "parent_sha256": "c92231b07b2b840944e934b3cf5b1c5fdce4bdb45c00a73f1dc25465b3c59034",
+      "sha256": "c92231b07b2b840944e934b3cf5b1c5fdce4bdb45c00a73f1dc25465b3c59034"
+    },
+    {
+      "file": "static/draft.css",
+      "parent_sha256": "1066664af12ea8919e139ce23e3823638c45d58790d1721e7005024a89b12202",
+      "sha256": "1066664af12ea8919e139ce23e3823638c45d58790d1721e7005024a89b12202"
+    }
+  ],
+  "m05b_rework_note": "R1-R4 rework; 9 product files changed vs prior M05-B; tests/evidence excluded.",
+  "q_fix_changes": [
+    {
+      "file": "app.py",
+      "parent_sha256": "9a8dd7bb54122155bd43e8da603d659c907392f67892a873959e1d714cb37730",
+      "sha256": "095c869dd49b2db7f595fc1be67c6b6138ebdf9b7ef4cf02f4f5ac4a6f4cfe82"
+    }
+  ],
+  "q_fix_note": "Q03-D cross-type ID dedupe; only app.py changed; tests/evidence excluded.",
+  "m05c_changes": [
+    {
+      "file": "app.py",
+      "parent_sha256": "095c869dd49b2db7f595fc1be67c6b6138ebdf9b7ef4cf02f4f5ac4a6f4cfe82",
+      "sha256": "0fd6d5d8d578c7c3f34683a82132a051372033d97e64e54ee2830f9d2a69ba0d"
+    },
+    {
+      "file": "_ops/workflows/research.py",
+      "parent_sha256": "5621b870821d03fc083bc89a68f4b4b32b906955bf5c8ea1ac214dce46259a0c",
+      "sha256": "b04a1c924826634a74c5bb35fccb58c163fb2e82467edf3f016d4d0135a5be41"
+    },
+    {
+      "file": "_ops/workflows/research_draft.py",
+      "parent_sha256": "722371a676a63f8fa0ecb72087be013eb2e012851e74156015b78c7ce8bf5b11",
+      "sha256": "54af531b16acabfcf7c5968f527cd104e6245fa59815794d31da4e7be83a6014"
+    },
+    {
+      "file": "static/research.html",
+      "parent_sha256": "7f809bbe4d2f70a18d96d8b5bb1bf0b47fe2a194da655b72395d3823dc89df48",
+      "sha256": "372a4339a12422d92ec7201fcb21db8473588a8f7108e4ef025761517376ca7c"
+    },
+    {
+      "file": "static/research.js",
+      "parent_sha256": "39823acb7d66f98f9678a424520720c500582ceda23bc7dbc7c9b2498c11e3ba",
+      "sha256": "83bd40b436e262479462a3247767a3b851032e225fe05edd9785e2a7265a1132"
+    },
+    {
+      "file": "static/research.css",
+      "parent_sha256": "b12abff5fcc08ef664621753b2c0fe30dfe46dc7326c0a9571bd4a05f636c3c1",
+      "sha256": "34fcfafce42267c97ecc948b1bac642e24f8b090954816a3c34b149afb8774c0"
+    },
+    {
+      "file": "static/draft.html",
+      "parent_sha256": "49db5a28a623ba470b2bed1c109130afc7155f665838ed59650e7ce7d09bbacf",
+      "sha256": "3bedf93edd0a22df708429612d7f3ea926ad3cf738628fae333590d001e3797f"
+    },
+    {
+      "file": "static/draft.js",
+      "parent_sha256": "c92231b07b2b840944e934b3cf5b1c5fdce4bdb45c00a73f1dc25465b3c59034",
+      "sha256": "f8b391c25834da744bddc62878a703a868a3fe97b53c022b08c5716a7fbb0bb9"
+    }
+  ],
+  "m05c_note": "M05-C reference adaptation; 8 product files; tests/evidence excluded.",
+  "python_tested_with": "3.12.14 (E:\\leida-build\\venv\\Scripts\\python.exe)",
+  "baseline_chain": [
+    {
+      "build_id": "20261022-codex-ice-ui1",
+      "zip_sha256": "8b7fbb9c1340b224ca3f6431c89d4aaf60ce1888a116b63a8ace7313e282ad93",
+      "zip_bytes": 18427476
+    },
+    {
+      "build_id": "20261022-codex-m05-final",
+      "zip_sha256": "c0d5044ae738da0a94a2f34afed03d382a14a8b6ece5f2ca12660b824c795db6",
+      "zip_bytes": 1081234
+    },
+    {
+      "build_id": "20261022-codex-fi-f2",
+      "zip_sha256": "80398ca2f57d5f46c0c6b138316e1a27f1f66a9e662413ae80de8593f6480cf2",
+      "zip_bytes": 1069327
+    },
+    {
+      "build_id": "20261022-codex-fi-f1-rework2",
+      "zip_sha256": "b1b5ddf95694917b1984297c65f6ab6d2cff35b2e7f3fa22478c600682052454",
+      "zip_bytes": 1058227
+    },
+    {
+      "build_id": "20261022-fi-f1-rework1-2",
+      "zip_sha256": "fb62f702f3bcbb87cb2b6673b1de0e23f0cd422061a8edb573450cf075444161",
+      "zip_bytes": 1056049
+    },
+    {
+      "build_id": "20261022-fi-f1-2",
+      "zip_sha256": "b45712e1166af274470f4d627f926ac41ce943c64475649479c5a03d3550a077",
+      "zip_bytes": 1054784
+    },
+    {
+      "build_id": "20261022-codex-m05e2-rework1",
+      "zip_sha256": "b665b0bd8ddeb9cc6bcf7eb11e17d3fa82e1c6a8bfde17a729b6a1410beaf816",
+      "zip_bytes": 1045384
+    },
+    {
+      "build_id": "20261022-0525-m05e2",
+      "zip_sha256": "2f25b535df582f95ab074b733c070575ba620248c7461cf032d0769d5452c614",
+      "zip_bytes": 1045237
+    },
+    {
+      "build_id": "20261022-0505-m05e2",
+      "zip_sha256": "1510284fc6c7a85fc736d7b60bc54843963ef9f585e03b7f0584f5dc8ea947b2",
+      "zip_bytes": 1045220
+    },
+    {
+      "build_id": "20261022-0405-m05e2",
+      "zip_sha256": "d519170a55bf5ad7e6358e5ad11103226a96707d06d01613c34f30aeaa244697",
+      "zip_bytes": 1044813
+    },
+    {
+      "build_id": "20261022-0245-m05d2-meta1",
+      "zip_sha256": "726973687f09afaa0d6acc126ab11b9cd39117dbcbbbfab6745d422d145d21f8",
+      "zip_bytes": 1031627
+    },
+    {
+      "build_id": "20261021-2305-m05d2-rework2",
+      "zip_sha256": "72eebd00141e38c74bcf7612dd173f4ca14787cf44dc045b523eb3f57bbe122e",
+      "zip_bytes": 1031485
+    },
+    {
+      "build_id": "20261021-1815-m05d2-rework1",
+      "zip_sha256": "82a060f0c01a47120fe43738f51ea7316ae3aa36e3610909eb77accc898adbb3",
+      "zip_bytes": 1030839
+    },
+    {
+      "build_id": "20261021-1730-m05d2",
+      "zip_sha256": "6a5e99d286b8ed2517102698b8914f0b809e8a9089e12c36065a5be279eeef43",
+      "zip_bytes": 1029778
+    },
+    {
+      "build_id": "20261021-1630-m05c-rework3",
+      "zip_sha256": "9c574863ba147447c6e4e9efaa243a21f757617165a193ac7af7776f13f57422",
+      "zip_bytes": 1011758
+    },
+    {
+      "build_id": "20261021-1530-m05c-rework2",
+      "zip_sha256": "6d761ec11beb10435d3a9bb8e0012df7b44e128bcd34c1c6218ba655c2ce444b",
+      "zip_bytes": 1011546
+    },
+    {
+      "build_id": "20261021-1430-m05c-rework1",
+      "zip_sha256": "114635aaccad5a200b1b4d78d9f976a4f4a5fb121247826e09dd6c0fc45e5dd5",
+      "zip_bytes": 1011171
+    },
+    {
+      "build_id": "20261021-1330-m05c",
+      "zip_sha256": "ef7455ee3dab6f4849806f3dc17903f5fa785ba540285d4f3a8b5fcf7bf340dc",
+      "zip_bytes": 1007505
+    },
+    {
+      "build_id": "20261021-1200-m05b-rework3",
+      "zip_sha256": "03f5608daeb325a2c4018324318822e2ad5c004c7e5b8950be5d52512968a1a2"
+    }
+  ],
+  "m05c_rework1_changes": [
+    {
+      "file": "app.py",
+      "state": "changed",
+      "sha256": "118659127d9929d2e8990b97043cc3e309c1491b58ec221d1327a58e684c1c0e",
+      "parent_sha256": "0fd6d5d8d578c7c3f34683a82132a051372033d97e64e54ee2830f9d2a69ba0d"
+    },
+    {
+      "file": "static/draft.js",
+      "state": "changed",
+      "sha256": "6f542d7c93b7fa2a0651912baf8115120c32ee96081883300123c3beca347612",
+      "parent_sha256": "f8b391c25834da744bddc62878a703a868a3fe97b53c022b08c5716a7fbb0bb9"
+    },
+    {
+      "file": "static/research.html",
+      "state": "changed",
+      "sha256": "d4088eff606320e00a27efce90798fd2d6596917f2a537c39e13da45c74d9611",
+      "parent_sha256": "372a4339a12422d92ec7201fcb21db8473588a8f7108e4ef025761517376ca7c"
+    },
+    {
+      "file": "static/research.js",
+      "state": "changed",
+      "sha256": "7482046e002ec3186cb598fe1f8bfb08594fc67c1de586afc2f453d38e4a518d",
+      "parent_sha256": "83bd40b436e262479462a3247767a3b851032e225fe05edd9785e2a7265a1132"
+    },
+    {
+      "file": "_ops/workflows/research_draft.py",
+      "state": "changed",
+      "sha256": "f7ce90b3ad61e312795c305544bb37c3cd4ab840bd145155b47a795c9f4130dd",
+      "parent_sha256": "54af531b16acabfcf7c5968f527cd104e6245fa59815794d31da4e7be83a6014"
+    },
+    {
+      "file": "_ops/workflows/research.py",
+      "state": "changed",
+      "sha256": "441c811872f3f5768d2c3b3088ab7c47215e9bd112a7e9586904e533e132e288",
+      "parent_sha256": "b04a1c924826634a74c5bb35fccb58c163fb2e82467edf3f016d4d0135a5be41"
+    }
+  ],
+  "m05c_rework1_note": "M05-C 第一次返工（R0-R4）：累计源码包；相对父包 20261021-1330-m05c 变更 6 个产品文件；SOURCE/MANIFEST 按最终被测树重建；data 为空；测试/证据/缓存/合成库不进入；旧包、U3 exe、owner/customer exe 未重建。",
+  "m05c_rework2_changes": [
+    {
+      "file": "static/research.js",
+      "parent_sha256": "7482046e002ec3186cb598fe1f8bfb08594fc67c1de586afc2f453d38e4a518d",
+      "sha256": "eec342aac752d154a3727a80eedf5e2c2e11c08c4ecc187ac1c8495a009c4420"
+    }
+  ],
+  "m05c_rework2_note": "R4 wait/edit restore and draft-version stale-hint fixes; product changes: static/research.js",
+  "m05c_rework3_changes": [
+    {
+      "file": "static/research.js",
+      "parent_sha256": "eec342aac752d154a3727a80eedf5e2c2e11c08c4ecc187ac1c8495a009c4420",
+      "sha256": "17e6964d12ebf0cfcc1027f5224971fa12f25a9df57e86ab4008bf72579c921a"
+    }
+  ],
+  "m05c_rework3_note": "R4 P1 commit deferral; product changes: static/research.js",
+  "m05d2_note": "M05-D2 deep draft optimization REWORK2: baseline and inherited authority fixes; tests/evidence excluded; parent REWORK1.",
+  "m05d2_changes": [
+    {
+      "file": "app.py",
+      "state": "changed",
+      "sha256": "49d489a36436ec3b053acce4562755ff692b06c0f8ba8e7e1689a5f4f43de360",
+      "parent_sha256": "118659127d9929d2e8990b97043cc3e309c1491b58ec221d1327a58e684c1c0e"
+    },
+    {
+      "file": "static/draft.html",
+      "state": "changed",
+      "sha256": "8a86fb7dfc3643a97333d86b7e1c08020fdef581786b0f7573807dac3ca5a262",
+      "parent_sha256": "3bedf93edd0a22df708429612d7f3ea926ad3cf738628fae333590d001e3797f"
+    },
+    {
+      "file": "static/draft.js",
+      "state": "changed",
+      "sha256": "07713d83045f473cd299d1c9830909abd6f43d81743ff958f4c12a12a089eba0",
+      "parent_sha256": "6f542d7c93b7fa2a0651912baf8115120c32ee96081883300123c3beca347612"
+    },
+    {
+      "file": "static/draft.css",
+      "state": "changed",
+      "sha256": "fecca7bba93b9c5b245ca17767c3e88ae2f3bd62c077b1e61475d569ac4c4653",
+      "parent_sha256": "1066664af12ea8919e139ce23e3823638c45d58790d1721e7005024a89b12202"
+    },
+    {
+      "file": "_ops/workflows/draft_optimization.py",
+      "state": "added",
+      "sha256": "d111dba7b83adc4dee49e329b9fa2aba68fd87607431d9ca04e3a300ec67bc28",
+      "parent_sha256": null
+    }
+  ],
+  "m05d2_rework1_changes": [
+    {
+      "file": "app.py",
+      "state": "changed",
+      "sha256": "78bc44e37fcdcd573f1a9bdef8dc6fe4b80604dec4132e9544d9c2fb63de9814",
+      "parent_sha256": "49d489a36436ec3b053acce4562755ff692b06c0f8ba8e7e1689a5f4f43de360"
+    },
+    {
+      "file": "static/draft.html",
+      "state": "changed",
+      "sha256": "8a86fb7dfc3643a97333d86b7e1c08020fdef581786b0f7573807dac3ca5a262",
+      "parent_sha256": "8a86fb7dfc3643a97333d86b7e1c08020fdef581786b0f7573807dac3ca5a262"
+    },
+    {
+      "file": "static/draft.js",
+      "state": "changed",
+      "sha256": "e7301ff9919716d6c4e7bfa2ea106ca626d20b52b7f0729c3326df8150d87d45",
+      "parent_sha256": "07713d83045f473cd299d1c9830909abd6f43d81743ff958f4c12a12a089eba0"
+    },
+    {
+      "file": "static/draft.css",
+      "state": "changed",
+      "sha256": "fecca7bba93b9c5b245ca17767c3e88ae2f3bd62c077b1e61475d569ac4c4653",
+      "parent_sha256": "fecca7bba93b9c5b245ca17767c3e88ae2f3bd62c077b1e61475d569ac4c4653"
+    },
+    {
+      "file": "_ops/workflows/draft_optimization.py",
+      "state": "changed",
+      "sha256": "8f7f8ab230bba8c394ca2d08f63e863f94adbcb936d113c45d681c6b13623b46",
+      "parent_sha256": "d111dba7b83adc4dee49e329b9fa2aba68fd87607431d9ca04e3a300ec67bc28"
+    }
+  ],
+  "m05d2_rework1_note": "R1 history wait full snapshot/confirm; R2 async ownership; R3 C parent chain; R4 complete messages; R5 C 24 refs; R6 baseline/confirmation.",
+  "m05d2_rework2_changes": [
+    {
+      "file": "app.py",
+      "state": "changed",
+      "sha256": "6bb0cdbd22698b0e91e276908d1be519f237d57c559d4c2159ddbf11e5fdccd1",
+      "parent_sha256": "78bc44e37fcdcd573f1a9bdef8dc6fe4b80604dec4132e9544d9c2fb63de9814"
+    },
+    {
+      "file": "static/draft.js",
+      "state": "changed",
+      "sha256": "ab6810749d4446462b3b0f5ad838b0c1ee8a197fca802ec57f9413b9fc913ca6",
+      "parent_sha256": "e7301ff9919716d6c4e7bfa2ea106ca626d20b52b7f0729c3326df8150d87d45"
+    },
+    {
+      "file": "_ops/workflows/draft_optimization.py",
+      "state": "changed",
+      "sha256": "8f7f8ab230bba8c394ca2d08f63e863f94adbcb936d113c45d681c6b13623b46",
+      "parent_sha256": "8f7f8ab230bba8c394ca2d08f63e863f94adbcb936d113c45d681c6b13623b46"
+    }
+  ],
+  "m05d2_rework2_note": "R6 form baseline not advanced; new-version optimize baseline; inherited A/C authority; M02 completion; R1/R2/R4/R5 retained.",
+  "m05d2_meta1_note": "Metadata-only correction: release.marker digest in SOURCE.files; 147 runtime/resource files unchanged from REWORK2.",
+  "m05e2_note": "M05-E2 12-domain content templates integrated across A/B/C, M02, D, history and export; tests/evidence excluded.",
+  "m05e2_changes": [
+    {
+      "file": "app.py",
+      "state": "changed",
+      "sha256": "40b453e0456d18dec998f9c4263c8ee19549f7f51cf06e5dea8d32285e41377c",
+      "parent_sha256": "6bb0cdbd22698b0e91e276908d1be519f237d57c559d4c2159ddbf11e5fdccd1"
+    },
+    {
+      "file": "static/research.html",
+      "state": "changed",
+      "sha256": "a338e54284e2e8ac145db8b931a40949c2d4e2febff68ce0d42e546597df6f37",
+      "parent_sha256": "d4088eff606320e00a27efce90798fd2d6596917f2a537c39e13da45c74d9611"
+    },
+    {
+      "file": "static/research.js",
+      "state": "changed",
+      "sha256": "63840574bae9339292f72a65bba81b38114a14a02ef5cdc385e20482b2c38e31",
+      "parent_sha256": "17e6964d12ebf0cfcc1027f5224971fa12f25a9df57e86ab4008bf72579c921a"
+    },
+    {
+      "file": "static/draft.html",
+      "state": "changed",
+      "sha256": "300778e9fd0fe5c0d627e2a144288cb73c0c6e4140b7215495bd5ba66d863011",
+      "parent_sha256": "8a86fb7dfc3643a97333d86b7e1c08020fdef581786b0f7573807dac3ca5a262"
+    },
+    {
+      "file": "static/draft.js",
+      "state": "changed",
+      "sha256": "6152fbc49cbcebf6a96ed42126ba68abfbe662067feb89abcadcbdd9c0aa0233",
+      "parent_sha256": "ab6810749d4446462b3b0f5ad838b0c1ee8a197fca802ec57f9413b9fc913ca6"
+    },
+    {
+      "file": "_ops/workflows/industry_templates.py",
+      "state": "added",
+      "sha256": "52a8e81911427fd839d403886f7785c88cddeefa9e4ba1a368b98de7d19da664",
+      "parent_sha256": null
+    }
+  ],
+  "m05e2_closeout_note": "R1 result display no input overwrite; R2 invalid legacy reject.",
+  "codex_rework": {
+    "scope": "E15 draft save/generate request-generation and confirmation isolation",
+    "runtime_files": [
+      "static/draft.js"
+    ],
+    "parent_zip": "radar-owner-20261022-0525-m05e2.zip"
+  },
+  "m05fi_f1_note": "FI-F1 local reminders; F2/exe not started.",
+  "changed": [
+    {
+      "file": "app.py",
+      "state": "changed",
+      "sha256": "40d188b1433a2369726f9f264c8d078af6d2f8206bc106542c790fb8b10c5546",
+      "parent_sha256": "38abe75729d1bb31a6ff1b10d3b3037fc47600ca6a26ccb9d515d6df94908ff7"
+    },
+    {
+      "file": "ops.py",
+      "state": "changed",
+      "sha256": "471d79a07e7c78d09be6606ee660ad42cf36373b0bc216224e63203436570e5e",
+      "parent_sha256": "4d01f4775b21d2c2d16d5f14e8f073c2b140302d2e3fe3b36510f01895587c7e"
+    },
+    {
+      "file": "static/dashboard.html",
+      "state": "changed",
+      "sha256": "300e4214cd59bb8f70e04e4aa06176c345b01f85a94038e4da3f6ff9233ac407",
+      "parent_sha256": "7009474e04cf7ac1654cee637881540f8a757ef0676e9a6edde56792ea721be3"
+    },
+    {
+      "file": "static/dashboard.js",
+      "state": "changed",
+      "sha256": "b3fba53e6e6b2a0eab1f0f97224336bf7ae9fb79377a4090c0ec0de2ce5bfb61",
+      "parent_sha256": "c43e3da2d1050b63b871bceeb0648bd99cc6e653f57c9a348607785349a6db14"
+    },
+    {
+      "file": "static/dashboard.css",
+      "state": "changed",
+      "sha256": "abd5e29a469c8db0371da2a5d3da8912e67f967f22b32e0faf8da0736566fd01",
+      "parent_sha256": "abd5e29a469c8db0371da2a5d3da8912e67f967f22b32e0faf8da0736566fd01"
+    },
+    {
+      "file": "_ops/workflows/ops_reminders.py",
+      "state": "changed",
+      "sha256": "a66307fafb019451b9485a2eb4f4cbb82aea4b1a9a26a31f3ad41b996de79d48",
+      "parent_sha256": "a66307fafb019451b9485a2eb4f4cbb82aea4b1a9a26a31f3ad41b996de79d48"
+    }
+  ],
+  "m05fi_f1_rework1_note": "R1-R7 fixes; F2/exe not started.",
+  "codex_fif1_rework": {
+    "scope": "FI-F1 reminder editor lifecycle, saved baseline/version, explicit DST occurrence, availability response",
+    "metadata_correction": "Correct inherited 0405 chain digest/size forward; historical archives remain unchanged."
+  },
+  "codex_fif2": {
+    "scope": "Deterministic conversion observation; authority and save in one transaction; immutable reports, export, selected samples and owner feedback panel",
+    "frozen_core_sha256": "521d43911e1446d8fb3e55014d8981190704dcbf06f744da51143462c4441407",
+    "runtime_files": [
+      "app.py",
+      "ops.py",
+      "_ops/workflows/conversion_observation.py",
+      "static/feedback.html",
+      "static/feedback.js",
+      "static/feedback.css"
+    ]
+  },
+  "ice_ui": {
+    "scope": "branding and presentation; workflow implementations unchanged",
+    "font": {
+      "url": "https://github.com/subframe7536/maple-font/releases/download/v7.9/MapleMono-CN-unhinted.zip",
+      "version": "v7.9",
+      "sha256": "d41cb72721e99cfe4fbd1a7b0f182a013457de46aa612018f924dd024699d3b9",
+      "license": "SIL Open Font License 1.1",
+      "shipped": [
+        "MapleMono-CN-Regular.ttf",
+        "MapleMono-CN-SemiBold.ttf",
+        "LICENSE.txt"
+      ]
+    },
+    "icon_source_sha256": "bd96473199dde1fbe602d37631044494289e66dbb4c13f8f64d3129cba3181ce"
+  },
+  "documentation_update": {
+    "scope": "user manual and packaging document inputs only",
+    "runtime_unchanged_from": "20261022-codex-ice-ui1",
+    "changed": [
+      "M05-使用说明.md",
+      "README-内测说明.md",
+      "build_desktop.py",
+      "build_release.py",
+      "使用说明.txt"
+    ]
+  }
+}

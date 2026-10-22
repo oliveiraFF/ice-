@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>脚本准备 · ice运营台</title>
+<link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/icons.css"><link rel="stylesheet" href="/script.css">
+<script defer src="/icons.js"></script><script defer src="/site.js"></script><script defer src="/script.js"></script><link rel="stylesheet" href="/site.css">
+<link rel="stylesheet" href="/ice.css"><link rel="icon" href="/favicon.ico">
+</head>
+<body class="script-app content-script-app"><header class="topbar"></header>
+<main class="script-page">
+  <div class="breadcrumbs"><a href="/tools">工具管理</a> › 脚本准备</div>
+  <div class="script-heading"><div><h1>填商品事实，生成可审阅的脚本。</h1><p>默认使用雷达已收录作品；无匹配会提示先采集。示例数据需主动选择。</p></div></div>
+  <div class="script-workspace">
+    <section class="script-form" aria-labelledby="formTitle">
+      <div class="script-section-head"><h2 id="formTitle">输入</h2><span class="script-hint">* 为必填</span></div>
+      <label>搜索关键词 <span class="script-required">*</span><input id="scriptKeyword" maxlength="40" placeholder="例如：厨房清洁"></label>
+      <label>商品名称 <span class="script-required">*</span><input id="scriptProduct" maxlength="150" placeholder="例如：长柄清洁刷"></label>
+      <label>目标人群 <input id="scriptAudience" maxlength="120" placeholder="例如：租房人群（可留空）"></label>
+
+      <fieldset class="script-modes"><legend>数据来源</legend>
+        <label><input type="radio" name="dataMode" value="radar" checked> 使用雷达已收录作品</label>
+        <label><input type="radio" name="dataMode" value="sample"> 示例演示（不使用真实作品）</label>
+      </fieldset>
+
+      <fieldset class="script-modes"><legend>模型模式</legend>
+        <label><input type="radio" name="modelMode" value="test" checked> 测试模式（stub，不调用模型）</label>
+        <label><input type="radio" name="modelMode" value="real"> 真实模型（复用雷达 AI 配置）</label>
+      </fieldset>
+      <label class="script-confirm" id="confirmField" hidden><input type="checkbox" id="modelConfirm"> 确认本次会调用真实模型并可能产生费用</label>
+
+      <div class="script-section-head"><h3>商品事实</h3><button type="button" class="secondary" id="addFact">添加一条</button></div>
+      <p class="script-hint">每条事实要有编号、内容和来源；只填一条时其余空白行会被忽略。</p>
+      <div id="scriptFacts" class="script-facts"></div>
+      <div class="script-section-head"><h3>选题池（需已确认策略）</h3></div>
+      <div class="script-actions"><button class="secondary" id="buildTopics" type="button">生成候选</button><button class="secondary" id="saveCombo" type="button" disabled>保存当日组合（2保守+1实验）</button></div>
+      <p id="topicsStatus" class="script-hint" role="status"></p>
+      <div id="topicsPool" class="script-source-list"></div>
+      <div id="comboPanel" class="script-source-detail" hidden></div>
+      <div class="script-section-head"><h3>复盘建议（可选）</h3></div>
+      <div id="suggestionPanel" class="script-source-detail" hidden></div>
+      <div class="script-section-head"><h3>参考与痛点（可选）</h3></div>
+      <p class="script-hint">参考只影响结构，痛点只影响关注点；都不会变成本商品事实。</p>
+      <div id="referenceList" class="script-source-list"></div>
+      <div id="painList" class="script-source-list"></div>
+      <div id="sourceDetail" class="script-source-detail" hidden></div>
+      <p id="scriptError" class="script-error" role="alert"></p>
+      <div class="script-actions"><button class="primary" id="generateScript" type="button">生成脚本</button></div>
+    </section>
+
+    <section class="script-result" id="scriptResult" hidden aria-label="生成结果">
+      <div class="script-section-head"><h2>生成结果</h2><span id="scriptSource" class="script-badge"></span></div>
+      <p id="scriptStatus" class="script-status" role="status"></p>
+      <div id="scriptBeats" class="script-beats"></div>
+      <div class="script-meta"><div><h3>事实引用</h3><p id="scriptFactIds"></p></div><div><h3>缺失项</h3><p id="scriptMissing"></p></div></div>
+      <div class="script-meta"><div><h3>参考作品</h3><div id="scriptReferences"></div></div><div><h3>生成信息</h3><p id="scriptRunInfo"></p></div></div>
+      <div id="scriptPlan" class="script-source-detail" hidden></div>
+      <div class="script-actions"><button class="secondary" id="copyScript" type="button">复制文稿</button><button class="secondary" id="exportScript" type="button">导出 Markdown</button></div>
+      <p id="scriptWarning" class="script-warning" role="status"></p>
+      <p id="scriptCopyStatus" class="script-hint" role="status"></p>
+    </section>
+  </div>
+
+  <section class="script-tasks" aria-labelledby="tasksTitle">
+    <div class="script-section-head"><h2 id="tasksTitle">内容任务</h2><span id="strategyBadge" class="script-badge"></span></div>
+    <p class="script-hint">保存后刷新或重启仍可打开；模型原稿保留，人工稿单独存为新版本。</p>
+    <div class="script-actions">
+      <button class="primary" id="saveTask" type="button" disabled>保存任务</button>
+      <button class="secondary" id="editTask" type="button" disabled>编辑</button>
+      <button class="secondary" id="saveVersion" type="button" hidden>保存修改</button>
+      <button class="secondary" id="approveTask" type="button" disabled>标记审阅通过（当前版本）</button>
+      <button class="secondary" id="exportSaved" type="button" disabled>导出已保存版本</button>
+    </div>
+    <label class="script-confirm"><input type="checkbox" id="formalTask"> 保存为正式任务（需已确认策略）</label>
+    <p id="taskStatus" class="script-hint" role="status"></p>
+    <button class="secondary" id="openCurrent" type="button" hidden>打开当前版本</button>
+    <div id="editPanel" class="script-edit" hidden></div>
+    <div id="taskList" class="script-task-list"></div>
+  </section>
+</main>
+</body></html>

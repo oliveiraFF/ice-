@@ -1,0 +1,4 @@
+.script-form label{display:block;margin:12px 0;font-size:13px;color:#374151}
+.script-form textarea{display:block;width:100%;margin-top:6px;padding:8px 10px;border:1px solid #d1d5db;border-radius:8px;font:inherit;box-sizing:border-box}
+.script-source-detail{margin-top:12px}
+.script-source-detail p{margin:6px 0}

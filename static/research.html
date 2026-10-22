@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>多源研究 · ice运营台</title>
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/icons.css">
+<link rel="stylesheet" href="/script.css">
+<link rel="stylesheet" href="/research.css">
+<script defer src="/icons.js"></script>
+<script defer src="/site.js"></script>
+<script defer src="/research.js"></script>
+
+<link rel="stylesheet" href="/site.css">
+<link rel="stylesheet" href="/ice.css"><link rel="icon" href="/favicon.ico">
+</head>
+<body class="script-app research-app">
+<header class="topbar"></header>
+<main class="script-main">
+  <div class="breadcrumbs">运营工作台 › 研究增强</div>
+  <div class="script-heading"><div><h1>多源研究</h1><p>只基于本次勾选的资料研究；区分业务限制、自有表现、外部参考、人工摘录与推断；不确认策略、不批准、不发布。</p></div><span id="researchMeta" class="script-badge">待研究</span></div>
+  <div id="researchError" class="script-error" role="status" hidden></div>
+  <div id="researchStale" class="script-hint" hidden></div>
+  <p id="researchStatus" class="script-hint" role="status"></p>
+
+  <section class="script-form" aria-label="研究输入">
+    <div class="script-section-head"><h2>研究主题与问题</h2></div>
+    <label>研究主题<input id="researchTopic" maxlength="200" placeholder="例如：旧家具修复的报价怎么讲清楚"></label>
+    <label>本次问题<textarea id="researchQuestion" rows="2" maxlength="1000" placeholder="例如：哪些报价顾虑需要先解决"></textarea></label>
+    <div class="script-section-head"><h2>业务现状</h2><span class="script-hint">缺失可留空；每项至多 2000 字</span></div>
+    <label>业务 / 商品或服务<textarea id="researchBusiness" rows="2" maxlength="2000"></textarea></label>
+    <label>目标受众<textarea id="researchAudience" rows="2" maxlength="2000"></textarea></label>
+    <label>阶段目标<textarea id="researchGoal" rows="2" maxlength="2000"></textarea></label>
+    <label>真实资源<textarea id="researchResources" rows="2" maxlength="2000"></textarea></label>
+    <label>每周可用时间 / 产能<textarea id="researchCapacity" rows="2" maxlength="2000"></textarea></label>
+    <label>当前问题<textarea id="researchQuestionField" rows="2" maxlength="2000"></textarea></label>
+    <label>内容领域模板<select id="researchIndustry" aria-label="内容领域模板"></select></label>
+    <p id="researchIndustrySummary" class="script-hint">当前选择只改变提问与证据检查，不改变事实、来源或策略。</p>
+
+    <div class="script-section-head"><h2>策略边界（只读）</h2><span id="researchStrategyState" class="script-hint">读取中…</span></div>
+    <div id="researchStrategyBody" class="research-strategy"></div>
+
+    <div class="script-section-head"><h2>本次所选资料</h2><span id="researchSelectedCount" class="script-hint">0 / 12 条</span></div>
+    <p class="script-hint">只有勾选/填写的内容会进入本次研究；外部参考只作参考，自有表现只是经营记录。</p>
+    <div class="research-sources">
+      <section class="research-source-block"><h3>受众痛点</h3><div id="researchPains"></div></section>
+      <section class="research-source-block"><h3>外部参考</h3><div id="researchReferences"></div></section>
+      <section class="research-source-block"><h3>研究稿版本</h3>
+        <select id="researchDraft" aria-label="选择研究稿"></select>
+        <select id="researchDraftVersion" aria-label="选择版本"></select>
+        <p id="researchDraftStatus" class="script-hint" hidden></p>
+      </section>
+      <section class="research-source-block"><h3>本业务登记与反馈</h3>
+        <select id="researchRecord" aria-label="选择作品登记"></select>
+        <p id="researchRecordStatus" class="script-hint" hidden></p>
+        <div id="researchConsultations"></div>
+        <div id="researchReviews"></div>
+      </section>
+      <section class="research-source-block research-excerpts"><h3>人工摘录（人工提供，未独立核实）</h3>
+        <div id="researchExcerpts"></div>
+        <button id="researchAddExcerpt" type="button" class="secondary compact">＋ 添加摘录</button>
+      </section>
+    </div>
+
+    <div id="researchFrozenSelected" class="research-frozen-selected" hidden>
+      <h3>冻结来源（当前列表未列出，仍参与研究）</h3>
+      <div id="researchFrozenList"></div>
+    </div>
+
+    <div class="script-actions research-actions">
+      <button id="researchSave" class="secondary" type="button">保存输入（不分析）</button>
+      <button id="researchDemo" class="secondary" type="button">演示研究</button>
+      <label class="research-confirm"><input id="researchConfirm" type="checkbox"> 本次确认真实调用</label>
+      <button id="researchReal" class="primary" type="button">真实研究</button>
+    </div>
+    <p class="script-hint">保存与演示都不调用模型；真实调用还需服务进程具备 LLM_ALLOW_PAID=1 的独立付费许可，页面不会自动开启。</p>
+  </section>
+
+  <section id="researchResultCard" class="script-result" aria-label="研究结果" hidden>
+    <div class="script-section-head"><h2>研究结果</h2><span id="researchSource" class="script-badge"></span></div>
+    <p id="researchSummary" class="research-summary"></p>
+    <h3>观察</h3><div id="researchObservations"></div>
+    <h3>推断</h3><div id="researchInferences"></div>
+    <h3>建议</h3><div id="researchSuggestions"></div>
+    <h3>资料冲突</h3><div id="researchConflicts"></div>
+    <h3>仍不能判断</h3><div id="researchCannot"></div>
+    <h3>冻结来源与边界</h3><div id="researchFrozen"></div>
+    <h3>本结果冻结的内容领域模板</h3><div id="researchIndustryFrozen" class="research-frozen-selected" hidden></div>
+    <div class="script-actions"><a id="researchExport" class="secondary" href="#">导出 Markdown</a></div>
+  </section>
+
+  <section class="script-form topics-section" id="topicsSection" aria-label="语义选题建议">
+    <div class="script-section-head"><h2>语义选题建议（研究用途）</h2><span id="topicsMeta" class="script-badge">待生成</span></div>
+    <p class="script-hint">只基于已保存的 M05-A 父记录冻结快照；不自动分析、不确认策略、不进入正式选题或发布。父记录未保存的当前编辑不会参与本次选题。</p>
+    <div class="topics-parent" id="topicsParentBox">
+      <p><strong id="topicsParentUid">当前 A：未选择已保存记录</strong></p>
+      <p id="topicsParentTopic" class="script-hint"></p>
+      <p id="topicsStrategyState" class="script-hint"></p>
+      <p id="topicsBaseNote" class="script-hint">基于已保存记录（父记录冻结快照）</p>
+      <p id="topicsDirtyHint" class="script-warning" role="status" hidden></p>
+    </div>
+    <div class="script-section-head"><h3>人工摘录需求角色声明</h3><span class="script-hint">仅能标注父记录中的人工摘录；人工声明，未独立核实</span></div>
+    <div id="topicsManualRoles" class="topics-role-list"></div>
+    <div class="script-actions topics-actions">
+      <button id="topicsDemo" class="secondary" type="button" disabled>演示生成选题</button>
+      <label class="research-confirm"><input id="topicsConfirm" type="checkbox"> 本次确认真实调用</label>
+      <button id="topicsReal" class="primary" type="button" disabled>真实生成选题</button>
+    </div>
+    <p class="script-hint">演示不调用模型；真实调用还需服务进程具备 LLM_ALLOW_PAID=1 的独立付费许可。一个按钮最多调用一次，不自动重试、不自动转稿。</p>
+    <p id="topicsStatus" class="script-hint" role="status"></p>
+    <p id="topicsError" class="script-error" role="status" hidden></p>
+    <div id="topicsDraftResult" class="topics-draft-result" hidden></div>
+    <div id="topicsResult" hidden>
+      <div class="script-section-head"><h3>选题候选</h3><span id="topicsSource" class="script-badge"></span></div>
+      <p id="topicsSummary" class="research-summary"></p>
+      <div id="topicsCandidates" class="topics-candidates"></div>
+      <h3>仍不能判断</h3><div id="topicsCannot"></div>
+      <div class="script-actions"><a id="topicsExport" class="secondary" href="#">导出选题 Markdown</a></div>
+    </div>
+    <div class="script-section-head"><h3>历史选题建议</h3><span class="script-hint">列表仅显示身份与摘要；打开不重新分析</span></div>
+    <div id="topicsHistory"></div>
+  </section>
+
+  <section class="script-form adaptation-section" id="adaptationSection" aria-label="参考适配">
+    <div class="script-section-head"><h2>参考适配（C）</h2><span id="adaptationMeta" class="script-badge">待生成</span></div>
+    <p class="script-hint">明确主题或 B 候选 + 一条指定外部参考 → 生成开头/结构/证明/节奏/承接的适配计划；区分可借鉴与不能照搬；不是完整正文、需求验证或效果承诺。保存与演示都不调用模型。</p>
+    <div class="adaptation-subject">
+      <label>主题来源<select id="adaptationSubjectKind" aria-label="主题来源">
+        <option value="manual">手工主题（本次填六字段）</option>
+        <option value="candidate">B 选题候选（冻结该候选链路）</option>
+      </select></label>
+      <div id="adaptationManualBox">
+        <label>适配主题<input id="adaptationTopic" maxlength="200" placeholder="例如：旧家具修复的报价怎么讲清楚"></label>
+        <div class="adaptation-business">
+          <label>业务 / 商品或服务<textarea id="adaptationBusiness" rows="2" maxlength="2000"></textarea></label>
+          <label>目标受众<textarea id="adaptationAudience" rows="2" maxlength="2000"></textarea></label>
+          <label>阶段目标<textarea id="adaptationGoal" rows="2" maxlength="2000"></textarea></label>
+          <label>真实资源<textarea id="adaptationResources" rows="2" maxlength="2000"></textarea></label>
+          <label>每周可用时间 / 产能<textarea id="adaptationCapacity" rows="2" maxlength="2000"></textarea></label>
+          <label>当前问题<textarea id="adaptationQuestion" rows="2" maxlength="2000"></textarea></label>
+        </div>
+      </div>
+      <div id="adaptationCandidateBox" hidden>
+        <label>B 选题记录<select id="adaptationParent" aria-label="B 选题记录"></select></label>
+        <label>目标候选<select id="adaptationCandidate" aria-label="目标候选"></select></label>
+        <p id="adaptationCandidateStatus" class="script-hint"></p>
+      </div>
+    </div>
+    <div class="script-section-head"><h3>指定外部参考（必须明确选择一条）</h3></div>
+    <label>内容领域模板<select id="adaptationIndustry" aria-label="适配内容领域模板"></select></label>
+    <p id="adaptationIndustrySummary" class="script-hint">候选来源缺省继承 B；手工主题缺省通用；本次显式选择只影响新 C。</p>
+    <select id="adaptationReference" aria-label="指定外部参考"></select>
+    <p id="adaptationReferenceStatus" class="script-hint"></p>
+    <div class="script-section-head"><h3>本业务补充资料</h3><span id="adaptationSelectedCount" class="script-hint">0 / 12 条</span></div>
+    <p class="script-hint">指定外部参考算一条；痛点、稿件精确版本、每条人工摘录各算一条。外部参考只作结构参考，不是本业务事实。</p>
+    <div class="research-sources adaptation-sources">
+      <section class="research-source-block"><h3>受众痛点</h3><div id="adaptationPains"></div></section>
+      <section class="research-source-block"><h3>研究稿版本</h3>
+        <select id="adaptationDraft" aria-label="选择研究稿"></select>
+        <select id="adaptationDraftVersion" aria-label="选择版本"></select>
+        <p id="adaptationDraftStatus" class="script-hint" hidden></p>
+      </section>
+      <section class="research-source-block research-excerpts"><h3>人工摘录（人工提供，未独立核实）</h3>
+        <div id="adaptationExcerpts"></div>
+        <button id="adaptationAddExcerpt" type="button" class="secondary compact">＋ 添加摘录</button>
+      </section>
+    </div>
+    <label>本次说明 / 限制<textarea id="adaptationInstruction" rows="2" maxlength="1000" placeholder="例如：只借结构，不使用他人的案例数字与承诺"></textarea></label>
+    <div id="adaptationFrozenSelected" class="research-frozen-selected" hidden>
+      <h3>冻结来源（当前列表未列出，仍参与适配；重新分析时服务端会校验）</h3>
+      <div id="adaptationFrozenList"></div>
+    </div>
+    <div class="script-actions adaptation-actions">
+      <button id="adaptationSaveInput" class="secondary" type="button">保存输入（不分析）</button>
+      <button id="adaptationDemo" class="secondary" type="button">演示适配</button>
+      <label class="research-confirm"><input id="adaptationConfirm" type="checkbox"> 本次确认真实调用</label>
+      <button id="adaptationReal" class="primary" type="button">真实适配</button>
+    </div>
+    <p class="script-hint">演示与保存不调用模型；真实调用还需服务进程具备 LLM_ALLOW_PAID=1 的独立付费许可。真实失败后需重新勾选确认。</p>
+    <p id="adaptationStatus" class="script-hint" role="status"></p>
+    <p id="adaptationStale" class="script-warning" role="status" hidden></p>
+    <p id="adaptationError" class="script-error" role="status" hidden></p>
+    <div id="adaptationResult" hidden>
+      <div class="script-section-head"><h3>适配计划</h3><span id="adaptationSource" class="script-badge"></span></div>
+      <p id="adaptationSummary" class="research-summary"></p>
+      <div id="adaptationReferenceInfo" class="adaptation-reference-box"></div>
+      <div id="adaptationPatterns" class="adaptation-patterns"></div>
+      <h3>不能照搬</h3><div id="adaptationNonTransferable"></div>
+      <h3>仍不能判断</h3><div id="adaptationCannot"></div>
+      <h3>冻结来源与边界</h3><div id="adaptationFrozen"></div>
+      <h3>本结果冻结的内容领域模板</h3><div id="adaptationIndustryFrozen" class="research-frozen-selected" hidden></div>
+      <div class="script-actions">
+        <a id="adaptationExport" class="secondary" href="#">导出适配 Markdown</a>
+        <button id="adaptationToDraft" class="secondary" type="button">转为 M02 研究稿输入</button>
+      </div>
+      <div id="adaptationDraftResult" class="topics-draft-result" hidden></div>
+    </div>
+    <div class="script-section-head"><h3>历史适配（C）</h3><span class="script-hint">列表仅显示身份与摘要；打开不重新分析</span></div>
+    <div id="adaptationHistory"></div>
+  </section>
+
+  <section class="script-tasks" aria-label="历史研究">
+    <div class="script-section-head"><h2>历史研究（A）</h2><span class="script-hint">列表仅显示身份与摘要</span></div>
+    <div id="researchHistory"></div>
+  </section>
+</main>
+</body></html>

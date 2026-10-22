@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>发布反馈 · ice运营台</title>
+<link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/icons.css"><link rel="stylesheet" href="/script.css"><link rel="stylesheet" href="/feedback.css">
+<script defer src="/icons.js"></script><script defer src="/site.js"></script><script defer src="/feedback.js"></script><link rel="stylesheet" href="/site.css">
+<link rel="stylesheet" href="/ice.css"><link rel="icon" href="/favicon.ico">
+</head>
+<body class="script-app feedback-app"><header class="topbar"></header>
+<main class="script-page">
+  <div class="breadcrumbs"><a href="/tools">工具管理</a> › 发布反馈</div>
+  <div class="script-heading"><div><h1>发布登记与指标</h1><p>只登记你已实际发布的作品；应用不代发、不抓取核实，登记不等于平台核实。</p></div></div>
+
+  <section class="script-form" aria-labelledby="registerTitle">
+    <div class="script-section-head"><h2 id="registerTitle">登记作品</h2></div>
+    <label>任务 ID<input id="recordTask" maxlength="40" placeholder="脚本页保存后的任务 ID"></label>
+    <label>稿件版本<input id="recordVersion" type="number" min="1" value="1"></label>
+    <label>平台<select id="recordPlatform"><option value="dy">抖音</option><option value="xhs">小红书</option></select></label>
+    <label>平台作品 ID<input id="recordPostId" maxlength="80" placeholder="作品 ID（按字符串保存）"></label>
+    <label>原链接<input id="recordUrl" maxlength="500" placeholder="https://..."></label>
+    <label>发布时间<input id="recordPublishedAt" type="datetime-local"></label>
+    <p id="recordError" class="script-error" role="alert"></p>
+    <div class="script-actions"><button class="primary" id="registerRecord" type="button">登记</button></div>
+  </section>
+
+  <section class="script-tasks" aria-labelledby="recordsTitle">
+    <div class="script-section-head"><h2 id="recordsTitle">已登记</h2></div>
+    <div id="recordList" class="script-task-list"></div>
+    <div id="recordDetail" class="script-source-detail" hidden></div>
+  </section>
+  <section id="conversionPanel" class="script-form" aria-labelledby="conversionTitle">
+    <h2 id="conversionTitle">转化观察（规则）</h2>
+    <p class="script-hint">指定一份快照做确定性计算。咨询摘录是人工样本，不等于咨询次数；事件比值不是去重转化率，也不判断因果。</p>
+    <div class="conversion-grid"><label>发布登记<select id="conversionRecord"><option value="">请选择登记</option></select></label>
+    <label>指标快照<select id="conversionSnapshot"><option value="">请选择一份快照</option></select></label></div>
+    <fieldset><legend>可选咨询摘录（最多 12 条）</legend><div id="conversionConsultations"></div></fieldset>
+    <label class="conversion-check"><input type="checkbox" id="conversionComparable">我确认本快照的播放与咨询按同一统计范围比较</label>
+    <p id="conversionError" class="script-error" role="alert"></p><p id="conversionStatus" role="status"></p>
+    <p id="conversionDirty" class="script-hint" hidden>当前选择尚未保存</p><p id="conversionStale" class="script-hint" hidden>当前展示的是已冻结报告，结果基于旧选择</p>
+    <div class="script-actions"><button type="button" id="conversionBuild" class="primary">生成并保存规则报告</button><button type="button" id="conversionRefresh" class="secondary">刷新可选资料与历史</button><a id="conversionExport" href="#" hidden>导出本报告 Markdown</a></div>
+    <pre id="conversionResult" aria-label="冻结转化观察报告"></pre><div id="conversionFollowups"></div>
+    <h3>转化观察历史</h3><div id="conversionHistory"></div>
+  </section>
+</main>
+</body></html>

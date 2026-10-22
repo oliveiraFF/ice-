@@ -1,0 +1,87 @@
+/* M05-A 多源研究页：沿用工作台样式，只增加来源选择与结果区块。 */
+.script-app .research-sources{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:10px 0 4px}
+.script-app .research-source-block{border:1px solid #e5e9e7;border-radius:8px;padding:12px 14px;background:#fbfcfb;min-width:0}
+.script-app .research-source-block h3{font-size:13px;margin:0 0 8px;color:#4d5c52}
+.script-app .research-source-block label{display:flex;gap:6px;align-items:flex-start;font-size:12px;line-height:1.7;margin:4px 0;color:#5b6961}
+.script-app .research-source-block input[type=checkbox]{margin-top:3px}
+.script-app .research-source-block select{width:100%;margin-top:6px}
+.script-app .research-strategy{font-size:12px;line-height:1.9;color:#5b6961;background:#f6f9f7;border:1px solid #e5e9e7;border-radius:8px;padding:10px 12px;white-space:pre-wrap;overflow-wrap:anywhere}
+.script-app .research-strategy p{margin:0 0 4px}
+.script-app .research-excerpt-row{display:grid;gap:6px;border-top:1px dashed #e5e9e7;padding:8px 0}
+.script-app .research-excerpt-row textarea{min-height:64px}
+.script-app .research-excerpt-row input{width:100%}
+.script-app .research-actions{flex-wrap:wrap;align-items:center}
+.script-app .research-confirm{display:inline-flex;gap:6px;align-items:center;font-size:12px;color:#5b6961;margin:0 4px}
+.script-app .research-item{border:1px solid #e5e9e7;border-radius:8px;padding:10px 12px;margin-bottom:10px;background:#fff}
+.script-app .research-item p{margin:0 0 4px;line-height:1.8}
+.script-app .research-item small{color:#8a958e;line-height:1.8}
+.script-app .research-summary{font-size:14px;line-height:1.9;color:#39443f}
+.script-app .research-history-item{display:block;width:100%;text-align:left;border:1px solid #e5e9e7;background:#fff;border-radius:8px;padding:10px 12px;margin-bottom:8px;cursor:pointer}
+.script-app .research-history-item small{display:block;color:#8a958e;margin-top:4px}
+.script-app .research-history-item.active{border-color:#b7d4c2;background:#f6fbf7}
+@media(max-width:600px){.script-app .research-sources{grid-template-columns:1fr}}
+
+.script-app .research-frozen-selected{border:1px solid #f0d9b5;background:#fffaf1;border-radius:8px;padding:10px 12px;margin:8px 0}
+.script-app .research-frozen-selected h3{font-size:13px;margin:0 0 8px;color:#8a6d3b}
+.script-app .research-frozen-item{border-top:1px dashed #f0d9b5;padding:8px 0;font-size:12px;line-height:1.8}
+.script-app .research-frozen-item:first-child{border-top:0}
+.script-app .research-frozen-item .text-button{margin-left:8px}
+.script-app .research-frozen-status{color:#9a6a2f}
+
+/* M05-B 语义选题建议：只增加本页 B 区块，不改变 A 与公共 UI。 */
+.script-app .topics-section{min-width:0}
+.script-app .topics-parent{border:1px solid #e5e9e7;background:#f8faf9;border-radius:8px;padding:10px 12px;margin:8px 0}
+.script-app .topics-parent p{margin:0 0 4px;line-height:1.8;overflow-wrap:anywhere}
+.script-app .topics-role-list{display:grid;gap:8px;margin:8px 0}
+.script-app .topics-role-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(150px,220px);gap:8px;align-items:start;border-top:1px dashed #e5e9e7;padding-top:8px}
+.script-app .topics-role-row:first-child{border-top:0;padding-top:0}
+.script-app .topics-role-row p{margin:0;font-size:12px;line-height:1.7;color:#5b6961;min-width:0;overflow-wrap:anywhere}
+.script-app .topics-role-row select{width:100%}
+.script-app .topics-actions{flex-wrap:wrap;align-items:center}
+.script-app .topics-candidates{display:grid;gap:12px;margin:10px 0}
+.script-app .topics-candidate{border:1px solid #e5e9e7;border-radius:10px;padding:12px 14px;background:#fff;min-width:0;overflow-wrap:anywhere}
+.script-app .topics-candidate-head{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:6px}
+.script-app .topics-candidate-head strong{font-size:14px}
+.script-app .topics-state{font-size:12px;border-radius:999px;padding:2px 8px;background:#eef4f0;color:#3f6b50;white-space:nowrap}
+.script-app .topics-state.needs_validation{background:#fff6e6;color:#8a6320}
+.script-app .topics-field{margin:0 0 5px;line-height:1.8;font-size:13px}
+.script-app .topics-field b{color:#4d5c52}
+.script-app .topics-candidate details{margin:6px 0}
+.script-app .topics-candidate summary{cursor:pointer;color:#2f6b4a;font-size:12px}
+.script-app .topics-basis-row{border-top:1px dashed #e5e9e7;padding:6px 0;font-size:12px;line-height:1.8}
+.script-app .topics-basis-row:first-child{border-top:0}
+.script-app .topics-basis-row small{color:#8a958e}
+.script-app .topics-basis-text{white-space:pre-wrap}
+.script-app .topics-declared{color:#8a6d3b}
+.script-app .topics-convert{margin-top:6px}
+.script-app .topics-draft-result{border:1px solid #b7d4c2;background:#f6fbf7;border-radius:8px;padding:8px 12px;margin:8px 0;line-height:1.8;overflow-wrap:anywhere}
+.script-app .topics-history-item{display:block;width:100%;text-align:left;border:1px solid #e5e9e7;background:#fff;border-radius:8px;padding:10px 12px;margin-bottom:8px;cursor:pointer;overflow-wrap:anywhere}
+.script-app .topics-history-item small{display:block;color:#8a958e;margin-top:4px}
+.script-app .topics-history-item.active{border-color:#b7d4c2;background:#f6fbf7}
+@media(max-width:600px){.script-app .topics-role-row{grid-template-columns:1fr}}
+
+/* M05-C 参考适配：只增加本页 C 区块，沿用 A/B 样式，不改变公共 UI。 */
+.script-app .adaptation-section{min-width:0}
+.script-app .adaptation-subject{display:grid;gap:10px;margin:8px 0}
+.script-app .adaptation-business{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:8px}
+.script-app .adaptation-sources{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.script-app .adaptation-actions{flex-wrap:wrap;align-items:center}
+.script-app .adaptation-patterns{display:grid;gap:12px;margin:10px 0}
+.script-app .adaptation-pattern{border:1px solid #e5e9e7;border-radius:10px;padding:12px 14px;background:#fff;min-width:0;overflow-wrap:anywhere}
+.script-app .adaptation-pattern-head{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:6px}
+.script-app .adaptation-aspect{font-size:12px;border-radius:999px;padding:2px 8px;background:#eef4f0;color:#3f6b50;white-space:nowrap}
+.script-app .adaptation-field{margin:0 0 5px;line-height:1.8;font-size:13px;overflow-wrap:anywhere}
+.script-app .adaptation-field b{color:#4d5c52}
+.script-app .adaptation-pattern details{margin:6px 0}
+.script-app .adaptation-pattern summary{cursor:pointer;color:#2f6b4a;font-size:12px}
+.script-app .adaptation-basis-row{border-top:1px dashed #e5e9e7;padding:6px 0;font-size:12px;line-height:1.8;overflow-wrap:anywhere}
+.script-app .adaptation-basis-row:first-child{border-top:0}
+.script-app .adaptation-basis-text{white-space:pre-wrap}
+.script-app .adaptation-reference-box{border:1px solid #e5e9e7;background:#f8faf9;border-radius:8px;padding:10px 12px;margin:8px 0;line-height:1.8;overflow-wrap:anywhere}
+.script-app .adaptation-reference-box p{margin:0 0 4px}
+.script-app .adaptation-non{border:1px solid #f0d9b5;background:#fffaf1;border-radius:10px;padding:12px 14px;margin-bottom:10px;overflow-wrap:anywhere}
+.script-app .adaptation-history-item{display:block;width:100%;text-align:left;border:1px solid #e5e9e7;background:#fff;border-radius:8px;padding:10px 12px;margin-bottom:8px;cursor:pointer;overflow-wrap:anywhere}
+.script-app .adaptation-history-item small{display:block;color:#8a958e;margin-top:4px}
+.script-app .adaptation-history-item.active{border-color:#b7d4c2;background:#f6fbf7}
+.script-app .adaptation-over{color:#a33}
+@media(max-width:600px){.script-app .adaptation-business{grid-template-columns:1fr}}

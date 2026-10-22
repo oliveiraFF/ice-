@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>API市场 · ice运营台</title>
+  <link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/icons.css"><link rel="stylesheet" href="/market.css">
+  <script defer src="/icons.js"></script><script defer src="/site.js"></script>
+  <script defer src="/market-data.js"></script><script defer src="/market.js"></script>
+
+<link rel="stylesheet" href="/site.css">
+<link rel="stylesheet" href="/ice.css"><link rel="icon" href="/favicon.ico">
+</head>
+<body class="market-app">
+  <header class="topbar">
+    <a class="brand" href="/"><span class="brand-symbol" data-icon="radar"></span>ice运营台<span class="edition">LOCAL</span></a>
+    <span class="top-caption">接口与工具工作台</span>
+    <div class="top-actions"><span class="local-indicator"><i></i> 本地运行</span><button class="secondary compact" id="openSettings">数据源设置</button></div>
+  </header>
+  <aside class="sidebar">
+    <nav class="side-nav" aria-label="主导航"><a class="nav-item" href="/" id="discoverNav"><span class="nav-symbol" data-icon="compass"></span>发现内容</a>
+<a class="nav-item" href="/dashboard" id="dashboardNav"><span class="nav-symbol" data-icon="chart"></span>数据大屏</a>
+<a class="nav-item active" href="/market" id="marketNav"><span class="nav-symbol" data-icon="grid"></span>API市场</a>
+<a class="nav-item" href="/tools" id="toolsNav"><span class="nav-symbol" data-icon="wrench"></span>工具管理</a></nav>
+    <div class="market-side-label">本地接口目录</div>
+    <div class="market-side-count"><strong id="sideTotal">—</strong><span>个接口条目已收录</span></div>
+    <div class="market-side-note">按平台与用途查找接口。已添加接口和测试结果保存在本机。</div>
+    <div class="side-bottom"><div class="connection"><span class="connection-dot" id="connectionDot"></span><div><strong id="connectionLabel">尚未配置密钥</strong><p>密钥仅保存在本次进程内存</p></div></div><p class="local-note">目录导入不会触发接口测试</p></div>
+  </aside>
+  <main class="market-main"><div class="breadcrumbs">API市场 › 全部接口</div>
+    <div class="market-heading"><div><h1 id="marketTitle">API市场</h1><p id="marketSubtitle">查找你需要的数据接口。</p></div><a href="/tools" class="secondary" id="headingLink">浏览功能工具 ↗</a></div>
+    <div class="directory-strip"><span><i></i><strong id="totalCount">—</strong> 全部接口</span><span><strong id="freeCount">—</strong> 请求价格 $0</span><span><strong id="managedCount">—</strong> 已添加接口</span><span id="importTime">正在读取本地目录…</span></div>
+    <section class="credit-panel" aria-label="赠送额度控制"><div><strong id="accessStatus">额度调用默认关闭</strong><p id="creditTotals">赠送余额尚未查询</p><p id="budgetTotals"></p></div><div class="credit-actions"><button class="secondary compact" id="refreshCredit">查询余额 · $0</button><button class="primary compact" id="openAccess">额度设置</button></div></section>
+    <section class="market-filters" aria-label="接口筛选">
+      <div class="filter-section"><h2>平台</h2><div id="platformChips" class="filter-chips" role="group" aria-label="平台筛选"></div></div>
+      <div class="filter-section"><h2>分类</h2><div id="featureChips" class="filter-chips" role="group" aria-label="功能分类"></div></div>
+      <div class="market-filter-row">
+        <div class="market-segments" id="typeFilters" role="group" aria-label="接口类型"><button data-type="" class="selected">全部</button><button data-type="app">APP</button><button data-type="web">WEB</button><button data-type="other">其他</button></div>
+        <div class="market-segments" role="group" aria-label="赠送额度"><button data-credit="" class="selected"><span data-icon="gift"></span>赠送额度</button><button data-credit="yes">支持</button><button data-credit="no">不支持</button></div>
+        <div class="market-segments" role="group" aria-label="折扣"><button data-discount="" class="selected"><span data-icon="percent"></span>折扣</button><button data-discount="yes">支持</button><button data-discount="no">不支持</button></div>
+      </div>
+    </section>
+    <div class="market-search-row"><label class="market-search"><span>⌕</span><input id="apiSearch" type="search" aria-label="搜索接口" placeholder="搜索接口名称、路径或关键词…" autocomplete="off"><kbd>/</kbd></label><select id="methodFilter" aria-label="请求方法"><option value="">全部方法</option><option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option><option value="UNKNOWN">方法未登记</option></select><select id="priceFilter" aria-label="请求价格"><option value="">全部价格</option><option value="zero">请求价格 $0</option><option value="paid">计费接口</option><option value="unknown">价格未登记</option></select><label class="managed-filter"><input id="managedFilter" type="checkbox"> 已添加</label><button id="clearFilters" class="clear-filters">× 清除</button></div>
+    <div class="market-results-row"><p id="apiResultCount">正在加载接口…</p><span id="marketHint">功能分类根据接口名称归类 · 支持赠送额度不等于请求价格 $0</span></div>
+    <div id="apiGrid" class="api-grid" aria-live="polite"></div>
+    <div id="apiEmpty" class="market-empty" hidden><span>⌕</span><h2>没有符合条件的接口</h2><p>试试其他关键词，或清除平台和费用筛选。</p><button class="secondary" id="emptyClear">清除筛选</button><a class="primary" href="/market">浏览API市场</a></div>
+    <div class="market-pagination"><button class="secondary compact" id="prevPage">← 上一页</button><span id="pageLabel"></span><button class="secondary compact" id="nextPage">下一页 →</button></div>
+    <footer class="main-footer legacy-footer"><span>目录来源：TikHub 公开价格目录与 OpenAPI</span><span>标价 $0 与赠送额度分别标注</span></footer>
+  </main>
+  <dialog id="apiDialog" class="api-dialog">
+    <div class="api-dialog-head"><div><span class="eyebrow">API DETAILS</span><h2 id="detailTitle"></h2></div><button class="icon-button" id="closeDetail" aria-label="关闭接口详情">✕</button></div>
+    <div class="api-dialog-body"><div id="detailBadges" class="api-badges"></div><code id="detailPath" class="detail-path"></code><div class="detail-links"><button class="secondary compact" id="copyEndpoint">复制接口地址</button><a id="officialDocs" class="text-button" target="_blank" rel="noopener noreferrer">官方文档 ↗</a><button class="primary compact" id="detailManage"></button></div>
+      <details class="api-description"><summary>接口说明与参数</summary><pre id="detailDescription"></pre><h3>查询参数文档</h3><pre id="parameterSchema"></pre><h3 id="bodySchemaTitle">请求体文档</h3><pre id="bodySchema"></pre></details>
+      <section class="api-run-section"><div class="run-heading"><h3>手动调用</h3><span id="runEligibility"></span></div><p class="helper">每次仅请求一次，不自动翻页或重试。使用赠送额度前核实实时价格、余额、预算与到期时间；失败或超时也保留本地预算预留，以防重复消耗。</p><p id="legacyNotice" class="helper" hidden>此接口参数来自官方历史SDK，当前服务可用性尚未验证。</p><div id="parameterFields" class="parameter-fields"></div><details><summary>高级参数 JSON（与上方表单同步）</summary><div class="request-editors"><label>查询参数（JSON对象）<textarea id="queryInput" spellcheck="false" aria-label="查询参数JSON"></textarea></label><label id="bodyEditor">请求体（JSON）<textarea id="bodyInput" spellcheck="false" aria-label="请求体JSON"></textarea></label></div></details><div id="collectionOptions" class="collection-options"><label><input type="checkbox" id="collectResult"> 将响应中的作品收录到“发现内容”</label><label>归入关键词<input id="collectionKeyword" maxlength="40" value="TikHub采集" aria-label="收录关键词"></label><p class="helper">支持抖音、小红书可识别的作品。播放量缺失时保留未知，不额外请求补查。</p></div><div class="run-actions"><span id="runStatus">尚未运行</span><button class="primary" id="runTool">运行一次 · $0</button></div><p id="collectionStatus" role="status"></p><a class="text-button" id="viewCollected" href="/" hidden>查看已收录内容 ↗</a><pre id="toolResponse" class="tool-response" aria-label="接口响应">执行结果将在这里显示。</pre></section>
+    </div>
+  </dialog>
+  <dialog id="accessDialog" class="modal"><button class="close-dialog icon-button" id="closeAccess" aria-label="关闭额度设置">✕</button><h2>赠送额度设置</h2><p>由你手动开启；不会自动发起接口请求。</p><form id="accessForm"><label><input id="accessEnabled" type="checkbox"> 开启赠送额度调用</label><label for="accessLimit">本地累计预算上限（美元）</label><input id="accessLimit" type="number" min="0" step="0.0001" required><label for="accessDuration">开启时长</label><select id="accessDuration"><option value="continuous">持续开启，手动关闭</option><option value="days">指定天数后停止</option></select><label id="accessDaysLabel" hidden>开启天数<input id="accessDays" type="number" min="1" max="3650" step="1" value="1"></label><p class="helper">累计预算不会因关闭、重启或修改时长而重置。保存指定天数会从本次保存时间重新计时。余额不足、预算不足或到期即拒绝后续调用；已发出的请求可能继续完成。$0 接口不消耗预算。</p><p id="accessError" role="status"></p><div class="dialog-actions"><button class="primary" type="submit">保存设置</button></div></form></dialog>
+  <dialog id="marketSettings" class="modal"><button class="close-dialog icon-button" id="closeSettings" aria-label="关闭数据源设置">✕</button><h2>数据源设置</h2><p>配置 TikHub API Key，供需要身份认证的接口使用。</p><form id="marketSettingsForm"><label for="marketApiKey">TikHub API Key</label><input id="marketApiKey" type="password" placeholder="在这里填写密钥，不要发送到聊天" autocomplete="off"><p class="helper">只保存在本次服务进程内存中，重启后清除。保存不会测试接口。</p><div class="dialog-actions"><button type="button" class="text-button" id="clearMarketKey">清除密钥</button><button class="primary" type="submit">保存配置</button></div></form></dialog>
+  <div id="marketToast" class="toast" role="status" hidden></div>
+</body>
+</html>

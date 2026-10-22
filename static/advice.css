@@ -1,0 +1,13 @@
+.advice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.advice-grid ul { margin: 0; padding-left: 18px; }
+.advice-action { border: 1px solid #e3e8ec; border-radius: 10px; padding: 10px 12px; margin-bottom: 10px; background: #fff; }
+.advice-action .script-actions { justify-content: flex-start; gap: 6px; }
+.advice-history { display: flex; flex-direction: column; gap: 8px; }
+.advice-history-item { text-align: left; background: #fff; border: 1px solid #e3e8ec; border-radius: 10px; padding: 10px 12px; cursor: pointer; }
+.advice-history-item small { color: #6b7785; }
+.advice-warn { color: #a33; }
+@media (max-width: 760px) { .advice-grid { grid-template-columns: 1fr; } }
+.advice-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.advice-choices label, .advice-note { display: block; margin: 4px 0; font-size: 14px; }
+.advice-note input { margin-left: 8px; width: 60%; padding: 4px 6px; }
+@media (max-width: 760px) { .advice-choices { grid-template-columns: 1fr; } }

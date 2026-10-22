@@ -1,0 +1,12 @@
+.mr-file { display: flex; flex-direction: column; gap: 6px; }
+.mr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+.mr-grid label, .mr-manuscript label { display: flex; flex-direction: column; gap: 4px; font-size: 14px; }
+.mr-grid input, .mr-grid textarea, .mr-grid select, .mr-manuscript select { padding: 6px 8px; }
+.mr-manuscript { display: flex; gap: 12px; align-items: center; margin-top: 10px; flex-wrap: wrap; }
+.mr-frames { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
+.mr-frames figure { margin: 0; text-align: center; font-size: 12px; color: #6b7280; }
+.mr-frames img { width: 120px; border-radius: 6px; border: 1px solid var(--line, #d9dde3); }
+.mr-history { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+.mr-history-item { text-align: left; padding: 8px 10px; border: 1px solid var(--line, #d9dde3); border-radius: 8px; background: #fff; cursor: pointer; }
+.mr-history-item small { color: #6b7280; margin-left: 8px; }
+@media (max-width: 760px) { .mr-grid { grid-template-columns: 1fr; } }

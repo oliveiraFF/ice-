@@ -1,0 +1,8 @@
+{
+  "product": "长柄清洁刷",
+  "facts": [
+    {"id": "F1", "content": "刷头可拆卸", "source": "商品详情页"},
+    {"id": "F2", "content": "手柄长 40cm", "source": "商品详情页"},
+    {"id": "F3", "content": "刷毛硬度适中", "source": "实测"}
+  ]
+}

@@ -1,0 +1,53 @@
+.draft-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.draft-grid label { display: flex; flex-direction: column; gap: 4px; font-size: 14px; }
+.draft-grid input { padding: 6px 8px; }
+.draft-versions { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+.draft-version-item { text-align: left; padding: 8px 10px; border: 1px solid var(--line, #d9dde3); border-radius: 8px; background: #fff; cursor: pointer; }
+.draft-version-item small { color: #6b7280; margin-left: 8px; }
+#draftMarkdown { white-space: pre-wrap; word-break: break-word; background: #f8f9fb; padding: 12px; border-radius: 8px; border: 1px solid var(--line, #d9dde3); }
+@media (max-width: 760px) { .draft-grid { grid-template-columns: 1fr; } }
+.advice-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 8px 0; }
+.advice-choices label { display: block; margin: 4px 0; font-size: 14px; }
+.script-error { color: #b42318; min-height: 18px; }
+@media (max-width: 760px) { .advice-choices { grid-template-columns: 1fr; } }
+.draft-version-item.active { border-color: #2563eb; box-shadow: 0 0 0 1px #2563eb inset; }
+#draftVersionList { flex-direction: row; flex-wrap: wrap; }
+
+
+/* ===== U1 draft (single consolidated block) ===== */
+body.site-app.owner-workspace.draft-app .script-main{display:grid;grid-template-columns:minmax(0,430px) minmax(0,1fr);gap:20px;max-width:1320px;margin:0 auto;padding:24px 28px 48px;align-items:start}
+body.site-app.owner-workspace.draft-app .script-main>.breadcrumbs,body.site-app.owner-workspace.draft-app .script-main>.script-heading{grid-column:1/-1}
+body.site-app.owner-workspace.draft-app .script-main>section.script-card:nth-of-type(1){grid-column:1}
+body.site-app.owner-workspace.draft-app .script-main>section.script-card:nth-of-type(2){grid-column:2}
+body.site-app.owner-workspace.draft-app .script-main>section.script-card:nth-of-type(3){grid-column:1/-1}
+body.site-app.owner-workspace.draft-app .script-heading h1{font-size:28px}
+body.site-app.owner-workspace.draft-app .script-card{padding:20px 22px;margin:0}
+body.site-app.owner-workspace.draft-app .draft-grid{grid-template-columns:1fr;gap:12px}
+body.site-app.owner-workspace.draft-app #draftContent{background:#FAFAFB;border:1px solid var(--c-border);border-radius:12px;padding:18px 20px;margin-top:12px}
+body.site-app.owner-workspace.draft-app #draftMarkdown{white-space:pre-wrap;overflow-wrap:anywhere;background:#fff;border:1px solid var(--c-border);border-radius:10px;padding:16px;font-family:var(--font);font-size:14px;line-height:2;color:var(--c-text);max-height:520px;overflow:auto}
+body.site-app.owner-workspace.draft-app #draftContent h3{font-size:20px;line-height:1.4;margin:0 0 6px}
+body.site-app.owner-workspace.draft-app #draftContent h4{font-size:13px;color:var(--c-text-2);margin:16px 0 6px}
+body.site-app.owner-workspace.draft-app #draftSummary{font-size:13px;line-height:1.9;color:var(--c-text-2)}
+body.site-app.owner-workspace.draft-app .draft-versions button.active{background:var(--c-primary-soft);border-color:#9FCFB4;color:var(--c-primary-dark);font-weight:600;box-shadow:inset 0 0 0 1px #9FCFB4}
+@media (max-width:1000px){body.site-app.owner-workspace.draft-app .script-main{grid-template-columns:1fr;padding:20px}body.site-app.owner-workspace.draft-app .script-main>.breadcrumbs,body.site-app.owner-workspace.draft-app .script-main>.script-heading{grid-column:1}body.site-app.owner-workspace.draft-app .script-main>section.script-card{grid-column:1!important}}
+
+/* M05-B 转入来源：只在本稿带 B 来源时显示，不改动 M02 原布局与生成。 */
+.draft-research-source{border:1px solid #b7d4c2;background:#f6fbf7;border-radius:10px;padding:10px 12px;margin-top:10px;overflow-wrap:anywhere}
+.draft-research-source h3{font-size:13px;margin:0 0 6px;color:#2f6b4a}
+.draft-research-source p{margin:0 0 5px;font-size:13px;line-height:1.8}
+.draft-source-chain{display:grid;gap:6px;margin-top:6px}
+.draft-source-row{border-top:1px dashed #cfe2d6;padding-top:6px;font-size:12px;line-height:1.8}
+.draft-source-row:first-child{border-top:0;padding-top:0}
+.draft-source-text{white-space:pre-wrap}
+
+/* M05-D2 深度优化：目标多选、附加 A/C 资料、硬上限与修改说明。 */
+.draft-opt-targets{border:1px solid var(--c-border,#d9dde3);border-radius:10px;padding:10px 12px;margin:8px 0 12px;display:flex;flex-wrap:wrap;gap:8px 16px}
+.draft-opt-targets legend{padding:0 6px;font-size:13px;color:#555}
+.draft-opt-targets label{font-size:14px;display:inline-flex;align-items:center;gap:4px}
+.draft-extra-choices{max-height:220px;overflow:auto;display:grid;gap:6px;margin:6px 0 12px}
+.draft-extra-choices label{font-size:13px;line-height:1.7}
+#draftOptimizeBase{font-weight:600}
+#draftChanges{margin-top:12px;border-top:1px solid var(--c-border,#d9dde3);padding-top:8px}
+#draftChanges ol{padding-left:20px}
+#draftChanges li{margin-bottom:8px;line-height:1.7}
+#draftMaxChars{max-width:220px}

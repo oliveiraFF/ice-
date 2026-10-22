@@ -1,0 +1,12 @@
+.script-form label{display:block;margin:12px 0;font-size:13px;color:#374151}
+.script-form input,.script-form select{display:block;width:100%;margin-top:6px;padding:8px 10px;border:1px solid #d1d5db;border-radius:8px;font:inherit;box-sizing:border-box}
+.script-source-detail{margin-top:12px}
+.script-source-detail p{margin:6px 0}
+.metric-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.metric-grid label{font-size:12px}
+
+#conversionPanel{min-width:0;overflow-wrap:anywhere} .conversion-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+#conversionPanel .conversion-check{display:flex;gap:8px;align-items:flex-start} #conversionPanel input[type=checkbox]{display:inline-block;width:auto;flex-shrink:0}
+#conversionPanel fieldset{min-width:0;border:1px solid #d1d5db;border-radius:8px;padding:12px} #conversionPanel pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;line-height:1.6}
+#conversionHistory{display:flex;flex-wrap:wrap;gap:8px} #conversionHistory button{max-width:100%;overflow-wrap:anywhere;white-space:normal}
+@media(max-width:640px){.conversion-grid{grid-template-columns:1fr}}

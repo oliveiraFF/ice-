@@ -1,0 +1,250 @@
+[
+  {
+    "file": "lucide-arrow-up.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/arrow-up.svg"
+  },
+  {
+    "file": "lucide-arrow-up-right.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/arrow-up-right.svg"
+  },
+  {
+    "file": "lucide-bookmark.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/bookmark.svg"
+  },
+  {
+    "file": "lucide-calendar-days.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/calendar-days.svg"
+  },
+  {
+    "file": "lucide-chart-no-axes-combined.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/chart-no-axes-combined.svg"
+  },
+  {
+    "file": "lucide-circle-play.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/circle-play.svg"
+  },
+  {
+    "file": "lucide-compass.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/compass.svg"
+  },
+  {
+    "file": "lucide-download.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/download.svg"
+  },
+  {
+    "file": "lucide-ellipsis.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/ellipsis.svg"
+  },
+  {
+    "file": "lucide-external-link.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/external-link.svg"
+  },
+  {
+    "file": "lucide-eye.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/eye.svg"
+  },
+  {
+    "file": "lucide-file-text.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/file-text.svg"
+  },
+  {
+    "file": "lucide-flame.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/flame.svg"
+  },
+  {
+    "file": "lucide-flask-conical.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/flask-conical.svg"
+  },
+  {
+    "file": "lucide-gift.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/gift.svg"
+  },
+  {
+    "file": "lucide-globe.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/globe.svg"
+  },
+  {
+    "file": "lucide-hash.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/hash.svg"
+  },
+  {
+    "file": "lucide-heart.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/heart.svg"
+  },
+  {
+    "file": "lucide-info.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/info.svg"
+  },
+  {
+    "file": "lucide-layers.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/layers.svg"
+  },
+  {
+    "file": "lucide-layout-grid.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/layout-grid.svg"
+  },
+  {
+    "file": "lucide-link.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/link.svg"
+  },
+  {
+    "file": "lucide-lock-keyhole.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/lock-keyhole.svg"
+  },
+  {
+    "file": "lucide-maximize.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/maximize.svg"
+  },
+  {
+    "file": "lucide-message-circle.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/message-circle.svg"
+  },
+  {
+    "file": "lucide-mic.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/mic.svg"
+  },
+  {
+    "file": "lucide-minimize.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/minimize.svg"
+  },
+  {
+    "file": "lucide-mouse-pointer-click.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/mouse-pointer-click.svg"
+  },
+  {
+    "file": "lucide-music.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/music.svg",
+    "unavailable": "HTTPError"
+  },
+  {
+    "file": "lucide-percent.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/percent.svg"
+  },
+  {
+    "file": "lucide-plus.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/plus.svg"
+  },
+  {
+    "file": "lucide-radar.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/radar.svg"
+  },
+  {
+    "file": "lucide-radio.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/radio.svg"
+  },
+  {
+    "file": "lucide-refresh-cw.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/refresh-cw.svg"
+  },
+  {
+    "file": "lucide-search.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/search.svg"
+  },
+  {
+    "file": "lucide-settings.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/settings.svg"
+  },
+  {
+    "file": "lucide-shield-check.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/shield-check.svg"
+  },
+  {
+    "file": "lucide-shopping-bag.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/shopping-bag.svg"
+  },
+  {
+    "file": "lucide-trending-up.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/trending-up.svg"
+  },
+  {
+    "file": "lucide-user-round.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/user-round.svg"
+  },
+  {
+    "file": "lucide-user-round-check.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/user-round-check.svg"
+  },
+  {
+    "file": "lucide-users.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/users.svg"
+  },
+  {
+    "file": "lucide-wrench.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/wrench.svg"
+  },
+  {
+    "file": "lucide-x.svg",
+    "source": "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/x.svg"
+  },
+  {
+    "file": "brand-tiktok.svg",
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/tiktok.svg"
+  },
+  {
+    "file": "brand-xiaohongshu.svg",
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/xiaohongshu.svg"
+  },
+  {
+    "file": "brand-bilibili.svg",
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/bilibili.svg"
+  },
+  {
+    "file": "brand-instagram.svg",
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/instagram.svg"
+  },
+  {
+    "file": "brand-kuaishou.svg",
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/kuaishou.svg"
+  },
+  {
+    "file": "brand-lemon8.svg",
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/lemon8.svg",
+    "unavailable": "HTTPError"
+  },
+  {
+    "file": "brand-linkedin.svg",
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/linkedin.svg",
+    "unavailable": "HTTPError"
+  },
+  {
+    "file": "brand-reddit.svg",
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/reddit.svg"
+  },
+  {
+    "file": "brand-telegram.svg",
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/telegram.svg"
+  },
+  {
+    "file": "brand-threads.svg",
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/threads.svg"
+  },
+  {
+    "file": "brand-toutiao.svg",
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/toutiao.svg",
+    "unavailable": "HTTPError"
+  },
+  {
+    "file": "brand-x.svg",
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/x.svg"
+  },
+  {
+    "file": "brand-wechat.svg",
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/wechat.svg"
+  },
+  {
+    "file": "brand-sinaweibo.svg",
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/sinaweibo.svg"
+  },
+  {
+    "file": "brand-youtube.svg",
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/youtube.svg"
+  },
+  {
+    "file": "brand-zhihu.svg",
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/zhihu.svg"
+  },
+  {
+    "file": "brand-neteasecloudmusic.svg",
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/neteasecloudmusic.svg"
+  }
+]

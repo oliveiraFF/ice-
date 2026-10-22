@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>运营建议与跟进 · ice运营台</title>
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/icons.css">
+<link rel="stylesheet" href="/script.css">
+<link rel="stylesheet" href="/advice.css">
+<script defer src="/icons.js"></script>
+<script defer src="/site.js"></script>
+<script defer src="/advice.js"></script>
+
+<link rel="stylesheet" href="/site.css">
+<link rel="stylesheet" href="/ice.css"><link rel="icon" href="/favicon.ico">
+</head>
+<body class="script-app advice-app">
+<header class="topbar"></header>
+<main class="script-main">
+  <div class="breadcrumbs">运营建议 › 业务现状与本周动作</div>
+  <div class="script-heading"><div><h1>运营建议与跟进</h1><p>填写业务现状，获取有依据的研究建议；不确认策略、不建正式计划、不替用户批准。</p></div><span id="adviceModeBadge" class="script-badge">待分析</span></div>
+
+  <section class="script-form" aria-label="业务现状">
+    <div class="script-section-head"><h2>业务现状</h2><span class="script-hint">缺失可留空</span></div>
+    <label>业务 / 商品或服务<textarea id="adviceBusiness" rows="2" maxlength="2000"></textarea></label>
+    <label>目标受众<textarea id="adviceAudience" rows="2" maxlength="2000"></textarea></label>
+    <label>阶段目标<textarea id="adviceGoal" rows="2" maxlength="2000"></textarea></label>
+    <label>真实资源（图片/资料/案例）<textarea id="adviceResources" rows="2" maxlength="2000"></textarea></label>
+    <label>每周可用时间 / 产能<textarea id="adviceCapacity" rows="2" maxlength="2000"></textarea></label>
+    <label>当前问题<textarea id="adviceQuestion" rows="2" maxlength="2000"></textarea></label>
+    <div class="script-section-head"><h3>资料选择（只发送勾选的资料）</h3></div>
+    <div class="advice-choices">
+      <div><h4>痛点</h4><div id="painChoices"></div></div>
+      <div><h4>参考</h4><div id="referenceChoices"></div></div>
+    </div>
+    <p class="script-hint">不勾选则不发送库内痛点/参考；未选择时明确无所选资料。业务现状按“用户提供”标注。</p>
+    <section id="adviceFollowup" class="script-card" hidden>
+      <h3>复盘建议来源</h3>
+      <p id="adviceFollowupText" class="script-hint"></p>
+      <div class="script-actions"><button id="adviceFollowupClear" class="secondary compact">取消该来源</button></div>
+    </section>
+    <p class="script-hint">保存现状不会调用模型；分析是显式动作。演示结果标 source=demo，不代表真实模型判断。</p>
+    <div class="script-actions">
+      <button class="secondary" id="saveStatus" type="button">保存现状</button>
+      <button class="primary" id="analyzeDemo" type="button">分析（演示）</button>
+      <label class="script-confirm"><input type="checkbox" id="realConfirm"> 允许本次真实模型调用</label>
+      <button class="secondary" id="analyzeReal" type="button">分析（真实）</button>
+    </div>
+    <p id="adviceStatus" class="script-hint" role="status"></p>
+    <p id="adviceStale" class="script-warning" role="status" hidden></p>
+    <p id="adviceError" class="script-error" role="alert"></p>
+  </section>
+
+  <section id="adviceResult" class="script-result" hidden aria-label="建议结果">
+    <div class="script-section-head"><h2>建议</h2><span id="adviceSource" class="script-badge"></span></div>
+    <p id="adviceCurrent" class="script-hint"></p>
+    <div class="advice-grid">
+      <div><h3>现在能判断</h3><ul id="adviceCanJudge"></ul></div>
+      <div><h3>暂不能判断</h3><ul id="adviceCannotJudge"></ul></div>
+    </div>
+    <div class="script-section-head"><h3>优先问题 / 机会</h3></div>
+    <div id="advicePriorities"></div>
+    <div class="script-section-head"><h3>建议方向</h3></div>
+    <div id="adviceDirections"></div>
+    <div class="script-section-head"><h3>本周动作</h3><span class="script-hint">按真实产能给条数，不凑 2+1</span></div>
+    <div id="adviceActions"></div>
+    <div class="script-section-head"><h3>需要你决定</h3></div><ul id="adviceDecisions"></ul>
+    <div class="script-section-head"><h3>不依赖这些决定可继续</h3></div><ul id="adviceContinue"></ul>
+    <div class="script-section-head"><h3>针对这条建议追问</h3></div>
+    <label>问题<textarea id="followQuestion" rows="2" maxlength="1000"></textarea></label>
+    <div class="script-actions">
+      <button class="secondary" id="askDemo" type="button">追问（演示）</button>
+      <button class="secondary" id="askReal" type="button">追问（真实）</button>
+    </div>
+    <p id="askStatus" class="script-hint" role="status"></p>
+  </section>
+
+  <section class="script-form" aria-label="历史分析">
+    <div class="script-section-head"><h2>历史分析</h2></div>
+    <div id="adviceHistory" class="advice-history"></div>
+  </section>
+</main>
+</body></html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>成片审阅 · ice运营台</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/media-review.css">
+<link rel="stylesheet" href="/icons.css">
+
+<script defer src="/icons.js"></script>
+<script defer src="/site.js"></script>
+<link rel="stylesheet" href="/site.css">
+<link rel="stylesheet" href="/ice.css"><link rel="icon" href="/favicon.ico">
+</head>
+<body class="media-review-app">
+<header class="topbar"></header>
+<main class="script-main"><div class="breadcrumbs">工作空间 / 成片审阅</div><div class="script-heading"><h1>成片审阅</h1><p>选择本机素材，按采样画面与提供的台词审阅。只发采样帧和文字，不上传整段视频。</p></div>
+  <section class="script-card">
+    <h2>素材与范围</h2>
+    <div class="mr-file">
+      <label>本机视频（MP4/WebM，20MB 内，180 秒内）
+        <input type="file" id="mrVideo" accept="video/mp4,video/webm">
+      </label>
+      <p id="mrVideoInfo" class="script-hint">未选择素材。</p>
+    </div>
+    <div id="mrFrames" class="mr-frames"></div>
+    <div class="mr-grid">
+      <label>审阅目标<textarea id="mrGoal" rows="2" placeholder="例如：开场 5 秒是否能让观众知道这条讲什么"></textarea></label>
+      <label>业务/商品或服务<input id="mrBusiness" maxlength="2000"></label>
+      <label>目标受众<input id="mrAudience" maxlength="2000"></label>
+      <label>真实资源/限制<input id="mrResources" maxlength="2000"></label>
+      <label>台词来源
+        <select id="mrTranscriptSource">
+          <option value="none">none（没有文字）</option>
+          <option value="manual">manual（我提供文字）</option>
+        </select>
+      </label>
+      <label>人工台词<textarea id="mrTranscript" rows="3" placeholder="可选；只用于措辞/结构判断，不代表音轨已被识别（最多 5000 字，超限会拒绝）"></textarea></label>
+    </div>
+    <label class="script-hint"><input type="checkbox" id="mrTranscriptComplete"> 台词为用户声明完整（可选）</label>
+    <div class="mr-manuscript">
+      <label>关联 M02 研究稿（可选，仅用于对照）
+        <select id="mrDraft"><option value="">不关联</option></select>
+      </label>
+      <label>版本 <select id="mrDraftVersion"></select></label>
+      <p id="mrManuscriptInfo" class="script-hint"></p>
+    </div>
+    <div class="script-actions">
+      <button id="mrAnalyzeDemo">审阅（演示）</button>
+      <button id="mrAnalyzeReal" class="secondary">审阅（真实）</button>
+      <label class="script-hint"><input type="checkbox" id="mrRealConfirm"> 本次确认真实调用</label>
+    </div>
+    <p id="mrStatus" class="script-hint" role="status"></p>
+    <p id="mrError" class="script-error" role="alert"></p>
+  </section>
+
+  <section class="script-card">
+    <h2>审阅记录</h2>
+    <p id="mrScope" class="script-hint"></p>
+    <div id="mrResult" hidden>
+      <h3 id="mrSummary"></h3>
+      <h4>观察</h4><ul id="mrObservations"></ul>
+      <h4>修改项</h4><div id="mrChanges"></div>
+      <h4>不能判断</h4><ul id="mrCannot"></ul>
+      <h4>缺口 / 下一步</h4><ul id="mrGaps"></ul><ul id="mrNext"></ul>
+    </div>
+    <div class="script-section-head"><h3>历史审阅</h3></div>
+    <div id="mrHistory" class="mr-history"></div>
+    <p class="script-hint">历史只保留审阅记录与范围摘要，不保存原视频/音轨。</p>
+  </section>
+</main>
+<script src="/media-review.js"></script>
+</body>
+</html>
+
