@@ -16,7 +16,7 @@ OPS = Path('D:/自媒体运营/project')
 BUILD_ROOT = Path('E:/leida-build/fusion-owner')
 RADAR_MODULES = (
     'app.py', 'catalog.py', 'free_tools.py', 'browser_collector.py', 'demo.py',
-    'ai_directions.py', 'video_creative.py', 'ops.py', 'customer_api.py', 'client_credentials.py',
+    'ai_directions.py', 'video_creative.py', 'agent_tasks.py', 'ops.py', 'customer_api.py', 'client_credentials.py',
     'topics.py', 'reviews.py',
 )
 OPS_FILES = (
@@ -108,7 +108,7 @@ def build_snapshot(output=BUILD_ROOT, build_id=None, radar=RADAR, ops=OPS):
         b'@echo off\r\ncd /d "%~dp0"\r\npython app.py --port 8765 --open-browser\r\npause\r\n')
     (target / 'README-内测说明.md').write_text(
         '# ice运营台 owner 源码内测包\n\n'
-        '- 需要 Python 3.6 或更高版本；本次验证的精确版本见外部交付报告。'
+        '- 请使用 Python 3.12；本次验证的精确版本见外部交付报告。'
         '使用标准库，以浏览器运行，不是免安装 exe，也不是桌面壳分发包。\n'
         '- 双击 启动.bat；或用 Python 执行本目录 app.py。默认端口 8765；'
         '占用时可指定 --port 其他端口。服务只接受本机访问。\n'
