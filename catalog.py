@@ -38,12 +38,23 @@ def resolve_schema(schema, spec, depth=0):
     return result
 
 
+def example_type(value, schema):
+    kind = schema.get('type')
+    if kind == 'integer' and isinstance(value, str) and re.fullmatch(r'[+-]?[0-9]+', value):
+        return int(value)
+    if kind == 'boolean' and isinstance(value, str) and value.lower() in ('true', 'false'):
+        return value.lower() == 'true'
+    if kind == 'string' and isinstance(value, (int, float)) and not isinstance(value, bool):
+        return str(value)
+    return value
+
+
 def example(schema):
     for key in ('example', 'default'):
         if key in schema:
-            return schema[key]
+            return example_type(schema[key], schema)
     if schema.get('examples'):
-        return schema['examples'][0]
+        return example_type(schema['examples'][0], schema)
     if schema.get('enum'):
         return schema['enum'][0]
     kind = schema.get('type')
@@ -129,7 +140,7 @@ def build_catalog(rules, spec):
             platform = parts[3] if len(parts) > 3 else 'other'
             title = op.get('summary', '').split('/')[0].strip() or path.rsplit('/', 1)[-1]
             parameters = op.get('parameters', [])
-            query = {p['name']: p.get('example', example(p.get('schema', {}))) for p in parameters
+            query = {p['name']: example_type(p.get('example', example(p.get('schema', {}))), p.get('schema', {})) for p in parameters
                      if p.get('in') == 'query' and ('example' in p or p.get('required') or 'default' in p.get('schema', {}))}
             body_schema = op.get('requestBody', {}).get('content', {}).get('application/json', {}).get('schema')
             body_schema = resolve_schema(body_schema, spec) if body_schema else None

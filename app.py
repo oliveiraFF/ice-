@@ -24,7 +24,7 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import parse_qs, urlencode, urlsplit
 from urllib.request import Request, urlopen
 from catalog import Catalog
-from free_tools import download_cached_video, imported_posts
+from free_tools import download_cached_video, imported_posts, cached_media_url, resolved_media_url, validate_media_url
 from browser_collector import browser_posts
 from ai_directions import AIDirections
 from video_creative import VideoCreative, MAX_REQUEST_BYTES, MAX_VIDEO_BYTES
@@ -167,6 +167,7 @@ def normalize_douyin(raw):
                 likes=number(stats.get('digg_count')), saves=number(stats.get('collect_count')),
                 comments=number(stats.get('comment_count')), followers=number(author.get('follower_count')),
                 cover=image_url(video.get('cover')), duration=number(video.get('duration')),
+                video_url=cached_media_url(video),
                 url='https://www.douyin.com/video/' + ident if ident.isdigit() else None,
                 tags=[], artwork='clean')
 
@@ -181,7 +182,7 @@ def normalize_xhs(raw):
                 published_at=timestamp(first(card.get('time'), card.get('publish_time'))),
                 likes=number(stats.get('liked_count')), saves=number(stats.get('collected_count')),
                 comments=number(first(stats.get('comment_count'), stats.get('comments_count'))), followers=None,
-                cover=image_url(card.get('cover')), duration=None,
+                cover=image_url(card.get('cover')), duration=None, video_url=cached_media_url(card.get('video')),
                 url='https://www.xiaohongshu.com/explore/' + ident if re.match(r'^[a-fA-F0-9]{24}$', ident) else None,
                 tags=[], artwork='storage')
 
@@ -285,11 +286,32 @@ class Store:
                 args = (mode, post['platform'], post['external_id'])
                 db.execute('INSERT OR IGNORE INTO posts(mode,platform,external_id,data,first_seen,updated_at) VALUES(?,?,?,?,?,?)',
                            args + (json.dumps(post, ensure_ascii=False), now, now))
-                row = db.execute('SELECT id FROM posts WHERE mode=? AND platform=? AND external_id=?', args).fetchone()
+                row = db.execute('SELECT id,data FROM posts WHERE mode=? AND platform=? AND external_id=?', args).fetchone()
+                if not post.get('video_url'):
+                    previous_url = json.loads(row['data']).get('video_url')
+                    if previous_url:
+                        try:
+                            post = dict(post, video_url=validate_media_url(previous_url))
+                        except ValueError:
+                            pass
                 db.execute('UPDATE posts SET data=?,updated_at=?,archived=0 WHERE id=?', (json.dumps(post, ensure_ascii=False), now, row['id']))
                 db.execute('INSERT OR IGNORE INTO matches VALUES(?,?)', (keyword_id, row['id']))
                 db.execute('INSERT INTO snapshots VALUES(?,?,?)', (row['id'], now, post.get('likes')))
             db.commit()
+
+    def set_video_url(self, ident, url):
+        url = validate_media_url(url)
+        with closing(self.connect()) as db:
+            db.execute('BEGIN IMMEDIATE')
+            row = db.execute("SELECT data FROM posts WHERE id=? AND mode='live' AND archived=0", (ident,)).fetchone()
+            if row is None:
+                raise ValueError('视频已移除；未保存直链或下载')
+            post = json.loads(row['data'])
+            post['video_url'] = url
+            db.execute('UPDATE posts SET data=?,updated_at=? WHERE id=?',
+                       (json.dumps(post, ensure_ascii=False), time.time(), ident))
+            db.commit()
+            return dict(post, id=ident)
 
     def save(self, ident, saved, note):
         with closing(self.connect()) as db:
@@ -4304,14 +4326,41 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                     store.put_posts(ident, fresh, 'live')
                     return self.send({'count': len(fresh), 'skipped': len(posts)-len(fresh), 'keyword_id': ident})
                 if self.path == '/api/download':
-                    ident = int(body.get('id', 0))
+                    ident = body.get('id')
+                    resolve = body.get('resolve', False)
+                    if not isinstance(resolve, bool) or not isinstance(ident, int) or isinstance(ident, bool):
+                        raise ValueError('视频ID或解析选项无效')
+                    if client and resolve:
+                        return self.send({'error': '接口不存在'}, 404)
                     post = next((p for p in store.state('live')['posts'] if p['id'] == ident), None)
                     if not post:
                         raise ValueError('请选择已收录的真实视频')
                     if not download_lock.acquire(False):
                         raise ValueError('已有视频正在下载，请等待完成')
                     try:
-                        return self.send(download_cached_video(post, downloads_dir))
+                        resolution_cost = None
+                        if resolve:
+                            if post['platform'] != 'dy' or not re.fullmatch(r'[0-9]{1,30}', post['external_id']):
+                                raise ValueError('此解析入口仅支持已收录的抖音视频；其他视频请使用已有直链或手动导入')
+                            resolver = 'GET /api/v1/douyin/app/v3/fetch_video_high_quality_play_url'
+                            expected_cost = catalog.get(resolver)['price']
+                            if expected_cost is None or body.get('confirmed_cost') != expected_cost:
+                                raise ValueError('请先确认本次直链解析的接口费用；费用变化时需重新确认')
+                            if not scan_lock.acquire(False):
+                                raise ValueError('已有接口请求正在运行，请等待完成')
+                            try:
+                                result = catalog.run(resolver, api_key[0], {'aweme_id': post['external_id']}, None, tikhub_json)
+                                if not result['ok'] or result['truncated']:
+                                    raise ValueError('获取直链失败；未下载，不自动重试：' + result['result'][:500])
+                                url = resolved_media_url(json.loads(result['result']), post['external_id'])
+                                post = store.set_video_url(ident, url)
+                                resolution_cost = result['cost']
+                            finally:
+                                scan_lock.release()
+                        downloaded = download_cached_video(post, downloads_dir)
+                        if resolution_cost is not None:
+                            downloaded['resolution_cost'] = resolution_cost
+                        return self.send(downloaded)
                     finally:
                         download_lock.release()
                 if self.path == '/api/tools':

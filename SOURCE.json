@@ -1,9 +1,9 @@
 {
-  "build_id": "20261023-ice-functionfix2",
-  "built_at": "2026-10-23T00:47:59.806485-04:00",
+  "build_id": "20261023-ice-unified1",
+  "built_at": "2026-10-23T03:40:32.445539-04:00",
   "edition": "owner-source",
   "python_built_with": "3.12.14",
-  "radar_source": "E:\\ice-function-fix-20261023-promptfix\\source",
+  "radar_source": "E:\\ice-unified-20261023\\source",
   "ops_source": "package:_ops",
   "ops_commit": "n/a (package _ops is authoritative)",
   "ops_worktree_dirty": true,
@@ -20,7 +20,7 @@
     },
     {
       "file": "M05-使用说明.md",
-      "sha256": "6ca4cf57807b48ca4a10485bae772abab3ccba7de665cd62556541d15e59819d",
+      "sha256": "e54afa39148f27c20e451e3d5fe38b229df242a275d074c20b4ccd2053630ef0",
       "source": "radar"
     },
     {
@@ -155,7 +155,7 @@
     },
     {
       "file": "app.py",
-      "sha256": "38ad1e93b701fb8dd006e4793bee67517f1d0504324a5e22956ae48446dd03ff",
+      "sha256": "c168a6b9a1f2f9c2cc1c7240554e27c3392752f9b52e68f764808cf065c02db5",
       "source": "radar"
     },
     {
@@ -175,12 +175,12 @@
     },
     {
       "file": "catalog.json",
-      "sha256": "3cdbf5a1a6e313a7dcc752c769c20b58a543a86801fe84efeb30d38020e6151a",
+      "sha256": "35ff31e5125776e8164272bd5e3afd8a37792a69a4c4693bc20e8ceec3fe895a",
       "source": "radar"
     },
     {
       "file": "catalog.py",
-      "sha256": "6e414bd6e1e7cb499e18220da1b4c3fa73593711424b2a235fd87bfa472c65cb",
+      "sha256": "7d3a38901561b25fc432e3fb6c45af50fde74ed2d25ce9ef637b82c150cbd6e9",
       "source": "radar"
     },
     {
@@ -205,7 +205,7 @@
     },
     {
       "file": "free_tools.py",
-      "sha256": "b685d73d4fd8168107372a30618b967c0d234e8bb1127b5fca7451b24782bc59",
+      "sha256": "c607dfd612fbfca33b6e890c116d7f05208fd74c786c5e9e9195834521cedead",
       "source": "radar"
     },
     {
@@ -220,7 +220,7 @@
     },
     {
       "file": "release.marker",
-      "sha256": "ce4b41de0110757de747cbd6166ea3e11b6c882d837b453adf7b096de6f901fd",
+      "sha256": "92c35e223b006c99679aa57b98741765cc0cc3f980d8285e2b1fde46be3de404",
       "source": "radar"
     },
     {
@@ -720,7 +720,7 @@
     },
     {
       "file": "static/market.js",
-      "sha256": "773275801272baa9c68c8214dbfd432726ba515b3d34b088e6157cf47f5b4574",
+      "sha256": "51501f69b05f5e01a41eb550a36b4aede38f2fe1c5fe9d9d0749e2a77a93af0a",
       "source": "radar"
     },
     {
@@ -805,17 +805,17 @@
     },
     {
       "file": "static/tools.css",
-      "sha256": "e5c5de7ce1ad063cca4433e5bba21b8b4cf0c3bf355f5fc6c20e153b67b0c5ab",
+      "sha256": "b5fde318972fc785824a2c99679fa6ad2898754c0dcdca2c65a3ef96537c8fb7",
       "source": "radar"
     },
     {
       "file": "static/tools.html",
-      "sha256": "6eb13c0b3cdfdf5ef62cecfa561b1b9b293afb03cfba382c69d789dfa89c5115",
+      "sha256": "db4996f0f37a0a390d5da6bdf5368325284eec4386bb7bf0a6c3c7aca07e8c0c",
       "source": "radar"
     },
     {
       "file": "static/tools.js",
-      "sha256": "dd07649657eb6832d5945de2d23aaf7de9d18004de8b83bcf9827a318a47d9f2",
+      "sha256": "0d166b956fe72abf5f2400cb2f77665ca8ef588672000f4d3a3f2fe06036a41e",
       "source": "radar"
     },
     {
@@ -830,7 +830,7 @@
     },
     {
       "file": "使用说明.txt",
-      "sha256": "3383ed661683ad68f6e44e0abaaa5673f2593e97f41fb4ef26b89f04bf3fae4b",
+      "sha256": "16a3b38af82113052e976376568b6d146c2f5abf51570d8e16f51a9d3fa120fe",
       "source": "radar"
     },
     {
@@ -1415,9 +1415,9 @@
       "使用说明.txt"
     ]
   },
-  "parent_source_zip_sha256": "a66f1810606457fa595f91f98619eecde40d6b98535a84220c0845c78afcd654",
+  "parent_source_zip_sha256": "cc61ee95bac2f999e67cf735bd4ad8b2641dfee8060b6faaa3523a7c4f008553",
   "parent_git_commit": "0ef0daa27714aa0b232ce436decfd434cf55d4c5",
-  "change": "Explicit research conflict constraints and media source whitelist/frame pairing; previous function fixes retained",
+  "change": "Save collected media URLs; manual import and cached batch downloads; explicitly confirmed optional Douyin URL resolution",
   "function_fix": {
     "changes": [
       {
@@ -1434,5 +1434,55 @@
     "independent_script_environment_gate": "unchanged",
     "data_schema": "unchanged",
     "user_data": "not bundled"
-  }
+  },
+  "download_update": {
+    "changes": [
+      {
+        "file": "app.py",
+        "parent_sha256": "38ad1e93b701fb8dd006e4793bee67517f1d0504324a5e22956ae48446dd03ff",
+        "sha256": "c168a6b9a1f2f9c2cc1c7240554e27c3392752f9b52e68f764808cf065c02db5"
+      },
+      {
+        "file": "free_tools.py",
+        "parent_sha256": "b685d73d4fd8168107372a30618b967c0d234e8bb1127b5fca7451b24782bc59",
+        "sha256": "dabd8648024d6a52b8c973d1ae7fe6a9566189bfcb56352d123bea93de1fba37"
+      },
+      {
+        "file": "M05-使用说明.md",
+        "parent_sha256": "6ca4cf57807b48ca4a10485bae772abab3ccba7de665cd62556541d15e59819d",
+        "sha256": "e54afa39148f27c20e451e3d5fe38b229df242a275d074c20b4ccd2053630ef0"
+      },
+      {
+        "file": "使用说明.txt",
+        "parent_sha256": "3383ed661683ad68f6e44e0abaaa5673f2593e97f41fb4ef26b89f04bf3fae4b",
+        "sha256": "16a3b38af82113052e976376568b6d146c2f5abf51570d8e16f51a9d3fa120fe"
+      },
+      {
+        "file": "static/tools.css",
+        "parent_sha256": "e5c5de7ce1ad063cca4433e5bba21b8b4cf0c3bf355f5fc6c20e153b67b0c5ab",
+        "sha256": "b5fde318972fc785824a2c99679fa6ad2898754c0dcdca2c65a3ef96537c8fb7"
+      },
+      {
+        "file": "static/tools.html",
+        "parent_sha256": "6eb13c0b3cdfdf5ef62cecfa561b1b9b293afb03cfba382c69d789dfa89c5115",
+        "sha256": "db4996f0f37a0a390d5da6bdf5368325284eec4386bb7bf0a6c3c7aca07e8c0c"
+      },
+      {
+        "file": "static/tools.js",
+        "parent_sha256": "dd07649657eb6832d5945de2d23aaf7de9d18004de8b83bcf9827a318a47d9f2",
+        "sha256": "0d166b956fe72abf5f2400cb2f77665ca8ef588672000f4d3a3f2fe06036a41e"
+      }
+    ],
+    "automatic_paid_requests": false,
+    "schema_changed": false,
+    "actual_paid_tests": 0
+  },
+  "parent_build_id": "20261023-ice-download1",
+  "unified_changes": [
+    "catalog.json",
+    "catalog.py",
+    "free_tools.py",
+    "static/market.js"
+  ],
+  "actual_paid_tests": 0
 }
