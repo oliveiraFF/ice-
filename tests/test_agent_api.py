@@ -1,12 +1,15 @@
 import base64
 import copy
 import json
+import io
+import sqlite3
 import socket
 import tempfile
 import threading
 import unittest
 from pathlib import Path
 from urllib.error import HTTPError
+from contextlib import closing
 from urllib.request import Request, urlopen
 from unittest.mock import patch
 
@@ -69,7 +72,7 @@ class AgentAPITests(unittest.TestCase):
         self.assertIn('JPEG', error.exception.payload['error'])
         self.assertEqual(self.request('/api/agent/tasks'), [])
 
-    def fake_generate(self, body, account_context=None):
+    def fake_generate(self, body, account_context=None, response_sink=None):
         self.seen_context = account_context
         report = dict(summary='合成传输替身，仅验证流程',
             observations=[dict(frame=1,evidence='合成画面',inference='待验证',advice='按资料拍摄')],
@@ -81,6 +84,7 @@ class AgentAPITests(unittest.TestCase):
 
     def test_generate_receives_frozen_account_and_survives_server_restart(self):
         draft = self.saved_input()
+        self.request('/api/ai/config', {'endpoint': 'http://127.0.0.1:1/v1', 'model': 'offline-double'})
         with patch.object(app.VideoCreative, 'generate', side_effect=self.fake_generate) as generate:
             saved = self.request('/api/agent/task/generate',
                 {'task_uid': draft['task_uid'], 'expected_version': 1, 'confirm': True})
@@ -105,8 +109,48 @@ class AgentAPITests(unittest.TestCase):
                 self.assertEqual(error.exception.code, 400)
             generate.assert_not_called()
 
+    def test_invalid_response_is_archived_before_validation_and_survives_restart(self):
+        draft = self.saved_input()
+        self.request('/api/ai/config', {'endpoint': 'http://127.0.0.1:1/v1', 'model': 'offline-double'})
+        raw = json.dumps({'choices': [{'message': {'content': '```json\n{bad\n```'}}]}).encode()
+        with patch('ai_directions.build_opener') as opener:
+            opener.return_value.open.return_value = io.BytesIO(raw)
+            with self.assertRaises(HTTPError):
+                self.request('/api/agent/task/generate',
+                    {'task_uid': draft['task_uid'], 'expected_version': 1, 'confirm': True})
+            self.assertEqual(opener.return_value.open.call_count, 1)
+        with closing(sqlite3.connect(Path(self.folder.name) / 'radar.sqlite3')) as db:
+            self.assertEqual(db.execute('SELECT raw_response FROM agent_task_attempt').fetchone()[0], raw)
+        self.stop_server()
+        self.start_server()
+        reopened = self.request('/api/agent/task?id=' + draft['task_uid'])
+        attempt = reopened['attempts'][-1]
+        self.assertEqual(attempt['status'], 'validation_failed')
+        self.assertEqual(attempt['validation']['repairs'], ['remove_code_fence'])
+        self.assertEqual(attempt['validation']['location']['line'], 1)
+        self.assertNotIn('raw_response', attempt)
+        self.assertEqual(reopened['input'], draft['input'])
+
+    def test_bad_transport_cannot_erase_previous_result_or_trigger_retry(self):
+        draft = self.saved_input()
+        self.request('/api/ai/config', {'endpoint': 'http://127.0.0.1:1/v1', 'model': 'offline-double'})
+        with patch.object(app.VideoCreative, 'generate', side_effect=self.fake_generate):
+            generated = self.request('/api/agent/task/generate',
+                {'task_uid': draft['task_uid'], 'expected_version': 1, 'confirm': True})
+        with patch('ai_directions.build_opener') as opener:
+            opener.return_value.open.return_value = io.BytesIO(b'bad envelope')
+            with self.assertRaises(HTTPError):
+                self.request('/api/agent/task/generate',
+                    {'task_uid': draft['task_uid'], 'expected_version': 2, 'confirm': True})
+            self.assertEqual(opener.return_value.open.call_count, 1)
+        reopened = self.request('/api/agent/task?id=' + draft['task_uid'])
+        self.assertEqual(reopened['result'], generated['result'])
+        self.assertEqual(reopened['version'], 2)
+        self.assertEqual(reopened['attempts'][-1]['status'], 'validation_failed')
+
     def test_edit_is_new_version_and_changed_inputs_cannot_relabel_old_result(self):
         draft = self.saved_input()
+        self.request('/api/ai/config', {'endpoint': 'http://127.0.0.1:1/v1', 'model': 'offline-double'})
         with patch.object(app.VideoCreative, 'generate', side_effect=self.fake_generate):
             generated = self.request('/api/agent/task/generate',
                 {'task_uid': draft['task_uid'], 'expected_version': 1, 'confirm': True})

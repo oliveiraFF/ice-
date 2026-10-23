@@ -45,6 +45,8 @@ if(typeof document!=='undefined')(()=>{
     el('creativeTaskVersion').innerHTML=task?task.versions.map(v=>`<option value="${v.version}" ${v.version===task.version?'selected':''}>v${v.version} · ${esc(v.source)}</option>`).join(''):'<option value="">—</option>';
     el('creativeTaskEvidence').textContent=task?`${taskScope()}。规则 ${task.rules.version}（${task.rules.sha256.slice(0,12)}）；台词来源：${{manual:'人工逐字稿',transcription:'外部转写',none:'未提供'}[task.input.transcript_source]||'用户资料'}。视频、采样、输入与成果按版本保留；没有读取其他账号或平台指标。`:'保存后保留账号、策略、规则、原视频、采样画面和台词。保存不调用模型。';
     el('creativeTaskStatus').textContent=task?`任务 ${task.task_uid} · v${task.version}${taskReadOnly()?' · 历史版本只读，请打开最新版本继续。':' · 已保存，可关闭后继续。'}`:'先选择视频并填写资料，可以仅保存输入，稍后继续。';
+    const attempt=task?.attempts?.filter(a=>a.input_version<=task.version).at(-1);
+    if(attempt&&!taskReadOnly())el('creativeTaskStatus').textContent+=` 最近生成：${{processing:'处理中',success:'成功',validation_failed:'校验失败，待人工处理',result_unconfirmed:'结果未确认',failed:'失败'}[attempt.status]||attempt.status}。${attempt.validation?.error||''}`;
     if(task)history.replaceState(null,'','/creative?task='+task.task_uid+'&version='+task.version);
   }
   async function loadTaskList(){
@@ -173,7 +175,12 @@ if(typeof document!=='undefined')(()=>{
       if(tasksEnabled){await persistTask(body,false);currentTask=await request('/api/agent/task/generate',{task_uid:currentTask.task_uid,expected_version:currentTask.current_version,confirm:true});savedMedia=currentTask.media;result=currentTask.result;uiBaseline=inputKey(body);showTask();await loadTaskList();}
       else result=await request('/api/video/generate',body);
       renderResult();el('creativeBriefDialog').close();el('creativeStatus').textContent=tasksEnabled?'分析完成，成果已随任务保存。请核对后继续；没有生成视频成片。':'分析完成，请导出保存；没有生成视频成片。';el('creativeResults').scrollIntoView({behavior:'smooth',block:'start'});
-    }catch(error){el('creativeBriefError').textContent=error.message;el('creativeStatus').textContent='本次未完成：'+error.message+(transcriptOrigin==='transcription'?' 已转写的台词仍在弹窗中，再次生成不会自动重复转写。':'');}
+    }catch(error){
+      el('creativeBriefError').textContent=error.message;el('creativeStatus').textContent='本次未完成：'+error.message+(transcriptOrigin==='transcription'?' 已转写的台词仍在弹窗中，再次生成不会自动重复转写。':'');
+      if(tasksEnabled&&currentTask&&inputKey(brief())===uiBaseline){
+        try{currentTask=await request('/api/agent/task?id='+currentTask.task_uid);result=currentTask.result;showTask();if(result)renderResult();}catch{}
+      }
+    }
     finally{locked(false);el('generateCreative').textContent='生成所选成果';}
   };
   function renderResult(){
