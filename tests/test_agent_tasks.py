@@ -77,6 +77,15 @@ class AgentTaskTests(unittest.TestCase):
         with closing(sqlite3.connect(old)) as db:
             self.assertIsNone(db.execute("SELECT name FROM sqlite_master WHERE name='agent_task'").fetchone())
 
+    def test_interrupted_attempt_becomes_uncertain_without_losing_raw_response(self):
+        task = self.save()
+        ident = self.store.begin_attempt(task, 'offline-model')
+        self.store.archive_response(ident, b'original transport bytes')
+        reopened = AgentTasks(self.path, 'new rules').get(task['task_uid'])
+        self.assertEqual(reopened['attempts'][0]['status'], 'result_unconfirmed')
+        with closing(self.store.connect()) as db:
+            self.assertEqual(db.execute('SELECT raw_response FROM agent_task_attempt').fetchone()[0], b'original transport bytes')
+
 
 if __name__ == '__main__':
     unittest.main()

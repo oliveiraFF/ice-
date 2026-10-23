@@ -17,7 +17,13 @@ class NoRedirect(HTTPRedirectHandler):
         return None
 
 
-def request_completion(endpoint, key, payload):
+class ModelRequestError(ValueError):
+    def __init__(self, message, state):
+        super().__init__(message)
+        self.state = state
+
+
+def request_completion(endpoint, key, payload, response_sink=None):
     if (urlsplit(endpoint).hostname == 'api.deepseek.com'
             and payload.get('model') in ('deepseek-flash', 'deepseek-v4-pro')):
         payload = dict(payload)
@@ -31,15 +37,19 @@ def request_completion(endpoint, key, payload):
     try:
         with build_opener(NoRedirect()).open(request, timeout=60) as response:
             raw = response.read(524289)
+            if response_sink is not None:
+                response_sink(raw)
             if len(raw) > 524288:
-                raise ValueError('模型响应超过大小上限，未保存分类；不会自动重试')
+                raise ModelRequestError('模型响应超过大小上限，未采用；已保留读取到的部分，不会自动重试', 'validation_failed')
             return json.loads(raw.decode('utf-8'))
     except HTTPError as exc:
-        raise ValueError('模型服务返回 HTTP {}，请检查地址、模型、密钥或额度；不会自动重试'.format(exc.code)) from None
+        with exc:
+            code = exc.code
+        raise ModelRequestError('模型服务返回 HTTP {}，请检查地址、模型、密钥或额度；不会自动重试'.format(code), 'failed') from None
     except (URLError, OSError):
-        raise ValueError('模型服务连接失败或超时；请求可能已计费，不会自动重试') from None
+        raise ModelRequestError('模型服务连接失败或超时；请求可能已计费，不会自动重试', 'result_unconfirmed') from None
     except (UnicodeError, json.JSONDecodeError):
-        raise ValueError('模型未返回有效 JSON 响应，未保存分类；不会自动重试') from None
+        raise ModelRequestError('模型未返回有效 JSON 响应，未采用；不会自动重试', 'validation_failed') from None
 
 
 class AIDirections:

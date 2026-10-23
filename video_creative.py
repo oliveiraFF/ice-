@@ -22,6 +22,42 @@ OUTPUTS = ('shooting', 'video_prompt', 'writing_prompt')
 DIMENSIONS = ('目标人群','需求场景','开头设计','核心卖点','卖点证明','内容结构','视听表达','互动动机','商品说服力','改编可行性')
 
 
+class GenerationError(ValueError):
+    def __init__(self, message, repairs=None, location=None):
+        super().__init__(message)
+        self.state = 'validation_failed'
+        self.repairs = repairs or []
+        self.location = location
+
+
+def parse_report(raw):
+    if not isinstance(raw, str):
+        raise ValueError('模型内容必须是文本')
+    repairs = []
+    if raw.startswith('\ufeff'):
+        raw = raw[1:]
+        repairs.append('remove_bom')
+    raw = raw.strip()
+    fence = re.fullmatch(r'```(?:json)?\s*\n([\s\S]*?)\n```', raw)
+    if fence:
+        raw = fence.group(1)
+        repairs.append('remove_code_fence')
+    def unique(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError('JSON包含重复字段')
+            result[key] = value
+        return result
+    def invalid_constant(value):
+        raise ValueError('JSON包含非有限数值')
+    try:
+        return json.loads(raw, object_pairs_hook=unique, parse_constant=invalid_constant), repairs
+    except ValueError as exc:
+        location = dict(line=exc.lineno, column=exc.colno, offset=exc.pos) if isinstance(exc, json.JSONDecodeError) else None
+        raise GenerationError('模型JSON格式无效，原文已保留；不会自动重试', repairs, location) from None
+
+
 def text(value, name, limit, required=False):
     if not isinstance(value, str) or len(value) > limit or required and not value.strip():
         raise ValueError('{}{}，最多{}字'.format('请填写' if required else '请检查', name, limit))
@@ -149,29 +185,32 @@ class VideoCreative:
         report['deliverables']={key:text(deliverables[key],'生成成果',40000,True) for key in outputs}
         return {key:report[key] for key in ('summary','observations','evaluations','adaptation','missing','deliverables')}
 
-    def generate(self, body, account_context=None):
+    def generate(self, body, account_context=None, response_sink=None):
         data,frames=self.prepare(body)
         if account_context is not None:
-            data['account_context'] = account_context
+            data['account_context'] = {k:v for k,v in account_context.items() if k != 'rules'}
         with self.ai.lock:
             config=self.connection()
             content=[dict(type='text',text=json.dumps(data,ensure_ascii=False))]
             for i,frame in enumerate(frames):
                 content.extend([dict(type='text',text='frame={}，采样时间={:.2f}秒'.format(i+1,frame['at'])),
                                 dict(type='image_url',image_url=dict(url=frame['image']))])
-            payload=dict(model=config['model'],stream=False,messages=[dict(role='system',content=TASK_RULES if account_context is not None else RULES),dict(role='user',content=content)])
-            try: response=request_completion(config['endpoint'],self.ai.key,payload)
-            except ValueError as exc: raise ValueError(str(exc).replace('分类','视频分析')) from None
+            rules = account_context.get('rules', {}).get('text', TASK_RULES) if account_context is not None else RULES
+            payload=dict(model=config['model'],stream=False,max_tokens=6000,messages=[dict(role='system',content=rules),dict(role='user',content=content)])
+            response=request_completion(config['endpoint'],self.ai.key,payload, response_sink=response_sink)
+        repairs = []
         try:
             raw=response['choices'][0]['message']['content']
-            if not isinstance(raw,str): raise ValueError()
-            raw=re.sub(r'^```(?:json)?\s*|\s*```$','',raw.strip())
-            report=self.validate(json.loads(raw),len(frames),data['outputs'])
+            parsed, repairs = parse_report(raw)
+            report=self.validate(parsed,len(frames),data['outputs'])
+        except GenerationError:
+            raise
         except (ValueError,TypeError,KeyError,IndexError,AttributeError):
-            raise ValueError('模型结果缺少所选成果、分析维度或有效证据，未采用；请求可能已计费，不会自动重试') from None
+            raise GenerationError('模型结果缺少所选成果、分析维度或有效证据，未采用；请求可能已计费，不会自动重试', repairs) from None
         writing = report['deliverables'].get('writing_prompt','')
         if any(phrase in writing for phrase in ('你要做的是可复用的写稿指令','不是一次性成稿')):
-            raise ValueError('写稿提示词包含让下游再次生成提示词的冲突指令，未采用；请求可能已计费，不会自动重试')
+            raise GenerationError('写稿提示词包含让下游再次生成提示词的冲突指令，未采用；请求可能已计费，不会自动重试', repairs)
         return dict(version='creative-v1.1',model=config['model'],report=report,
+                    validation=dict(repairs=repairs),
                     scope=dict(duration=data['duration'],frames=data['frames'],audio=data['audio'],
                                limitation='仅分析采样画面与已提供文字，无法验证完整动作、音轨或真实传播和成交效果'))

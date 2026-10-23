@@ -4318,6 +4318,7 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                     if not agent_task_lock.acquire(False):
                         raise ValueError('当前任务正在生成，请等待完成')
                     acquired_ai = False
+                    attempt_uid = None
                     try:
                         task = agent_tasks.get(body.get('task_uid'))
                         if type(body.get('expected_version')) is not int or body['expected_version'] != task['current_version']:
@@ -4325,11 +4326,24 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                         acquired_ai = ai_request_lock.acquire(False)
                         if not acquired_ai:
                             raise ValueError('模型正在处理，请等待完成')
+                        config = creative.connection()
+                        attempt_uid = agent_tasks.begin_attempt(task, config['model'])
                         result = creative.generate(dict(task['input'], confirmed=True),
-                            account_context={'account': task['account'], 'strategy': task['strategy']})
-                        return self.send(agent_tasks.save(task['input'], task['media']['media_id'],
+                            account_context={'account': task['account'], 'strategy': task['strategy'], 'rules': task['rules']},
+                            response_sink=lambda raw: agent_tasks.archive_response(attempt_uid, raw))
+                        saved = agent_tasks.save(task['input'], task['media']['media_id'],
                             task['strategy'], result=result, source='llm', task_uid=task['task_uid'],
-                            expected_version=task['current_version']))
+                            expected_version=task['current_version'], rules=task['rules'])
+                        agent_tasks.finish_attempt(attempt_uid, 'success', result.get('validation', {}))
+                        return self.send(agent_tasks.get(saved['task_uid']))
+                    except Exception as exc:
+                        if attempt_uid is not None:
+                            state = getattr(exc, 'state', 'result_unconfirmed')
+                            message = str(exc) if isinstance(exc, ValueError) else '本地保存未完成，结果未确认；不会自动重试'
+                            agent_tasks.finish_attempt(attempt_uid, state,
+                                {'error': message, 'repairs': getattr(exc, 'repairs', []),
+                                 'location': getattr(exc, 'location', None)})
+                        raise
                     finally:
                         if acquired_ai:
                             ai_request_lock.release()

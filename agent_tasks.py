@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 MAX_MEDIA_BYTES = 20 * 1024 * 1024
-TABLES = {'agent_local_account', 'agent_media', 'agent_task', 'agent_task_version'}
+TABLES = {'agent_local_account', 'agent_media', 'agent_task', 'agent_task_version', 'agent_task_attempt'}
 SCHEMA = '''
 CREATE TABLE IF NOT EXISTS agent_local_account (
  id INTEGER PRIMARY KEY CHECK(id=1), account_uid TEXT NOT NULL UNIQUE,
@@ -28,6 +28,11 @@ CREATE TABLE IF NOT EXISTS agent_task_version (
  created_at REAL NOT NULL, PRIMARY KEY(task_uid,version),
  FOREIGN KEY(task_uid) REFERENCES agent_task(task_uid),
  FOREIGN KEY(media_id) REFERENCES agent_media(media_id));
+CREATE TABLE IF NOT EXISTS agent_task_attempt (
+ attempt_uid TEXT PRIMARY KEY, task_uid TEXT NOT NULL, input_version INTEGER NOT NULL,
+ status TEXT NOT NULL, model TEXT NOT NULL, raw_response BLOB,
+ validation_json TEXT NOT NULL, started_at REAL NOT NULL, finished_at REAL,
+ FOREIGN KEY(task_uid,input_version) REFERENCES agent_task_version(task_uid,version));
 '''
 
 
@@ -69,6 +74,8 @@ class AgentTasks:
         with closing(self.connect()) as db:
             db.execute('INSERT OR IGNORE INTO agent_local_account VALUES(1,?,?,?,?)',
                        (uuid.uuid4().hex, '当前本地账号', 'identity_pending', time.time()))
+            db.execute("UPDATE agent_task_attempt SET status='result_unconfirmed',finished_at=?,validation_json=? WHERE status='processing'",
+                       (time.time(), _json({'error': '上次生成被中断，结果未确认；不会自动重试'})))
             db.commit()
 
     def connect(self):
@@ -106,7 +113,7 @@ class AgentTasks:
         return dict(row)
 
     def save(self, inputs, media_id, strategy, result=None, source='user_input',
-             task_uid=None, expected_version=0):
+             task_uid=None, expected_version=0, rules=None):
         if not isinstance(inputs, dict) or not isinstance(strategy, dict):
             raise ValueError('任务输入格式无效')
         if result is not None and not isinstance(result, dict):
@@ -141,7 +148,7 @@ class AgentTasks:
                            (task_uid, account['account_uid'], version, now, now))
             db.execute('INSERT INTO agent_task_version VALUES(?,?,?,?,?,?,?,?,?,?)',
                        (task_uid, version, _json(account), input_json, strategy_json,
-                        result_json, _json(self.rules), media_id, source, now))
+                        result_json, _json(rules or self.rules), media_id, source, now))
             db.commit()
         return self.get(task_uid)
 
@@ -159,12 +166,37 @@ class AgentTasks:
             versions = [dict(item) for item in db.execute(
                 'SELECT version,source,created_at FROM agent_task_version WHERE task_uid=? ORDER BY version',
                 (task_uid,))]
+            attempts = [dict(item) for item in db.execute(
+                'SELECT attempt_uid,input_version,status,model,validation_json,started_at,finished_at FROM agent_task_attempt WHERE task_uid=? ORDER BY started_at',
+                (task_uid,))]
+            for attempt in attempts:
+                attempt['validation'] = json.loads(attempt.pop('validation_json'))
         result = dict(task)
         for name in ('account', 'input', 'strategy', 'result', 'rules'):
             result[name] = json.loads(row[name + '_json'])
         result.update(version=row['version'], source=row['source'], versions=versions,
+                      attempts=attempts,
                       media={key: value for key, value in self.read_media(row['media_id']).items() if key != 'data'})
         return result
+
+    def begin_attempt(self, task, model):
+        ident = uuid.uuid4().hex
+        with closing(self.connect()) as db, db:
+            db.execute('INSERT INTO agent_task_attempt VALUES(?,?,?,?,?,NULL,?,?,NULL)',
+                       (ident, task['task_uid'], task['version'], 'processing', model, '{}', time.time()))
+        return ident
+
+    def archive_response(self, ident, raw):
+        with closing(self.connect()) as db, db:
+            db.execute("UPDATE agent_task_attempt SET raw_response=? WHERE attempt_uid=? AND status='processing'",
+                       (raw, ident))
+
+    def finish_attempt(self, ident, status, validation):
+        if status not in ('success', 'validation_failed', 'result_unconfirmed', 'failed'):
+            raise ValueError('生成状态无效')
+        with closing(self.connect()) as db, db:
+            db.execute("UPDATE agent_task_attempt SET status=?,validation_json=?,finished_at=? WHERE attempt_uid=? AND status='processing'",
+                       (status, _json(validation), time.time(), ident))
 
     def list(self):
         with closing(self.connect()) as db:
