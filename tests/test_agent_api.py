@@ -148,6 +148,62 @@ class AgentAPITests(unittest.TestCase):
         self.assertEqual(reopened['version'], 2)
         self.assertEqual(reopened['attempts'][-1]['status'], 'validation_failed')
 
+    def test_concurrent_generate_and_save_cannot_duplicate_model_call(self):
+        draft = self.saved_input()
+        self.request('/api/ai/config', {'endpoint': 'http://127.0.0.1:1/v1', 'model': 'offline-double'})
+        started, release = threading.Event(), threading.Event()
+        results = []
+        def slow_generate(*args, **kwargs):
+            started.set()
+            if not release.wait(4):
+                raise ValueError('测试超时')
+            return self.fake_generate(*args, **kwargs)
+        payload = {'task_uid': draft['task_uid'], 'expected_version': 1, 'confirm': True}
+        def generate_first():
+            try:
+                results.append(self.request('/api/agent/task/generate', payload))
+            except Exception as exc:
+                results.append(exc)
+        with patch.object(app.VideoCreative, 'generate', side_effect=slow_generate) as model:
+            worker = threading.Thread(target=generate_first)
+            worker.start()
+            try:
+                self.assertTrue(started.wait(2))
+                with self.assertRaises(HTTPError):
+                    self.request('/api/agent/task/generate', payload)
+                with self.assertRaises(HTTPError):
+                    self.request('/api/agent/task/save', dict(payload, input=self.inputs, media_id=draft['media']['media_id']))
+            finally:
+                release.set()
+                worker.join(5)
+            self.assertEqual(model.call_count, 1)
+        self.assertEqual(results[0]['version'], 2)
+
+    def test_successful_retry_uses_frozen_rules_and_records_local_repairs(self):
+        draft = self.saved_input()
+        self.request('/api/ai/config', {'endpoint': 'http://127.0.0.1:1/v1', 'model': 'offline-double'})
+        with patch('ai_directions.build_opener') as opener:
+            opener.return_value.open.return_value = io.BytesIO(b'invalid first response')
+            with self.assertRaises(HTTPError):
+                self.request('/api/agent/task/generate',
+                    {'task_uid': draft['task_uid'], 'expected_version': 1, 'confirm': True})
+        report = self.fake_generate(self.inputs)['report']
+        raw = json.dumps({'choices': [{'message': {'content': '\ufeff```json\n' + json.dumps(report) + '\n```'}}]}).encode()
+        captured = []
+        def transport(request, timeout):
+            captured.append(json.loads(request.data))
+            return io.BytesIO(raw)
+        with patch('ai_directions.build_opener') as opener, patch('video_creative.TASK_RULES', 'changed rules'):
+            opener.return_value.open.side_effect = transport
+            result = self.request('/api/agent/task/generate',
+                {'task_uid': draft['task_uid'], 'expected_version': 1, 'confirm': True})
+        self.assertEqual(captured[0]['messages'][0]['content'], draft['rules']['text'])
+        self.assertEqual(captured[0]['max_tokens'], 6000)
+        self.assertEqual(result['rules'], draft['rules'])
+        self.assertEqual(result['attempts'][-1]['validation']['repairs'], ['remove_bom', 'remove_code_fence'])
+        self.assertEqual(result['version'], 2)
+        self.assertEqual([a['status'] for a in result['attempts']], ['validation_failed', 'success'])
+
     def test_edit_is_new_version_and_changed_inputs_cannot_relabel_old_result(self):
         draft = self.saved_input()
         self.request('/api/ai/config', {'endpoint': 'http://127.0.0.1:1/v1', 'model': 'offline-double'})
