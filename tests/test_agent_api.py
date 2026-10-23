@@ -72,6 +72,13 @@ class AgentAPITests(unittest.TestCase):
         self.assertIn('JPEG', error.exception.payload['error'])
         self.assertEqual(self.request('/api/agent/tasks'), [])
 
+    def test_nonempty_transcript_cannot_be_labeled_as_missing_source(self):
+        self.inputs['transcript_source'] = 'none'
+        with self.assertRaises(HTTPError) as error:
+            self.saved_input()
+        self.assertIn('台词来源', error.exception.payload['error'])
+        self.assertEqual(self.request('/api/agent/tasks'), [])
+
     def fake_generate(self, body, account_context=None, response_sink=None):
         self.seen_context = account_context
         report = dict(summary='合成传输替身，仅验证流程',

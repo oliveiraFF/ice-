@@ -151,7 +151,7 @@ class VideoCreative:
                     frames=[dict(frame=i+1,at=f['at']) for i,f in enumerate(cleaned)],
                     audio='已提供台词（非音轨听觉分析）' if data['transcript'] else '未读取音轨')
         origin = body.get('transcript_source', 'manual' if data['transcript'] else 'none')
-        if origin not in ('none', 'manual', 'transcription') or (not data['transcript'] and origin != 'none'):
+        if origin not in ('none', 'manual', 'transcription') or bool(data['transcript']) != (origin != 'none'):
             raise ValueError('台词来源无效')
         data['transcript_source'] = origin
         return data,cleaned
