@@ -12,7 +12,14 @@ const CreativeData=(()=>{
     if(!body.outputs.length)throw new Error('请至少选择一类成果');
     if(!Number.isInteger(body.target_seconds)||body.target_seconds<10||body.target_seconds>180)throw new Error('目标时长需为10至180秒整数');
   }
-  return {names,sampleTimes,clock,checkBrief};
+  function provenance(task,dirty){
+    if(!task)return '';
+    const input={...task.input,frames:task.input.frames.map(f=>({at:f.at}))};
+    const snapshot={account_uid:task.account.account_uid,identity_state:task.account.identity_state,
+      strategy:task.strategy,media:task.media,source:task.source,input};
+    return `# 任务 ${task.task_uid} · 已保存 v${task.version}\n\n${dirty?'当前导出含未保存修改，不属于已保存版本；下面的依据是该版本的输入快照。':'成果与依据来自已保存版本。'}\n\n规则 ${task.rules.version} · ${task.rules.sha256}\n\n人工逐字稿未做时间对齐；采样时间是原视频证据时间，分镜时间是建议安排。\n\n## 已保存的输入与来源快照\n\n\`\`\`json\n${JSON.stringify(snapshot,null,2)}\n\`\`\`\n\n`;
+  }
+  return {names,sampleTimes,clock,checkBrief,provenance};
 })();
 if(typeof module!=='undefined')module.exports=CreativeData;
 if(typeof document!=='undefined')(()=>{
@@ -205,7 +212,7 @@ if(typeof document!=='undefined')(()=>{
   el('exportCreative').onclick=()=>{
     if(!result)return;const r=result.report,s=result.scope;
     let content=`# 视频分析与改编\n\n规则 V1.1 · 模型 ${result.model}\n\n${s.limitation}\n\n读取范围：${s.frames.length}张采样画面；${s.audio}\n\n## 分析摘要\n\n${r.summary}\n\n## 关键画面拆解\n\n`;
-    if(currentTask)content=`# 已保存任务 ${currentTask.task_uid} · v${currentTask.version}\n\n${taskScope()}\n\n规则 ${currentTask.rules.version} · ${currentTask.rules.sha256}\n\n`+content;
+    content=CreativeData.provenance(currentTask,unsaved())+content;
     for(const row of r.observations)content+=`### 画面 ${row.frame} · ${CreativeData.clock(s.frames[row.frame-1].at)}\n\n观察事实：${row.evidence}\n\n分析推测：${row.inference}\n\n改编建议：${row.advice}\n\n`;
     content+='## 十项评价\n\n';for(const row of r.evaluations)content+=`- ${row.dimension}：${row.verdict}。${row.reason}（${row.frames.map(i=>'画面'+i).join('、')||'证据不足'}）\n`;
     for(const [key,title] of [['reuse','可沿用'],['adjust','需调整'],['avoid','不适合沿用']])content+=`\n## ${title}\n\n${r.adaptation[key].map(t=>'- '+t).join('\n')}\n`;
