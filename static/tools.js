@@ -4,7 +4,7 @@ const tools = [
   {id:'video',name:'视频数据分析',icon:'eye',tone:'blue',description:'查看本地视频的播放量、点赞和互动数据。支持CSV导出及视频JSON导入、导出。',status:'local',label:'本地免费'},
   {id:'creator',name:'创作者分析',icon:'user',tone:'orange',description:'按平台和作者名称汇总本地视频样本，比较已知播放量与点赞，支持CSV导出。',status:'local',label:'本地免费'},
   {id:'comments',name:'评论分析',icon:'comment',tone:'green',description:'粘贴评论或导入TXT、JSON，统计高频词和重复文本。只在浏览器本地处理。',status:'local',label:'本地免费'},
-  {id:'download',name:'缓存视频下载',icon:'download',tone:'indigo',description:'使用已收录视频的缓存直链保存文件。直链过期或被限制时停止，不调用付费解析。',status:'local',label:'不调用解析API'},
+  {id:'download',name:'视频下载',icon:'download',tone:'indigo',description:'采集直链自动保存，支持手动导入和批量下载。缺少直链时，可确认费用后获取抖音直链并下载。',status:'local',label:'已有直链免费 / 可选付费解析'},
   {id:'voice',name:'AI 声音克隆',icon:'mic',tone:'purple',description:'本期未接入语音模型或外部服务，暂不提供声音克隆。',status:'pending',label:'本期暂缓'},
   {id:'fraud',name:'刷量检测',icon:'shield',tone:'red',description:'本期没有足够的历史数据及验证依据，暂不提供刷量判定。',status:'pending',label:'本期暂缓'},
   {id:'extension',name:'浏览器采集',icon:'browser',tone:'blue',description:'此版本采用TikHub接口获取内容，浏览器手动采集入口已停用。',status:'pending',label:'未启用'}
@@ -38,7 +38,39 @@ async function analyze(id,open=true){
   }
   $('exportAnalysis').disabled=posts.length===0;$('exportVideoJSON').disabled=posts.length===0;if(open)$('analysisDialog').showModal();
 }
-async function openDownloads(){await readState();$('downloadVideoSelect').innerHTML=localState.posts.filter(p=>p.video_url).map(p=>`<option value="${p.id}">${esc(p.title.slice(0,65))}</option>`).join('');$('downloadStatus').textContent=$('downloadVideoSelect').options.length?'选择一个视频，再下载。':'没有可用的缓存直链，请导入带video_url的视频JSON。';$('startDownload').disabled=!$('downloadVideoSelect').options.length;$('downloadResult').hidden=true;$('downloadDialog').showModal();}
+let downloadPosts=[],downloadResolver=null,downloadBusy=false,downloadLoadSeq=0;
+const resolverId='GET /api/v1/douyin/app/v3/fetch_video_high_quality_play_url';
+function selectedDownloads(){const ids=new Set([...$('downloadVideoSelect').selectedOptions].map(o=>Number(o.value)));return downloadPosts.filter(p=>ids.has(p.id));}
+function updateDownloadActions(){
+  const selected=selectedDownloads();
+  $('startDownload').disabled=downloadBusy||!selected.some(p=>p.video_url);
+  $('resolveDownload').disabled=downloadBusy||!selected.length||!downloadResolver?.ready||selected.some(p=>p.platform!=='dy'||!/^\d{1,30}$/.test(p.external_id));
+  $('resolveDownload').textContent=`获取直链并下载 · $${downloadResolver?.price??'?'} / 条`;
+  $('downloadVideoSelect').disabled=downloadBusy;$('refreshDownloads').disabled=downloadBusy;
+  $('downloadDialog').querySelector('[data-close-tool]').disabled=downloadBusy;
+}
+async function openDownloads(){
+  if(downloadBusy)return;
+  const seq=++downloadLoadSeq;
+  $('downloadStatus').textContent='正在读取本地视频…';$('startDownload').disabled=true;$('resolveDownload').disabled=true;
+  if(!$('downloadDialog').open)$('downloadDialog').showModal();
+  try{
+    const [state,catalogResponse]=await Promise.all([fetch('/api/state?mode=live').then(async r=>{if(!r.ok)throw new Error('本地视频读取失败');return r.json();}),fetch('/api/catalog')]);
+    const catalog=catalogResponse.ok?await catalogResponse.json():null;
+    if(seq!==downloadLoadSeq)return;
+    const selected=new Set([...$('downloadVideoSelect').selectedOptions].map(o=>Number(o.value)));
+    localState=state;downloadPosts=state.posts;
+    const item=catalog?.items.find(row=>row.id===resolverId);
+    const reason=item?.execution_reason||(!catalog?.tools[resolverId]?.enabled?'请先启用直链解析接口':!catalog?.connected?'请先配置 TikHub API Key':!catalog?.access?.active?'请先开启接口调用并设置预算':'');
+    downloadResolver=item?{price:item.price,ready:!reason}:null;
+    $('downloadResolverSettings').hidden=!item;
+    $('downloadResolverNote').textContent=item?`额外解析目录标价 $${item.price} / 条。${reason||'接口已就绪；只有点击并确认费用后才执行。'}`:'此版本不提供额外解析；可使用已有直链或手动导入。';
+    $('downloadVideoSelect').innerHTML=downloadPosts.map(p=>`<option value="${p.id}" ${selected.has(p.id)?'selected':''}>${esc(p.title.slice(0,65))} · ${p.video_url?'已有直链':'缺少直链'}${p.platform==='dy'?' · 抖音':' · 小红书'}</option>`).join('');
+    if(!selectedDownloads().length&&downloadPosts.length)$('downloadVideoSelect').value=String((downloadPosts.find(p=>p.video_url)||downloadPosts[0]).id);
+    $('downloadStatus').textContent=downloadPosts.length?`共 ${downloadPosts.length} 条，其中 ${downloadPosts.filter(p=>p.video_url).length} 条已有直链。可多选；单批最多20条。`:'暂无视频。先采集视频，或用“手动导入视频JSON”。';
+    updateDownloadActions();
+  }catch(error){if(seq===downloadLoadSeq){downloadResolver=null;$('downloadStatus').textContent=error.message;}}
+}
 $('featureTools').onclick=async event=>{const button=event.target.closest('[data-tool]');if(!button||button.disabled)return;button.disabled=true;$('toolsError').hidden=true;try{const id=button.dataset.tool;if(id==='script'){location.href='/script';return;}if(id==='creative'){location.href='/creative';return;}if(id==='comments')$('commentsDialog').showModal();else if(id==='download')await openDownloads();else await analyze(id);}catch(error){notice(error.message);}finally{button.disabled=false;}};
 $('painEvidence').onchange=()=>{
   const index=$('painEvidence').value;
@@ -74,7 +106,40 @@ $('commentInput').oninput=()=>{commentResult=null;commentEvidence=[];$('painEvid
 $('exportComments').onclick=()=>{if(commentResult)saveFile('comments-analysis.json',JSON.stringify(commentResult,null,2),'application/json;charset=utf-8');};
 $('videoJSONFile').onchange=async event=>{try{$('videoJSONInput').value=await readFile(event.target.files[0]);$('videoImportStatus').textContent='已读取文件，确认后导入。';}catch(error){$('videoImportStatus').textContent=error.message;}finally{event.target.value='';}};
 $('importVideoJSON').onclick=async()=>{const button=$('importVideoJSON');button.disabled=true;try{const input=$('videoJSONInput').value;if(input.length>1000000)throw new Error('JSON文本最多100万字符');let payload;try{payload=JSON.parse(input);}catch{throw new Error('视频JSON格式不正确');}const posts=Array.isArray(payload)?payload:payload.posts;await readState();const result=await post('/api/import',{keyword:$('importKeyword').value,posts});$('videoImportStatus').textContent=`已导入 ${result.count} 条，跳过已有作品 ${result.skipped} 条。`;if($('analysisDialog').open)await analyze('video',false);}catch(error){$('videoImportStatus').textContent=error.message;}finally{button.disabled=false;}};
-$('startDownload').onclick=async()=>{const button=$('startDownload');button.disabled=true;$('downloadVideoSelect').disabled=true;$('downloadResult').hidden=true;$('downloadStatus').textContent='正在下载缓存直链，请稍候…';try{const result=await post('/api/download',{id:Number($('downloadVideoSelect').value)});$('downloadStatus').textContent=`已保存到 ${result.directory} · ${(result.bytes/1048576).toFixed(2)} MB`;$('downloadResult').href=result.url;$('downloadResult').download=result.filename;$('downloadResult').textContent='另存一份 '+result.filename;$('downloadResult').hidden=false;}catch(error){$('downloadStatus').textContent=error.message;}finally{button.disabled=false;$('downloadVideoSelect').disabled=false;}};
+async function downloadSelected(resolve=false){
+  if(downloadBusy)return;
+  const jobs=selectedDownloads().map(p=>({...p})),cost=downloadResolver?.price;
+  if(!jobs.length||jobs.length>20){$('downloadStatus').textContent='请选择1～20条视频。';return;}
+  if(resolve){
+    if(!downloadResolver?.ready||jobs.some(p=>p.platform!=='dy'||!/^\d{1,30}$/.test(p.external_id))){$('downloadStatus').textContent='请先配置解析接口；额外解析仅支持抖音视频。';return;}
+    const total=(Number(cost)*jobs.length).toFixed(4);
+    if(!confirm(`将为所选 ${jobs.length} 条抖音视频逐条重新获取直链并下载。接口标价 $${cost} / 条，合计最多 $${total}，计入累计预算；可能使用充值余额。失败不重试，任一项失败后停止余下解析。继续？`))return;
+  }
+  downloadBusy=true;updateDownloadActions();$('downloadResult').hidden=true;$('downloadItems').replaceChildren();
+  let done=0,failed=0,skipped=0,stop=false;
+  try{
+    for(const [index,job] of jobs.entries()){
+      const row=document.createElement('li');row.textContent=job.title+'：等待中';$('downloadItems').append(row);
+      if(stop||(!resolve&&!job.video_url)){row.textContent=job.title+(stop?'：未执行，前一项失败后已停止':'：跳过，缺少直链；可单独获取直链后下载');skipped++;continue;}
+      row.textContent=job.title+(resolve?'：正在获取直链并下载…':'：正在下载已有直链…');
+      $('downloadStatus').textContent=`正在处理 ${index+1}/${jobs.length}；请等待完成。`;
+      try{
+        const result=await post('/api/download',{id:job.id,...(resolve?{resolve:true,confirmed_cost:cost}:{})});
+        row.textContent=`${job.title}：已保存 ${result.directory}\\${result.filename} · ${(result.bytes/1048576).toFixed(2)} MB `;
+        const link=document.createElement('a');link.href=result.url;link.download=result.filename;link.textContent='另存一份';row.append(link);done++;
+        if(resolve){const state=await fetch('/api/state?mode=live').then(r=>r.ok?r.json():null).catch(()=>null);if(state){localState=state;downloadPosts=state.posts;}}
+      }catch(error){row.textContent=job.title+'：'+error.message;failed++;if(resolve)stop=true;}
+    }
+    $('downloadStatus').textContent=`处理完成：成功 ${done}，失败 ${failed}，跳过 ${skipped}。文件保存在程序目录的 downloads 文件夹；不会自动重试或自动付费解析。`;
+  }finally{downloadBusy=false;updateDownloadActions();}
+}
+$('startDownload').onclick=()=>downloadSelected();
+$('resolveDownload').onclick=()=>downloadSelected(true);
+$('downloadVideoSelect').onchange=updateDownloadActions;
+$('refreshDownloads').onclick=openDownloads;
+$('downloadDialog').addEventListener('cancel',event=>{if(downloadBusy)event.preventDefault();else downloadLoadSeq++;});
+$('downloadDialog').addEventListener('close',()=>{downloadLoadSeq++;});
+$('downloadImport').onclick=()=>$('videoImportDialog').showModal();
 document.querySelectorAll('[data-close-tool]').forEach(button=>button.onclick=()=>button.closest('dialog').close());
 
 if(new URLSearchParams(location.search).get('open')==='import')$('videoImportDialog').showModal();

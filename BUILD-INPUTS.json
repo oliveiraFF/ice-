@@ -1,9 +1,7 @@
 {
-  "build_id": "20261023-ice-functionfix2",
-  "source_zip_sha256": "19be0573df4da8bdfaa5fed1e68d815fc435ba7cecc49f7e85736f9715baab3a",
-  "source_zip_bytes": 18446851,
-  "source_zip_path": "E:\\ice-function-fix-20261023-promptfix\\20261023-ice-functionfix2-source.zip",
-  "parent_source_sha256": "a66f1810606457fa595f91f98619eecde40d6b98535a84220c0845c78afcd654",
+  "build_id": "20261023-ice-unified1",
+  "source_zip_sha256": "8a484cc1863335a793b7e030f846022f0b814f056f4c8b30cff94212563c3a51",
+  "parent_build_id": "20261023-ice-download1",
   "files": [
     {
       "file": ".gitattributes",
@@ -14,15 +12,15 @@
       "sha256": "fd19bcd9d309666ecba2c14831de997d4a161fabc223f01a0367684c5e6574fd"
     },
     {
-      "file": "M05-使用说明.md",
-      "sha256": "6ca4cf57807b48ca4a10485bae772abab3ccba7de665cd62556541d15e59819d"
+      "file": "M05-\u4f7f\u7528\u8bf4\u660e.md",
+      "sha256": "e54afa39148f27c20e451e3d5fe38b229df242a275d074c20b4ccd2053630ef0"
     },
     {
       "file": "MANIFEST.sha256",
-      "sha256": "4631401b0d90be2da702cf11eba918bf193a50816185d974fcacacf7ebd2118d"
+      "sha256": "f58d7f210515ded6fe1b9973a7dc8a2086ed21044c9caadbe4f01b3aef7c63de"
     },
     {
-      "file": "README-内测说明.md",
+      "file": "README-\u5185\u6d4b\u8bf4\u660e.md",
       "sha256": "6b2d9c0c71481f2812eddd1be69d81d207bf45568d3a01865b0c0f02e75fe42f"
     },
     {
@@ -31,7 +29,7 @@
     },
     {
       "file": "SOURCE.json",
-      "sha256": "65925410df9754a6323aa7c235b66bd36720ca748fd8876dc65b4702e8d7ec75"
+      "sha256": "10469146a4746cf6ddc86d477ab87647c079c586268133bd7d10c746c4447964"
     },
     {
       "file": "_ops/fixtures/sample_facts.json",
@@ -131,7 +129,7 @@
     },
     {
       "file": "app.py",
-      "sha256": "38ad1e93b701fb8dd006e4793bee67517f1d0504324a5e22956ae48446dd03ff"
+      "sha256": "c168a6b9a1f2f9c2cc1c7240554e27c3392752f9b52e68f764808cf065c02db5"
     },
     {
       "file": "browser_collector.py",
@@ -147,11 +145,11 @@
     },
     {
       "file": "catalog.json",
-      "sha256": "3cdbf5a1a6e313a7dcc752c769c20b58a543a86801fe84efeb30d38020e6151a"
+      "sha256": "35ff31e5125776e8164272bd5e3afd8a37792a69a4c4693bc20e8ceec3fe895a"
     },
     {
       "file": "catalog.py",
-      "sha256": "6e414bd6e1e7cb499e18220da1b4c3fa73593711424b2a235fd87bfa472c65cb"
+      "sha256": "7d3a38901561b25fc432e3fb6c45af50fde74ed2d25ce9ef637b82c150cbd6e9"
     },
     {
       "file": "client_credentials.py",
@@ -171,7 +169,7 @@
     },
     {
       "file": "free_tools.py",
-      "sha256": "b685d73d4fd8168107372a30618b967c0d234e8bb1127b5fca7451b24782bc59"
+      "sha256": "c607dfd612fbfca33b6e890c116d7f05208fd74c786c5e9e9195834521cedead"
     },
     {
       "file": "ops.py",
@@ -183,7 +181,7 @@
     },
     {
       "file": "release.marker",
-      "sha256": "ce4b41de0110757de747cbd6166ea3e11b6c882d837b453adf7b096de6f901fd"
+      "sha256": "92c35e223b006c99679aa57b98741765cc0cc3f980d8285e2b1fde46be3de404"
     },
     {
       "file": "reviews.py",
@@ -583,7 +581,7 @@
     },
     {
       "file": "static/market.js",
-      "sha256": "773275801272baa9c68c8214dbfd432726ba515b3d34b088e6157cf47f5b4574"
+      "sha256": "51501f69b05f5e01a41eb550a36b4aede38f2fe1c5fe9d9d0749e2a77a93af0a"
     },
     {
       "file": "static/media-review.css",
@@ -651,15 +649,15 @@
     },
     {
       "file": "static/tools.css",
-      "sha256": "e5c5de7ce1ad063cca4433e5bba21b8b4cf0c3bf355f5fc6c20e153b67b0c5ab"
+      "sha256": "b5fde318972fc785824a2c99679fa6ad2898754c0dcdca2c65a3ef96537c8fb7"
     },
     {
       "file": "static/tools.html",
-      "sha256": "6eb13c0b3cdfdf5ef62cecfa561b1b9b293afb03cfba382c69d789dfa89c5115"
+      "sha256": "db4996f0f37a0a390d5da6bdf5368325284eec4386bb7bf0a6c3c7aca07e8c0c"
     },
     {
       "file": "static/tools.js",
-      "sha256": "dd07649657eb6832d5945de2d23aaf7de9d18004de8b83bcf9827a318a47d9f2"
+      "sha256": "0d166b956fe72abf5f2400cb2f77665ca8ef588672000f4d3a3f2fe06036a41e"
     },
     {
       "file": "topics.py",
@@ -670,11 +668,11 @@
       "sha256": "7ffdd09bb3dccdbd2954afdd01b153217d5f3f7becf28633ffdbcc9577478ad1"
     },
     {
-      "file": "使用说明.txt",
-      "sha256": "3383ed661683ad68f6e44e0abaaa5673f2593e97f41fb4ef26b89f04bf3fae4b"
+      "file": "\u4f7f\u7528\u8bf4\u660e.txt",
+      "sha256": "16a3b38af82113052e976376568b6d146c2f5abf51570d8e16f51a9d3fa120fe"
     },
     {
-      "file": "启动.bat",
+      "file": "\u542f\u52a8.bat",
       "sha256": "abfe71b17946f60d336674a969b0dbd6e3506e530c5828282b7de0362fbaba23"
     }
   ]

@@ -15,6 +15,51 @@ MEDIA_DOMAINS = ('douyin.com','douyinvod.com','bytecdn.cn','bytecdntp.com','byte
                  'tiktokcdn-us.com','tiktokv.com','xhscdn.com','xiaohongshu.com')
 
 
+def cached_media_url(video):
+    """Read known playback fields only; never use covers or arbitrary nested URLs."""
+    if not isinstance(video, dict):
+        return None
+    candidates = []
+    for key in ('play_addr', 'download_addr', 'play_addr_h264', 'play_addr_h265', 'play_addr_265'):
+        value = video.get(key)
+        if isinstance(value, dict):
+            urls = value.get('url_list')
+            if isinstance(urls, list):
+                candidates.extend(urls)
+    rates = video.get('bit_rate')
+    for rate in rates if isinstance(rates, list) else []:
+        address = rate.get('play_addr') if isinstance(rate, dict) else None
+        urls = address.get('url_list') if isinstance(address, dict) else None
+        if isinstance(urls, list):
+            candidates.extend(urls)
+    media = video.get('media')
+    streams = media.get('stream') if isinstance(media, dict) else None
+    if isinstance(streams, dict):
+        for codec in ('h264', 'h265', 'av1'):
+            entries = streams.get(codec)
+            for stream in entries if isinstance(entries, list) else []:
+                if isinstance(stream, dict):
+                    candidates.append(stream.get('master_url'))
+                    backups = stream.get('backup_urls')
+                    if isinstance(backups, list):
+                        candidates.extend(backups)
+    for url in candidates:
+        try:
+            return validate_media_url(url)
+        except (ValueError, TypeError):
+            continue
+    return None
+
+
+def resolved_media_url(payload, external_id):
+    data = payload.get('data') if isinstance(payload, dict) else None
+    if not isinstance(data, dict):
+        raise ValueError('解析响应没有视频直链；未下载，不自动重试')
+    if data.get('video_id') is not None and str(data['video_id']) != external_id:
+        raise ValueError('解析响应的作品ID与所选视频不一致；未保存或下载')
+    return validate_media_url(data.get('original_video_url'))
+
+
 def validate_media_url(url, check_dns=False):
     if not isinstance(url, str) or len(url) > 12000:
         raise ValueError('没有可用的缓存视频直链')

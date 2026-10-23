@@ -24077,9 +24077,16 @@
             "default": 20
           },
           "cookie": {
-            "type": "string",
             "title": "Cookie",
-            "description": "用户网页版抖音Cookie/Your web version of Douyin Cookie"
+            "description": "用户网页版抖音Cookie/Your web version of Douyin Cookie",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "type": "object",
@@ -38788,7 +38795,7 @@
       "category": "app",
       "query": {
         "boardType": 1,
-        "boardId": "1"
+        "boardId": 1
       },
       "body": null,
       "parameters": [
@@ -42818,7 +42825,7 @@
       "category": "app",
       "query": {
         "uri": "eapi/song/enhance/player/url/v1",
-        "add_variable": "false"
+        "add_variable": false
       },
       "body": {},
       "parameters": [
@@ -43297,7 +43304,7 @@
       "category": "app",
       "query": {
         "uid": "254132915",
-        "_time": -1,
+        "_time": "-1",
         "limit": "10"
       },
       "body": null,
@@ -63823,7 +63830,7 @@
       "category": "web",
       "query": {
         "screen_name": "elonmusk",
-        "rest_id": "44196397"
+        "rest_id": 44196397
       },
       "body": null,
       "parameters": [
@@ -63884,7 +63891,7 @@
       "category": "web",
       "query": {
         "screen_name": "elonmusk",
-        "rest_id": "44196397"
+        "rest_id": 44196397
       },
       "body": null,
       "parameters": [
@@ -63945,7 +63952,7 @@
       "category": "web",
       "query": {
         "screen_name": "elonmusk",
-        "rest_id": "44196397"
+        "rest_id": 44196397
       },
       "body": null,
       "parameters": [
