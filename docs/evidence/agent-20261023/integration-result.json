@@ -1,0 +1,15 @@
+{
+  "python": "3.12.14",
+  "agent_test_count": 23,
+  "agent_tests_passed": true,
+  "legacy_tests": 42,
+  "legacy_tests_passed": true,
+  "javascript_suites": [
+    "creative export provenance checks passed",
+    "media replacement identity checks passed"
+  ],
+  "all_static_js_syntax_passed": true,
+  "sensitive_pattern_flagged_paths": [],
+  "external_paid_calls": 0,
+  "source_commit": "1ac88026da1707049db9c98635372d8488f60b2c"
+}

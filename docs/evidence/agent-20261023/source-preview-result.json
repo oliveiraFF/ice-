@@ -1,0 +1,9 @@
+{
+  "directory": "C:\\Users\\25370\\Desktop\\ice运营台-统一更新版-20261023\\验收记录\\agent-20261023\\source-preview\\20261023-agent-final-preview",
+  "zip": "C:\\Users\\25370\\Desktop\\ice运营台-统一更新版-20261023\\验收记录\\agent-20261023\\source-preview\\radar-owner-20261023-agent-final-preview.zip",
+  "zip_sha256": "800cdea85d9df44181f5d2b1c9af516a6dd98b1e1217d6dce8433bed38d036eb",
+  "files": 162,
+  "startup": "standalone source preview startup passed",
+  "kind": "development source preview only; not a new exe release",
+  "source_commit": "1ac88026da1707049db9c98635372d8488f60b2c"
+}
