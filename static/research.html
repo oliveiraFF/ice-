@@ -70,10 +70,10 @@
     <div class="script-actions research-actions">
       <button id="researchSave" class="secondary" type="button">保存输入（不分析）</button>
       <button id="researchDemo" class="secondary" type="button">演示研究</button>
-      <label class="research-confirm"><input id="researchConfirm" type="checkbox"> 本次确认真实调用</label>
+      <label class="research-confirm"><input id="researchConfirm" type="checkbox"> 本次确认真实调用（可能计费）</label>
       <button id="researchReal" class="primary" type="button">真实研究</button>
     </div>
-    <p class="script-hint">保存与演示都不调用模型；真实调用还需服务进程具备 LLM_ALLOW_PAID=1 的独立付费许可，页面不会自动开启。</p>
+    <p class="script-hint">保存与演示都不调用模型；真实调用需先配置模型并勾选本次确认，可能由模型服务单独计费。</p>
   </section>
 
   <section id="researchResultCard" class="script-result" aria-label="研究结果" hidden>
@@ -103,10 +103,10 @@
     <div id="topicsManualRoles" class="topics-role-list"></div>
     <div class="script-actions topics-actions">
       <button id="topicsDemo" class="secondary" type="button" disabled>演示生成选题</button>
-      <label class="research-confirm"><input id="topicsConfirm" type="checkbox"> 本次确认真实调用</label>
+      <label class="research-confirm"><input id="topicsConfirm" type="checkbox"> 本次确认真实调用（可能计费）</label>
       <button id="topicsReal" class="primary" type="button" disabled>真实生成选题</button>
     </div>
-    <p class="script-hint">演示不调用模型；真实调用还需服务进程具备 LLM_ALLOW_PAID=1 的独立付费许可。一个按钮最多调用一次，不自动重试、不自动转稿。</p>
+    <p class="script-hint">演示不调用模型；真实调用需先配置模型并勾选本次确认，可能由模型服务单独计费。一个按钮最多调用一次，不自动重试、不自动转稿。</p>
     <p id="topicsStatus" class="script-hint" role="status"></p>
     <p id="topicsError" class="script-error" role="status" hidden></p>
     <div id="topicsDraftResult" class="topics-draft-result" hidden></div>
@@ -173,10 +173,10 @@
     <div class="script-actions adaptation-actions">
       <button id="adaptationSaveInput" class="secondary" type="button">保存输入（不分析）</button>
       <button id="adaptationDemo" class="secondary" type="button">演示适配</button>
-      <label class="research-confirm"><input id="adaptationConfirm" type="checkbox"> 本次确认真实调用</label>
+      <label class="research-confirm"><input id="adaptationConfirm" type="checkbox"> 本次确认真实调用（可能计费）</label>
       <button id="adaptationReal" class="primary" type="button">真实适配</button>
     </div>
-    <p class="script-hint">演示与保存不调用模型；真实调用还需服务进程具备 LLM_ALLOW_PAID=1 的独立付费许可。真实失败后需重新勾选确认。</p>
+    <p class="script-hint">演示与保存不调用模型；真实调用需先配置模型并勾选本次确认，可能由模型服务单独计费。真实失败后需重新勾选确认。</p>
     <p id="adaptationStatus" class="script-hint" role="status"></p>
     <p id="adaptationStale" class="script-warning" role="status" hidden></p>
     <p id="adaptationError" class="script-error" role="status" hidden></p>

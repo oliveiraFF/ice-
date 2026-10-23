@@ -163,6 +163,25 @@ def build_review_prompt(input_data, manuscript, extra_context=None, base_version
          input_data['resources'] or '未填写', input_data['duration'], frame_desc,
          transcript['source'], ('（用户声明完整）' if input_data.get('transcript_complete') else ''),
          transcript['text'] or '（无）', manuscript_text, extra, _SCHEMA)
+    allowed_sources = {'frame:%d' % item['frame'] for item in input_data['frames']}
+    if transcript['source'] == 'manual':
+        allowed_sources.add('transcript')
+    if manuscript:
+        allowed_sources.add('manuscript')
+        allowed_sources.update(str(ref['id']) for ref in
+                               (manuscript.get('context_json') or {}).get('refs') or []
+                               if ref.get('id'))
+    allowed_sources.update(str(ref['id']) for ref in (extra_context or {}).get('refs') or []
+                           if ref.get('id'))
+    user += ('\n本次可用来源标识（完整白名单）：%s\n'
+             'sources 每项必须从此清单逐字选择，不能创建别名。业务、目标、资源是输入文字，'
+             '不能据此另造 business/goal/resources/user 等来源标识；不含 manuscript 或 transcript '
+             '时不得引用它们。不能直接引用合法来源的判断写为 inference 或 cannot_judge；'
+             '修改项没有合法来源时不凑 changes。\n'
+             '帧与来源必须成对：每当 observations 或 changes 的 frames 列出 N，sources 必须同时包含 '
+             'frame:N。纯台词修改使用 frames:[]、sources:["transcript"]；基于帧1的修改使用 '
+             'frames:[1]、sources:["frame:1"]，不得只写其他来源却仍声明 frames:[1]。\n'
+             % json.dumps(sorted(allowed_sources), ensure_ascii=False))
     return _SYSTEM, user
 
 

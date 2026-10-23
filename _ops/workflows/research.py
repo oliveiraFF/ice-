@@ -241,6 +241,11 @@ def build_research_prompt(input_data, context):
                  business.get('goal') or '未填写', business.get('resources') or '未填写',
                  business.get('capacity') or '未填写', business.get('question') or '未填写',
                  '\n'.join(_strategy_lines(strategy)), '\n'.join(_ref_lines(refs)), _SCHEMA)
+    user += ('\n冲突填写规则：资料不足不是冲突；只有至少两个不同的本次资料号的原文确有相互矛盾，'
+             '才能填写 conflicts，basis 至少列出这两个不同资料号。没有此类冲突时 conflicts 必须为 []；'
+             '缺失信息写入 cannot_judge 或 gaps，不要在 conflicts 中写“没有冲突”的占位行。\n')
+    if len(refs) < 2:
+        user += '本次资料不足两条，conflicts 必须为 []。\n'
     return _SYSTEM, user
 
 

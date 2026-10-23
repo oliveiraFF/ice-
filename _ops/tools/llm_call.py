@@ -100,6 +100,10 @@ def call_llm(messages, max_tokens=800, timeout=60, config=None):
         "max_tokens": max_tokens,
         "temperature": 0.7,
     }
+    if (urlsplit(base).hostname == "api.deepseek.com"
+            and model in ("deepseek-flash", "deepseek-v4-pro")):
+        payload["thinking"] = {"type": "disabled"}
+        payload["response_format"] = {"type": "json_object"}
     data = json.dumps(payload, ensure_ascii=False).encode("utf-8")
     request = urllib.request.Request(base + "/chat/completions", data, {
         "Content-Type": "application/json",

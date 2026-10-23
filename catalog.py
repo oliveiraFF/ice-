@@ -54,15 +54,18 @@ def example(schema):
     return [] if kind == 'array' else False if kind == 'boolean' else 0 if kind in ('integer', 'number') else ''
 
 
-def execution_reason(item):
+def execution_reason(item, allow_balance=False):
     if re.search(r'live|webcast|livestream', item['path'], re.I):
         return '直播接口按设置停用'
     if not item['runnable']:
         return '缺少执行文档或尚未接入此操作'
+    if (item.get('platform') == 'douyin' and item.get('legacy_documentation')
+            and re.search(r'(?:video|general)_search|search_video$', item['path'])):
+        return '历史搜索地址已暂停，请使用当前官方搜索接口'
     if item['price'] is None:
         return '价格未知，不能执行'
-    if item['price'] != '0' and not item['free_credit']:
-        return '此接口不支持赠送额度，仅展示'
+    if item['price'] != '0' and not item['free_credit'] and not allow_balance:
+        return '此接口需要充值余额，请在额度设置中明确允许使用充值余额'
     return ''
 
 
@@ -161,6 +164,8 @@ class Catalog:
                        'enabled INTEGER NOT NULL DEFAULT 0, limit_amount TEXT NOT NULL DEFAULT "0", '
                        'expires_at REAL, free_credit TEXT, balance TEXT, checked_at REAL)')
             db.execute('INSERT OR IGNORE INTO api_access(id) VALUES(1)')
+            if 'allow_balance' not in {r[1] for r in db.execute('PRAGMA table_info(api_access)')}:
+                db.execute('ALTER TABLE api_access ADD COLUMN allow_balance INTEGER NOT NULL DEFAULT 0')
             db.execute('CREATE TABLE IF NOT EXISTS api_requests(id INTEGER PRIMARY KEY, '
                        'tool_id TEXT NOT NULL, cost TEXT NOT NULL, at REAL NOT NULL, outcome TEXT NOT NULL)')
             db.commit()
@@ -173,16 +178,17 @@ class Catalog:
     def state(self):
         with closing(sqlite3.connect(self.database, timeout=15)) as db:
             rows = db.execute('SELECT id,enabled,last_at,last_ok FROM tools WHERE added=1').fetchall()
+        access = self.access_state()
         compact = [dict({k: v for k, v in i.items() if k not in ('description', 'query', 'body', 'parameters', 'body_schema')},
-                        execution_reason=execution_reason(i)) for i in self.items]
+                        execution_reason=execution_reason(i, access['allow_balance'])) for i in self.items]
         return dict(items=compact, imported_at=self.snapshot['imported_at'], source=self.snapshot['source'],
-                    access=self.access_state(),
+                    access=access,
                     tools={r[0]: dict(enabled=bool(r[1]), last_at=r[2], last_ok=None if r[3] is None else bool(r[3]))
                            for r in rows if r[0] in self.index})
 
     def detail(self, ident):
         item = dict(self.get(ident))
-        item['execution_reason'] = execution_reason(item)
+        item['execution_reason'] = execution_reason(item, self.access_state()['allow_balance'])
         with closing(sqlite3.connect(self.database, timeout=15)) as db:
             row = db.execute('SELECT last_result FROM tools WHERE id=?', (ident,)).fetchone()
         item['last_result'] = row[0] if row else None
@@ -192,8 +198,9 @@ class Catalog:
         item = self.get(ident)
         if action not in ('add', 'remove', 'enable', 'disable'):
             raise ValueError('工具操作无效')
-        if action == 'enable' and execution_reason(item):
-            raise ValueError(execution_reason(item))
+        reason = execution_reason(item, self.access_state()['allow_balance'])
+        if action == 'enable' and reason:
+            raise ValueError(reason)
         with closing(sqlite3.connect(self.database, timeout=15)) as db:
             if action == 'add':
                 db.execute('INSERT OR IGNORE INTO tools(id) VALUES(?)', (ident,))
@@ -216,18 +223,18 @@ class Catalog:
         active = bool(row['enabled'] and remaining > 0 and (not row['expires_at'] or time.time() < row['expires_at']))
         return dict(enabled=bool(row['enabled']), active=active, limit=row['limit_amount'], spent=format(spent, 'f'),
                     remaining=format(remaining, 'f'), expires_at=row['expires_at'], free_credit=row['free_credit'],
-                    balance=row['balance'], checked_at=row['checked_at'])
+                    balance=row['balance'], checked_at=row['checked_at'], allow_balance=bool(row['allow_balance']))
 
-    def configure_access(self, enabled, amount, days=None):
+    def configure_access(self, enabled, amount, days=None, allow_balance=False):
         amount = price(amount)
-        if not isinstance(enabled, bool) or amount is None:
+        if not isinstance(enabled, bool) or not isinstance(allow_balance, bool) or amount is None:
             raise ValueError('开关或预算金额无效')
         if days is not None and (isinstance(days, bool) or not isinstance(days, int) or not 1 <= days <= 3650):
             raise ValueError('开启天数需为1～3650的整数，持续开启请留空')
         expires = time.time() + days * 86400 if enabled and days is not None else None
         with closing(sqlite3.connect(self.database, timeout=15)) as db:
-            db.execute('UPDATE api_access SET enabled=?,limit_amount=?,expires_at=? WHERE id=1',
-                       (int(enabled), amount, expires))
+            db.execute('UPDATE api_access SET enabled=?,limit_amount=?,expires_at=?,allow_balance=? WHERE id=1',
+                       (int(enabled), amount, expires, int(allow_balance)))
             db.commit()
         return self.access_state()
 
@@ -249,13 +256,16 @@ class Catalog:
             db.commit()
         return self.access_state()
 
-    def reserve(self, ident, cost):
+    def reserve(self, ident, cost, uses_balance=False):
         with closing(sqlite3.connect(self.database, timeout=15)) as db:
             db.execute('BEGIN IMMEDIATE')
-            enabled, limit, expires = db.execute('SELECT enabled,limit_amount,expires_at FROM api_access WHERE id=1').fetchone()
+            enabled, limit, expires, allow_balance = db.execute(
+                'SELECT enabled,limit_amount,expires_at,allow_balance FROM api_access WHERE id=1').fetchone()
             spent = sum((Decimal(r[0]) for r in db.execute('SELECT cost FROM api_requests')), Decimal('0'))
             if not enabled or (expires and time.time() >= expires):
-                raise ValueError('赠送额度调用未开启或已到期，请在额度设置中开启')
+                raise ValueError('接口调用未开启或已到期，请在额度设置中开启')
+            if uses_balance and not allow_balance:
+                raise ValueError('未允许使用充值余额，已停止')
             if spent + cost > Decimal(limit):
                 raise ValueError('本地累计预算不足，已停止')
             row = db.execute('INSERT INTO api_requests(tool_id,cost,at,outcome) VALUES(?,?,?,?)',
@@ -265,9 +275,11 @@ class Catalog:
 
     def run(self, ident, key, params, body, call):
         item = self.get(ident)
-        tool = self.state()['tools'].get(ident)
-        if execution_reason(item) or not tool or not tool['enabled']:
-            raise ValueError(execution_reason(item) or '请先启用该接口')
+        state = self.state()
+        tool = state['tools'].get(ident)
+        reason = execution_reason(item, state['access']['allow_balance'])
+        if reason or not tool or not tool['enabled']:
+            raise ValueError(reason or '请先启用该接口')
         if item['requires_key'] and not key:
             raise ValueError('请先在数据源设置填写 API Key')
         if not isinstance(params, dict):
@@ -284,19 +296,24 @@ class Catalog:
         if item.get('body_schema'):
             validate_value(body, item['body_schema'], '请求体')
         if item['price'] != '0' and not self.access_state()['active']:
-            raise ValueError('赠送额度调用未开启、预算不足或已到期')
+            raise ValueError('接口调用未开启、预算不足或已到期')
         info = call('/api/v1/tikhub/user/get_endpoint_info', params={'endpoint': item['path']}).get('data') or {}
         current = price(info.get('endpoint_cost'))
         if info.get('endpoint_uri') != item['path'] or current is None or current != item['price']:
             raise ValueError('实时价格与目录不一致或无法确认价格；已停止，未执行目标接口')
         request_id = None
+        funding_source = 'zero'
         if current != '0':
-            if info.get('allow_free_credit') not in (True, 1):
-                raise ValueError('实时信息显示接口不支持赠送额度；已停止')
             account = self.refresh_credit(key, call)
-            if Decimal(account['free_credit']) < Decimal(current):
-                raise ValueError('赠送余额不足，已停止，不使用充值余额')
-            request_id = self.reserve(ident, Decimal(current))
+            if info.get('allow_free_credit') in (True, 1) and Decimal(account['free_credit']) >= Decimal(current):
+                funding_source = 'free_credit'
+            elif not account['allow_balance']:
+                raise ValueError('接口不支持赠送额度或赠送余额不足；未允许使用充值余额，已停止')
+            elif Decimal(account['balance']) < Decimal(current):
+                raise ValueError('充值余额不足，已停止')
+            else:
+                funding_source = 'balance'
+            request_id = self.reserve(ident, Decimal(current), uses_balance=funding_source == 'balance')
         ok = False
         try:
             payload = call(item['path'], key=key if item['requires_key'] else None, params=params,
@@ -315,4 +332,5 @@ class Catalog:
             if request_id is not None:
                 db.execute('UPDATE api_requests SET outcome=? WHERE id=?', ('returned' if ok else 'uncertain', request_id))
             db.commit()
-        return dict(ok=ok, result=result, at=at, truncated=truncated, cost=current, access=self.access_state())
+        return dict(ok=ok, result=result, at=at, truncated=truncated, cost=current,
+                    funding_source=funding_source, access=self.access_state())

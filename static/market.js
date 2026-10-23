@@ -21,7 +21,7 @@ function render(){
   $('totalCount').textContent=count.toLocaleString();$('freeCount').textContent=zero;$('managedCount').textContent=managed;
   $('importTime').textContent='目录快照 · '+timeText(model.imported_at);
   const access=model.access||{};
-  $('accessStatus').textContent=access.active?'赠送额度调用已开启':access.enabled?'额度调用已停止 · 预算不足或已到期':'赠送额度调用已关闭';
+  $('accessStatus').textContent=access.active?(access.allow_balance?'接口调用已开启 · 允许充值余额':'接口调用已开启 · 仅赠送额度'):access.enabled?'接口调用已停止 · 预算不足或已到期':'接口调用已关闭';
   $('creditTotals').textContent=`赠送余额 ${moneyText(access.free_credit)} · 充值余额 ${moneyText(access.balance)} · 查询于 ${timeText(access.checked_at)}`;
   $('budgetTotals').textContent=`累计预算 ${moneyText(access.limit)} · 已预留 ${moneyText(access.spent)} · 剩余 ${moneyText(access.remaining)} · ${access.expires_at?'到期 '+timeText(access.expires_at):'未设置到期时间'}`;
   if(!$('platformChips').children.length){
@@ -41,11 +41,12 @@ function render(){
 }
 function resetFilters(){type='';credit='';discount='';platform='';feature='';page=1;$('apiSearch').value='';$('methodFilter').value='';$('priceFilter').value='';$('managedFilter').checked=false;render();}
 async function manage(id,action){await api('/api/tools',{id,action});await load();toast({add:'已添加，可用“已添加”筛选查看',remove:'已移除，可在API市场重新添加',enable:'接口已启用；尚未执行',disable:'接口已停用'}[action]);}
+function isLegacyDouyinSearch(row){return row?.platform==='douyin'&&row.legacy_documentation&&/(?:video|general)_search|search_video$/.test(row.path);}
 function refreshDetail(){
-  if(!detail)return;const tool=model.tools[detail.id],free=detail.price==='0';
-  const reason=detail.execution_reason||(!tool?.enabled?'请先启用接口':(detail.requires_key||!free)&&!model.connected?'请先配置密钥':!free&&!model.access?.active?'请先在市场页面开启额度并设置预算':'');
-  $('detailManage').disabled=Boolean(detail.execution_reason&&!tool?.enabled)||busy;
-  $('detailManage').textContent=tool?.enabled?'停用接口':detail.execution_reason?'当前不可执行':'启用接口';
+  if(!detail)return;const tool=model.tools[detail.id],free=detail.price==='0',reasonNow=model.items.find(row=>row.id===detail.id)?.execution_reason??detail.execution_reason;
+  const reason=(isLegacyDouyinSearch(detail)?'该历史搜索地址不在当前官方文档中，已暂停执行；可通过视频分享链接收录单条视频。':'')||reasonNow||(!tool?.enabled?'请先启用接口':(detail.requires_key||!free)&&!model.connected?'请先配置密钥':!free&&!model.access?.active?'请先在市场页面开启额度并设置预算':'');
+  $('detailManage').disabled=Boolean(reasonNow&&!tool?.enabled)||busy;
+  $('detailManage').textContent=tool?.enabled?'停用接口':reasonNow?'当前不可执行':'启用接口';
   $('runTool').disabled=busy||Boolean(reason);
   $('runTool').textContent=busy?'正在运行…':`执行一次 · ${moneyText(detail.price)}`;
   $('runEligibility').textContent=reason||'执行前再次检查实时价格与额度';
@@ -60,6 +61,7 @@ async function openDetail(id){
   $('queryInput').value=JSON.stringify(detail.query||{},null,2);$('bodyInput').value=JSON.stringify(detail.body??{},null,2);$('bodyEditor').hidden=detail.method!=='POST';
   const keyword=new URLSearchParams(location.search).get('keyword');
   if(keyword){const query=JSON.parse($('queryInput').value),body=JSON.parse($('bodyInput').value);if(detail.parameters.some(p=>p.in==='query'&&p.name==='keyword'))query.keyword=keyword;else if(detail.body_schema?.properties?.keyword)body.keyword=keyword;else if(detail.body_schema?.properties?.query)body.query=keyword;$('queryInput').value=JSON.stringify(query,null,2);$('bodyInput').value=JSON.stringify(body,null,2);}
+  if(detail.path==='/api/v1/douyin/app/v3/fetch_one_video_by_share_url'&&new URLSearchParams(location.search).get('collect')==='1'){const query=JSON.parse($('queryInput').value);query.share_url='';$('queryInput').value=JSON.stringify(query,null,2);}
   $('legacyNotice').hidden=!detail.legacy_documentation;
   $('collectionOptions').hidden=!['douyin','xiaohongshu'].includes(detail.platform);
   $('collectResult').checked=new URLSearchParams(location.search).get('collect')==='1'&&!$('collectionOptions').hidden;
@@ -84,11 +86,14 @@ document.addEventListener('click',async event=>{
 });
 $('detailManage').onclick=()=>{if(detail)manage(detail.id,model.tools[detail.id]?.enabled?'disable':'enable').catch(e=>toast(e.message));};
 $('runTool').onclick=async()=>{
-  if(busy||!detail)return;const id=detail.id;let params,body;
+  if(busy||!detail)return;
+  if(isLegacyDouyinSearch(detail)){$('runStatus').textContent='历史搜索接口已暂停，未发出请求。请使用当前接口文档中的地址。';refreshDetail();return;}
+  const id=detail.id;let params,body;
   for(const field of document.querySelectorAll('#parameterFields input'))if(!field.checkValidity()){field.reportValidity();return;}
   try{params=JSON.parse($('queryInput').value);body=detail.method==='POST'?JSON.parse($('bodyInput').value):null;if(!params||Array.isArray(params)||typeof params!=='object')throw new Error('查询参数必须是 JSON 对象');}catch(error){toast('请检查参数 JSON：'+error.message);return;}
+  if(detail.path==='/api/v1/douyin/app/v3/fetch_one_video_by_share_url'&&!String(params.share_url||'').trim()){$('runStatus').textContent='请先在 share_url 中粘贴你的视频分享链接；未发送请求。';return;}
   busy=true;refreshDetail();$('runStatus').textContent='正在核实实时价格并执行一次…';
-  try{const result=await api('/api/tools/run',{id,params,body,collect:$('collectResult').checked,keyword:$('collectionKeyword').value.trim()});if(detail?.id===id){$('toolResponse').textContent=result.result;$('runStatus').textContent=(result.ok?'已返回响应 · ':'返回错误 · ')+timeText(result.at)+' · 本次标价 '+moneyText(result.cost);$('collectionStatus').textContent=result.collection_message||'';$('viewCollected').hidden=!result.keyword_id;if(result.keyword_id)$('viewCollected').href='/?keyword='+result.keyword_id;}await load();}
+  try{const result=await api('/api/tools/run',{id,params,body,collect:$('collectResult').checked,keyword:$('collectionKeyword').value.trim()});if(detail?.id===id){$('toolResponse').textContent=result.result;$('runStatus').textContent=(result.ok?'已返回响应 · ':'返回错误 · ')+timeText(result.at)+' · 本次标价 '+moneyText(result.cost)+(result.funding_source==='balance'?' · 充值余额':result.funding_source==='free_credit'?' · 赠送额度':'');$('collectionStatus').textContent=result.ok?(result.collection_message||''):('接口执行失败，未收录视频。实际原因：'+String(result.result||'未返回可识别的错误说明').slice(0,500));$('viewCollected').hidden=!result.keyword_id;if(result.keyword_id)$('viewCollected').href='/?keyword='+result.keyword_id;}await load();}
   catch(error){if(detail?.id===id)$('runStatus').textContent=error.message;toast(error.message);}
   finally{busy=false;refreshDetail();}
 };
@@ -113,8 +118,9 @@ function renderParameterFields(){
   $('parameterFields').oninput=event=>{const index=event.target.dataset.paramIndex;if(index===undefined)return;const p=fields[Number(index)],schema=p.schema?.anyOf?.find(s=>s.type!=='null')||p.schema||{},input=event.target.value,target=p.scope==='query'?'queryInput':'bodyInput';try{const data=JSON.parse($(target).value);if(input==='')delete data[p.name];else data[p.name]=['integer','number','boolean','array','object'].includes(schema.type)?JSON.parse(input):input;$(target).value=JSON.stringify(data,null,2);event.target.setCustomValidity('');}catch{event.target.setCustomValidity('请填写正确的数字、布尔值或JSON');}};
 }
 $('queryInput').oninput=renderParameterFields;$('bodyInput').oninput=renderParameterFields;
-$('refreshCredit').onclick=async()=>{const button=$('refreshCredit');button.disabled=true;try{await api('/api/credit',{});await load();toast('已更新赠送余额；未调用内容接口');}catch(error){toast(error.message);}finally{button.disabled=false;}};
-$('openAccess').onclick=()=>{const a=model.access||{};$('accessEnabled').checked=Boolean(a.enabled);$('accessLimit').value=a.limit||'0';$('accessDuration').value=a.expires_at?'days':'continuous';$('accessDays').value=a.expires_at?Math.max(1,Math.ceil((a.expires_at-Date.now()/1000)/86400)):1;$('accessDaysLabel').hidden=!a.expires_at;$('accessError').textContent='';$('accessDialog').showModal();};
+$('refreshCredit').onclick=async()=>{const button=$('refreshCredit');button.disabled=true;try{await api('/api/credit',{});await load();toast('已更新账户余额；未调用内容接口');}catch(error){toast(error.message);}finally{button.disabled=false;}};
+$('openAccess').onclick=()=>{const a=model.access||{};$('accessEnabled').checked=Boolean(a.enabled);$('allowBalance').checked=Boolean(a.allow_balance);$('accessLimit').value=a.limit||'0';$('accessDuration').value=a.expires_at?'days':'continuous';$('accessDays').value=a.expires_at?Math.max(1,Math.ceil((a.expires_at-Date.now()/1000)/86400)):1;$('accessDaysLabel').hidden=!a.expires_at;$('accessError').textContent='';$('accessDialog').showModal();};
+$('detailAccess').onclick=()=>$('openAccess').onclick();
 $('accessDuration').onchange=()=>$('accessDaysLabel').hidden=$('accessDuration').value!=='days';
 $('closeAccess').onclick=()=>$('accessDialog').close();
-$('accessForm').onsubmit=async event=>{event.preventDefault();try{await api('/api/access',{enabled:$('accessEnabled').checked,limit:$('accessLimit').value,days:$('accessDuration').value==='days'?Number($('accessDays').value):null});$('accessDialog').close();await load();toast('额度设置已保存；没有执行内容请求');}catch(error){$('accessError').textContent=error.message;}};
+$('accessForm').onsubmit=async event=>{event.preventDefault();try{await api('/api/access',{enabled:$('accessEnabled').checked,allow_balance:$('allowBalance').checked,limit:$('accessLimit').value,days:$('accessDuration').value==='days'?Number($('accessDays').value):null});$('accessDialog').close();await load();toast('额度设置已保存；没有执行内容请求');}catch(error){$('accessError').textContent=error.message;}};

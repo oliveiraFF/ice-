@@ -701,7 +701,7 @@ def script_prepare(body, store=None, ai=None, data_dir=None, ops=None):
             'model': model,
             'api_key': key,
             'authorized': body.get('confirm') is True,
-            'allow_paid': os.getenv('LLM_ALLOW_PAID', '') == '1',
+            'allow_paid': body.get('confirm') is True,
         }
 
     source, model, usage, llm_duration, llm_error = None, None, None, None, None
@@ -1010,7 +1010,7 @@ def _advice_run(status, context, question, parent, model_mode, confirm, ai):
         raise ValueError('请先在 AI 模型设置中配置服务地址、模型和密钥')
     base = endpoint[:-len('/chat/completions')] if endpoint.endswith('/chat/completions') else endpoint
     llm_config = {'base_url': base, 'model': model, 'api_key': key, 'authorized': True,
-                  'allow_paid': os.getenv('LLM_ALLOW_PAID', '') == '1'}
+                  'allow_paid': confirm is True}
     system, user = build_advice_prompt(status, context, question, parent=parent)
     started = time.time()
     try:
@@ -1108,7 +1108,7 @@ def _draft_run(status, topic, context, instruction, ai, model_mode, confirm, bas
         raise ValueError('请先在 AI 模型设置中配置服务地址、模型和密钥')
     base_url = endpoint[:-len('/chat/completions')] if endpoint.endswith('/chat/completions') else endpoint
     llm_config = {'base_url': base_url, 'model': model, 'api_key': key, 'authorized': True,
-                  'allow_paid': os.getenv('LLM_ALLOW_PAID', '') == '1'}
+                  'allow_paid': confirm is True}
     if base:
         system, user = build_optimize_prompt(base, instruction, context, topic, status,
                                              base_version=base_version)
@@ -1597,7 +1597,7 @@ def _draft_optimize_with_optimization(body, store, ops, ai, optimization):
         base_url = endpoint[:-len('/chat/completions')] if endpoint.endswith('/chat/completions') else endpoint
         llm_config = {'base_url': base_url, 'model': model, 'api_key': key,
                       'authorized': True,
-                      'allow_paid': os.getenv('LLM_ALLOW_PAID', '') == '1'}
+                      'allow_paid': spec['confirm'] is True}
         started = time.time()
         try:
             resp = call_llm(messages, max_tokens=2400, timeout=90, config=llm_config)
@@ -1849,7 +1849,7 @@ def media_review_analyze(body, store, ops, ai):
             raise ValueError('请先在 AI 模型设置中配置服务地址、模型和密钥')
         base_url = endpoint[:-len('/chat/completions')] if endpoint.endswith('/chat/completions') else endpoint
         llm_config = {'base_url': base_url, 'model': model, 'api_key': key, 'authorized': True,
-                      'allow_paid': os.getenv('LLM_ALLOW_PAID', '') == '1'}
+                      'allow_paid': body.get('confirm') is True}
         system, user = build_review_prompt(input_data, manuscript, extra_context=context)
         content = [{'type': 'text', 'text': user}]
         for item in input_data['frames']:
@@ -2127,7 +2127,7 @@ def research_analyze(body, store, ops, ai):
             raise ValueError('请先在 AI 模型设置中配置服务地址、模型和密钥')
         base_url = endpoint[:-len('/chat/completions')] if endpoint.endswith('/chat/completions') else endpoint
         llm_config = {'base_url': base_url, 'model': model, 'api_key': key, 'authorized': True,
-                      'allow_paid': os.getenv('LLM_ALLOW_PAID', '') == '1'}
+                      'allow_paid': body.get('confirm') is True}
         system, user = build_research_prompt(input_data, context)
         user = _append_industry_prompt(user, context.get('industry'))
         started = time.time()
@@ -2523,7 +2523,7 @@ def research_topics(body, store, ops, ai):
             raise ValueError('请先在 AI 模型设置中配置服务地址、模型和密钥')
         base_url = endpoint[:-len('/chat/completions')] if endpoint.endswith('/chat/completions') else endpoint
         llm_config = {'base_url': base_url, 'model': model, 'api_key': key, 'authorized': True,
-                      'allow_paid': os.getenv('LLM_ALLOW_PAID', '') == '1'}
+                      'allow_paid': confirm is True}
         system, user = build_topics_prompt(context)
         user = _append_industry_prompt(user, context.get('industry'))
         started = time.time()
@@ -3135,7 +3135,7 @@ def research_adaptation(body, store, ops, ai):
             if endpoint.endswith('/chat/completions') else endpoint
         llm_config = {'base_url': base_url, 'model': model, 'api_key': key,
                       'authorized': True,
-                      'allow_paid': os.getenv('LLM_ALLOW_PAID', '') == '1'}
+                      'allow_paid': confirm is True}
         system, user = build_adaptation_prompt(context)
         user = _append_industry_prompt(user, context.get('industry'))
         started = time.time()
@@ -4321,7 +4321,8 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                     if not scan_lock.acquire(False):
                         raise ValueError('已有请求正在运行，请完成后再更改额度设置')
                     try:
-                        return self.send(catalog.configure_access(body.get('enabled'), body.get('limit'), body.get('days')))
+                        return self.send(catalog.configure_access(body.get('enabled'), body.get('limit'),
+                                                                  body.get('days'), body.get('allow_balance', False)))
                     finally:
                         scan_lock.release()
                 if self.path == '/api/credit':
@@ -4341,8 +4342,10 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                             item = catalog.get(str(body.get('id', '')))
                             if item['platform'] not in ('douyin', 'xiaohongshu'):
                                 result['collection_message'] = '此平台暂不支持收录到发现内容，响应已保留。'
-                            elif not result['ok'] or result['truncated']:
-                                result['collection_message'] = '响应失败或超过大小上限，未收录视频。'
+                            elif not result['ok']:
+                                result['collection_message'] = '接口执行失败，未收录视频。实际原因：' + result['result'][:500]
+                            elif result['truncated']:
+                                result['collection_message'] = '响应超过大小上限，未收录视频。'
                             else:
                                 posts = extract_posts(json.loads(result['result']), 'dy' if item['platform']=='douyin' else 'xhs')
                                 keyword = str(body.get('keyword') or 'TikHub采集').strip()

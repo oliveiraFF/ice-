@@ -291,9 +291,11 @@
         (version.base_version ? '（基于 v' + version.base_version + '）' : '') +
         (version.source === 'demo' ? '（演示：仅追加说明，未真正改写正文）' : '') +
         (meta.body_chars ? ' · 正文 ' + meta.body_chars + ' 码点' : '');
+      el('draftStatus').textContent = el('draftOptimizeStatus').textContent;
       loadList();
     } catch (error) {
       if (seq !== pageSeq) return;
+      el('draftStatus').textContent = '';
       el('draftOptimizeStatus').textContent = '';
       el('draftError').textContent = error.message;
     } finally {

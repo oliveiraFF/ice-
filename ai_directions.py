@@ -18,6 +18,12 @@ class NoRedirect(HTTPRedirectHandler):
 
 
 def request_completion(endpoint, key, payload):
+    if (urlsplit(endpoint).hostname == 'api.deepseek.com'
+            and payload.get('model') in ('deepseek-flash', 'deepseek-v4-pro')):
+        payload = dict(payload)
+        payload.setdefault('max_tokens', 6000)
+        payload['thinking'] = {'type': 'disabled'}
+        payload['response_format'] = {'type': 'json_object'}
     headers = {'Content-Type': 'application/json', 'Accept': 'application/json'}
     if key:
         headers['Authorization'] = 'Bearer ' + key

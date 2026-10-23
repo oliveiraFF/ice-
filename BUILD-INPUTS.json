@@ -1,23 +1,37 @@
 {
-  "build_id": "20261022-codex-ice-ui1-docs1",
-  "source_zip_sha256": "d73e291ab858c41aa225f3cb7da1a4aa9c87ec8cf89e8287eed013068f3a472c",
-  "source_zip_bytes": 18439531,
+  "build_id": "20261023-ice-functionfix2",
+  "source_zip_sha256": "19be0573df4da8bdfaa5fed1e68d815fc435ba7cecc49f7e85736f9715baab3a",
+  "source_zip_bytes": 18446851,
+  "source_zip_path": "E:\\ice-function-fix-20261023-promptfix\\20261023-ice-functionfix2-source.zip",
+  "parent_source_sha256": "a66f1810606457fa595f91f98619eecde40d6b98535a84220c0845c78afcd654",
   "files": [
     {
+      "file": ".gitattributes",
+      "sha256": "94f1276ccdedacc5ce408c9d02af36e5a0ee7a6cfe77a8498c6296ad6fadb81c"
+    },
+    {
+      "file": ".gitignore",
+      "sha256": "fd19bcd9d309666ecba2c14831de997d4a161fabc223f01a0367684c5e6574fd"
+    },
+    {
       "file": "M05-使用说明.md",
-      "sha256": "8415e5f1960412cf84592b4133ec6b1d4d9d01643d27476e070add7ff33bd213"
+      "sha256": "6ca4cf57807b48ca4a10485bae772abab3ccba7de665cd62556541d15e59819d"
     },
     {
       "file": "MANIFEST.sha256",
-      "sha256": "20f889835255ee0cceb2434b68f3e1c3bb2b63847c3f53b0f1df012126a3d34c"
+      "sha256": "4631401b0d90be2da702cf11eba918bf193a50816185d974fcacacf7ebd2118d"
     },
     {
       "file": "README-内测说明.md",
       "sha256": "6b2d9c0c71481f2812eddd1be69d81d207bf45568d3a01865b0c0f02e75fe42f"
     },
     {
+      "file": "README.md",
+      "sha256": "0780551a8a56529973f067b24a368264ab7366c9baa4bcba6a0fb7e8b1ec67c2"
+    },
+    {
       "file": "SOURCE.json",
-      "sha256": "ad5dc5935d8c1eff65b8ec40b9f028aaf94cde9a2dcb7b92bb69ae336d32fb8b"
+      "sha256": "65925410df9754a6323aa7c235b66bd36720ca748fd8876dc65b4702e8d7ec75"
     },
     {
       "file": "_ops/fixtures/sample_facts.json",
@@ -53,7 +67,7 @@
     },
     {
       "file": "_ops/tools/llm_call.py",
-      "sha256": "797b6792c816155da1431657fcaee6fc18c3876e61610b957d59b9c49cc0b918"
+      "sha256": "0df98b2d54ca5f4826c87ebe891fed65b069899e352aa48a256dba93a030f61e"
     },
     {
       "file": "_ops/tools/llm_script.py",
@@ -85,7 +99,7 @@
     },
     {
       "file": "_ops/workflows/media_review.py",
-      "sha256": "f653fa3add73a1b3e27365e35a0a125ed256ab7d95bedceef2f5d913aef45fc7"
+      "sha256": "343bb94ec86d8636c1e597f25323e19af4f501318727ff7f13bd0ca7d9d26305"
     },
     {
       "file": "_ops/workflows/ops_advice.py",
@@ -97,7 +111,7 @@
     },
     {
       "file": "_ops/workflows/research.py",
-      "sha256": "441c811872f3f5768d2c3b3088ab7c47215e9bd112a7e9586904e533e132e288"
+      "sha256": "bd0a41b648e8f671bf732218d053b3c19cb26373937e31a7f3d078974bcbd3ce"
     },
     {
       "file": "_ops/workflows/research_draft.py",
@@ -108,12 +122,16 @@
       "sha256": "aed89ddf48915180d2bbc0a812c3e2b44b3057d41a8fb46ada059eac26dda041"
     },
     {
+      "file": "_runtime/codex-rejected-cas.pem",
+      "sha256": "c916ce1b14ed8ca69e9b5c9fab22799a900dd610d6d4ec9b1347f4fd48e53718"
+    },
+    {
       "file": "ai_directions.py",
-      "sha256": "8fb8e19e78a547f62e55ae0a88f13b886adc8d6e74bb7bf02e45ac3a6d175116"
+      "sha256": "a32868a4c8701d744887b9476a4bc6ab2eeefb1a1e717622e43c7752f27b1c6e"
     },
     {
       "file": "app.py",
-      "sha256": "bbf7956dae61fe7abe3d063752c9f6c4d24edc8ff46cecb2b390396263faf8cc"
+      "sha256": "38ad1e93b701fb8dd006e4793bee67517f1d0504324a5e22956ae48446dd03ff"
     },
     {
       "file": "browser_collector.py",
@@ -121,7 +139,7 @@
     },
     {
       "file": "build_desktop.py",
-      "sha256": "442eb2a7d334bb4eb577904d7f4c2367166aee8bb1ce60ab556c67906aeabee2"
+      "sha256": "84a0bba597dfded251bc0972f9b9b8ce4fac7e5e9fa6e9b0fa39445957f3c0bb"
     },
     {
       "file": "build_release.py",
@@ -133,7 +151,7 @@
     },
     {
       "file": "catalog.py",
-      "sha256": "f69a684b54f679d222dc15019b138f0672ebeafe13b6515db97f60378cd0b442"
+      "sha256": "6e414bd6e1e7cb499e18220da1b4c3fa73593711424b2a235fd87bfa472c65cb"
     },
     {
       "file": "client_credentials.py",
@@ -165,7 +183,7 @@
     },
     {
       "file": "release.marker",
-      "sha256": "d23211db7da52706f8d7db37a6c6a6980a2e84c1916caa5bbbf73afa7493dae9"
+      "sha256": "ce4b41de0110757de747cbd6166ea3e11b6c882d837b453adf7b096de6f901fd"
     },
     {
       "file": "reviews.py",
@@ -177,7 +195,7 @@
     },
     {
       "file": "static/advice.html",
-      "sha256": "f2c36b652ce26cade5dfadd0f304821840c29e2735d8a47387ad02c9d0d0adc5"
+      "sha256": "53f885886bac5f534438d688a6dbec3c2ff8ab96dfcc791c3358d120dbb813b4"
     },
     {
       "file": "static/advice.js",
@@ -185,7 +203,7 @@
     },
     {
       "file": "static/app.js",
-      "sha256": "2fd2b4e17ad8feeda5129af1b0b7374da629e69688963a306b5840c246ab3b10"
+      "sha256": "6bc337ac0276229d95b1429701c35c1a74795acd517fd749dbfa34817ce76c9c"
     },
     {
       "file": "static/browser-collector.zip",
@@ -253,11 +271,11 @@
     },
     {
       "file": "static/draft.html",
-      "sha256": "459d1b552650526229285dadf013f5944f2b49a95e689880c846e517b9e46707"
+      "sha256": "a8c6259bf704e04be8cd10d2344376f2567a4941676ccc3b8311fc6a4288b1ef"
     },
     {
       "file": "static/draft.js",
-      "sha256": "19acb4e3772e6ebdf8af08039c7e78e4b98631aecdf103f10e46cf66046f0db7"
+      "sha256": "70080afbebfe94d8ee910824960589fa05e07ee5511ece923cf7d2002b8e68cf"
     },
     {
       "file": "static/feedback.css",
@@ -297,7 +315,7 @@
     },
     {
       "file": "static/ice.css",
-      "sha256": "85628b5a2bdf9b7c5f34ea3ba25ee78d2461f30b8033a4fa59f81e8f01592c05"
+      "sha256": "82b3a00d1bc11d9f85e6d6349d5b13f78bdbbc8c6b28e30fe473e59b76c3632f"
     },
     {
       "file": "static/icons.css",
@@ -549,7 +567,7 @@
     },
     {
       "file": "static/index.html",
-      "sha256": "902629ddaff0299157369c1a8583c94987a3c0420be35c7c874e13eed80f2147"
+      "sha256": "9879bf95995e4404e6dcbd1f5c815407bf70c7ac933153117929b8d4a4d9e658"
     },
     {
       "file": "static/market-data.js",
@@ -561,11 +579,11 @@
     },
     {
       "file": "static/market.html",
-      "sha256": "8d2a6759c70ef304ebcdb01fd0688e91a7cb96f44e757e51ec8639316c78f3d6"
+      "sha256": "5f26fb9ad79ed8e1c333a57da6381b1fb0ce8a3c9de6a5522d8ef5ee05a30510"
     },
     {
       "file": "static/market.js",
-      "sha256": "7f43afba00a223f0ce2651cc7d6eca05deee6517b196168e4606fc51233a7e71"
+      "sha256": "773275801272baa9c68c8214dbfd432726ba515b3d34b088e6157cf47f5b4574"
     },
     {
       "file": "static/media-review.css",
@@ -573,7 +591,7 @@
     },
     {
       "file": "static/media-review.html",
-      "sha256": "a2aacd47f81ef83865bcb60b94cf9d1efea12d870f16027f475587bf1b3b4a53"
+      "sha256": "8b6f3f93689fd8638ea18d4b319f190f1a1cc113fef3d21d1512379f3dbdb890"
     },
     {
       "file": "static/media-review.js",
@@ -589,7 +607,7 @@
     },
     {
       "file": "static/research.html",
-      "sha256": "f8fee1bda5302955a71dc38be16e75760a5b8bed9e87101cbdc068a54434fa4f"
+      "sha256": "9c80b23a271cc4c3bb522c681cf35e432d418a60b9a2225bf8d600e09611b3c6"
     },
     {
       "file": "static/research.js",
@@ -653,18 +671,11 @@
     },
     {
       "file": "使用说明.txt",
-      "sha256": "24e8ad3879bc73fdf85ac89272ed8cf4ba728bc91ce902d30ffc5ae14368c4ba"
+      "sha256": "3383ed661683ad68f6e44e0abaaa5673f2593e97f41fb4ef26b89f04bf3fae4b"
     },
     {
       "file": "启动.bat",
       "sha256": "abfe71b17946f60d336674a969b0dbd6e3506e530c5828282b7de0362fbaba23"
     }
-  ],
-  "binary_build_id": "20261022-codex-ice-ui1",
-  "binary_unchanged": true,
-  "mapping": {
-    "compiled_python": "code-object equality to source; runtime unchanged",
-    "static": "byte equality to UI1",
-    "ops": "byte equality to UI1"
-  }
+  ]
 }
