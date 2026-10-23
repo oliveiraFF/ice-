@@ -20,7 +20,7 @@ class AgentAPITests(unittest.TestCase):
         self.addCleanup(self.folder.cleanup)
         self.start_server()
         self.addCleanup(self.stop_server)
-        jpeg = (Path(app.__file__).parent / 'static/ice-assets/avatar.jpg').read_bytes()
+        jpeg = (Path(__file__).parent / 'fixtures/frame.jpg').read_bytes()
         self.inputs = dict(duration=2, outputs=['shooting', 'video_prompt'], target_seconds=30,
             product='合成测试收纳盒', audience='整理桌面的人', facts='合成资料：盒宽20厘米',
             conditions='手机拍摄，不露脸', details='', transcript='先量一下桌面。',
@@ -48,14 +48,26 @@ class AgentAPITests(unittest.TestCase):
             options = dict(data=body if isinstance(body, bytes) else json.dumps(body).encode(),
                 headers={'Origin': self.base, 'X-Radar-Token': self.token,
                          'Content-Type': 'application/json', **(headers or {})})
-        with urlopen(Request(self.base + path, **options), timeout=5) as response:
-            return json.loads(response.read())
+        try:
+            with urlopen(Request(self.base + path, **options), timeout=5) as response:
+                return json.loads(response.read())
+        except HTTPError as exc:
+            with exc:
+                exc.payload = json.loads(exc.read())
+            raise
 
     def saved_input(self):
         media = self.request('/api/agent/media', b'\x00\x00\x00\x18ftypisom0000',
                              {'Content-Type': 'video/mp4', 'X-Radar-Filename': 'test.mp4'})
         return self.request('/api/agent/task/save', {'input': self.inputs,
                             'media_id': media['media_id'], 'expected_version': 0})
+
+    def test_truncated_frame_is_rejected_without_creating_task(self):
+        self.inputs['frames'][0]['image'] = 'data:image/jpeg;base64,' + base64.b64encode(b'\xff\xd8truncated').decode()
+        with self.assertRaises(HTTPError) as error:
+            self.saved_input()
+        self.assertIn('JPEG', error.exception.payload['error'])
+        self.assertEqual(self.request('/api/agent/tasks'), [])
 
     def fake_generate(self, body, account_context=None):
         self.seen_context = account_context
