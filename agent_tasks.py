@@ -42,10 +42,23 @@ def backup_database(path):
     name = 'before-agent-tasks-' + datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
     target = folder / (name + '.sqlite3')
     with closing(sqlite3.connect(path.as_uri() + '?mode=ro', uri=True)) as source:
+        source.execute('BEGIN')
+        schema_version = source.execute('PRAGMA schema_version').fetchone()[0]
+        tables = [row[0] for row in source.execute("SELECT name FROM sqlite_master WHERE type='table'")]
+        def counts(db):
+            return {table: db.execute('SELECT count(*) FROM "' + table.replace('"', '""') + '"').fetchone()[0]
+                    for table in tables}
+        expected = counts(source)
         with closing(sqlite3.connect(target)) as destination:
             source.backup(destination)
-            if destination.execute('PRAGMA quick_check').fetchone()[0] != 'ok':
+            if (destination.execute('PRAGMA integrity_check').fetchone()[0] != 'ok'
+                    or counts(destination) != expected):
                 raise ValueError('数据库备份验证失败，未迁移')
+    manifest = dict(schema_version=schema_version, tables=expected,
+                    sha256=hashlib.sha256(target.read_bytes()).hexdigest(),
+                    created_at=datetime.now(timezone.utc).isoformat(),
+                    restore_scope='仅恢复备份时已提交的数据；迁移后的新增记录不在恢复点中')
+    target.with_suffix('.json').write_text(_json(manifest), encoding='utf-8')
     return target
 
 

@@ -1,7 +1,9 @@
 import json
+import hashlib
 import sqlite3
 import tempfile
 import unittest
+import shutil
 from contextlib import closing
 from pathlib import Path
 from unittest.mock import patch
@@ -85,6 +87,37 @@ class AgentTaskTests(unittest.TestCase):
         self.assertEqual(reopened['attempts'][0]['status'], 'result_unconfirmed')
         with closing(self.store.connect()) as db:
             self.assertEqual(db.execute('SELECT raw_response FROM agent_task_attempt').fetchone()[0], b'original transport bytes')
+
+    def test_wal_backup_has_verified_manifest_and_can_restore_old_schema(self):
+        old = Path(self.folder.name) / 'wal.sqlite3'
+        with closing(sqlite3.connect(old)) as writer:
+            writer.execute('PRAGMA journal_mode=WAL')
+            writer.execute('CREATE TABLE legacy(id INTEGER PRIMARY KEY, note TEXT)')
+            writer.execute("INSERT INTO legacy VALUES(1,'committed WAL data')")
+            writer.commit()
+            self.assertTrue(Path(str(old) + '-wal').exists())
+            AgentTasks(old, 'rules')
+        backup = next((old.parent / 'backups').glob('*.sqlite3'))
+        meta = json.loads(backup.with_suffix('.json').read_text('utf-8'))
+        self.assertEqual(meta['sha256'], hashlib.sha256(backup.read_bytes()).hexdigest())
+        self.assertEqual(meta['tables']['legacy'], 1)
+        restored = old.with_name('restored.sqlite3')
+        shutil.copy2(backup, restored)
+        with closing(sqlite3.connect(restored)) as db:
+            self.assertEqual(db.execute('SELECT note FROM legacy').fetchone()[0], 'committed WAL data')
+            self.assertIsNone(db.execute("SELECT name FROM sqlite_master WHERE name='agent_task'").fetchone())
+        self.assertTrue(old.exists())
+
+    def test_interrupted_migration_rolls_back_all_new_tables(self):
+        old = Path(self.folder.name) / 'interrupted.sqlite3'
+        with closing(sqlite3.connect(old)) as db, db:
+            db.execute('CREATE TABLE legacy(id INTEGER)')
+        import agent_tasks
+        with patch.object(agent_tasks, 'SCHEMA', agent_tasks.SCHEMA + '\nINVALID MIGRATION;'):
+            with self.assertRaises(sqlite3.OperationalError):
+                AgentTasks(old, 'rules')
+        with closing(sqlite3.connect(old)) as db:
+            self.assertEqual(db.execute("SELECT name FROM sqlite_master WHERE type='table'").fetchall(), [('legacy',)])
 
 
 if __name__ == '__main__':
