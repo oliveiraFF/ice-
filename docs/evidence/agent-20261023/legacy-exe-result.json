@@ -1,0 +1,16 @@
+{
+  "results": {
+    "migrated": {
+      "strategy_identical": true,
+      "export_identical": true
+    },
+    "restored": {
+      "strategy_identical": true,
+      "export_identical": true
+    }
+  },
+  "old_exe_sha256": "262215f6de10694266216b319010a8593546f72ff1e9b87193f77db13409489c",
+  "process_stop": "terminated isolated test process; no claim of graceful exe exit",
+  "external_model_calls": 0,
+  "new_agent_task_survives_old_exe": true
+}

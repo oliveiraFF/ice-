@@ -1,0 +1,18 @@
+{
+  "task_uid": "eedf1a72e617",
+  "versions": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "model_requests": 2,
+  "normal_server_exit": "HTTP servers closed normally",
+  "valid_synthetic_video": true,
+  "real_business_video": false,
+  "model_kind": "localhost deterministic fixture; no real model quality claim",
+  "media_replacement_identical_inputs": true,
+  "history_v2_readonly": true,
+  "edited_v3_survived_restart": true,
+  "failed_response_preserved": true
+}
