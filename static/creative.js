@@ -19,7 +19,8 @@ const CreativeData=(()=>{
       strategy:task.strategy,media:task.media,source:task.source,input};
     return `# 任务 ${task.task_uid} · 已保存 v${task.version}\n\n${dirty?'当前导出含未保存修改，不属于已保存版本；下面的依据是该版本的输入快照。':'成果与依据来自已保存版本。'}\n\n规则 ${task.rules.version} · ${task.rules.sha256}\n\n人工逐字稿未做时间对齐；采样时间是原视频证据时间，分镜时间是建议安排。\n\n## 已保存的输入与来源快照\n\n\`\`\`json\n${JSON.stringify(snapshot,null,2)}\n\`\`\`\n\n`;
   }
-  return {names,sampleTimes,clock,checkBrief,provenance};
+  function sameMedia(task,media){return Boolean(task&&media&&task.media.media_id===media.media_id);}
+  return {names,sampleTimes,clock,checkBrief,provenance,sameMedia};
 })();
 if(typeof module!=='undefined')module.exports=CreativeData;
 if(typeof document!=='undefined')(()=>{
@@ -69,10 +70,10 @@ if(typeof document!=='undefined')(()=>{
       savedMedia=await request('/api/agent/media',file,{'Content-Type':/\.webm$/i.test(file.name)?'video/webm':'video/mp4','X-Radar-Filename':encodeURIComponent(file.name)});
     }
     const key=inputKey(body);
-    if(currentTask&&key===uiBaseline&&!withEdits)return currentTask;
+    if(currentTask&&key===uiBaseline&&CreativeData.sameMedia(currentTask,savedMedia)&&!withEdits)return currentTask;
     const payload={input:body,media_id:savedMedia.media_id,expected_version:currentTask?.current_version||0};
     if(currentTask)payload.task_uid=currentTask.task_uid;
-    if(withEdits&&result&&key===uiBaseline)payload.result=editedResult();
+    if(withEdits&&result&&key===uiBaseline&&CreativeData.sameMedia(currentTask,savedMedia))payload.result=editedResult();
     currentTask=await request('/api/agent/task/save',payload);result=currentTask.result;savedMedia=currentTask.media;uiBaseline=key;
     history.replaceState(null,'','/creative?task='+currentTask.task_uid);
     showTask();await loadTaskList();
@@ -88,7 +89,7 @@ if(typeof document!=='undefined')(()=>{
   }
   function unsaved(){
     if(!frames.length||taskReadOnly())return false;
-    if(!currentTask||inputKey(brief())!==uiBaseline)return true;
+    if(!currentTask||inputKey(brief())!==uiBaseline||!CreativeData.sameMedia(currentTask,savedMedia))return true;
     return result&&Object.entries(result.report.deliverables).some(([key,value])=>el('creativeText-'+key)?.value!==value);
   }
   async function openTask(uid,version){
