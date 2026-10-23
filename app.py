@@ -21,13 +21,14 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
 from socketserver import ThreadingMixIn
 from urllib.error import HTTPError, URLError
-from urllib.parse import parse_qs, urlencode, urlsplit
+from urllib.parse import parse_qs, urlencode, urlsplit, unquote
 from urllib.request import Request, urlopen
 from catalog import Catalog
 from free_tools import download_cached_video, imported_posts, cached_media_url, resolved_media_url, validate_media_url
 from browser_collector import browser_posts
 from ai_directions import AIDirections
-from video_creative import VideoCreative, MAX_REQUEST_BYTES, MAX_VIDEO_BYTES
+from video_creative import VideoCreative, MAX_REQUEST_BYTES, MAX_VIDEO_BYTES, TASK_RULES
+from agent_tasks import AgentTasks
 from ops import OpsStore, ensure_tables
 
 # 复用 OPS 脚本工作流：发布包默认从包内 _ops 加载；开发模式保留 OPS_PROJECT_ROOT / D 盘默认。
@@ -3929,6 +3930,8 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
     ai = AIDirections(store.path)
     creative = VideoCreative(ai)
     ops = OpsStore(store.path)
+    agent_tasks = AgentTasks(store.path, TASK_RULES) if not client else None
+    agent_task_lock = threading.Lock()
     ai_request_lock = threading.Lock()
 
     class Handler(BaseHTTPRequestHandler):
@@ -3955,6 +3958,26 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                 return self.send({'error': '页面不存在'}, 404)
             if client and parsed.path == '/api/client/config':
                 return self.send(client.config())
+            if parsed.path.startswith('/api/agent/'):
+                try:
+                    query = parse_qs(parsed.query)
+                    if parsed.path == '/api/agent/account':
+                        return self.send({'account': agent_tasks.account(), 'strategy': ops.get_strategy()})
+                    if parsed.path == '/api/agent/tasks':
+                        rows = agent_tasks.list()
+                        for item in rows:
+                            inputs = json.loads(item.pop('input_json'))
+                            item.update(product=inputs.get('product', ''), goal=inputs.get('goal', ''))
+                        return self.send(rows)
+                    if parsed.path == '/api/agent/task':
+                        version = query.get('version', [''])[0]
+                        return self.send(agent_tasks.get(query.get('id', [''])[0], int(version) if version else None))
+                    if parsed.path == '/api/agent/media':
+                        media = agent_tasks.read_media(query.get('id', [''])[0])
+                        return self.send(media['data'], content_type=media['mime'])
+                    return self.send({'error': '页面不存在'}, 404)
+                except (ValueError, TypeError) as exc:
+                    return self.send({'error': str(exc)}, 400)
             if parsed.path == '/api/ai/config':
                 return self.send(ai.config())
             if parsed.path == '/api/catalog':
@@ -3972,7 +3995,8 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                     if client:
                         state = client.public_state(state)
                     state.update(connected=bool(client.key if client else api_key[0]), token=token,
-                                 free_only=False, access=client.access() if client else catalog.access_state())
+                                 free_only=False, access=client.access() if client else catalog.access_state(),
+                                 agent_tasks_enabled=agent_tasks is not None)
                     return self.send(state)
                 except ValueError as exc:
                     return self.send({'error': str(exc)}, 400)
@@ -4234,15 +4258,21 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                 return self.send({'error': '接口不存在'}, 404)
             try:
                 length = int(self.headers.get('Content-Length', '0'))
-                limit = (MAX_VIDEO_BYTES if self.path == '/api/video/transcribe' else
+                limit = (MAX_VIDEO_BYTES if self.path in ('/api/video/transcribe', '/api/agent/media') else
                          MAX_REQUEST_BYTES if self.path in ('/api/video/generate', '/api/reference/save',
-                                                            '/api/ops/media-review/analyze') else
+                                                            '/api/ops/media-review/analyze', '/api/agent/task/save') else
                          M04_OPS_BYTES if self.path in M04_OPS_PATHS else
                          2000000 if self.path in ('/api/import', '/api/browser-import') else 12000)
                 if not 0 < length <= limit:
                     # 超限请求先读掉小请求体，保证客户端收到受控 400 而不是连接重置。
                     self._drain_request_body()
                     raise ValueError('请求大小无效：超过 %d 字节上限' % limit)
+                if self.path == '/api/agent/media':
+                    media = self.rfile.read(length)
+                    if len(media) != length:
+                        raise ValueError('视频传输不完整')
+                    return self.send(agent_tasks.put_media(media, self.headers.get('Content-Type'),
+                        unquote(self.headers.get('X-Radar-Filename', 'video'))))
                 if self.path == '/api/video/transcribe':
                     if not ai_request_lock.acquire(False): raise ValueError('模型正在处理，请等待完成')
                     try:
@@ -4255,6 +4285,55 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                 body = json.loads(self.rfile.read(length).decode('utf-8'))
                 if not isinstance(body, dict):
                     raise ValueError('请求格式无效')
+                if self.path == '/api/agent/task/save':
+                    if not agent_task_lock.acquire(False):
+                        raise ValueError('当前任务正在生成，请完成后再保存')
+                    try:
+                        raw = body.get('input')
+                        if not isinstance(raw, dict):
+                            raise ValueError('缺少任务输入')
+                        prepared, frames = creative.prepare(dict(raw, confirmed=True))
+                        prepared.update(frames=frames, confirmed=False)
+                        task_uid = body.get('task_uid') or None
+                        current = agent_tasks.get(task_uid) if task_uid else None
+                        result = body.get('result')
+                        if result is not None:
+                            if not isinstance(result, dict):
+                                raise ValueError('成果格式无效')
+                            if (not current or not current['result'] or current['input'] != prepared
+                                    or current['media']['media_id'] != body.get('media_id')):
+                                raise ValueError('输入已改变，请先保存新输入；旧成果仍保留在历史版本')
+                            report = creative.validate(copy.deepcopy(result.get('report')),
+                                                       len(frames), prepared['outputs'])
+                            result = dict(current['result'], report=report)
+                        return self.send(agent_tasks.save(prepared, body.get('media_id'),
+                            current['strategy'] if current else ops.get_strategy(), result=result,
+                            source='user_saved' if result else 'user_input', task_uid=task_uid,
+                            expected_version=body.get('expected_version', 0)))
+                    finally:
+                        agent_task_lock.release()
+                if self.path == '/api/agent/task/generate':
+                    if body.get('confirm') is not True:
+                        raise ValueError('请先确认本次模型调用')
+                    if not agent_task_lock.acquire(False):
+                        raise ValueError('当前任务正在生成，请等待完成')
+                    acquired_ai = False
+                    try:
+                        task = agent_tasks.get(body.get('task_uid'))
+                        if type(body.get('expected_version')) is not int or body['expected_version'] != task['current_version']:
+                            raise ValueError('任务版本已变化，请重新打开最新版本')
+                        acquired_ai = ai_request_lock.acquire(False)
+                        if not acquired_ai:
+                            raise ValueError('模型正在处理，请等待完成')
+                        result = creative.generate(dict(task['input'], confirmed=True),
+                            account_context={'account': task['account'], 'strategy': task['strategy']})
+                        return self.send(agent_tasks.save(task['input'], task['media']['media_id'],
+                            task['strategy'], result=result, source='llm', task_uid=task['task_uid'],
+                            expected_version=task['current_version']))
+                    finally:
+                        if acquired_ai:
+                            ai_request_lock.release()
+                        agent_task_lock.release()
                 if self.path == '/api/video/generate':
                     if not ai_request_lock.acquire(False): raise ValueError('模型正在处理，请等待完成')
                     try: return self.send(creative.generate(body))

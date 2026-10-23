@@ -14,6 +14,10 @@ from ai_directions import NoRedirect, request_completion
 MAX_VIDEO_BYTES = 20 * 1024 * 1024
 MAX_REQUEST_BYTES = 5 * 1024 * 1024
 RULES = (Path(__file__).resolve().parent / 'static' / 'creative-rules.txt').read_text(encoding='utf-8')
+TASK_RULES = RULES + ('\n【当前账号任务】\naccount_context 是本次冻结的本地账号和策略资料。'
+    '已确认策略约束目标、受众、资源与表达；未确认策略只作为用户草案，不写成正式决定。'
+    'identity_pending 表示平台身份尚未确认，不据此认领作品或推断经营表现。'
+    '结合账号条件改编；账号策略不是商品事实，冲突或缺少证明时明确列入待补。')
 OUTPUTS = ('shooting', 'video_prompt', 'writing_prompt')
 DIMENSIONS = ('目标人群','需求场景','开头设计','核心卖点','卖点证明','内容结构','视听表达','互动动机','商品说服力','改编可行性')
 
@@ -109,7 +113,11 @@ class VideoCreative:
             cleaned.append(dict(at=at,image=image)); previous=at
         data.update(duration=duration,outputs=outputs,target_seconds=seconds,
                     frames=[dict(frame=i+1,at=f['at']) for i,f in enumerate(cleaned)],
-                    audio='转写文字（非音轨听觉分析）' if data['transcript'] else '未读取音轨')
+                    audio='已提供台词（非音轨听觉分析）' if data['transcript'] else '未读取音轨')
+        origin = body.get('transcript_source', 'manual' if data['transcript'] else 'none')
+        if origin not in ('none', 'manual', 'transcription') or (not data['transcript'] and origin != 'none'):
+            raise ValueError('台词来源无效')
+        data['transcript_source'] = origin
         return data,cleaned
 
     def validate(self, report, count, outputs):
@@ -141,15 +149,17 @@ class VideoCreative:
         report['deliverables']={key:text(deliverables[key],'生成成果',40000,True) for key in outputs}
         return {key:report[key] for key in ('summary','observations','evaluations','adaptation','missing','deliverables')}
 
-    def generate(self, body):
+    def generate(self, body, account_context=None):
         data,frames=self.prepare(body)
+        if account_context is not None:
+            data['account_context'] = account_context
         with self.ai.lock:
             config=self.connection()
             content=[dict(type='text',text=json.dumps(data,ensure_ascii=False))]
             for i,frame in enumerate(frames):
                 content.extend([dict(type='text',text='frame={}，采样时间={:.2f}秒'.format(i+1,frame['at'])),
                                 dict(type='image_url',image_url=dict(url=frame['image']))])
-            payload=dict(model=config['model'],stream=False,messages=[dict(role='system',content=RULES),dict(role='user',content=content)])
+            payload=dict(model=config['model'],stream=False,messages=[dict(role='system',content=TASK_RULES if account_context is not None else RULES),dict(role='user',content=content)])
             try: response=request_completion(config['endpoint'],self.ai.key,payload)
             except ValueError as exc: raise ValueError(str(exc).replace('分类','视频分析')) from None
         try:
