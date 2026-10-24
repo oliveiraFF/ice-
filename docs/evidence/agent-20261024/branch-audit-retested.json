@@ -1,0 +1,211 @@
+[
+  {
+    "branch": "test/agent-integration",
+    "worktree": "C:\\Users\\25370\\Desktop\\ice运营台-统一更新版-20261023\\工作树\\agent-integration",
+    "head": "4a6f223be72855179c86edf064b337ca3bb5dd74",
+    "dirty": "",
+    "ignored_paths": [],
+    "is_main_ancestor": true,
+    "evidence": {
+      "branch": "test/agent-integration",
+      "branch_head": "4a6f223be72855179c86edf064b337ca3bb5dd74",
+      "main_merge": "e3243a9b5193bb4977b0cf46d5abd0db58bfbfdf",
+      "task": "test: cover concurrent generation and frozen-rule recovery",
+      "validation": "21项通过，含并发一次调用和手动恢复新增版本",
+      "worktree": "C:/Users/25370/Desktop/ice运营台-统一更新版-20261023/工作树/agent-integration"
+    },
+    "completion": "code retest passed; archive pending",
+    "retest": "验收记录\\agent-20261024\\agent-integration-retest.txt"
+  },
+  {
+    "branch": "fix/agent-media-replacement",
+    "worktree": "C:\\Users\\25370\\Desktop\\ice运营台-统一更新版-20261023\\工作树\\agent-media-replacement",
+    "head": "5f23cb95c4e94fa63694ee891129acd5b2fe8a6b",
+    "dirty": "",
+    "ignored_paths": [],
+    "is_main_ancestor": true,
+    "evidence": {
+      "branch": "fix/agent-media-replacement",
+      "branch_head": "5f23cb95c4e94fa63694ee891129acd5b2fe8a6b",
+      "main_merge": "9ae80a0a733218390c1b2082f902625bd864ac5d",
+      "task": "fix: create a new input version when reference media changes",
+      "validation": "两组JS通过；浏览器相同输入和采样/不同文件创建v4，旧v3保留",
+      "worktree": "C:/Users/25370/Desktop/ice运营台-统一更新版-20261023/工作树/agent-media-replacement"
+    },
+    "completion": "code retest passed; archive pending",
+    "retest": "验收记录\\agent-20261024\\agent-media-replacement-retest.txt"
+  },
+  {
+    "branch": "fix/agent-migration-safety",
+    "worktree": "C:\\Users\\25370\\Desktop\\ice运营台-统一更新版-20261023\\工作树\\agent-migration-safety",
+    "head": "c29d92e5f3a08b796aa4381dbd5abcbc34bfddb0",
+    "dirty": "",
+    "ignored_paths": [],
+    "is_main_ancestor": true,
+    "evidence": {
+      "branch": "fix/agent-migration-safety",
+      "branch_head": "c29d92e5f3a08b796aa4381dbd5abcbc34bfddb0",
+      "main_merge": "eb22c2aa2403e5a2633799569a2bbedfe8752238",
+      "task": "fix: verify migration backups with schema and WAL recovery evidence",
+      "validation": "19项通过，含WAL与中断回滚",
+      "worktree": "C:/Users/25370/Desktop/ice运营台-统一更新版-20261023/工作树/agent-migration-safety"
+    },
+    "completion": "code retest passed; archive pending",
+    "retest": "验收记录\\agent-20261024\\agent-migration-safety-retest.txt"
+  },
+  {
+    "branch": "fix/agent-response-recovery",
+    "worktree": "C:\\Users\\25370\\Desktop\\ice运营台-统一更新版-20261023\\工作树\\agent-response-recovery",
+    "head": "e998be85ec495ee05dd323fc9c98fa8c2a3cab3f",
+    "dirty": "",
+    "ignored_paths": [],
+    "is_main_ancestor": true,
+    "evidence": {
+      "branch": "fix/agent-response-recovery",
+      "branch_head": "e998be85ec495ee05dd323fc9c98fa8c2a3cab3f",
+      "main_merge": "8575286aac0e353d3f01782132d6b80a0b36c9f8",
+      "task": "fix: archive model responses and recover failed agent attempts",
+      "validation": "17项通过，含原文先落库/失败恢复/重启",
+      "worktree": "C:/Users/25370/Desktop/ice运营台-统一更新版-20261023/工作树/agent-response-recovery"
+    },
+    "completion": "code retest passed; archive pending",
+    "retest": "验收记录\\agent-20261024\\agent-response-recovery-retest.txt"
+  },
+  {
+    "branch": "fix/agent-source-bundle",
+    "worktree": "C:\\Users\\25370\\Desktop\\ice运营台-统一更新版-20261023\\工作树\\agent-source-bundle",
+    "head": "e058270f7619d6d6948823b3572f221043680c1c",
+    "dirty": "",
+    "ignored_paths": [],
+    "is_main_ancestor": true,
+    "evidence": {
+      "branch": "fix/agent-source-bundle",
+      "branch_head": "e058270f7619d6d6948823b3572f221043680c1c",
+      "main_merge": "659f947c986f5f2f17e5084e7926dbed3a957a04",
+      "task": "fix: include agent task storage in source bundles",
+      "validation": "打包白名单回归与独立源码预览启动通过",
+      "worktree": "C:/Users/25370/Desktop/ice运营台-统一更新版-20261023/工作树/agent-source-bundle"
+    },
+    "completion": "code retest passed; archive pending",
+    "retest": "验收记录\\agent-20261024\\agent-source-bundle-retest.txt"
+  },
+  {
+    "branch": "feat/agent-task-snapshots",
+    "worktree": "C:\\Users\\25370\\Desktop\\ice运营台-统一更新版-20261023\\工作树\\agent-task-snapshots",
+    "head": "c2af719b608ac028e5c96a610436c0bf413900a8",
+    "dirty": "",
+    "ignored_paths": [],
+    "is_main_ancestor": true,
+    "evidence": {
+      "branch": "feat/agent-task-snapshots",
+      "branch_head": "c2af719b608ac028e5c96a610436c0bf413900a8",
+      "main_merge": "521ac7507655dcd415850209f7834a20edd0793c",
+      "task": "Merge valid media fixture regression",
+      "validation": "10项通过后合入，保留接手前失败快照",
+      "worktree": "C:/Users/25370/Desktop/ice运营台-统一更新版-20261023/工作树/agent-task-snapshots"
+    },
+    "completion": "code retest passed; archive pending",
+    "retest": "验收记录\\agent-20261024\\agent-task-snapshots-retest.txt"
+  },
+  {
+    "branch": "fix/agent-task-ui",
+    "worktree": "C:\\Users\\25370\\Desktop\\ice运营台-统一更新版-20261023\\工作树\\agent-task-ui",
+    "head": "417e814250971dd67ae9c255d93632cdbdf865fe",
+    "dirty": "",
+    "ignored_paths": [],
+    "is_main_ancestor": true,
+    "evidence": {
+      "branch": "fix/agent-task-ui",
+      "branch_head": "417e814250971dd67ae9c255d93632cdbdf865fe",
+      "main_merge": "aef4c60d78e912255d7c6d84f5f6c02fe0cc8e01",
+      "task": "fix: label unsaved exports and include frozen task provenance",
+      "validation": "17项Python、导出JS、隔离浏览器通过",
+      "worktree": "C:/Users/25370/Desktop/ice运营台-统一更新版-20261023/工作树/agent-task-ui"
+    },
+    "completion": "code retest passed; archive pending",
+    "retest": "验收记录\\agent-20261024\\agent-task-ui-retest.txt"
+  },
+  {
+    "branch": "fix/agent-test-media",
+    "worktree": "C:\\Users\\25370\\Desktop\\ice运营台-统一更新版-20261023\\工作树\\agent-test-media",
+    "head": "1ee9c7f6e606a61f807cdb356b5acb46fc569088",
+    "dirty": "",
+    "ignored_paths": [],
+    "is_main_ancestor": true,
+    "evidence": {
+      "branch": "fix/agent-test-media",
+      "branch_head": "1ee9c7f6e606a61f807cdb356b5acb46fc569088",
+      "main_merge": "521ac7507655dcd415850209f7834a20edd0793c",
+      "task": "test: use valid JPEG fixture and close HTTP error responses",
+      "validation": "10项通过，含截断图片拒绝",
+      "worktree": "C:/Users/25370/Desktop/ice运营台-统一更新版-20261023/工作树/agent-test-media"
+    },
+    "completion": "code retest passed; archive pending",
+    "retest": "验收记录\\agent-20261024\\agent-test-media-retest.txt"
+  },
+  {
+    "branch": "fix/agent-transcript-source",
+    "worktree": "C:\\Users\\25370\\Desktop\\ice运营台-统一更新版-20261023\\工作树\\agent-transcript-source",
+    "head": "3fe7372df18d5f28619949a0dfec38a0a21076df",
+    "dirty": "",
+    "ignored_paths": [],
+    "is_main_ancestor": true,
+    "evidence": {
+      "branch": "fix/agent-transcript-source",
+      "branch_head": "3fe7372df18d5f28619949a0dfec38a0a21076df",
+      "main_merge": "1ac88026da1707049db9c98635372d8488f60b2c",
+      "task": "fix: require transcript source to match supplied text",
+      "validation": "错误接受已复现，修复后拒绝；最终23项任务回归通过",
+      "worktree": "C:/Users/25370/Desktop/ice运营台-统一更新版-20261023/工作树/agent-transcript-source"
+    },
+    "completion": "code retest passed; archive pending",
+    "retest": "验收记录\\agent-20261024\\agent-transcript-source-retest.txt"
+  },
+  {
+    "branch": "docs/agent-validation-20261023",
+    "worktree": "C:\\Users\\25370\\Desktop\\ice运营台-统一更新版-20261023\\工作树\\agent-validation",
+    "head": "2cb171f5044bbfe0903b985047e7da83a23fc41d",
+    "dirty": "",
+    "ignored_paths": [],
+    "is_main_ancestor": true,
+    "evidence": null,
+    "completion": "code retest passed; archive pending",
+    "retest": "验收记录\\agent-20261024\\agent-validation-retest.txt"
+  },
+  {
+    "branch": "test/legacy-rollback-compatibility",
+    "worktree": "C:\\Users\\25370\\Desktop\\ice运营台-统一更新版-20261023\\工作树\\legacy-rollback",
+    "head": "deb41387964701d3594962754ca158256fe9df14",
+    "dirty": "",
+    "ignored_paths": [],
+    "is_main_ancestor": true,
+    "evidence": {
+      "branch": "test/legacy-rollback-compatibility",
+      "branch_head": "deb41387964701d3594962754ca158256fe9df14",
+      "main_merge": "392cd234a8f624197e4e81b50d7157a439b10cd2",
+      "task": "test: verify preserved exe on migrated and restored databases",
+      "validation": "旧exe读取迁移库/恢复库及历史导出一致，新任务保留",
+      "worktree": "C:/Users/25370/Desktop/ice运营台-统一更新版-20261023/工作树/legacy-rollback"
+    },
+    "completion": "code retest passed; archive pending",
+    "retest": "验收记录\\agent-20261024\\legacy-rollback-retest.txt"
+  },
+  {
+    "branch": "chore/unified-release-20261023",
+    "worktree": "C:\\Users\\25370\\Desktop\\ice运营台-统一更新版-20261023\\工作树\\unified-release",
+    "head": "9f7e9f8b7ada7ea844f548e2d091313ec534021a",
+    "dirty": "",
+    "ignored_paths": [],
+    "is_main_ancestor": true,
+    "evidence": {
+      "branch": "chore/unified-release-20261023",
+      "branch_head": "9f7e9f8b7ada7ea844f548e2d091313ec534021a",
+      "main_merge": "80b9fb952ae43540c01fcacce68989f95aaeb44c",
+      "task": "chore: import preserved unified release baseline",
+      "validation": "168项构建输入哈希匹配；语法通过",
+      "worktree": "C:/Users/25370/Desktop/ice运营台-统一更新版-20261023/工作树/unified-release"
+    },
+    "completion": "code retest passed; archive pending",
+    "retest": "baseline Python syntax, prior 168 hash check"
+  }
+]

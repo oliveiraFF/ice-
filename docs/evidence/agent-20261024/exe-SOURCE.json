@@ -1,0 +1,17 @@
+{
+  "edition": "owner-exe",
+  "built_at": "2026-10-24T00:29:28",
+  "build_id": "ice-agent-20261024-credential1",
+  "parent_build_id": "20261023-ice-unified1",
+  "source_commit": "1842f77fb4c2d6080f643315cdc137f6ef5a634e",
+  "source_dirty": false,
+  "build_run": "20261024-002901",
+  "build_inputs_sha256": "29024a63c0140d7e090796a18af363b503244295a799ba79800f1f23a1421fac",
+  "radar_source": "C:\\Users\\25370\\Desktop\\ice运营台-统一更新版-20261023\\正式仓库",
+  "ops_source": "C:\\Users\\25370\\Desktop\\ice运营台-统一更新版-20261023\\正式仓库\\_ops",
+  "ops_commit": "1842f77fb4c2d6080f643315cdc137f6ef5a634e",
+  "ops_worktree_dirty": false,
+  "pyinstaller": "6.22.3",
+  "python": "3.12.14",
+  "files": "see MANIFEST.sha256"
+}
