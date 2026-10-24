@@ -1,0 +1,62 @@
+[
+  {
+    "branch": "fix/desktop-build-provenance",
+    "head": "faa03237a32624f044b62acc009ecab50d4182c3",
+    "goal": "新exe使用当前源码输入与提交，不沿用旧发布身份",
+    "validation": "2项输入清单回归；实际打包成功，新exe清单哈希通过",
+    "main_merge": "60559948959888e180250a28906c3e9e316b0f93",
+    "remaining": "none in branch deliverable",
+    "completion": "closed",
+    "worktree_removed": true
+  },
+  {
+    "branch": "feat/desktop-graceful-exit",
+    "head": "f974b8eba1e37532c6f99166e78e6522981955eb",
+    "goal": "确认退出桌面窗口并完成HTTP/锁/会话清理",
+    "validation": "2项退出门禁回归；新exe4次正常退出，返回码0且会话文件清理",
+    "main_merge": "1842f77fb4c2d6080f643315cdc137f6ef5a634e",
+    "remaining": "none in branch deliverable",
+    "completion": "closed",
+    "worktree_removed": true
+  },
+  {
+    "branch": "test/frozen-owner-lifecycle",
+    "head": "b1d2ac53498437b1d47ba6c6b840a6234026bf95",
+    "goal": "新exe实际任务和凭据闭环验收",
+    "validation": "实际新exe验证一次本机模型、任务v1-v3及历史，4次正常退出，无外部付费",
+    "main_merge": "343e1058d7553afd5e35013d2b01e1d0f8e5ccc3",
+    "remaining": "none in branch deliverable",
+    "completion": "closed",
+    "worktree_removed": true
+  },
+  {
+    "branch": "feat/owner-credential-vault",
+    "head": "54648a471e213117f433232dca93436cb54dc099",
+    "goal": "owner TikHub 加密保存/重启恢复/清除/损坏恢复",
+    "validation": "3项源码DPAPI回归+新exe4次正常退出全生命周期",
+    "main_merge": "35ee355f8d5495e93c49f8105a7aa1075d1b4c61",
+    "remaining": "none in branch deliverable",
+    "completion": "closed",
+    "worktree_removed": true
+  },
+  {
+    "branch": "docs/p0-acceptance-inputs",
+    "head": "0368b90013496a419dda26246589d2e080638032",
+    "goal": "准备10份合成输入候选及可审查费用材料",
+    "validation": "10份JSON及SHA256清单自校验通过，未冻结/未评分状态明确；收费请求未执行",
+    "main_merge": "4d5806c03f4c96eaba6c75fb0d7e39badfdf6abe",
+    "remaining": "none in branch deliverable",
+    "completion": "closed",
+    "worktree_removed": true
+  },
+  {
+    "branch": "fix/test-server-bind",
+    "head": "0cd694c4d964e939948cbaf2db747dd686999c0c",
+    "goal": "测试服务原子申请端口，消除先释放再绑定竞争",
+    "validation": "9项API回归通过；已记录原始WinError10013及顺序复跑",
+    "main_merge": "a045b1cca740af183dc9dcfd71e3f94c4aeba0bc",
+    "remaining": "none in branch deliverable",
+    "completion": "closed",
+    "worktree_removed": true
+  }
+]

@@ -1,0 +1,1 @@
+首次并行复跑历史分支时，test_no_confirmation_or_stale_version_never_calls_model 在 setUp/start_server 的 Server.socket.bind 处出现 PermissionError: [WinError 10013]。当时使用先socket.bind(0)取端口、关闭后create_server(port)的测试写法。原始失败在本聊天工具输出可查；复跑日志已更新为顺序复跑通过，不将其说成仍有原始失败日志文件。当前主干直接create_server(0)消除预选端口释放窗口；API九项回归通过。

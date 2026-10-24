@@ -1,0 +1,47 @@
+test_archive_during_resolution_does_not_restore_or_download (test_download.DownloadTests.test_archive_during_resolution_does_not_restore_or_download) ... ok
+test_bad_response_link_rejected_before_save_or_media (test_download.DownloadTests.test_bad_response_link_rejected_before_save_or_media) ... ok
+test_collect_saves_play_addr_without_extra_call (test_download.DownloadTests.test_collect_saves_play_addr_without_extra_call) ... ok
+test_customer_paid_resolve_is_404 (test_download.DownloadTests.test_customer_paid_resolve_is_404) ... ok
+test_demo_archived_missing_ids_never_call_provider (test_download.DownloadTests.test_demo_archived_missing_ids_never_call_provider) ... ok
+test_failed_resolver_keeps_budget_and_no_download (test_download.DownloadTests.test_failed_resolver_keeps_budget_and_no_download) ... ok
+test_invalid_cached_structure_does_not_abort_collection (test_download.DownloadTests.test_invalid_cached_structure_does_not_abort_collection) ... ok
+test_keyword_http_collection_to_download_no_extra_resolver (test_download.DownloadTests.test_keyword_http_collection_to_download_no_extra_resolver) ... ok
+test_manual_import_and_download_still_works (test_download.DownloadTests.test_manual_import_and_download_still_works) ... ok
+test_media_failure_after_resolve_keeps_link_without_second_api_call (test_download.DownloadTests.test_media_failure_after_resolve_keeps_link_without_second_api_call) ... ok
+test_missing_link_plain_download_never_resolves (test_download.DownloadTests.test_missing_link_plain_download_never_resolves) ... ok
+test_missing_or_unsafe_media_not_mistaken_for_cover (test_download.DownloadTests.test_missing_or_unsafe_media_not_mistaken_for_cover) ... ok
+test_nonvideo_response_leaves_no_partial_file (test_download.DownloadTests.test_nonvideo_response_leaves_no_partial_file) ... ok
+test_refresh_without_link_preserves_existing (test_download.DownloadTests.test_refresh_without_link_preserves_existing) ... ok
+test_resolve_cache_download_one_call_and_no_autoretry (test_download.DownloadTests.test_resolve_cache_download_one_call_and_no_autoretry) ... ok
+test_resolve_requires_explicit_cost_and_permission (test_download.DownloadTests.test_resolve_requires_explicit_cost_and_permission) ... ok
+test_resolver_identity_mismatch_rejected (test_download.DownloadTests.test_resolver_identity_mismatch_rejected) ... ok
+test_unsafe_resolver_payload_preserves_existing_cached_link (test_download.DownloadTests.test_unsafe_resolver_payload_preserves_existing_cached_link) ... ok
+test_xhs_stream_saved (test_download.DownloadTests.test_xhs_stream_saved) ... ok
+test_catalog_builder_normalizes_examples_without_weakening_input (test_market_repairs.MarketRepairs.test_catalog_builder_normalizes_examples_without_weakening_input) ... ok
+test_catalog_default_examples_match_declared_types (test_market_repairs.MarketRepairs.test_catalog_default_examples_match_declared_types) ... ok
+test_collection_download_and_restart_roundtrip (test_market_repairs.MarketRepairs.test_collection_download_and_restart_roundtrip) ... ok
+test_direct_video_addresses (test_market_repairs.MarketRepairs.test_direct_video_addresses) ... ok
+test_legacy_status_is_visible_on_cards (test_market_repairs.MarketRepairs.test_legacy_status_is_visible_on_cards) ... ok
+test_missing_or_unsafe_media_does_not_break_collection (test_market_repairs.MarketRepairs.test_missing_or_unsafe_media_does_not_break_collection) ... ok
+test_optional_cookie_null_and_strict_bad_values (test_market_repairs.MarketRepairs.test_optional_cookie_null_and_strict_bad_values) ... ok
+test_change_frame_source_mismatch_still_rejected (test_prompt_contracts.PromptContracts.test_change_frame_source_mismatch_still_rejected) ... ok
+test_multiple_sources_require_distinct_conflict_basis (test_prompt_contracts.PromptContracts.test_multiple_sources_require_distinct_conflict_basis) ... ok
+test_review_whitelist_matches_parser_scope (test_prompt_contracts.PromptContracts.test_review_whitelist_matches_parser_scope) ... ok
+test_single_basis_conflict_remains_rejected (test_prompt_contracts.PromptContracts.test_single_basis_conflict_remains_rejected) ... ok
+test_single_source_requires_no_conflict (test_prompt_contracts.PromptContracts.test_single_source_requires_no_conflict) ... ok
+test_unknown_source_still_rejected (test_prompt_contracts.PromptContracts.test_unknown_source_still_rejected) ... ok
+test_deepseek_uses_bounded_non_thinking_json (test_provider_payload.ProviderPayload.test_deepseek_uses_bounded_non_thinking_json) ... ok
+test_direct_deepseek_request_has_output_cap (test_provider_payload.ProviderPayload.test_direct_deepseek_request_has_output_cap) ... ok
+test_other_provider_parameters_unchanged (test_provider_payload.ProviderPayload.test_other_provider_parameters_unchanged) ... ok
+test_advice_and_followup (test_runtime_consent.ConsentIntegration.test_advice_and_followup) ... ok
+test_draft_generate_and_optimize (test_runtime_consent.ConsentIntegration.test_draft_generate_and_optimize) ... ok
+test_environment_gate_remains_for_independent_script (test_runtime_consent.ConsentIntegration.test_environment_gate_remains_for_independent_script) ... ok
+test_media_review (test_runtime_consent.ConsentIntegration.test_media_review) ... ok
+test_missing_key_still_blocks_confirmed_call (test_runtime_consent.ConsentIntegration.test_missing_key_still_blocks_confirmed_call) ... ok
+test_research_topics_adaptation (test_runtime_consent.ConsentIntegration.test_research_topics_adaptation) ... ok
+test_script_prepare_uses_same_request_consent (test_runtime_consent.ConsentIntegration.test_script_prepare_uses_same_request_consent) ... ok
+
+----------------------------------------------------------------------
+Ran 42 tests in 24.546s
+
+OK

@@ -1,0 +1,13 @@
+{
+  "save_restart_forget_passed": true,
+  "corrupt_vault_recovered": true,
+  "normal_exits": 4,
+  "task_versions_preserved": true,
+  "confirmed_strategy_preserved": true,
+  "actual_local_model_calls": 1,
+  "external_paid_calls": 0,
+  "manifest_bad": [],
+  "source_commit": "1842f77fb4c2d6080f643315cdc137f6ef5a634e",
+  "exe_sha256": "9c9cac97cb9ab476ce38d1052578a28580728b06b59262097a503b69ba43452c",
+  "evidence_scope": "actual packaged exe; synthetic business inputs and localhost model, no real quality claim"
+}
