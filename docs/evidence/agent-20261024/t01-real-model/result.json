@@ -1,0 +1,24 @@
+{
+  "external_paid_requests": 1,
+  "synthetic_only": true,
+  "normal_exits": 2,
+  "generation_success": true,
+  "reopen_matches": true,
+  "attempt_count": 1,
+  "attempt_status": "success",
+  "usage": {
+    "prompt_tokens": 3401,
+    "completion_tokens": 3445,
+    "total_tokens": 6846,
+    "prompt_tokens_details": {
+      "cached_tokens": 1152
+    },
+    "prompt_cache_hit_tokens": 1152,
+    "prompt_cache_miss_tokens": 2249
+  },
+  "peak_cost_cny_estimate": 0.051543000000000005,
+  "export_method": "offline artifact export using production provenance(); UI download click not exercised",
+  "export_hash": "61d5a4d4f82867f79c7791b298022b86655132aa3b1858d17090fdfd32dde677",
+  "credential_scan_passed": true,
+  "human_quality_score": null
+}
