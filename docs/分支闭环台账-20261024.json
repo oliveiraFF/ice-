@@ -160,5 +160,31 @@
     "remaining": "无分支交付遗留",
     "completion": "已验证、已合入、工作树已安全移除",
     "head": "0cd694c4d964e939948cbaf2db747dd686999c0c"
+  },
+  {
+    "branch": "docs/branch-closeout-20261024",
+    "goal": "逐分支目标/验证/合入/遗留核对与最终验收材料",
+    "head": "0be379216f038f04be2e4a896ea112fb09c4d35c",
+    "main_merge": "768ee5c531da1f1c00187779e971b31fa83e7f0c",
+    "validation": "18条先前台账、72项Python、两组JS、新exe4次正常退出与输入一致性证据已审查；文档无凭据/运行库",
+    "remaining": "无文档分支遗留；项目真实验收门槛仍待用户",
+    "completion": "已验证、已合入、工作树已安全移除"
+  },
+  {
+    "branch": "test/t01-realistic-fixture",
+    "goal": "完整模拟业务资料与预算授权记录",
+    "validation": "T01文字资料JSON/事实编号/状态/哈希校验通过",
+    "main_merge": "0a8dc1a8ec6b3bd64d2bfbcff63cfdaa92817b47",
+    "head": "63aa8c4f9faca371bc8b39ddef24db5dcfa99717",
+    "remaining": "合成资料不是真实商品证明",
+    "completion": "已验证、已合入、工作树已安全移除"
+  },
+  {
+    "branch": "test/t01-model-acceptance",
+    "goal": "单次真实模型调用与合成视频技术链路验收",
+    "validation": "实际exe两次正常退出、生成与重开一致、30 Python+2 JS通过；见T01首例人工评审",
+    "main_merge": "完成后见外部最终分支闭环.json（避免自引用提交）",
+    "remaining": "人工评分、真实实拍、十主题和B/C/D增强；UI下载点击未验证",
+    "completion": "验证通过，当前提交后合并并安全移除"
   }
 ]

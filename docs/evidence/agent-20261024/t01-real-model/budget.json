@@ -1,0 +1,14 @@
+{
+  "authorized_max_cny": 1,
+  "requests_allowed": 1,
+  "retry": false,
+  "input_token_conservative_bound": 18522,
+  "output_tokens_max": 6000,
+  "usd_to_cny_safety_factor": 10,
+  "estimated_cny_ceiling": 0.12756599999999998,
+  "pricing": "peak cache-miss input $0.30/M; output $1.20/M",
+  "sources": [
+    "https://api-docs.deepseek.com/quick_start/pricing/",
+    "https://api-docs.deepseek.com/guides/vision/"
+  ]
+}
