@@ -3,6 +3,7 @@ import argparse
 import hashlib
 import importlib.metadata
 import json
+import re
 from pathlib import Path
 import shutil
 import sqlite3
@@ -11,7 +12,7 @@ import sys
 import time
 
 ROOT = Path(__file__).resolve().parent
-from build_release import OPS_FILES
+from build_release import OPS_FILES, RADAR_MODULES
 
 
 def sha256(path):
@@ -22,11 +23,25 @@ def sha256(path):
     return digest.hexdigest()
 
 
+def collect_inputs(root):
+    names = list(RADAR_MODULES) + ['desktop.py', 'build_desktop.py', 'build_release.py',
+        'catalog.json', 'radar.ico', '_runtime/codex-rejected-cas.pem', '使用说明.txt', 'M05-使用说明.md']
+    names += ['_ops/' + name for name in OPS_FILES]
+    names += [p.relative_to(root).as_posix() for p in sorted((root / 'static').rglob('*')) if p.is_file()]
+    return [dict(file=name, sha256=sha256(root / name)) for name in names]
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--data-dir', type=Path, default=ROOT / 'data')
+    parser.add_argument('--build-id', default='ice-agent-' + time.strftime('%Y%m%d-%H%M%S'))
     args = parser.parse_args()
+    if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,79}', args.build_id):
+        raise ValueError('build-id must be a simple name')
+    inputs = collect_inputs(ROOT)
+    source_commit = subprocess.check_output(['git', '-C', str(ROOT), 'rev-parse', 'HEAD'], text=True).strip()
+    source_dirty = bool(subprocess.check_output(['git', '-C', str(ROOT), 'status', '--porcelain'], text=True).strip())
     target = args.output.resolve() / time.strftime('%Y%m%d-%H%M%S')
     target.mkdir(parents=True, exist_ok=False)
     command = [sys.executable, '-m', 'PyInstaller', '--onedir', '--windowed', '--name', 'ice运营台',
@@ -61,20 +76,25 @@ def main():
                     folder.mkdir(parents=True, exist_ok=True)
                     shutil.copy2(str(source), str(folder / file.name))
     source_identity = json.loads((ROOT / 'SOURCE.json').read_text(encoding='utf-8'))
-    ops_commit, ops_dirty = source_identity.get('ops_commit', 'unknown'), source_identity.get('ops_worktree_dirty')
-    shutil.copy2(ROOT / 'BUILD-INPUTS.json', release / 'BUILD-INPUTS.json')
+    if collect_inputs(ROOT) != inputs:
+        raise ValueError('source changed during build; refusing to label release')
+    build_inputs = dict(build_id=args.build_id, source_commit=source_commit,
+                        source_dirty=source_dirty, files=inputs)
+    (release / 'BUILD-INPUTS.json').write_text(json.dumps(build_inputs, ensure_ascii=False, indent=2), encoding='utf-8')
     shutil.copy2(ROOT / 'M05-使用说明.md', release / 'M05-使用说明.md')
     provenance = {
         'edition': 'owner-exe',
         'built_at': time.strftime('%Y-%m-%dT%H:%M:%S'),
-        'build_id': source_identity['build_id'],
+        'build_id': args.build_id,
+        'parent_build_id': source_identity['build_id'],
+        'source_commit': source_commit,
+        'source_dirty': source_dirty,
         'build_run': target.name,
-        'source_zip_sha256': json.loads((ROOT / 'BUILD-INPUTS.json').read_text(encoding='utf-8'))['source_zip_sha256'],
-        'build_inputs_sha256': sha256(ROOT / 'BUILD-INPUTS.json'),
+        'build_inputs_sha256': sha256(release / 'BUILD-INPUTS.json'),
         'radar_source': str(ROOT),
         'ops_source': str(ops),
-        'ops_commit': ops_commit,
-        'ops_worktree_dirty': ops_dirty,
+        'ops_commit': source_commit,
+        'ops_worktree_dirty': source_dirty,
         'pyinstaller': importlib.metadata.version('pyinstaller'),
         'python': sys.version.split()[0],
         'files': 'see MANIFEST.sha256',
