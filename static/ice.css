@@ -1,3 +1,4 @@
+/* finesse · register=product · A=user-gray-green · B=system-CJK-600/400 · C=existing-shell · D=feedback-only · E=evidence · SOUL=6 SPECTACLE=1 DENSITY=7 */
 /* ice运营台: presentation layer; existing IDs and workflow handlers stay intact. */
 @font-face{font-family:IceMaple;src:url('/ice-regular.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:IceMaple;src:url('/ice-semibold.ttf') format('truetype');font-weight:500 800;font-style:normal;font-display:swap}
@@ -112,3 +113,50 @@ body.site-app.owner-workspace.discover-app .keyword-search-panel form{display:fl
 body.site-app.owner-workspace.discover-app #keywordEndpoint{flex:1 1 280px;max-width:520px;font-size:12px}
 body.site-app.owner-workspace.discover-app #searchKeywordInput{flex:1 1 160px;min-width:120px;font-size:13px}
 body.site-app.owner-workspace.discover-app #keywordSearchStatus{font-size:12px;line-height:1.8}
+
+/* Approved ICE redesign v1.1: explicit user tokens override skill palette defaults. */
+html,body{overflow-x:clip}
+body.site-app.owner-workspace{--bg:#f7f8fa;--paper:#fff;--ink:#2b3440;--muted:#667281;--line:#e9ecef;--c-text:#2b3440;--c-text-2:#667281;--c-primary:#1f7a58;--c-primary-dark:#1d6b4f;--c-primary-soft:#eaf5ef;--r-card:18px;font-family:"Microsoft YaHei UI","Microsoft YaHei","PingFang SC","Noto Sans SC",system-ui,sans-serif;line-height:1.65}
+body.site-app.owner-workspace :is(h1,h2,h3,button,input,select,textarea,pre,.primary,.secondary,.site-brand span,.wb-kpi strong){font-family:inherit;letter-spacing:normal}
+body.site-app.owner-workspace :is(h1,h2,h3,strong,b){font-weight:600}
+body.site-app.owner-workspace :is(h1,.wb-heading h1,.script-heading h1){font-size:26px;line-height:1.4;letter-spacing:0}
+body.site-app.owner-workspace h2{font-size:16px}
+body.site-app.owner-workspace :is(button,.primary,.secondary,input,select,textarea,td,.wb-row strong){font-size:14px}
+body.site-app.owner-workspace :is(small,.helper,.script-hint,.creative-status,.breadcrumbs,label,th,.wb-heading p,.script-heading p,.wb-library-note){font-size:13px;line-height:1.75}
+body.site-app.owner-workspace main{padding:30px 36px 44px}
+body.site-app.owner-workspace .site-nav>a span{font-size:14.5px}
+body.site-app.owner-workspace .site-nav>a.active:not(.site-brand){background:#eaf5ef;color:#1d6b4f}
+body.site-app.owner-workspace :is(.wb-panel,.wb-kpi,.screen-panel,.script-card,.script-form,.script-result,.script-tasks,.creative-task-panel,.creative-source,.creative-guide,.creative-results,.ice-card,.api-card,.credit-panel){border:1px solid #e9ecef;border-radius:18px;padding:20px;background:#fff;box-shadow:0 1px 2px rgba(20,30,40,.04),0 8px 24px rgba(20,30,40,.04);min-width:0}
+body.site-app.owner-workspace .primary{background:#1f7a58;color:white;border-color:#1f7a58;font-weight:600}
+body.site-app.owner-workspace .primary:hover{background:#1d6b4f;color:white}
+body.site-app.owner-workspace :is(button,.primary,.secondary){min-height:40px;white-space:normal}
+body.site-app.owner-workspace .wb-kpi strong{font-size:30px;font-weight:600;font-variant-numeric:tabular-nums}
+body.site-app.owner-workspace .wb-kpi:first-child{border-top:3px solid #1f7a58}
+body.site-app.owner-workspace .wb-kpis{grid-template-columns:repeat(5,minmax(0,1fr))}
+.ice-task-layout{display:grid;grid-template-columns:170px minmax(0,1fr) 230px;gap:18px;align-items:start;margin-top:20px}
+.ice-task-center{display:grid;gap:18px;min-width:0}body.site-app.owner-workspace.creative-app .ice-task-center .creative-workspace{display:block}.ice-task-center .creative-guide{margin-top:18px}.ice-task-center .creative-results{margin-top:0}
+.ice-stage{display:grid;gap:8px;padding:14px 10px;border:1px solid #e9ecef;border-radius:12px;margin-top:12px;color:#2b3440;text-decoration:none}.ice-stage.current{background:#eaf5ef;border-color:#b8d9c9}.ice-stage small{color:#667281}
+.ice-tag{display:inline-flex;align-items:center;gap:6px;width:fit-content;border-radius:20px;padding:3px 9px;background:#eff2f5;color:#4a5563;font-size:12.5px;line-height:1.6;font-weight:400;white-space:nowrap}.ice-tag:before{content:'';width:6px;height:6px;flex:none;border-radius:50%;background:currentColor}.ice-tag.good{background:#e8f5ee;color:#25664b}.ice-tag.bad,.ice-alert.bad{background:#fcefec;color:#9a3a30}.ice-tag.warn,.ice-alert{background:#fdf3dc;color:#76571a}
+.ice-check{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:1px solid #e9ecef}.ice-quality{background:#eff2f5;padding:16px;border-radius:12px;margin:18px 0}.ice-quality p,.ice-muted{color:#667281;font-size:13px;line-height:1.75}.ice-quality button{width:100%}.ice-alert{padding:14px;border-radius:12px;overflow-wrap:anywhere}.ice-alert[hidden]{display:none}
+.ice-steps{display:flex;gap:8px;flex-wrap:wrap}.ice-steps button{flex:1 1 60px}.ice-source-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:16px 0}.ice-source-options>*{border:1px solid #e9ecef;border-radius:12px;padding:12px;background:#f7f8fa;text-align:left;min-width:0}.ice-source-option{background:#eaf5ef!important}.ice-source-options small{display:block}.ice-task-center pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:280px;overflow:auto}.ice-task-layout>*{min-width:0}.ice-trace{overflow-wrap:anywhere}.ice-task-center .creative-filmstrip{max-width:100%;overflow:auto}.ice-task-center .creative-dialog{max-width:100%}
+.ice-home-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:18px;margin:18px 0}.ice-info{display:grid;grid-template-columns:120px minmax(0,1fr);gap:8px}.ice-info dt{color:#667281}.ice-info dd{margin:0;overflow-wrap:anywhere}.ice-home-stages{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:16px 0}.ice-home-stages a{display:block;padding:10px 6px;border:1px solid #e9ecef;border-radius:12px;font-size:13px;color:#2b3440}.ice-home-stages .ice-tag{font-size:11px;padding:2px 5px;margin-top:7px}.ice-table-scroll{overflow-x:auto;max-width:100%}.ice-table{border-collapse:collapse;width:100%;min-width:540px}.ice-table th,.ice-table td{text-align:left;padding:12px;border-bottom:1px solid #e9ecef;line-height:1.7}.ice-table th{color:#667281;font-weight:400}.ice-card h2{margin:0 0 14px}.ice-card h3{margin:18px 0 8px}
+body.site-app.owner-workspace :is(.creative-heading,.wb-heading,.script-heading,.market-heading){flex-wrap:wrap;gap:14px}
+body.site-app.owner-workspace :is(.creative-heading>div,.wb-heading>div,.script-heading>div,.market-heading>div){min-width:0}
+body.site-app.owner-workspace :is(pre,code){overflow-wrap:anywhere;max-width:100%}
+body.site-app.owner-workspace :is(.script-main,.creative-page,.market-main,.screen-main){min-width:0}
+@media(max-width:1180px){.ice-task-layout{grid-template-columns:150px minmax(0,1fr)}.ice-trace{grid-column:1/-1}.ice-home-stages{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){body.site-app.owner-workspace main{padding:22px 14px 36px}.ice-task-layout,.ice-home-grid{grid-template-columns:minmax(0,1fr)}.ice-trace{grid-column:auto}#iceStages{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.ice-stage{margin:0}.ice-task-layout>aside:first-child h2{margin-bottom:12px}.ice-source-options{grid-template-columns:minmax(0,1fr)}.ice-home-stages{grid-template-columns:repeat(2,minmax(0,1fr))}body.site-app.owner-workspace .wb-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}body.site-app.owner-workspace :is(button,.primary,.secondary){min-height:44px}.creative-task-actions{display:flex;flex-wrap:wrap}.creative-task-actions label{max-width:100%;min-width:0;flex:1 1 150px}.ice-info{grid-template-columns:100px minmax(0,1fr)}body.site-app.owner-workspace .site-header{flex-wrap:wrap}.ice-task-center .creative-deliverable textarea{min-width:0;width:100%}.ice-task-center .creative-section-head{flex-wrap:wrap}}
+
+body.site-app.owner-workspace.creative-app .creative-section-head{flex-wrap:wrap}
+body.site-app.owner-workspace.creative-app .creative-guide li{border-left:0;padding-left:0}
+body.site-app.owner-workspace.creative-app .ice-source-options{grid-template-columns:minmax(0,1fr)}
+body.site-app.owner-workspace.creative-app .creative-section-actions{display:flex;flex-wrap:wrap;gap:8px}
+body.site-app.owner-workspace.creative-app .creative-kicker,body.site-app.owner-workspace.creative-app .creative-guide a{color:#1f7a58}
+
+.ice-task-center{grid-template-columns:minmax(0,1fr)}
+.ice-task-center>*{min-width:0}
+body.site-app.owner-workspace .creative-task-actions{display:flex;flex-wrap:wrap;align-items:end}
+body.site-app.owner-workspace .creative-task-actions label{flex:1 1 180px;min-width:0;max-width:100%}
+body.site-app.owner-workspace .creative-task-actions button{flex:none;white-space:nowrap}
+body.site-app.owner-workspace :is(button,.primary,.secondary){white-space:nowrap}
+@media(max-width:700px){body.site-app.owner-workspace.creative-app .creative-page{padding:22px 14px 36px}body.site-app.owner-workspace .creative-evaluations{grid-template-columns:minmax(0,1fr)}body.site-app.owner-workspace .creative-dialog-actions{flex-wrap:wrap}body.site-app.owner-workspace .creative-form-body{grid-template-columns:minmax(0,1fr)}body.site-app.owner-workspace .creative-more-grid{grid-template-columns:minmax(0,1fr)}}

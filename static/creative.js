@@ -20,7 +20,14 @@ const CreativeData=(()=>{
     return `# 任务 ${task.task_uid} · 已保存 v${task.version}\n\n${dirty?'当前导出含未保存修改，不属于已保存版本；下面的依据是该版本的输入快照。':'成果与依据来自已保存版本。'}\n\n规则 ${task.rules.version} · ${task.rules.sha256}\n\n人工逐字稿未做时间对齐；采样时间是原视频证据时间，分镜时间是建议安排。\n\n## 已保存的输入与来源快照\n\n\`\`\`json\n${JSON.stringify(snapshot,null,2)}\n\`\`\`\n\n`;
   }
   function sameMedia(task,media){return Boolean(task&&media&&task.media.media_id===media.media_id);}
-  return {names,sampleTimes,clock,checkBrief,provenance,sameMedia};
+  function taskPresentation(task,dirty=false){
+    const attempt=task?.attempts?.filter(a=>a.input_version===task.version||(task.result&&a.input_version<=task.version)).at(-1);
+    const labels={processing:'处理中',success:'成功',validation_failed:'失败',failed:'失败',result_unconfirmed:'结果未确认'};
+    const state=attempt?labels[attempt.status]||'结果未确认':task?'待补资料':'未开始';
+    const checks=[['JSON 合法',dirty?'需重跑':task?.result?'通过':'未测'],['引用存在','未测'],['来源类型匹配','未测'],['无编造事实','未测'],['逐镜信息完整','未测']];
+    return {state,checks,qualityUnlocked:false,error:attempt?.validation?.error||'',retained:Object.keys(task?.result?.report?.deliverables||{}).length};
+  }
+  return {names,sampleTimes,clock,checkBrief,provenance,sameMedia,taskPresentation};
 })();
 if(typeof module!=='undefined')module.exports=CreativeData;
 if(typeof document!=='undefined')(()=>{
@@ -53,9 +60,24 @@ if(typeof document!=='undefined')(()=>{
     el('creativeTaskVersion').innerHTML=task?task.versions.map(v=>`<option value="${v.version}" ${v.version===task.version?'selected':''}>v${v.version} · ${esc(v.source)}</option>`).join(''):'<option value="">—</option>';
     el('creativeTaskEvidence').textContent=task?`${taskScope()}。规则 ${task.rules.version}（${task.rules.sha256.slice(0,12)}）；台词来源：${{manual:'人工逐字稿',transcription:'外部转写',none:'未提供'}[task.input.transcript_source]||'用户资料'}。视频、采样、输入与成果按版本保留；没有读取其他账号或平台指标。`:'保存后保留账号、策略、规则、原视频、采样画面和台词。保存不调用模型。';
     el('creativeTaskStatus').textContent=task?`任务 ${task.task_uid} · v${task.version}${taskReadOnly()?' · 历史版本只读，请打开最新版本继续。':' · 已保存，可关闭后继续。'}`:'先选择视频并填写资料，可以仅保存输入，稍后继续。';
-    const attempt=task?.attempts?.filter(a=>a.input_version<=task.version).at(-1);
+    const attempt=task?.attempts?.filter(a=>a.input_version===task.version||(task.result&&a.input_version<=task.version)).at(-1);
     if(attempt&&!taskReadOnly())el('creativeTaskStatus').textContent+=` 最近生成：${{processing:'处理中',success:'成功',validation_failed:'校验失败，待人工处理',result_unconfirmed:'结果未确认',failed:'失败'}[attempt.status]||attempt.status}。${attempt.validation?.error||''}`;
+    renderTrace();
     if(task)history.replaceState(null,'','/creative?task='+task.task_uid+'&version='+task.version);
+  }
+  function renderTrace(){
+    const target=el('iceTrace');if(!target)return;
+    const task=currentTask, view=CreativeData.taskPresentation(task,Boolean(task&&frames.length&&unsaved()));
+    const tag=(text)=>`<span class="ice-tag ${text==='失败'||text==='未过'?'bad':text==='成功'||text==='通过'?'good':text==='待补资料'||text==='需重跑'?'warn':''}">${esc(text)}</span>`;
+    el('iceTaskState').innerHTML=tag(busy?'处理中':view.state);
+    el('iceStages').innerHTML=['账号诊断','选题与参考','视频资料','分析与创作','审核与反馈'].map((name,i)=>`<a class="ice-stage ${i===3?'current':''}" href="${['/strategy','/research','#sourceTitle','#creativeResults','/feedback'][i]}"><strong>${name}</strong>${tag(i===3?(busy?'处理中':view.state):i===2?(!el('iceMissingMedia').hidden?'素材失联':savedMedia?'成功':'待补资料'):'未测')}<small>${i===2?(!el('iceMissingMedia').hidden?'请重新关联素材':savedMedia?'已关联本地保存素材':'选择本地视频'):i===3?'当前生成尝试':'未提供关联阶段执行记录'}</small></a>`).join('');
+    target.innerHTML=`<h2>硬性检查与追溯</h2><div>${view.checks.map(([name,status])=>`<p class="ice-check"><span>${name}</span>${tag(status)}</p>`).join('')}</div><div class="ice-quality" aria-disabled="true"><strong>质量评审 · 未开放</strong><p>等硬性检查都通过后，再来看内容质量。</p><button disabled>下一步</button></div><h3>输入快照</h3><p>来源：${savedMedia?'本地视频':'—'}<br>台词：${task?.input.transcript_source==='manual'?'人工逐字稿，无时间轴':task?.input.transcript_source==='transcription'?'外部转写，非字幕时间轴':'—'}<br>画面范围：${frames.length} 张采样画面<br>规则版本：${esc(task?.rules.version||'—')}</p><p>结构化逐镜检查待接入；文本成果不等于检查通过。</p>`;
+    const failure=el('iceFailure');failure.hidden=!['失败','结果未确认'].includes(view.state);
+    failure.textContent=`分析与创作这次没有生成成功：${view.error||view.state}。已保存的输入、历史版本和${view.retained}项当前成果都已为你保留，可以补充资料后手动重新生成（将调用模型）。`;
+    el('iceInputs').textContent=`策略 ${task?.strategy?.version?'v'+task.strategy.version:'—'} · ${task?.source==='test'?'演示 · ':''}用户提供，未经平台核实 · ${frames.length}张采样画面 · ${task?.input.transcript?'人工/转写台词':'台词未提供'}`;
+    el('iceStale').hidden=!(task&&frames.length&&unsaved());
+    document.querySelectorAll('[data-ice-step]').forEach(b=>{b.disabled=!['sourceTitle','iceTranscriptTitle'].includes(b.dataset.iceStep)&&!result;});
+    el('iceTranscriptPreview').textContent=el('creativeTranscript').value||'尚未提供逐字稿。可在“补充资料”中填写，不调用模型。';
   }
   async function loadTaskList(){
     const rows=await request('/api/agent/tasks');
@@ -116,7 +138,7 @@ if(typeof document!=='undefined')(()=>{
   }
   async function refreshConfig(){config=await request('/api/ai/config');el('creativeModelStatus').textContent=config.endpoint?`当前模型：${config.model} · ${config.connected||config.local?'可提交请求；需模型支持图片输入':'需填写本次运行的模型密钥'}`:'尚未配置模型，请打开 AI 模型设置。';return config;}
   refreshConfig().catch(error=>{el('creativeModelStatus').textContent=error.message;});
-  function locked(value){busy=value;const readonly=taskReadOnly();el('creativeFile').disabled=value||readonly;el('openCreativeBrief').disabled=value||!frames.length;el('openCreativeModel').disabled=value;el('replaceCreativeFile').disabled=value||readonly;el('creativeBriefFields').disabled=value||readonly;el('generateCreative').disabled=value||readonly;el('cancelCreativeBrief').disabled=value;el('closeCreativeBrief').disabled=value;el('saveCreativeTask').disabled=value||readonly||!frames.length;el('saveCreativeInput').disabled=value||readonly;el('openCreativeTask').disabled=value;el('creativeTaskChoice').disabled=value;el('creativeTaskVersion').disabled=value;}
+  function locked(value){busy=value;const readonly=taskReadOnly();el('creativeFile').disabled=value||readonly;el('openCreativeBrief').disabled=value||!frames.length;el('openCreativeModel').disabled=value;el('replaceCreativeFile').disabled=value||readonly;el('creativeBriefFields').disabled=value||readonly;el('generateCreative').disabled=value||readonly;el('cancelCreativeBrief').disabled=value;el('closeCreativeBrief').disabled=value;el('saveCreativeTask').disabled=value||readonly||!frames.length;el('saveCreativeInput').disabled=value||readonly;el('openCreativeTask').disabled=value;el('creativeTaskChoice').disabled=value;el('creativeTaskVersion').disabled=value;renderTrace();}
   function eventOnce(target,event,action){return new Promise((resolve,reject)=>{
     const timer=setTimeout(()=>finish(new Error('视频读取超时，请换用可正常播放的 MP4/WebM')),20000);
     function done(){finish();}function fail(){finish(new Error('当前视频编码无法读取，请换用可正常播放的 MP4/WebM'));}
@@ -160,7 +182,7 @@ if(typeof document!=='undefined')(()=>{
   el('creativeBriefDialog').addEventListener('cancel',event=>{if(busy)event.preventDefault();});
   el('creativeTranscribe').onchange=()=>{el('creativeSpeechField').hidden=!el('creativeTranscribe').checked;el('creativeSpeechModel').required=el('creativeTranscribe').checked;el('creativeConsent').checked=false;sendScope();};
   el('creativeTranscript').oninput=()=>{transcriptOrigin='user';el('creativeConsent').checked=false;sendScope();};
-  el('creativeBriefForm').oninput=()=>{el('creativeBriefError').textContent='';};
+  el('creativeBriefForm').oninput=()=>{el('creativeBriefError').textContent='';renderTrace();};
   function brief(){const transcript=el('creativeTranscript').value.trim();return {confirmed:el('creativeConsent').checked,duration,frames,product:el('creativeProduct').value.trim(),audience:el('creativeAudience').value.trim(),facts:el('creativeFacts').value.trim(),outputs:[...document.querySelectorAll('[name="creativeOutput"]:checked')].map(n=>n.value),goal:el('creativeGoal').value,format:el('creativeFormat').value,style:el('creativeStyle').value,target_seconds:Number(el('creativeSeconds').value),reference:el('creativeReference').value,conditions:el('creativeConditions').value.trim(),details:el('creativeDetails').value.trim(),transcript,transcript_source:transcript?(transcriptOrigin==='transcription'?'transcription':'manual'):'none'};}
   el('creativeBriefForm').onsubmit=async event=>{
     event.preventDefault();if(busy)return;
@@ -189,7 +211,7 @@ if(typeof document!=='undefined')(()=>{
         try{currentTask=await request('/api/agent/task?id='+currentTask.task_uid);result=currentTask.result;showTask();if(result)renderResult();}catch{}
       }
     }
-    finally{locked(false);el('generateCreative').textContent='生成所选成果';}
+    finally{locked(false);el('generateCreative').textContent='生成所选成果 · 将调用模型';}
   };
   function renderResult(){
     const report=result.report,scope=result.scope;
@@ -200,6 +222,11 @@ if(typeof document!=='undefined')(()=>{
     el('creativeDeliverables').innerHTML=Object.entries(report.deliverables).map(([key,value])=>`<article class="creative-deliverable"><header><h3>${CreativeData.names[key]}</h3><button class="secondary compact" data-copy-creative="${key}">复制内容</button></header><p>AI 生成 · ${descriptions[key]}可编辑。</p><textarea id="creativeText-${key}" aria-label="${CreativeData.names[key]}" spellcheck="false">${esc(value)}</textarea></article>`).join('');
     el('creativeDeliverables').querySelectorAll('textarea').forEach(area=>{area.readOnly=taskReadOnly();});
   }
+  el('creativeDeliverables').addEventListener('input',renderTrace);
+  el('creativeVideo').addEventListener('error',()=>{el('iceMissingMedia').hidden=false;renderTrace();});
+  el('creativeVideo').addEventListener('loadeddata',()=>{el('iceMissingMedia').hidden=true;renderTrace();});
+  document.querySelectorAll('[data-ice-step]').forEach(b=>b.onclick=()=>{const id=b.dataset.iceStep;document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'});});
+  el('iceRelink').onclick=()=>el('replaceCreativeFile').click();
   el('creativeDeliverables').onclick=async event=>{const button=event.target.closest('[data-copy-creative]');if(!button)return;const area=el('creativeText-'+button.dataset.copyCreative);try{await navigator.clipboard.writeText(area.value);button.textContent='已复制';setTimeout(()=>{button.textContent='复制内容';},1800);}catch{area.focus();area.select();button.textContent='已选中，请按 Ctrl+C';}};
   el('saveReference').onclick=async()=>{
     if(!result)return;

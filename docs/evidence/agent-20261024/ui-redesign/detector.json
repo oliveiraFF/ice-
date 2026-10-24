@@ -1,0 +1,158 @@
+{
+  "p0": 0,
+  "files": [
+    {
+      "file": "static/creative.html",
+      "findings": [
+        {
+          "id": "missing-stamp",
+          "severity": "P2",
+          "label": "No /* finesse · … */ build stamp — next run has nothing to rotate against",
+          "fix": "divergence §4.2",
+          "hits": [
+            {
+              "line": 0,
+              "text": "no five-axis stamp in CSS"
+            }
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "static/market.html",
+      "findings": [
+        {
+          "id": "missing-stamp",
+          "severity": "P2",
+          "label": "No /* finesse · … */ build stamp — next run has nothing to rotate against",
+          "fix": "divergence §4.2",
+          "hits": [
+            {
+              "line": 0,
+              "text": "no five-axis stamp in CSS"
+            }
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "static/ice.css",
+      "findings": [
+        {
+          "id": "default-palette-token",
+          "severity": "P2",
+          "label": "Default-category palette token name (--cream/--sand/--paper…)",
+          "fix": "soul",
+          "count": 2,
+          "hits": [
+            {
+              "line": 5,
+              "text": "--paper"
+            },
+            {
+              "line": 119,
+              "text": "--paper"
+            }
+          ]
+        },
+        {
+          "id": "pure-bw",
+          "severity": "P2",
+          "label": "Pure #fff / #000 (untinted neutral)",
+          "fix": "soul",
+          "count": 9,
+          "hits": [
+            {
+              "line": 5,
+              "text": "#fff"
+            },
+            {
+              "line": 6,
+              "text": "#fff"
+            },
+            {
+              "line": 18,
+              "text": "#fff"
+            },
+            {
+              "line": 20,
+              "text": "#fff"
+            },
+            {
+              "line": 32,
+              "text": "#fff"
+            },
+            {
+              "line": 78,
+              "text": "#fff"
+            },
+            {
+              "line": 85,
+              "text": "#fff"
+            },
+            {
+              "line": 119,
+              "text": "#fff"
+            }
+          ]
+        },
+        {
+          "id": "inline-color-literal",
+          "severity": "P2",
+          "label": "108 opaque colour literals outside :root (>30) — lift them into named tokens",
+          "fix": "soul",
+          "total": 108,
+          "hits": [
+            {
+              "line": 5,
+              "text": "#f7f8fa"
+            },
+            {
+              "line": 5,
+              "text": "#fff"
+            },
+            {
+              "line": 5,
+              "text": "#1b2125"
+            },
+            {
+              "line": 5,
+              "text": "#6b7280"
+            },
+            {
+              "line": 5,
+              "text": "#e3e7eb"
+            },
+            {
+              "line": 5,
+              "text": "#1b2125"
+            },
+            {
+              "line": 5,
+              "text": "#5b6573"
+            },
+            {
+              "line": 5,
+              "text": "#77828f"
+            }
+          ],
+          "count": 108
+        }
+      ]
+    }
+  ],
+  "notCovered": [
+    "default-category aesthetic (the vibe, not just token names — beige+brass craft, AI purple-glow)",
+    "div-based fake screenshots / fake dashboards",
+    "identical / generic card grids (icon + title + text × N)",
+    "zero imagery on an image-implied brief (food / hotel / fashion / travel)",
+    "glassmorphism / AI-purple-glow used as decoration",
+    "layout-family repetition (§5) and whether the soul is actually distinct",
+    "whether the engine RENDERS real pixels (needs the Playwright runtime pass, not a grep)",
+    "mobile-floor M3/M4 — clickable text wrapping to two lines, long-word overflow at 320px (needs a rendered page at 320, not a grep)",
+    "HTML fragments constructed in JavaScript: URLs resolve against the consuming document, so verify them in the browser",
+    "root-relative asset paths (`/img/x.png`) — dead-ref only resolves file-relative ones; a broken `/…` link needs the real serving root"
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "python_tests": {
+    "command": "python -m unittest discover -s tests -p test_*.py",
+    "passed": 30,
+    "seconds": 18.572
+  },
+  "javascript": [
+    "test_creative_media.cjs passed",
+    "test_creative_export.cjs passed",
+    "test_ui_truth.cjs passed"
+  ],
+  "reopen": {
+    "mode": "local server process stopped and restarted; browser reopened saved task",
+    "task": "7a4b5d86524e",
+    "version": 3,
+    "text_retained": true,
+    "versions": [
+      1,
+      2,
+      3
+    ],
+    "v2_read_only": true
+  },
+  "paid_calls_this_change": 0,
+  "browser_css_viewports": [
+    {
+      "width": 1280,
+      "height": 900
+    },
+    {
+      "width": 390,
+      "height": 900
+    }
+  ],
+  "limitations": [
+    "Native desktop window close/reopen not repeated in this UI change",
+    "320/375/414/768 widths not measured",
+    "No side-by-side reference screenshot artifact",
+    "Browser tool removed before final post-review screenshot refresh"
+  ],
+  "files": [
+    {
+      "name": "creative-1280.png",
+      "bytes": 349423,
+      "sha256": "149895ccf8766ab3d97804700540f908607465b62d99bf3bf5c019a169ccff4a"
+    },
+    {
+      "name": "creative-390.png",
+      "bytes": 305009,
+      "sha256": "27a282c445b6dc49907cfe31d992184a362639ee268786abeba498c980a10641"
+    },
+    {
+      "name": "dashboard-1280.png",
+      "bytes": 124595,
+      "sha256": "1d4bce044567ebadb1fb45eebe9fd894f80c18fe12e8eea3db8085d5df89b969"
+    },
+    {
+      "name": "dashboard-390.png",
+      "bytes": 97836,
+      "sha256": "94d7ebff387e6679b21f893c55231795a68cae2c27049c7189d9571dd53f3c94"
+    },
+    {
+      "name": "detector.json",
+      "bytes": 4263,
+      "sha256": "31ade2834e2fdcf9bc6863ac4e2fbaeb71d06e8b36bf206fc9f01d54909caa8c"
+    },
+    {
+      "name": "empty-390.png",
+      "bytes": 131252,
+      "sha256": "277e2e21ff1aaf844492f35aa3d8278c9d4cbd39a5e27e9a4994cf8a360a7487"
+    },
+    {
+      "name": "failed-1280.png",
+      "bytes": 200421,
+      "sha256": "cec93f166a2e9fd8997e33bf90c467ef44d7a4c6d100a9057d666b36600c5039"
+    },
+    {
+      "name": "fixture-ids.json",
+      "bytes": 175,
+      "sha256": "c5c3bec1b8e32fbc57a58e4d918273807fcfcf1d1820b13785da58dca3d8d7b9"
+    },
+    {
+      "name": "key-dialog-1280.png",
+      "bytes": 37656,
+      "sha256": "23c106efcd20ee233e2dc60177d6be2c6ed36e8ccffe2237ccac576f42c29b44"
+    },
+    {
+      "name": "market-1280.png",
+      "bytes": 81948,
+      "sha256": "42ba7a8182085c7d5046ab3ada204ec1ad2e4fa0b50aac3e77ffb71579e0c3e5"
+    },
+    {
+      "name": "market-390.png",
+      "bytes": 33271,
+      "sha256": "5c9f36d59d734dc28a1c9dea734264b4c424463fe2f726bab11096fbc197de25"
+    },
+    {
+      "name": "missing_media-1280.png",
+      "bytes": 188137,
+      "sha256": "67af930d4f2fb07394b8c86aa6f9e77430acf17e6eca2934a86fb2e562143a8d"
+    },
+    {
+      "name": "need_input-1280.png",
+      "bytes": 185387,
+      "sha256": "b78ec046e24d8664336b38fa713489edba65773133ae9d5152ab48009759e2e2"
+    },
+    {
+      "name": "processing-1280.png",
+      "bytes": 185772,
+      "sha256": "f7a90a08dc49bc88bc5b52a7b6088cf1307e9e132f68974fa12d830f414328ce"
+    },
+    {
+      "name": "reopened-v3.png",
+      "bytes": 78886,
+      "sha256": "d1a738827438f2db9ee96897cd3f867474cfae40a16837527deb490f064ba6aa"
+    },
+    {
+      "name": "result_unconfirmed-1280.png",
+      "bytes": 201963,
+      "sha256": "7eaa44bab4981815e2c78c29c6e702351fd1e1cd9accd2a329f8290faab0f526"
+    },
+    {
+      "name": "ui-checks.json",
+      "bytes": 2386,
+      "sha256": "bd086cd54bf0415593afc6aa2cdd7895353b40ffd5844c8018ca3b4ea4d4d9a0"
+    },
+    {
+      "name": "ui-export-v3.md",
+      "bytes": 16916,
+      "sha256": "c5ce6ea0e8b6902dddb85c0929ef520e03fca2724765c24d30bb27d732f5f901"
+    }
+  ]
+}

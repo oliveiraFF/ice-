@@ -8,7 +8,7 @@
 <body class="script-app content-script-app"><header class="topbar"></header>
 <main class="script-page">
   <div class="breadcrumbs"><a href="/tools">工具管理</a> › 脚本准备</div>
-  <div class="script-heading"><div><h1>填商品事实，生成可审阅的脚本。</h1><p>默认使用雷达已收录作品；无匹配会提示先采集。示例数据需主动选择。</p></div></div>
+  <div class="script-heading"><div><h1>填商品事实，生成可审阅的脚本。</h1><p>默认使用已收录作品；无匹配会提示先采集。示例数据需主动选择。</p></div></div>
   <div class="script-workspace">
     <section class="script-form" aria-labelledby="formTitle">
       <div class="script-section-head"><h2 id="formTitle">输入</h2><span class="script-hint">* 为必填</span></div>
@@ -17,13 +17,13 @@
       <label>目标人群 <input id="scriptAudience" maxlength="120" placeholder="例如：租房人群（可留空）"></label>
 
       <fieldset class="script-modes"><legend>数据来源</legend>
-        <label><input type="radio" name="dataMode" value="radar" checked> 使用雷达已收录作品</label>
+        <label><input type="radio" name="dataMode" value="radar" checked> 使用已收录作品</label>
         <label><input type="radio" name="dataMode" value="sample"> 示例演示（不使用真实作品）</label>
       </fieldset>
 
       <fieldset class="script-modes"><legend>模型模式</legend>
         <label><input type="radio" name="modelMode" value="test" checked> 测试模式（stub，不调用模型）</label>
-        <label><input type="radio" name="modelMode" value="real"> 真实模型（复用雷达 AI 配置）</label>
+        <label><input type="radio" name="modelMode" value="real"> 真实模型（复用当前 AI 配置）</label>
       </fieldset>
       <label class="script-confirm" id="confirmField" hidden><input type="checkbox" id="modelConfirm"> 确认本次会调用真实模型并可能产生费用</label>
 
