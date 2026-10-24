@@ -3,7 +3,6 @@ import copy
 import json
 import io
 import sqlite3
-import socket
 import tempfile
 import threading
 import unittest
@@ -31,10 +30,8 @@ class AgentAPITests(unittest.TestCase):
             reference='借鉴整体结构', frames=[dict(at=0, image='data:image/jpeg;base64,' + base64.b64encode(jpeg).decode())])
 
     def start_server(self):
-        with socket.socket() as listener:
-            listener.bind(('127.0.0.1', 0))
-            port = listener.getsockname()[1]
-        self.server = app.create_server(port=port, data_dir=self.folder.name)
+        self.server = app.create_server(port=0, data_dir=self.folder.name)
+        port = self.server.server_address[1]
         self.thread = threading.Thread(target=self.server.serve_forever, daemon=True)
         self.thread.start()
         self.base = 'http://127.0.0.1:' + str(port)
