@@ -1,0 +1,14 @@
+{
+  "ui_download_clicked": true,
+  "download_bytes": 16853,
+  "sha256": "a1205020a79e107b7208e664bd70b6fc4a1a164302f62624f14e563709297612",
+  "deliverables_match_saved_v2": true,
+  "provenance_verified": true,
+  "no_key_or_base64": true,
+  "attempt_counts_original_and_copy": [
+    1,
+    1
+  ],
+  "original_data_unchanged": true,
+  "new_paid_calls": 0
+}

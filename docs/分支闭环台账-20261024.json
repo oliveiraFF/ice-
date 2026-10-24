@@ -183,8 +183,17 @@
     "branch": "test/t01-model-acceptance",
     "goal": "单次真实模型调用与合成视频技术链路验收",
     "validation": "实际exe两次正常退出、生成与重开一致、30 Python+2 JS通过；见T01首例人工评审",
-    "main_merge": "完成后见外部最终分支闭环.json（避免自引用提交）",
+    "main_merge": "5cd015852a6a2c734e5d75752feb018979d38439",
     "remaining": "人工评分、真实实拍、十主题和B/C/D增强；UI下载点击未验证",
-    "completion": "验证通过，当前提交后合并并安全移除"
+    "completion": "已验证、已合入、工作树已安全移除",
+    "head": "5a9323840fed4e9262cd8d05317db37d47f194ff"
+  },
+  {
+    "branch": "test/t01-ui-export",
+    "goal": "UI下载与状态历史分区",
+    "validation": "下载内容/来源/保密/调用数/原库哈希通过",
+    "main_merge": "合并后见外部最终分支闭环.json",
+    "remaining": "项目人工评分与增强待办",
+    "completion": "已验证，待合并收尾"
   }
 ]
