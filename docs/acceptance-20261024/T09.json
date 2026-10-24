@@ -1,0 +1,57 @@
+{
+  "case_id": "T09",
+  "topic": "学习计时器：一轮计时的设置方法",
+  "status": "proposed; reference material and user confirmation required",
+  "data_class": "synthetic_test_only",
+  "account": {
+    "account_uid": "synthetic-account-v1",
+    "identity_state": "identity_pending",
+    "platform_metrics": null
+  },
+  "strategy": {
+    "version": 1,
+    "confirmed": false,
+    "data": {
+      "direction": "解释操作与限制",
+      "audience": "需要操作说明的成年人",
+      "goal": "引导核对适用条件",
+      "resources": "一人、手机、不露脸；全部为合成声明",
+      "exclusions": "不承诺成绩、效率、专注力改善或教育疗效"
+    }
+  },
+  "goal": "用30秒说明操作步骤和需确认的条件",
+  "facts": [
+    {
+      "id": "T09-F1",
+      "text": "按键可设置分钟，开始键启动倒计时；均为合成资料",
+      "source": "合成资料，不属于真实业务事实"
+    }
+  ],
+  "transcript": {
+    "source": "manual_synthetic",
+    "text": "先设定一轮计时的分钟数，再按开始，结束后手动记录。",
+    "time_alignment": "none"
+  },
+  "reference": {
+    "media_path": null,
+    "media_sha256": null,
+    "frames": [],
+    "status": "reference_missing; cannot run model until frozen"
+  },
+  "allowed_claims": "仅使用本案F1及明确的操作流程；未知条件列入待补",
+  "forbidden_claims": [
+    "不承诺成绩、效率、专注力改善或教育疗效",
+    "不得编造个人经历、评价或账号表现"
+  ],
+  "target_seconds": 30,
+  "outputs": [
+    "shooting",
+    "video_prompt"
+  ],
+  "rules": {
+    "version": "agent-video-v1",
+    "sha256": "928084bff24e2031942a0798b3811fce142d0f448507ccb61b94b564a8d508a4"
+  },
+  "reviewer": "用户本人",
+  "score_status": "not_scored"
+}
