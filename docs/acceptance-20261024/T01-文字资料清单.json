@@ -1,0 +1,17 @@
+{
+  "scope": "text_fixture_only; not complete model input",
+  "files": {
+    "T01-完整模拟业务资料.md": "cffcb2f26744d90d0dc08e57c4eded83b825082b4edc91453a408114647bfe50",
+    "T01-完整模拟输入.json": "80510cdf51da9ed26e9a13ee133f332e91c11e5dbab674d46ab8c9e1f076d75e"
+  },
+  "external_paid_calls": 0,
+  "model_config_checked": {
+    "model": "deepseek-flash",
+    "connected": false
+  },
+  "remaining": [
+    "matching video and sampled frames",
+    "model credential in application",
+    "human review after output"
+  ]
+}
