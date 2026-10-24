@@ -155,6 +155,7 @@ body.site-app.owner-workspace.creative-app .creative-kicker,body.site-app.owner-
 
 .ice-task-center{grid-template-columns:minmax(0,1fr)}
 .ice-task-center>*{min-width:0}
+.ice-task-layout,[data-ice-step],#sourceTitle,#iceTranscriptTitle,#creativeAnalysis,[id^="creativeText-"]{scroll-margin-top:96px}
 body.site-app.owner-workspace .creative-task-actions{display:flex;flex-wrap:wrap;align-items:end}
 body.site-app.owner-workspace .creative-task-actions label{flex:1 1 180px;min-width:0;max-width:100%}
 body.site-app.owner-workspace .creative-task-actions button{flex:none;white-space:nowrap}
