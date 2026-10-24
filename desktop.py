@@ -47,7 +47,15 @@ def main(edition='owner'):
             sys.stdout = open(os.devnull, 'w')
         if sys.stderr is None:
             sys.stderr = open(os.devnull, 'w')
-        server = create_server(0, data_dir, data_dir.parent / 'downloads', edition=edition)
+        window = None
+        closing = threading.Event()
+        def request_exit():
+            if window is None:
+                raise ValueError('桌面窗口尚未就绪，请稍后退出')
+            if not closing.is_set():
+                closing.set()
+                threading.Timer(.2, window.destroy).start()
+        server = create_server(0, data_dir, data_dir.parent / 'downloads', edition=edition, on_exit=request_exit)
         thread = threading.Thread(target=server.serve_forever, daemon=True)
         thread.start()
         port = server.server_address[1]
@@ -55,7 +63,7 @@ def main(edition='owner'):
         import webview
         webview.settings['ALLOW_DOWNLOADS'] = True
         webview.settings['ALLOW_FILE_URLS'] = False
-        webview.create_window('ice运营台', 'http://127.0.0.1:' + str(port), width=1280, height=900,
+        window = webview.create_window('ice运营台', 'http://127.0.0.1:' + str(port), width=1280, height=900,
                               min_size=(900, 600), text_select=True, background_color='#e9eded')
         webview.start(gui='edgechromium', private_mode=False, storage_path=str(data_dir / 'webview'),
                       icon=str(Path(__file__).resolve().parent / 'radar.ico'))

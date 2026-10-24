@@ -3906,7 +3906,7 @@ def _research_markdown(artifact):
     return '\n'.join(lines) + '\n'
 
 
-def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner', static_dir=None, catalog_snapshot=None):
+def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner', static_dir=None, catalog_snapshot=None, on_exit=None):
     if edition not in ('owner', 'customer'):
         raise ValueError('软件版本无效')
     data_dir = Path(data_dir) if data_dir is not None else ROOT / 'data'
@@ -4014,6 +4014,7 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                     state.update(connected=bool(client.key if client else api_key[0]), token=token,
                                  credential_remembered=credential_remembered[0],
                                  credential_error=credential_error[0],
+                                 desktop_exit_enabled=on_exit is not None,
                                  free_only=False, access=client.access() if client else catalog.access_state(),
                                  agent_tasks_enabled=agent_tasks is not None)
                     return self.send(state)
@@ -4304,6 +4305,13 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                 body = json.loads(self.rfile.read(length).decode('utf-8'))
                 if not isinstance(body, dict):
                     raise ValueError('请求格式无效')
+                if self.path == '/api/desktop/exit':
+                    if on_exit is None:
+                        return self.send({'error': '仅桌面版支持退出程序'}, 404)
+                    if body.get('confirm') is not True:
+                        raise ValueError('请先确认已保存修改并退出程序')
+                    on_exit()
+                    return self.send({'closing': True})
                 if self.path == '/api/agent/task/save':
                     if not agent_task_lock.acquire(False):
                         raise ValueError('当前任务正在生成，请完成后再保存')
