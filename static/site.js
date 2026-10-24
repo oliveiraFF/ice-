@@ -12,6 +12,17 @@ const SiteUI=(()=>{
   document.querySelector('.wb-details')?.removeAttribute('open');
   document.body.insertAdjacentHTML('beforeend',`<footer class="site-footer"><span>${RadarIcons.svg('lock')}关键词与视频记录保存在本机</span><span>TikHub / 本地记录 · 额度调用由你控制</span><button data-site-settings>管理数据源 ↗</button></footer><dialog id="siteSearchDialog" class="site-search-dialog"><div class="site-dialog-heading"><h2>本地搜索结果</h2><button class="icon-button" id="closeSiteSearch" aria-label="关闭搜索">${RadarIcons.svg('x')}</button></div><p id="siteSearchStatus"></p><div id="siteSearchResults"></div></dialog><dialog id="siteSettingsDialog" class="modal"><button id="closeSiteSettings" class="close-dialog icon-button" aria-label="关闭设置">${RadarIcons.svg('x')}</button><h2>TikHub 数据源设置</h2><p>视频分析、评论分析和导入导出无需密钥。此处供API市场需要认证的接口使用；赠送额度在API市场设置。</p><form id="siteSettingsForm"><label for="siteApiKey">TikHub API Key</label><input id="siteApiKey" type="password" autocomplete="off"><p class="helper" data-owner-credential-status>由 Windows 当前账户加密保存在本机，重启自动恢复；换电脑或账户需重填。保存不执行接口，也不会开启额度。</p><p id="siteSettingsStatus" class="helper" role="status"></p><div class="dialog-actions"><button type="button" class="text-button" id="clearSiteKey">清除密钥</button><button class="primary" type="submit">保存配置</button></div></form></dialog>`);
   const el=id=>document.getElementById(id);
+  fetch('/api/state?mode=live').then(r=>r.json()).then(state=>{
+    if(!state.desktop_exit_enabled)return;
+    const button=document.createElement('button');button.textContent='退出程序';button.id='exitDesktop';
+    document.querySelector('.site-footer').append(button);
+    button.onclick=async()=>{
+      if(!confirm('退出前请确认已保存当前修改；现在退出程序？'))return;
+      button.disabled=true;
+      try{const response=await fetch('/api/desktop/exit',{method:'POST',headers:{'Content-Type':'application/json','X-Radar-Token':state.token},body:JSON.stringify({confirm:true})});const data=await response.json();if(!response.ok)throw new Error(data.error);}
+      catch(error){button.disabled=false;button.textContent=error.message||'退出失败，请重试';}
+    };
+  }).catch(()=>{});
   async function settings(){const dialog=el('marketSettings')||el('settingsDialog')||el('siteSettingsDialog');dialog.showModal();try{const state=await (await fetch('/api/state?mode=live')).json();const status=dialog.querySelector('[data-owner-credential-status]');if(status)status.textContent=state.credential_error||(state.credential_remembered?'当前 Windows 账户已有加密凭据，重启自动恢复；清除密钥会同时移除本机保存。':'由 Windows 当前账户加密保存在本机；换电脑或账户需重填。保存不会调用接口或开启额度。');}catch{}}
   el('siteSettings').onclick=settings;document.querySelector('[data-site-settings]').onclick=settings;
   el('closeSiteSettings').onclick=()=>el('siteSettingsDialog').close();el('closeSiteSearch').onclick=()=>el('siteSearchDialog').close();
