@@ -106,15 +106,16 @@ clock();setInterval(clock,1000);load();
       const counts = operations.tasks.counts;
       const values = [actions.filter(item => item.state !== 'done').length, drafts.length, counts.pending_review, counts.approved_unpublished, operations.published.count];
       values.forEach((value, i) => { node('wbCount' + i).textContent = value; });
+      if(node('iceTodoCount'))node('iceTodoCount').textContent=values[0];
       node('wbDate').textContent = '业务日 ' + operations.business_date;
       node('wbReadAt').textContent = '本地记录 · 刚刚刷新';
       const todo = [...(operations.actions || []).map(item => row(item.target, item.reason, '来自当前运营记录', '去处理', '', 'arrow'))];
       if (counts.pending_review) todo.push(row('/script', '审阅 ' + counts.pending_review + ' 个待审版本', '查看稿件内容、依据与待补资料', '待审核', '', 'file-text'));
       if (counts.approved_unpublished) todo.push(row('/feedback', '登记 ' + counts.approved_unpublished + ' 个已审任务', '仅登记你已经实际发布的作品', '待登记', '', 'calendar'));
       if (!operations.strategy.confirmed) todo.push(row('/strategy', operations.strategy.configured ? '检查并确认账号策略' : '补充业务与账号策略', '方向、受众、资源与排除项', '待确认', '', 'compass'));
-      node('wbToday').innerHTML = todo.slice(0, 4).join('') || empty('当前没有待处理事项，可以开始下一条内容。', '/draft', '新建研究稿');
+      node('wbToday').dataset.followupCount = todo.length;
       node('wbWeek').innerHTML = actions.length ? actions.slice(0, 4).map(item => row('/advice?id=' + encodeURIComponent(advice.advice_uid), item.text, item.next, {todo:'待开始',doing:'进行中',done:'已完成'}[item.state] || '待开始', item.state, 'calendar')).join('') : empty('还没有行动建议。填写业务现状，建立下一步。', '/advice', '获取运营建议');
-      node('wbWeekNote').textContent = advice ? '最近建议 · ' + new Date(advice.created_at * 1000).toLocaleDateString('zh-CN') + ' · 未提供周排期（按建议日期展示，不代表本周已排期）' : '来自已保存的运营建议 · 未提供周排期';
+      node('wbWeekNote').textContent = advice ? '最近建议 · ' + new Date(advice.created_at * 1000).toLocaleDateString('zh-CN') + ' · 未提供周排期（按建议日期展示，不代表本周已排期）' : '建议仅供参考，不代表已经排进本周。';
       entries = [
         ...drafts.map(item => {
           const version = (item.versions || []).slice(-1)[0], content = version ? version.content_json : {};
@@ -377,4 +378,28 @@ clock();setInterval(clock,1000);load();
   $('reminderCancelEdit').onclick = () => { if (!dirty() || confirm('当前提醒有未保存修改，取消编辑会丢弃；继续？')) reset(); };
   $('reminderRefresh').onclick = () => refresh();
   reset(); refresh();
+})();
+
+/* Read-only task/diagnosis evidence, using existing public responses only. */
+(()=>{
+ const main=document.getElementById('workbench');if(!main)return;
+ const esc=v=>String(v??'—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const area=document.createElement('div');area.innerHTML='<div class="ice-home-grid"><section class="ice-card"><h2>账号诊断摘要</h2><div id="iceDiagnosis">读取中…</div><p class="ice-muted">自有指标由你提供，尚未经平台核实。</p></section><section class="ice-card"><h2>系统状态</h2><div id="iceSystem">读取中…</div></section></div><section class="ice-card"><h2>最近创作成果</h2><div id="iceArtifacts"></div></section>';
+ main.querySelector('.wb-library').before(area);
+ const read=async p=>{const r=await fetch(p);if(!r.ok)throw Error('资料读取失败');return r.json();};
+ async function refresh(){try{
+  const [account,tasks,state]=await Promise.all(['/api/agent/account','/api/agent/tasks','/api/state?mode=live'].map(read));
+  const latest=tasks.length?await read('/api/agent/task?id='+encodeURIComponent(tasks[0].task_uid)):null;
+  const strategy=account.strategy||{},data=strategy.data||{};
+  document.getElementById('iceDiagnosis').innerHTML='<dl class="ice-info"><dt>定位表达</dt><dd>'+esc(data.direction||'资料缺口：请补充账号定位')+'</dd><dt>真实资源</dt><dd>'+esc(data.resources||'资料缺口：请补充拍摄资源')+'</dd><dt>作品表现比较</dt><dd>门槛待配置；暂不输出比较结论。</dd><dt>表现趋势</dt><dd>门槛待配置；暂不输出趋势结论。</dd></dl>';
+  const access=state.access||{};
+  document.getElementById('iceSystem').innerHTML='<dl class="ice-info"><dt>接口调用</dt><dd>'+(access.active?'开启':access.enabled?'已停止':'已关闭')+'</dd><dt>额度上限</dt><dd>'+esc(access.limit == null ? '—' : '$'+access.limit)+'</dd><dt>已用情况</dt><dd>'+esc(access.spent == null ? '—' : '$'+access.spent)+'</dd><dt>最近备份</dt><dd>—</dd><dt>数据位置</dt><dd>本机；具体目录未提供</dd></dl><p class="ice-muted">读取状态不触发探针或模型调用。</p>';
+  if(latest){
+   const a=latest.attempts.filter(a=>a.input_version===latest.version||(latest.result&&a.input_version<=latest.version)).at(-1),status={processing:'处理中',success:'成功',validation_failed:'失败',failed:'失败',result_unconfirmed:'结果未确认'}[a?.status]||'待补资料';
+   document.getElementById('wbToday').innerHTML='<dl class="ice-info"><dt>自有账号</dt><dd>'+esc(latest.account.label)+'</dd><dt>运营目标</dt><dd>'+esc(latest.input.goal)+'</dd><dt>策略版本</dt><dd>v'+latest.strategy.version+' · '+(latest.strategy.confirmed?'已确认':'草稿')+'</dd></dl><div class="ice-home-stages">'+['账号诊断','选题与参考','视频资料','分析与创作','审核与反馈'].map((n,i)=>'<a href="'+['/strategy','/research','/creative','/creative','/feedback'][i]+'">'+n+'<br><span class="ice-tag">'+(i===3?status:i===2?'已关联':'未测')+'</span></a>').join('')+'</div><p class="ice-muted">接下来：查看已保存资料与成果，再决定是否补充或评审。未提供记录的阶段不推定已完成。</p><a class="primary" href="/creative?task='+latest.task_uid+'">继续：分析与创作</a>';
+   const items=Object.keys(latest.result?.report?.deliverables||{});
+   document.getElementById('iceArtifacts').innerHTML=items.length?'<div class="ice-table-scroll"><table class="ice-table"><thead><tr><th>标题</th><th>类型</th><th>版本</th><th>状态</th></tr></thead><tbody>'+items.map(k=>'<tr><td><a href="/creative?task='+latest.task_uid+'">'+esc(latest.input.product)+'</a></td><td>'+esc({shooting:'真人拍摄改编稿',video_prompt:'AI 视频提示词',writing_prompt:'写稿提示词'}[k])+'</td><td>v'+latest.version+'</td><td>已保存 · 模型推断</td></tr>').join('')+'</tbody></table></div>':'<p class="ice-muted">当前任务尚无生成成果，输入和历史版本已保留。</p>';
+  }else{document.getElementById('wbToday').innerHTML='<p class="ice-muted">还没有保存的运营任务。从本地视频和真实业务资料开始。</p><a class="primary" href="/creative">新建任务</a>';document.getElementById('iceArtifacts').textContent='尚无创作成果。';}
+ }catch(e){document.getElementById('iceDiagnosis').textContent='资料读取失败；请确认本机服务仍在运行。';document.getElementById('iceSystem').textContent='—';document.getElementById('wbToday').textContent='任务读取失败；请刷新重试。';document.getElementById('iceArtifacts').textContent='成果读取失败。';}}
+ document.getElementById('wbRefresh').addEventListener('click',refresh);refresh();
 })();

@@ -21,6 +21,7 @@ function render(){
   $('totalCount').textContent=count.toLocaleString();$('freeCount').textContent=zero;$('managedCount').textContent=managed;
   $('importTime').textContent='目录快照 · '+timeText(model.imported_at);
   const access=model.access||{};
+  $('iceKeyState').textContent=model.credential_error?'本机密钥恢复失败，请重新配置':model.connected?(model.credential_remembered?'已配置 · Windows 当前账户加密保存':'已配置 · 本次运行可用'):'未配置 · 可手动添加';
   $('accessStatus').textContent=access.active?(access.allow_balance?'接口调用已开启 · 允许充值余额':'接口调用已开启 · 仅赠送额度'):access.enabled?'接口调用已停止 · 预算不足或已到期':'接口调用已关闭';
   $('creditTotals').textContent=`赠送余额 ${moneyText(access.free_credit)} · 充值余额 ${moneyText(access.balance)} · 查询于 ${timeText(access.checked_at)}`;
   $('budgetTotals').textContent=`累计预算 ${moneyText(access.limit)} · 已预留 ${moneyText(access.spent)} · 剩余 ${moneyText(access.remaining)} · ${access.expires_at?'到期 '+timeText(access.expires_at):'未设置到期时间'}`;
@@ -48,7 +49,7 @@ function refreshDetail(){
   $('detailManage').disabled=Boolean(reasonNow&&!tool?.enabled)||busy;
   $('detailManage').textContent=tool?.enabled?'停用接口':reasonNow?'当前不可执行':'启用接口';
   $('runTool').disabled=busy||Boolean(reason);
-  $('runTool').textContent=busy?'正在运行…':`执行一次 · ${moneyText(detail.price)}`;
+  $('runTool').textContent=busy?'正在运行…':`手动探针 · ${moneyText(detail.price)}`;
   $('runEligibility').textContent=reason||'执行前再次检查实时价格与额度';
 }
 async function openDetail(id){
@@ -100,6 +101,7 @@ $('runTool').onclick=async()=>{
 $('copyEndpoint').onclick=()=>{if(detail)navigator.clipboard.writeText('https://api.tikhub.io'+detail.path).then(()=>toast('接口地址已复制')).catch(()=>toast('浏览器未允许复制，请从上方选择接口地址。'));};
 $('closeDetail').onclick=()=>$('apiDialog').close();
 $('closeSettings').onclick=()=>$('marketSettings').close();
+$('iceKeySettings').onclick=()=>$('siteSettings').click();
 $('marketSettingsForm').onsubmit=async event=>{event.preventDefault();const key=$('marketApiKey').value.trim();if(!key){toast('请填写密钥，或点击清除密钥');return;}try{await api('/api/connect',{key});$('marketApiKey').value='';$('marketSettings').close();await load();toast('密钥已配置；没有执行接口测试');}catch(error){toast(error.message);}};
 $('clearMarketKey').onclick=async()=>{try{await api('/api/connect',{key:''});$('marketApiKey').value='';$('marketSettings').close();await load();toast('已清除运行及本机加密密钥');}catch(error){toast(error.message);}};
 $('apiSearch').oninput=()=>{page=1;render();};

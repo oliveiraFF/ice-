@@ -110,7 +110,7 @@
     const beats = script.beats || [];
     const factIds = [...new Set(beats.flatMap(b => b.fact_ids || []))];
     el('scriptResult').hidden = false;
-    el('scriptSource').textContent = '来源：' + (data.source || 'stub') + ' · 选题：' + (data.data_source === 'radar' ? '雷达真实作品' : '示例');
+    el('scriptSource').textContent = '来源：' + (data.source || 'stub') + ' · 选题：' + (data.data_source === 'radar' ? '已收录作品' : '示例');
     el('scriptStatus').textContent = script.status === 'ready' ? '可审阅（事实齐全）' : '草案（缺事实，不可发布）';
     el('scriptStatus').className = 'script-status ' + (script.status === 'ready' ? 'is-ready' : 'is-draft');
     renderBeats(beats);

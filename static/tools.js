@@ -1,5 +1,5 @@
 const tools = [
-  {id:'script',name:'脚本准备',icon:'file-text',tone:'blue',description:'用雷达已收录作品和商品事实生成可审阅脚本，带事实引用和运行记录。测试模式不调用模型。',status:'local',label:'本地 + 可选模型'},
+  {id:'script',name:'脚本准备',icon:'file-text',tone:'blue',description:'用已收录作品和商品事实生成可审阅脚本，带事实引用和运行记录。测试模式不调用模型。',status:'local',label:'本地 + 可选模型'},
   {id:'creative',name:'视频分析与改编',icon:'circle-play',tone:'blue',description:'上传参考视频，按固定规则分析，生成真人拍摄稿、AI视频提示词和视频写稿提示词。需配置图片模型，可能计费。',status:'ai',label:'自配模型'},
   {id:'video',name:'视频数据分析',icon:'eye',tone:'blue',description:'查看本地视频的播放量、点赞和互动数据。支持CSV导出及视频JSON导入、导出。',status:'local',label:'本地免费'},
   {id:'creator',name:'创作者分析',icon:'user',tone:'orange',description:'按平台和作者名称汇总本地视频样本，比较已知播放量与点赞，支持CSV导出。',status:'local',label:'本地免费'},

@@ -1,0 +1,114 @@
+{
+  "uiChecks": [
+    {
+      "fixture": "need_input",
+      "state": "待补资料",
+      "nextEnabled": false
+    },
+    {
+      "fixture": "failed",
+      "state": "失败",
+      "nextEnabled": false
+    },
+    {
+      "fixture": "result_unconfirmed",
+      "state": "结果未确认",
+      "nextEnabled": false
+    },
+    {
+      "fixture": "processing",
+      "state": "处理中",
+      "nextEnabled": false
+    },
+    {
+      "fixture": "missing_media",
+      "state": "待补资料",
+      "nextEnabled": false
+    },
+    {
+      "fixture": "empty",
+      "state": "未开始"
+    }
+  ],
+  "navigationChecks": [
+    {
+      "navCount": 11,
+      "path": "/dashboard",
+      "scroll": 376,
+      "title": "运营工作台 · ice运营台",
+      "width": 390
+    },
+    {
+      "navCount": 11,
+      "path": "/advice",
+      "scroll": 376,
+      "title": "运营建议与跟进 · ice运营台",
+      "width": 390
+    },
+    {
+      "navCount": 11,
+      "path": "/",
+      "scroll": 376,
+      "title": "发现内容 · ice运营台",
+      "width": 390
+    },
+    {
+      "navCount": 11,
+      "path": "/draft",
+      "scroll": 376,
+      "title": "研究稿 · ice运营台",
+      "width": 390
+    },
+    {
+      "navCount": 11,
+      "path": "/research",
+      "scroll": 376,
+      "title": "多源研究 · ice运营台",
+      "width": 390
+    },
+    {
+      "navCount": 11,
+      "path": "/media-review",
+      "scroll": 376,
+      "title": "成片审阅 · ice运营台",
+      "width": 390
+    },
+    {
+      "navCount": 11,
+      "path": "/script",
+      "scroll": 376,
+      "title": "脚本准备 · ice运营台",
+      "width": 390
+    },
+    {
+      "navCount": 11,
+      "path": "/feedback",
+      "scroll": 376,
+      "title": "发布反馈 · ice运营台",
+      "width": 390
+    },
+    {
+      "navCount": 11,
+      "path": "/strategy",
+      "scroll": 376,
+      "title": "账号策略 · ice运营台",
+      "width": 390
+    },
+    {
+      "navCount": 11,
+      "path": "/market",
+      "scroll": 376,
+      "title": "API市场 · ice运营台",
+      "width": 390
+    },
+    {
+      "navCount": 11,
+      "path": "/tools",
+      "scroll": 376,
+      "title": "工具管理 · ice运营台",
+      "width": 390
+    }
+  ],
+  "exportFile": "E:\\系统文档\\下载\\视频分析与改编-2026-10-24 (1).md",
+  "network": "No provider calls performed"
+}
