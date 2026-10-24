@@ -1,0 +1,113 @@
+{
+  "case_id": "T01",
+  "topic": "清洁刷：狭缝清洁的操作步骤",
+  "status": "text_fixture_ready; video_and_model_key_missing",
+  "data_class": "synthetic_test_only",
+  "account": {
+    "account_uid": "synthetic-account-v1",
+    "identity_state": "identity_pending",
+    "platform_metrics": null
+  },
+  "strategy": {
+    "version": 1,
+    "confirmed": false,
+    "data": {
+      "direction": "解释清洁工具的使用方法与限制",
+      "audience": "独居、租房成年人；受众顾虑为测试假设",
+      "goal": "30秒内说明尺寸核对和操作步骤",
+      "resources": "一人、一手机、三脚架、自然光，不露脸，45分钟准备拍摄",
+      "exclusions": "不编造去污率、除菌率、零划痕、账号表现或用户经历"
+    }
+  },
+  "goal": "用30秒说明操作步骤和需确认的条件",
+  "facts": [
+    {
+      "id": "F01",
+      "text": "小禾可拆头清洁刷，虚构SKU XH-B02",
+      "source": "synthetic_test_only; no real-world evidence"
+    },
+    {
+      "id": "F02",
+      "text": "刷头宽20毫米、厚8毫米；手柄长200毫米",
+      "source": "synthetic_test_only; no real-world evidence"
+    },
+    {
+      "id": "F03",
+      "text": "PP手柄、尼龙刷毛；未验证耐温与表面兼容性",
+      "source": "synthetic_test_only; no real-world evidence"
+    },
+    {
+      "id": "F04",
+      "text": "按扣拆卸，一柄一刷头；不附清洁剂和替换头",
+      "source": "synthetic_test_only; no real-world evidence"
+    },
+    {
+      "id": "F05",
+      "text": "模拟售价19.9元；本次不主动宣传价格",
+      "source": "synthetic_test_only; no real-world evidence"
+    },
+    {
+      "id": "F06",
+      "text": "使用后清水冲洗刷头，通风晾干",
+      "source": "synthetic_test_only; no real-world evidence"
+    }
+  ],
+  "transcript": {
+    "source": "manual_synthetic",
+    "text": "刷子能不能进去，先别凭感觉。这个测试款刷头宽两厘米、厚八毫米，要看你从哪个方向放进去。先确认表面适不适合，再小范围轻刷，别硬挤。用完拆下刷头，清水冲洗，再通风晾干。先核对家里的尺寸和材质，再决定是否需要。",
+    "time_alignment": "planned_only; not observed video transcription"
+  },
+  "reference": {
+    "media_path": null,
+    "media_sha256": null,
+    "frames": [],
+    "status": "reference_missing; cannot run model until frozen"
+  },
+  "allowed_claims": "仅模拟案例F01-F06；必须保留合成来源，不得推定真实产品效果。",
+  "forbidden_claims": [
+    "不编造去污率、除菌率或实际清洁前后效果",
+    "不得编造个人经历、评价或账号表现"
+  ],
+  "target_seconds": 30,
+  "outputs": [
+    "shooting",
+    "video_prompt"
+  ],
+  "rules": {
+    "version": "agent-video-v1",
+    "sha256": "928084bff24e2031942a0798b3811fce142d0f448507ccb61b94b564a8d508a4"
+  },
+  "reviewer": "用户本人",
+  "score_status": "not_scored",
+  "fixture_version": "2026-10-24-v1",
+  "budget_authorization": {
+    "currency": "CNY",
+    "maximum": 1,
+    "max_requests": 1,
+    "automatic_retry": false,
+    "source": "user_reply_2026-10-24",
+    "requests_used": 0
+  },
+  "business_brief": "T01-完整模拟业务资料.md",
+  "input_draft": {
+    "product": "小禾可拆头清洁刷（合成测试 XH-B02）",
+    "audience": "独居、租房成年人；受众顾虑为测试假设",
+    "facts": "以下均为合成测试事实，仅限测试，不是真实商品承诺。\nF01 小禾可拆头清洁刷，虚构SKU XH-B02\nF02 刷头宽20毫米、厚8毫米；手柄长200毫米\nF03 PP手柄、尼龙刷毛；未验证耐温与表面兼容性\nF04 按扣拆卸，一柄一刷头；不附清洁剂和替换头\nF05 模拟售价19.9元；本次不主动宣传价格\nF06 使用后清水冲洗刷头，通风晾干",
+    "conditions": "一人一手机、三脚架、自然光、卷尺、水盆、抹布；竖屏1080x1920、30fps、不露脸、后配旁白；准备拍摄共45分钟。",
+    "details": "先量目标空间，按进入方向核对宽厚；不保证能进入任何特定缝隙。先确认材质并隐蔽试刷。不编造零划痕、去污率、除菌率、耐温、销量或优惠。旁白为人工拟拍，不是视频转写。",
+    "transcript": "刷子能不能进去，先别凭感觉。这个测试款刷头宽两厘米、厚八毫米，要看你从哪个方向放进去。先确认表面适不适合，再小范围轻刷，别硬挤。用完拆下刷头，清水冲洗，再通风晾干。先核对家里的尺寸和材质，再决定是否需要。",
+    "transcript_source": "manual",
+    "goal": "解释商品",
+    "format": "实测演示",
+    "style": "自然分享",
+    "reference": "借鉴整体结构",
+    "outputs": [
+      "shooting",
+      "video_prompt"
+    ],
+    "target_seconds": 30,
+    "duration": null,
+    "frames": [],
+    "confirmed": false
+  }
+}
