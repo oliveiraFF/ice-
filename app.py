@@ -29,6 +29,7 @@ from browser_collector import browser_posts
 from ai_directions import AIDirections
 from video_creative import VideoCreative, MAX_REQUEST_BYTES, MAX_VIDEO_BYTES, TASK_RULES
 from agent_tasks import AgentTasks
+from client_credentials import CredentialVault
 from ops import OpsStore, ensure_tables
 
 # 复用 OPS 脚本工作流：发布包默认从包内 _ops 加载；开发模式保留 OPS_PROJECT_ROOT / D 盘默认。
@@ -3924,6 +3925,20 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
         client = ClientAPI(data_dir, store, catalog)
     static_root = Path(static_dir) if static_dir is not None else ROOT / 'static'
     api_key = ['' if client else os.environ.get('TIKHUB_API_KEY', '')]
+    owner_vault = CredentialVault(data_dir / 'owner-tikhub') if not client else None
+    credential_error = ['']
+    credential_remembered = [False]
+    credential_lock = threading.Lock()
+    if owner_vault is not None:
+        try:
+            owner, saved_key = owner_vault.load()
+            if saved_key and owner != 'owner-tikhub':
+                raise ValueError('凭据用途不符')
+            if saved_key:
+                api_key[0] = saved_key
+                credential_remembered[0] = True
+        except (ValueError, OSError):
+            credential_error[0] = '本机加密凭据不可用，请重新填写或清除；换电脑或 Windows 账户需重填'
     token = secrets.token_urlsafe(24)
     scan_lock = threading.Lock()
     download_lock = threading.Lock()
@@ -3982,7 +3997,9 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                 return self.send(ai.config())
             if parsed.path == '/api/catalog':
                 result = catalog.state()
-                result.update(token=token, connected=bool(api_key[0]))
+                result.update(token=token, connected=bool(api_key[0]),
+                              credential_remembered=credential_remembered[0],
+                              credential_error=credential_error[0])
                 return self.send(result)
             if parsed.path == '/api/catalog/detail':
                 try:
@@ -3995,6 +4012,8 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                     if client:
                         state = client.public_state(state)
                     state.update(connected=bool(client.key if client else api_key[0]), token=token,
+                                 credential_remembered=credential_remembered[0],
+                                 credential_error=credential_error[0],
                                  free_only=False, access=client.access() if client else catalog.access_state(),
                                  agent_tasks_enabled=agent_tasks is not None)
                     return self.send(state)
@@ -4576,11 +4595,18 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                 if self.path == '/api/ops/draft/optimize':
                     return self.send(draft_optimize(body, store, ops, ai))
                 if self.path == '/api/connect':
-                    key = str(body.get('key', '')).strip()
-                    if len(key) > 500 or '\n' in key or '\r' in key:
+                    key = body.get('key')
+                    if not isinstance(key, str) or len(key) > 500 or re.search(r'[\x00-\x20\x7f-\uffff]', key):
                         raise ValueError('密钥格式无效')
-                    api_key[0] = key
-                    return self.send({'connected': bool(key)})
+                    with credential_lock:
+                        if key:
+                            owner_vault.save('owner-tikhub', key)
+                        else:
+                            owner_vault.forget()
+                        api_key[0] = key
+                        credential_remembered[0] = bool(key)
+                        credential_error[0] = ''
+                    return self.send({'connected': bool(key), 'remembered': bool(key)})
                 if self.path == '/api/script/prepare':
                     return self.send(script_prepare(body, store, ai, data_dir, ops))
                 if self.path == '/api/script/task/save':

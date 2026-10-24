@@ -24,7 +24,7 @@
     <div class="market-side-label">本地接口目录</div>
     <div class="market-side-count"><strong id="sideTotal">—</strong><span>个接口条目已收录</span></div>
     <div class="market-side-note">按平台与用途查找接口。已添加接口和测试结果保存在本机。</div>
-    <div class="side-bottom"><div class="connection"><span class="connection-dot" id="connectionDot"></span><div><strong id="connectionLabel">尚未配置密钥</strong><p>密钥仅保存在本次进程内存</p></div></div><p class="local-note">目录导入不会触发接口测试</p></div>
+    <div class="side-bottom"><div class="connection"><span class="connection-dot" id="connectionDot"></span><div><strong id="connectionLabel">尚未配置密钥</strong><p>Windows 当前账户加密保存</p></div></div><p class="local-note">目录导入不会触发接口测试</p></div>
   </aside>
   <main class="market-main"><div class="breadcrumbs">API市场 › 全部接口</div>
     <div class="market-heading"><div><h1 id="marketTitle">API市场</h1><p id="marketSubtitle">查找你需要的数据接口。</p></div><a href="/tools" class="secondary" id="headingLink">浏览功能工具 ↗</a></div>
@@ -54,7 +54,7 @@
     </div>
   </dialog>
   <dialog id="accessDialog" class="modal"><button class="close-dialog icon-button" id="closeAccess" aria-label="关闭额度设置">✕</button><h2>接口调用与预算设置</h2><p>由你手动开启；不会自动发起接口请求。</p><form id="accessForm"><label><input id="accessEnabled" type="checkbox"> 开启接口调用</label><label><input id="allowBalance" type="checkbox"> 允许使用充值余额（仅手动执行，受累计预算限制）</label><p class="helper">默认只使用赠送额度。勾选后，不支持赠送额度或赠送额度不足的接口可使用充值余额；保存设置不会发起抓取。</p><label for="accessLimit">本地累计预算上限（美元）</label><input id="accessLimit" type="number" min="0" step="0.0001" required><label for="accessDuration">开启时长</label><select id="accessDuration"><option value="continuous">持续开启，手动关闭</option><option value="days">指定天数后停止</option></select><label id="accessDaysLabel" hidden>开启天数<input id="accessDays" type="number" min="1" max="3650" step="1" value="1"></label><p class="helper">累计预算不会因关闭、重启或修改时长而重置。保存指定天数会从本次保存时间重新计时。余额不足、预算不足或到期即拒绝后续调用；已发出的请求可能继续完成。$0 接口不消耗预算。</p><p id="accessError" role="status"></p><div class="dialog-actions"><button class="primary" type="submit">保存设置</button></div></form></dialog>
-  <dialog id="marketSettings" class="modal"><button class="close-dialog icon-button" id="closeSettings" aria-label="关闭数据源设置">✕</button><h2>数据源设置</h2><p>配置 TikHub API Key，供需要身份认证的接口使用。</p><form id="marketSettingsForm"><label for="marketApiKey">TikHub API Key</label><input id="marketApiKey" type="password" placeholder="在这里填写密钥，不要发送到聊天" autocomplete="off"><p class="helper">只保存在本次服务进程内存中，重启后清除。保存不会测试接口。</p><div class="dialog-actions"><button type="button" class="text-button" id="clearMarketKey">清除密钥</button><button class="primary" type="submit">保存配置</button></div></form></dialog>
+  <dialog id="marketSettings" class="modal"><button class="close-dialog icon-button" id="closeSettings" aria-label="关闭数据源设置">✕</button><h2>数据源设置</h2><p>配置 TikHub API Key，供需要身份认证的接口使用。</p><form id="marketSettingsForm"><label for="marketApiKey">TikHub API Key</label><input id="marketApiKey" type="password" placeholder="在这里填写密钥，不要发送到聊天" autocomplete="off"><p class="helper" data-owner-credential-status>由 Windows 当前账户加密保存在本机，重启自动恢复；换电脑或账户需重填。保存不会测试接口。</p><div class="dialog-actions"><button type="button" class="text-button" id="clearMarketKey">清除密钥</button><button class="primary" type="submit">保存配置</button></div></form></dialog>
   <div id="marketToast" class="toast" role="status" hidden></div>
 </body>
 </html>

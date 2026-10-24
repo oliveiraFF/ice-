@@ -101,7 +101,7 @@ $('copyEndpoint').onclick=()=>{if(detail)navigator.clipboard.writeText('https://
 $('closeDetail').onclick=()=>$('apiDialog').close();
 $('closeSettings').onclick=()=>$('marketSettings').close();
 $('marketSettingsForm').onsubmit=async event=>{event.preventDefault();const key=$('marketApiKey').value.trim();if(!key){toast('请填写密钥，或点击清除密钥');return;}try{await api('/api/connect',{key});$('marketApiKey').value='';$('marketSettings').close();await load();toast('密钥已配置；没有执行接口测试');}catch(error){toast(error.message);}};
-$('clearMarketKey').onclick=async()=>{try{await api('/api/connect',{key:''});$('marketApiKey').value='';$('marketSettings').close();await load();toast('密钥已从内存清除');}catch(error){toast(error.message);}};
+$('clearMarketKey').onclick=async()=>{try{await api('/api/connect',{key:''});$('marketApiKey').value='';$('marketSettings').close();await load();toast('已清除运行及本机加密密钥');}catch(error){toast(error.message);}};
 $('apiSearch').oninput=()=>{page=1;render();};
 for(const id of ['methodFilter','priceFilter','managedFilter'])$(id).onchange=()=>{page=1;render();};
 $('clearFilters').onclick=resetFilters;$('emptyClear').onclick=resetFilters;
