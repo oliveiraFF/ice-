@@ -34,6 +34,10 @@
 - `git -c core.whitespace=cr-at-eol diff --check` 通过。
 - 使用本机 `finesse-ui` 的 `scripts/detect.mjs --json static/draft.css`：P0/P1 为 0；将本轮新增样式改为项目现有颜色令牌后，检测无剩余 finding。运行时外观已由上述真实浏览器检查覆盖。
 
+## 本地主干复验
+
+P0 合入后，在正式仓库 `main`（当时 HEAD `a87188f8f264b3c67dd8457f38ad5034dc654a7b`）从主干源码另启本地服务，使用全新临时数据库重复走真实 UI：合成示例 → 演示生成 v1 → 演示优化 v2 → 浏览器刷新恢复 v2。随后在 320、375、390、414、768、1280px 复测；导航仍为 11 项，无横向溢出、浏览器错误或外部请求。记录见 [main-reverify.json](main-reverify.json)。
+
 ## 费用和限制
 
 - 本验收没有调用真实模型、TikHub 或其他收费接口；演示生成/优化仅验证本地版本、门禁文案、保存和导出路径，不代表模型质量。
