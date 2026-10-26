@@ -1,0 +1,123 @@
+{
+  "checkedAt": "2026-10-26T06:57:10.434Z",
+  "server": "local ICE source app.py port 8877",
+  "isolatedSyntheticDatabase": true,
+  "viewports": [
+    {
+      "width": 320,
+      "docScroll": 320,
+      "bodyScroll": 320,
+      "mainWidth": 320,
+      "mainScroll": 320,
+      "columns": 1,
+      "nav": 11,
+      "wrapped": [],
+      "small": [],
+      "fieldsetDisplay": "flex",
+      "goalY": [
+        -639,
+        -639,
+        -639,
+        -587,
+        -587
+      ]
+    },
+    {
+      "width": 375,
+      "docScroll": 375,
+      "bodyScroll": 375,
+      "mainWidth": 375,
+      "mainScroll": 375,
+      "columns": 1,
+      "nav": 11,
+      "wrapped": [],
+      "small": [],
+      "fieldsetDisplay": "flex",
+      "goalY": [
+        -639,
+        -639,
+        -639,
+        -639,
+        -587
+      ]
+    },
+    {
+      "width": 390,
+      "docScroll": 390,
+      "bodyScroll": 390,
+      "mainWidth": 390,
+      "mainScroll": 390,
+      "columns": 1,
+      "nav": 11,
+      "wrapped": [],
+      "small": [],
+      "fieldsetDisplay": "flex",
+      "goalY": [
+        -639,
+        -639,
+        -639,
+        -639,
+        -587
+      ]
+    },
+    {
+      "width": 414,
+      "docScroll": 414,
+      "bodyScroll": 414,
+      "mainWidth": 414,
+      "mainScroll": 414,
+      "columns": 1,
+      "nav": 11,
+      "wrapped": [],
+      "small": [],
+      "fieldsetDisplay": "flex",
+      "goalY": [
+        881,
+        881,
+        881,
+        881,
+        933
+      ]
+    },
+    {
+      "width": 768,
+      "docScroll": 768,
+      "bodyScroll": 768,
+      "mainWidth": 768,
+      "mainScroll": 768,
+      "columns": 1,
+      "nav": 11,
+      "wrapped": [],
+      "small": [],
+      "fieldsetDisplay": "flex",
+      "goalY": [
+        728,
+        728,
+        728,
+        728,
+        728
+      ]
+    },
+    {
+      "width": 1280,
+      "docScroll": 1280,
+      "bodyScroll": 1280,
+      "mainWidth": 1064,
+      "mainScroll": 1064,
+      "columns": 2,
+      "nav": 11,
+      "wrapped": [],
+      "small": [],
+      "fieldsetDisplay": "flex",
+      "goalY": [
+        776,
+        776,
+        776,
+        776,
+        776
+      ]
+    }
+  ],
+  "consoleErrors": [],
+  "nonLocalRequests": []
+}
