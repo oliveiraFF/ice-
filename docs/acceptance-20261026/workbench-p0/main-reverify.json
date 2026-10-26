@@ -1,0 +1,28 @@
+{
+  "verified_date": "2026-10-26",
+  "main_head_at_test": "a87188f8f264b3c67dd8457f38ad5034dc654a7b",
+  "server_source": "正式仓库 main",
+  "server_origin": "http://127.0.0.1:8878",
+  "database": "%TEMP%\\ice-main-reverify-20261026\\radar.sqlite3",
+  "synthetic_record_uid": "7a0546def57c",
+  "flow": [
+    "blank state",
+    "load explicitly synthetic example",
+    "demo generate version 1",
+    "demo optimize version 2",
+    "reload page and restore version 2"
+  ],
+  "restored_version_label": "v2 · 演示（基于 v1） · 优化：开头、结构清晰",
+  "version_count": 2,
+  "viewports": [
+    {"width": 320, "document_scroll_width": 320, "main_scroll_width": 320, "columns": 1, "navigation_items": 11},
+    {"width": 375, "document_scroll_width": 375, "main_scroll_width": 375, "columns": 1, "navigation_items": 11},
+    {"width": 390, "document_scroll_width": 390, "main_scroll_width": 390, "columns": 1, "navigation_items": 11},
+    {"width": 414, "document_scroll_width": 414, "main_scroll_width": 414, "columns": 1, "navigation_items": 11},
+    {"width": 768, "document_scroll_width": 768, "main_scroll_width": 768, "columns": 1, "navigation_items": 11},
+    {"width": 1280, "document_scroll_width": 1280, "main_scroll_width": 1064, "columns": 2, "navigation_items": 11}
+  ],
+  "browser_errors": [],
+  "external_requests": [],
+  "paid_calls": 0
+}
