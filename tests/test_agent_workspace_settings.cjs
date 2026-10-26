@@ -76,6 +76,16 @@ async function hashInputs() {
       if (new URL(request.url()).origin !== origin) results.externalRequests++;
     });
 
+    await page.goto(origin + '/');
+    await page.waitForLoadState('networkidle');
+    await page.locator('#siteSettings').click();
+    await page.locator('#settingsDialog #agentWorkspaceForm').waitFor({state: 'visible'});
+    assert.equal(await page.locator('#settingsDialog #agentWorkspaceForm').count(), 1,
+      'the default local-video page must show Agent settings inside its active data-source dialog');
+    assert.equal(await page.locator('#siteSettingsDialog #agentWorkspaceForm').count(), 0,
+      'Agent settings must not be attached to the inactive duplicate dialog');
+    await page.locator('#settingsDialog').evaluate(dialog => dialog.close());
+
     await page.goto(origin + '/ops-wallboard');
     await page.waitForLoadState('networkidle');
     await page.locator('#siteSettings').click();

@@ -1,8 +1,10 @@
 /* finesse · companion behavior for the Agent workspace settings component; visual tokens and layout are in agent-workspace-settings.css. */
 /* ICE product settings · persistent local path only; workspace content remains read-only. */
 (() => {
-  const dialog = document.getElementById('siteSettingsDialog');
-  const keyForm = document.getElementById('siteSettingsForm');
+  const dialog = ['marketSettings', 'settingsDialog', 'siteSettingsDialog']
+    .map(id => document.getElementById(id))
+    .find(candidate => candidate?.querySelector('form'));
+  const keyForm = dialog?.querySelector('form');
   if (!dialog || !keyForm || document.getElementById('agentWorkspaceForm')) return;
 
   const styles = document.createElement('link');
