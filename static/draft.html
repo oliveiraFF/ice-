@@ -5,19 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>研究稿 · ice运营台</title>
   <link rel="stylesheet" href="/style.css">
-  <link rel="stylesheet" href="/draft.css">
 <link rel="stylesheet" href="/icons.css">
 
 <script defer src="/icons.js"></script>
 <script defer src="/site.js"></script>
 <link rel="stylesheet" href="/site.css">
-<link rel="stylesheet" href="/ice.css"><link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/ice.css"><link rel="stylesheet" href="/draft.css"><link rel="icon" href="/favicon.ico">
 </head>
 <body class="draft-app">
 <header class="topbar"></header>
-<main class="script-main"><div class="breadcrumbs">工作空间 / 研究稿</div><div class="script-heading"><h1>研究稿</h1><p>从一个明确主题开始，生成、优化并保留每个版本。研究稿不等于正式批准。</p></div>
+<main class="script-main"><div class="breadcrumbs">工作空间 / 研究稿</div><div class="script-heading"><h1>研究稿工作台</h1><p>从一个主题开始，补充真实资料，生成或优化研究稿。每个版本都可追溯；研究稿不等于正式批准。</p></div>
   <section class="script-card">
-    <h2>输入与资料</h2>
+    <h2>本次任务</h2>
+    <nav class="draft-step-rail" aria-label="研究稿操作步骤">
+      <span class="active">1 选稿或写主题</span><span>2 定优化目标</span><span>3 选写作模板</span><span>4 开始并查看</span>
+    </nav>
+    <p id="draftSourceBar" class="draft-source-bar">新研究稿：输入一个主题即可开始演示试跑。</p>
     <div id="draftResearchSource" class="draft-research-source" hidden>
       <h3 id="draftSourceHeading">研究建议来源（M05-B，非事实）</h3>
       <p id="draftSourceMeta" class="script-hint"></p>
@@ -25,37 +28,71 @@
       <div id="draftSourceChain" class="draft-source-chain"></div>
       <p id="draftSourceNote" class="script-hint"></p>
     </div>
-    <div class="draft-grid">
-      <label>研究稿主题<input id="draftTopic" maxlength="200" placeholder="例如：旧家具修复的报价怎么讲清楚"></label>
-      <label>业务/商品或服务<input id="draftBusiness" maxlength="2000"></label>
-      <label>目标受众<input id="draftAudience" maxlength="2000"></label>
-      <label>目标<input id="draftGoal" maxlength="2000"></label>
-      <label>真实资源<input id="draftResources" maxlength="2000"></label>
-      <label>每周可用时间<input id="draftCapacity" maxlength="2000"></label>
+    <label class="draft-topic-label">研究稿 / 主题（必填）<input id="draftTopic" maxlength="200" required placeholder="例如：旧家具修复的报价怎么讲清楚"></label>
+    <div class="draft-primary-grid">
+      <label>本次操作<select id="draftOperation"><option value="generate">新建研究稿</option><option value="optimize" disabled>优化当前版本</option></select></label>
+      <label>本次使用的写作模板（必选；可继承默认）<select id="draftWorkbenchIndustry" aria-label="本次使用的写作模板"></select></label>
     </div>
-    <label>内容领域模板（新稿/重新生成）<select id="draftIndustry" aria-label="内容领域模板"></select></label>
-    <p id="draftIndustrySummary" class="script-hint">缺省使用通用内容；模板只改变提问与表达约束，不改变业务事实。</p>
-    <div class="script-section-head"><h3>资料选择（只发送勾选的资料）</h3></div>
-    <div class="advice-choices">
-      <div><h4>痛点</h4><div id="draftPainChoices"></div></div>
-      <div><h4>参考</h4><div id="draftReferenceChoices"></div></div>
+    <p id="draftIndustrySummary" class="script-hint">不选择时沿用当前版本；新稿使用通用内容。模板只提供表达约束，不替代业务事实。</p>
+    <fieldset id="draftOptimizeTargets" class="draft-opt-targets" hidden>
+      <legend>优化目标（必选，最多 5 项；默认先选 2 项）</legend>
+      <p id="draftOptimizeBase" class="script-hint">基于哪一版修改：未选择</p>
+      <label><input type="checkbox" data-opt-target="hook"> 开头</label>
+      <label><input type="checkbox" data-opt-target="structure"> 结构清晰</label>
+      <label><input type="checkbox" data-opt-target="proof"> 证明</label>
+      <label><input type="checkbox" data-opt-target="pacing"> 口语节奏</label>
+      <label><input type="checkbox" data-opt-target="cta"> 承接</label>
+    </fieldset>
+    <div id="draftDirty" class="draft-dirty" role="status">当前输入与已保存内容一致</div>
+    <div class="draft-optional">
+      <button id="draftAdvancedToggle" class="draft-disclosure-toggle" type="button" aria-expanded="false" aria-controls="draftAdvancedContent">
+        <span>更多资料（可选）</span><span aria-hidden="true">⌄</span>
+      </button>
+      <p id="draftAdvancedSummary" class="draft-disclosure-summary">业务资料、优化要求和参考资料 · 默认收起</p>
+      <div id="draftAdvancedContent" class="draft-disclosure-content" hidden>
+      <div class="draft-grid">
+        <label>业务、商品或服务<input id="draftBusiness" maxlength="2000"></label>
+        <label>目标受众<input id="draftAudience" maxlength="2000"></label>
+        <label>目标<input id="draftGoal" maxlength="2000"></label>
+        <label>真实资源<input id="draftResources" maxlength="2000"></label>
+        <label>每周可用时间<input id="draftCapacity" maxlength="2000"></label>
+      </div>
+      <div class="script-section-head"><h3>资料选择（只发送勾选的资料）</h3></div>
+      <div class="advice-choices">
+        <div><h4>受众痛点 <small id="draftPainCount">0 已选</small></h4><div id="draftPainChoices"></div></div>
+        <div><h4>参考与咨询资料 <small id="draftReferenceCount">0 已选</small></h4><div id="draftReferenceChoices"></div></div>
+      </div>
+      <label>正文字符硬上限（可选，50–10000；留空不设）
+        <input id="draftMaxChars" type="number" min="50" max="10000" step="1" inputmode="numeric">
+      </label>
+      <label>优化要求（可选，最多 1000 字）<textarea id="draftInstruction" rows="2" maxlength="1000" placeholder="一句话说明必须保留或不能出现的内容"></textarea></label>
+      <div class="script-section-head"><h4>参考与咨询记录（可选，最多 12 条）</h4></div>
+      <div id="draftExtraChoices" class="draft-extra-choices"><p class="script-hint">读取中…</p></div>
+      <div id="draftSelectedMaterials" class="draft-selected-materials" aria-live="polite"></div>
+      </div>
     </div>
-    <div class="script-actions">
-      <button id="draftSave" class="secondary compact">保存主题（不生成）</button>
-      <button id="draftGenerateDemo">生成（演示）</button>
-      <button id="draftGenerateReal" class="secondary">生成（真实）</button>
-      <label class="script-hint"><input type="checkbox" id="draftRealConfirm"> 本次确认真实调用（可能计费）</label>
+    <div class="draft-run-row">
+      <label>执行模式<select id="draftExecutionMode"><option value="test">演示试跑 · 不调用模型</option><option value="real">真实调用 · 可能产生费用</option></select></label>
+      <button id="draftSave" class="secondary compact">只保存主题</button>
+      <button id="draftRun" class="draft-run-button">生成研究稿（演示）</button>
     </div>
+    <p id="draftRunNotice" class="script-hint">演示试跑不会调用模型；仅验证本地流程并保存演示版本。</p>
+    <p id="draftOptimizeStatus" class="script-hint" role="status"></p>
     <p id="draftStatus" class="script-hint" role="status"></p>
     <p id="draftError" class="script-error" role="alert"></p>
   </section>
 
   <section class="script-card">
-    <h2>当前版本</h2>
-    <p id="draftVersionLabel" class="script-hint"></p>
+    <h2>当前版本 <span class="draft-readonly-tag">只读预览</span></h2>
+    <p id="draftVersionLabel" class="script-hint">还没有生成版本</p>
     <p id="draftVersionInput" class="script-hint"></p>
     <div id="draftVersionList" class="draft-versions"></div>
     <p id="draftNewTopic" class="script-warning" role="status" hidden></p>
+    <div id="draftEmptyState" class="draft-empty-state">
+      <strong>还没有可预览的版本</strong>
+      <p>可以先输入自己的主题，也可以加载明确标注的合成示例。演示试跑只验证本地流程，不代表真实业务判断。</p>
+      <button id="draftUseExample" class="secondary compact" type="button">用示例试一下</button>
+    </div>
     <div id="draftContent" hidden>
       <h3 id="draftTitle"></h3>
       <p id="draftSummary"></p>
@@ -78,38 +115,22 @@
         <a id="draftExport" class="button secondary compact" href="#">导出 Markdown</a>
       </div>
     </div>
-    <div class="script-section-head"><h3>优化</h3></div>
-    <p id="draftOptimizeBase" class="script-hint">当前基版本：未选择</p>
-    <fieldset class="draft-opt-targets">
-      <legend>优化目标（必选 1–5 项）</legend>
-      <label><input type="checkbox" data-opt-target="hook"> 开头</label>
-      <label><input type="checkbox" data-opt-target="structure"> 结构清晰</label>
-      <label><input type="checkbox" data-opt-target="proof"> 证明</label>
-      <label><input type="checkbox" data-opt-target="pacing"> 口语节奏</label>
-      <label><input type="checkbox" data-opt-target="cta"> 承接</label>
-    </fieldset>
-    <label>本次优化内容领域模板（缺省继承基版本）<select id="draftOptimizeIndustry" aria-label="优化内容领域模板"></select></label>
-    <p id="draftOptimizeIndustrySummary" class="script-hint">留空继承所选基版本自己的完整模板；显式选择只影响新版本。</p>
-    <label>正文字符硬上限（可选，50–10000；留空不设）
-      <input id="draftMaxChars" type="number" min="50" max="10000" step="1" inputmode="numeric">
-    </label>
-    <label>优化要求（可选，最多 1000 字）<textarea id="draftInstruction" rows="2" maxlength="1000" placeholder="例如：保留限定条件，先说明报价依据"></textarea></label>
-    <div class="script-section-head"><h4>本次另选 A/C 资料（可选，最多 12）</h4></div>
-    <p class="script-hint">只加载你明确勾选、已分析的研究/适配记录；作为补充参考，不覆盖基版本事实、来源与限制。</p>
-    <div id="draftExtraChoices" class="draft-extra-choices"><p class="script-hint">读取中…</p></div>
-    <div class="script-actions">
-      <button id="draftOptimizeDemo">优化（演示）</button>
-      <button id="draftOptimizeReal" class="secondary">优化（真实）</button>
-    </div>
-    <p id="draftOptimizeStatus" class="script-hint" role="status"></p>
   </section>
 
   <section class="script-card">
-    <h2>历史研究稿</h2>
-    <div id="draftList" class="draft-versions"></div>
-    <p class="script-hint">导出为 Markdown 文件；导出不影响正式门禁。</p>
+    <div class="draft-history">
+      <button id="draftHistoryToggle" class="draft-history-toggle" type="button" aria-expanded="false" aria-controls="draftHistoryContent">
+        <strong>历史研究稿</strong><span aria-hidden="true">⌄</span>
+      </button>
+      <p class="draft-history-note">打开历史前会提示未保存修改。</p>
+      <div id="draftHistoryContent" class="draft-history-content" hidden>
+        <div id="draftList" class="draft-versions"></div>
+        <p class="script-hint">Markdown 导出不影响正式门禁。</p>
+      </div>
+    </div>
   </section>
 </main>
+<input type="hidden" id="draftIndustry"><input type="hidden" id="draftOptimizeIndustry">
 <script src="/draft.js"></script>
 </body>
 </html>
