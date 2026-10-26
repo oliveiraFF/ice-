@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN" class="wallboard-document">
+<!-- /* finesse · register=product · A=ICE gray-green · B=system CJK + tabular numerals · C=11-item rail with 16:9 KPI/pipeline/evidence board · D=manual/60s refresh only · E=workspace provenance and freshness · preserve ICE identity; change board composition and evidence material */ -->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>今日运营总览 · ice运营台</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/icons.css">
+  <link rel="stylesheet" href="/site.css">
+  <link rel="stylesheet" href="/ice.css">
+  <link rel="stylesheet" href="/ops-wallboard.css">
+  <script defer src="/icons.js"></script>
+  <script defer src="/site.js"></script>
+  <script defer src="/ops-wallboard.js"></script>
+  <link rel="icon" href="/favicon.ico">
+</head>
+<body class="dashboard-app wallboard-app">
+  <header class="topbar"></header>
+  <main class="wallboard-main">
+    <div class="breadcrumbs">工作空间 / 运营总览</div>
+    <section class="wallboard-heading" aria-labelledby="wallboardTitle">
+      <div>
+        <p class="wallboard-eyebrow">ICE 运营台 · 只读总览</p>
+        <h1 id="wallboardTitle">今日运营</h1>
+        <p class="wallboard-intro">仅查看已保存资料；不提供修改、发布或 AI 生成操作。</p>
+      </div>
+      <div class="wallboard-controls">
+        <div class="wallboard-connection" role="status" aria-live="polite">
+          <span id="connectionDot" class="wallboard-dot" aria-hidden="true"></span>
+          <span id="connectionLabel">正在连接</span>
+          <small id="lastRefresh">尚未刷新</small>
+        </div>
+        <button id="refreshButton" class="secondary" type="button">刷新数据</button>
+        <button id="fullscreenButton" class="secondary" type="button">全屏</button>
+      </div>
+    </section>
+    <p id="freshnessNotice" class="wallboard-freshness" role="status" hidden></p>
+    <p id="workspaceNotice" class="wallboard-workspace-notice" hidden></p>
+
+    <section class="wallboard-kpis" aria-label="今日运营指标">
+      <article class="wallboard-kpi">
+        <div class="wallboard-kpi-head"><span class="wallboard-kpi-icon">TODO</span><span class="wallboard-status-chip">今日</span></div>
+        <p>今日待办</p><strong data-kpi="todo">待接入</strong><small data-kpi-updated="todo">来源时间待接入</small>
+      </article>
+      <article class="wallboard-kpi">
+        <div class="wallboard-kpi-head"><span class="wallboard-kpi-icon">RUN</span><span class="wallboard-status-chip">进行中</span></div>
+        <p>内容进行中</p><strong data-kpi="in_progress">待接入</strong><small data-kpi-updated="in_progress">来源时间待接入</small>
+      </article>
+      <article class="wallboard-kpi">
+        <div class="wallboard-kpi-head"><span class="wallboard-kpi-icon">REVIEW</span><span class="wallboard-status-chip">复盘</span></div>
+        <p>待复盘</p><strong data-kpi="review">待接入</strong><small data-kpi-updated="review">来源时间待接入</small>
+      </article>
+      <article class="wallboard-kpi wallboard-kpi-attention">
+        <div class="wallboard-kpi-head"><span class="wallboard-kpi-icon">BLOCK</span><span class="wallboard-status-chip">状态</span></div>
+        <p>异常 / 阻塞</p><strong data-kpi="blocked">待接入</strong><small data-kpi-updated="blocked">来源时间待接入</small>
+      </article>
+    </section>
+
+    <section class="wallboard-pipeline-panel wallboard-panel" aria-labelledby="pipelineTitle">
+      <div class="wallboard-panel-heading">
+          <div><h2 id="pipelineTitle">内容流水线</h2></div>
+        <span id="pipelineUpdated" class="wallboard-panel-meta">数据时间待接入</span>
+      </div>
+      <ol id="pipelineList" class="wallboard-pipeline">
+        <li class="wallboard-pipeline-item"><span>选题</span><strong>待接入</strong><small>资料未连接</small></li>
+        <li class="wallboard-pipeline-item"><span>研究</span><strong>待接入</strong><small>资料未连接</small></li>
+        <li class="wallboard-pipeline-item"><span>成稿</span><strong>待接入</strong><small>资料未连接</small></li>
+        <li class="wallboard-pipeline-item"><span>发布</span><strong>待接入</strong><small>资料未连接</small></li>
+        <li class="wallboard-pipeline-item"><span>复盘</span><strong>待接入</strong><small>资料未连接</small></li>
+      </ol>
+    </section>
+
+    <div class="wallboard-middle">
+      <section class="wallboard-panel wallboard-alerts-panel" aria-labelledby="alertsTitle">
+        <div class="wallboard-panel-heading">
+          <div><h2 id="alertsTitle">今日重点 / 异常</h2></div>
+          <span id="alertCount" class="wallboard-panel-meta">待接入</span>
+        </div>
+        <ul id="alertList" class="wallboard-alert-list">
+          <li class="wallboard-empty">正在读取运营状态…</li>
+        </ul>
+      </section>
+      <section class="wallboard-panel wallboard-recent-panel" aria-labelledby="recentTitle">
+        <div class="wallboard-panel-heading">
+          <div><h2 id="recentTitle">最近动态</h2></div>
+          <span id="recentCount" class="wallboard-panel-meta">最多显示 10 条</span>
+        </div>
+        <div class="wallboard-table-wrap">
+          <table class="wallboard-table">
+            <thead><tr><th scope="col">时间</th><th scope="col">条目</th><th scope="col">状态</th><th scope="col">来源</th><th scope="col">查看</th></tr></thead>
+            <tbody id="recentRows"><tr><td colspan="5" class="wallboard-empty">正在读取动态…</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+    <p class="wallboard-footnote">数据来自本机运营资料。缺少数据时显示“待接入”；未记录更新时间时会明确提示。</p>
+  </main>
+</body>
+</html>
