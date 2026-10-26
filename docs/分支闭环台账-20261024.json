@@ -204,5 +204,14 @@
     "validation": "docs/acceptance-20261024/最终界面与EXE复验.md；验收记录/agent-20261024/ui-final-complete/browser-results.json、验收记录/agent-20261024/ui-exe/exe-results.json；六种宽度与11项导航、保存/导出/素材重连通过；真实 EXE 保存后退出重启并保留修改；161项构建输入哈希与main源码一致",
     "remaining": "项目级真实业务、人工评分及未接入后端能力仍按最终界面与EXE复验记录所述",
     "completion": "源码分支已合入main 89c594d；已确认main复验干净；分支工作树已安全删除"
+  },
+  {
+    "branch": "feat/agent-integration-v1",
+    "goal": "ICE 设置页选择并保存 Agent workspace 目录，验证打包版重启恢复",
+    "head": "1e0f3e848a6a8c8ca55f56f001666d851d6a395f",
+    "main_merge": "1e0f3e848a6a8c8ca55f56f001666d851d6a395f",
+    "validation": "docs/acceptance-20261026/agent-integration-v1/验收记录.md；40项Python回归、真实本地Chrome/Playwright七视口、Windows原生文件夹选择器、打包EXE保存/关闭/重启恢复；266项发布清单哈希全部通过",
+    "remaining": "项目级真实模型质量、真实实拍与人工评分仍按项目验收报告执行",
+    "completion": "已验证、快进合入main并主干复验；Git工作树已注销，分支引用已删除"
   }
 ]
