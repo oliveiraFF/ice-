@@ -21,6 +21,18 @@ def message(text):
     ctypes.windll.user32.MessageBoxW(None, text, 'ice运营台', 0x10)
 
 
+class DesktopBridge:
+    def __init__(self):
+        self._window = None
+
+    def choose_agent_workspace(self):
+        if self._window is None:
+            return None
+        import webview
+        selected = self._window.create_file_dialog(webview.FileDialog.FOLDER)
+        return str(selected[0]) if selected else None
+
+
 def main(edition='owner'):
     parser = argparse.ArgumentParser()
     parser.add_argument('--data-dir', type=Path, default=portable_home() / 'data')
@@ -63,8 +75,11 @@ def main(edition='owner'):
         import webview
         webview.settings['ALLOW_DOWNLOADS'] = True
         webview.settings['ALLOW_FILE_URLS'] = False
+        desktop_bridge = DesktopBridge()
         window = webview.create_window('ice运营台', 'http://127.0.0.1:' + str(port), width=1280, height=900,
-                              min_size=(900, 600), text_select=True, background_color='#e9eded')
+                              min_size=(900, 600), text_select=True, background_color='#e9eded',
+                              js_api=desktop_bridge)
+        desktop_bridge._window = window
         webview.start(gui='edgechromium', private_mode=False, storage_path=str(data_dir / 'webview'),
                       icon=str(Path(__file__).resolve().parent / 'radar.ico'))
     except Exception:

@@ -1,4 +1,4 @@
-/* finesse · register=product · A=ICE gray-green · B=system CJK + tabular numerals · C=11-item rail with 16:9 KPI/pipeline/evidence board · D=manual/60s refresh only · E=workspace provenance and freshness · preserve ICE identity; change board composition and evidence material */
+/* finesse · register=product · shell=ICE 11-item rail + read-only Agent evidence board · palette=inherited ICE gray-green · density=compact · interaction=manual/60s refresh and evidence links */
 body.site-app.owner-workspace.wallboard-app{
   --wb-bg:#f2f6f3;
   --wb-surface:#fbfdfb;
@@ -85,6 +85,40 @@ body.site-app.owner-workspace.wallboard-app .wallboard-controls button{min-heigh
 .wallboard-table a:hover{text-decoration:underline;text-underline-offset:3px}
 .wallboard-state{display:inline-flex;align-items:center;min-height:24px;padding:3px 8px;border-radius:999px;background:var(--wb-accent-soft);color:var(--wb-accent);font-size:10px;font-weight:650}
 .wallboard-state.is-warning{background:var(--wb-warn-fill);color:var(--wb-warn)}
+.wallboard-insights{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:16px;margin-top:16px}
+.wallboard-insights .wallboard-panel{min-width:0}
+.wallboard-insight-summary{margin:0 0 13px;color:var(--wb-muted);font-size:13px;line-height:1.6;overflow-wrap:anywhere}
+.wallboard-insight-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:12px}
+.wallboard-insight-fact{min-width:0;padding:10px 11px;border:1px solid var(--wb-line);border-radius:10px;background:var(--wb-surface-soft)}
+.wallboard-insight-fact span{display:block;color:var(--wb-muted);font-size:11px;line-height:1.4}
+.wallboard-insight-fact strong{display:block;margin-top:3px;color:var(--wb-ink);font-size:14px;line-height:1.5;overflow-wrap:anywhere}
+.wallboard-insight-fact small{display:block;margin-top:4px;color:var(--wb-muted);font-size:10px;line-height:1.45;overflow-wrap:anywhere}
+.wallboard-subheading,.wallboard-account-assessment h3,.wallboard-account-profile h3,.wallboard-draft-preview h3,.wallboard-reference-preview h3{margin:13px 0 7px;color:var(--wb-ink);font-size:13px;line-height:1.45}
+.wallboard-blocker-list,.wallboard-account-profile ul,.wallboard-account-assessment ul,.wallboard-reference-preview ul{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.wallboard-blocker{padding:10px 11px;border:1px solid var(--wb-line);border-radius:10px;background:var(--wb-surface-soft)}
+.wallboard-blocker strong{display:block;color:var(--wb-ink);font-size:12px;line-height:1.5}
+.wallboard-blocker p{margin:4px 0 0;color:var(--wb-muted);font-size:11px;line-height:1.55;overflow-wrap:anywhere}
+.wallboard-blocker small,.wallboard-provenance{display:block;margin-top:5px;color:var(--wb-muted);font-size:10px;line-height:1.5;overflow-wrap:anywhere}
+.wallboard-account-profile,.wallboard-account-assessment{margin-top:12px;padding-top:10px;border-top:1px solid var(--wb-line)}
+.wallboard-account-profile li,.wallboard-account-assessment li{color:var(--wb-muted);font-size:11px;line-height:1.55;overflow-wrap:anywhere}
+.wallboard-account-assessment p{margin:0;color:var(--wb-ink);font-size:12px;line-height:1.6;overflow-wrap:anywhere}
+.wallboard-plan-summary{padding:11px 12px;border:1px solid var(--wb-line);border-radius:10px;background:var(--wb-surface-soft)}
+.wallboard-plan-summary span{display:block;color:var(--wb-muted);font-size:11px}
+.wallboard-plan-summary strong{display:block;margin:3px 0;color:var(--wb-ink);font-size:14px;line-height:1.5;overflow-wrap:anywhere}
+.wallboard-plan-summary small{display:block;color:var(--wb-muted);font-size:10px;line-height:1.5;overflow-wrap:anywhere}
+.wallboard-plan-summary p{margin:6px 0 0;color:var(--wb-warn);font-size:11px;line-height:1.5;overflow-wrap:anywhere}
+.wallboard-material-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:10px 0 0;padding:0;list-style:none}
+.wallboard-material{min-width:0;padding:9px 10px;border:1px solid var(--wb-line);border-radius:9px;background:var(--wb-surface)}
+.wallboard-material span{display:block;color:var(--wb-muted);font-size:10px;line-height:1.4}
+.wallboard-material strong{display:block;margin:3px 0;color:var(--wb-ink);font-size:15px;line-height:1.4}
+.wallboard-material small{display:block;color:var(--wb-muted);font-size:9px;line-height:1.4;overflow-wrap:anywhere}
+.wallboard-draft-preview,.wallboard-reference-preview{margin-top:12px;padding-top:10px;border-top:1px solid var(--wb-line)}
+.wallboard-draft-preview blockquote{max-height:220px;overflow:auto;margin:0;padding:10px 11px;border:1px solid var(--wb-line);border-radius:8px;background:var(--wb-surface-soft);color:var(--wb-ink);font-size:12px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere}
+.wallboard-draft-preview small{display:block;margin-top:5px;color:var(--wb-muted);font-size:10px;line-height:1.5;overflow-wrap:anywhere}
+.wallboard-reference-preview li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 10px;align-items:start;padding:9px 10px;border:1px solid var(--wb-line);border-radius:9px;background:var(--wb-surface-soft)}
+.wallboard-reference-preview strong{color:var(--wb-ink);font-size:11px;line-height:1.45;overflow-wrap:anywhere}
+.wallboard-reference-preview span,.wallboard-reference-preview small{color:var(--wb-muted);font-size:10px;line-height:1.45;overflow-wrap:anywhere}
+.wallboard-reference-preview small{grid-column:1/-1}
 .wallboard-footnote{margin:14px 2px 0;color:var(--wb-muted);font-size:11px;line-height:1.5}
 @media(max-width:1260px){
   .wallboard-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -95,6 +129,7 @@ body.site-app.owner-workspace.wallboard-app .wallboard-controls button{min-heigh
   .wallboard-heading{align-items:flex-start;flex-direction:column}
   .wallboard-controls{justify-content:flex-start;width:100%}
   .wallboard-middle{grid-template-columns:minmax(0,1fr)}
+  .wallboard-insights{grid-template-columns:minmax(0,1fr)}
   .wallboard-pipeline{grid-template-columns:repeat(2,minmax(0,1fr))}
   .wallboard-pipeline-item:nth-child(3)::after{display:block}
   .wallboard-pipeline-item:nth-child(even)::after{display:none}
@@ -122,6 +157,7 @@ body.site-app.owner-workspace.wallboard-app .wallboard-controls button{min-heigh
   .wallboard-pipeline-item strong.is-unavailable{font-size:14px}
   .wallboard-panel-heading{align-items:flex-start}
   .wallboard-panel-meta{font-size:10px}
+  .wallboard-insight-facts,.wallboard-material-list{grid-template-columns:minmax(0,1fr)}
   .wallboard-table{table-layout:auto;min-width:600px}
   .wallboard-table th:first-child,.wallboard-table td:first-child{width:98px}
   .wallboard-table th:nth-child(3),.wallboard-table td:nth-child(3){width:74px}

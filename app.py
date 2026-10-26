@@ -31,7 +31,8 @@ from video_creative import VideoCreative, MAX_REQUEST_BYTES, MAX_VIDEO_BYTES, TA
 from agent_tasks import AgentTasks
 from client_credentials import CredentialVault
 from ops import OpsStore, ensure_tables
-from agent_bridge import build_view_model, empty_view_model
+from agent_bridge import (build_view_model, clear_workspace_config, empty_view_model,
+                           read_workspace_config, save_workspace_config, validate_workspace)
 
 # 复用 OPS 脚本工作流：发布包默认从包内 _ops 加载；开发模式保留 OPS_PROJECT_ROOT / D 盘默认。
 def _executable_dir():
@@ -3979,8 +3980,36 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                     query = parse_qs(parsed.query)
                     if parsed.path == '/api/agent/account':
                         return self.send({'account': agent_tasks.account(), 'strategy': ops.get_strategy()})
+                    if parsed.path == '/api/agent/workspace-config':
+                        if client:
+                            return self.send({'error': '接口不存在'}, 404)
+                        saved_path, config_error = read_workspace_config(data_dir)
+                        environment_path = os.environ.get('SHORT_VIDEO_OPS_WORKSPACE', '').strip()
+                        effective_path = environment_path or saved_path
+                        valid = False
+                        message = (config_error if not environment_path else '') or (
+                            '尚未配置 Agent workspace' if not effective_path else '')
+                        if effective_path:
+                            try:
+                                validate_workspace(effective_path)
+                                valid = True
+                            except ValueError as exc:
+                                message = str(exc)
+                        return self.send({
+                            'configured_path': saved_path or '',
+                            'effective_path': effective_path or '',
+                            'environment_override': bool(environment_path),
+                            'valid': valid,
+                            'message': message,
+                        })
                     if parsed.path == '/api/agent/view-model':
+                        if client:
+                            return self.send({'error': '接口不存在'}, 404)
                         workspace_root = os.environ.get('SHORT_VIDEO_OPS_WORKSPACE', '').strip()
+                        if not workspace_root:
+                            workspace_root, config_error = read_workspace_config(data_dir)
+                            if config_error:
+                                return self.send(empty_view_model('read_error', config_error), 503)
                         if not workspace_root:
                             return self.send(empty_view_model())
                         try:
@@ -4235,6 +4264,8 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                      '/ops-wallboard': ('ops-wallboard.html', 'text/html'),
                      '/ops-wallboard.js': ('ops-wallboard.js', 'text/javascript'),
                      '/ops-wallboard.css': ('ops-wallboard.css', 'text/css'),
+                     '/agent-workspace-settings.js': ('agent-workspace-settings.js', 'text/javascript'),
+                     '/agent-workspace-settings.css': ('agent-workspace-settings.css', 'text/css'),
                      '/icons.js': ('icons.js', 'text/javascript'), '/icons.css': ('icons.css', 'text/css'),
                      '/site.js': ('site.js', 'text/javascript'), '/site.css': ('site.css', 'text/css'),
                      '/radar-data.js': ('radar-data.js', 'text/javascript'), '/discovery.css': ('discovery.css', 'text/css'),
@@ -4258,6 +4289,7 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                                            '/browser-import','/browser-import.js','/browser-collector.zip',
                                            '/media-review','/media-review.js','/media-review.css',
                                            '/ops-wallboard','/ops-wallboard.js','/ops-wallboard.css',
+                                           '/agent-workspace-settings.js','/agent-workspace-settings.css',
                                            '/draft','/draft.js','/draft.css','/advice','/advice.js','/advice.css',
                                            '/research','/research.js','/research.css'):
                 return self.send({'error': '页面不存在'}, 404)
@@ -4321,6 +4353,16 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                 body = json.loads(self.rfile.read(length).decode('utf-8'))
                 if not isinstance(body, dict):
                     raise ValueError('请求格式无效')
+                if self.path == '/api/agent/workspace-config':
+                    if client:
+                        return self.send({'error': '接口不存在'}, 404)
+                    if body.get('clear') is True:
+                        clear_workspace_config(data_dir)
+                        return self.send({'configured': False, 'message': '已清除 ICE 本机保存的路径；Agent workspace 文件未改动。'})
+                    root = save_workspace_config(data_dir, body.get('workspace_path'))
+                    return self.send({'configured': True, 'valid': True,
+                                      'message': 'Agent workspace 已校验并保存在本机数据目录。',
+                                      'workspace_name': root.name})
                 if self.path == '/api/desktop/exit':
                     if on_exit is None:
                         return self.send({'error': '仅桌面版支持退出程序'}, 404)

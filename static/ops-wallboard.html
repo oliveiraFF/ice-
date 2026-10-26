@@ -94,6 +94,53 @@
         </div>
       </section>
     </div>
+
+    <div class="wallboard-insights">
+      <section class="wallboard-panel wallboard-account-panel" aria-labelledby="accountAnalysisTitle">
+        <div class="wallboard-panel-heading">
+          <div><h2 id="accountAnalysisTitle">账号分析与数据门槛</h2></div>
+          <span id="accountState" class="wallboard-state is-warning">正在读取</span>
+        </div>
+        <p id="accountSummary" class="wallboard-insight-summary">正在读取 Agent 的确认状态与作品证据。</p>
+        <div id="accountFacts" class="wallboard-insight-facts" aria-live="polite"></div>
+        <div id="accountConfirmedProfile" class="wallboard-account-profile" hidden></div>
+        <div id="accountAssessment" class="wallboard-account-assessment" hidden>
+          <h3>Agent 已保存的评估</h3>
+          <p id="accountConclusion"></p>
+          <ul id="accountEvidence"></ul>
+        </div>
+        <h3 class="wallboard-subheading">当前缺口</h3>
+        <ul id="accountBlockers" class="wallboard-blocker-list">
+          <li class="wallboard-empty">正在读取缺口…</li>
+        </ul>
+        <p id="accountProvenance" class="wallboard-panel-meta wallboard-provenance"></p>
+      </section>
+
+      <section class="wallboard-panel wallboard-workbench-panel" aria-labelledby="agentWorkbenchTitle">
+        <div class="wallboard-panel-heading">
+          <div><h2 id="agentWorkbenchTitle">Agent 工作台预览</h2></div>
+          <span id="workbenchState" class="wallboard-state">待接入</span>
+        </div>
+        <div class="wallboard-plan-summary">
+          <span>当前计划</span><strong id="workbenchPlanStatus">待接入</strong>
+          <small id="workbenchPlanSource">来源时间待接入</small>
+          <p id="workbenchPlanBlockers"></p>
+        </div>
+        <ul id="workbenchMaterials" class="wallboard-material-list" aria-label="Agent 工作台资料数量">
+          <li class="wallboard-empty">正在读取资料…</li>
+        </ul>
+        <div id="workbenchDraft" class="wallboard-draft-preview" hidden>
+          <h3>最近一次保存的草稿输入</h3>
+          <blockquote id="workbenchDraftText"></blockquote>
+          <small id="workbenchDraftSource"></small>
+        </div>
+        <div id="workbenchMatches" class="wallboard-reference-preview" hidden>
+          <h3>Agent 已保存的参考匹配</h3>
+          <ul id="workbenchMatchList"></ul>
+        </div>
+        <p id="workbenchEmpty" class="wallboard-empty">还没有可预览的优化运行记录；此页不会自动运行 Agent。</p>
+      </section>
+    </div>
     <p class="wallboard-footnote">数据来自本机运营资料。缺少数据时显示“待接入”；未记录更新时间时会明确提示。</p>
   </main>
 </body>
