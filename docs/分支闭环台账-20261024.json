@@ -213,5 +213,23 @@
     "validation": "docs/acceptance-20261026/agent-integration-v1/验收记录.md；40项Python回归、真实本地Chrome/Playwright七视口、Windows原生文件夹选择器、打包EXE保存/关闭/重启恢复；266项发布清单哈希全部通过",
     "remaining": "项目级真实模型质量、真实实拍与人工评分仍按项目验收报告执行",
     "completion": "已验证、快进合入main并主干复验；Git工作树已注销，分支引用已删除"
+  },
+  {
+    "branch": "feat/workbench-simplify",
+    "goal": "研究稿工作台 P0：空态、演示版本历史、导出与响应式布局",
+    "head": "c2bee848c7a64edf7a36fff1bbac877317108b79",
+    "main_merge": "3f9a3a62afa909759972f281f5ea2560a48879fa",
+    "validation": "docs/acceptance-20261026/workbench-p0/acceptance.md、main-reverify.json、desktop-package-reverify.md；真实本地UI六视口、11项导航、保存/刷新恢复、版本历史与下载；打包版复验见记录",
+    "remaining": "演示稿不代表真实模型质量",
+    "completion": "已合入main并有主干复验；工作树注销，分支引用已删除；本地辅助文件另行保留"
+  },
+  {
+    "branch": "feat/ops-wallboard",
+    "goal": "只读 Agent 运营总览与来源/缺失值展示",
+    "head": "23020b38eb2f1bc239e3f0127ae8ed527b8d1b51",
+    "main_merge": "6251d3a41f72cac2bdc4fb943cacf36f40b679a3",
+    "validation": "docs/acceptance-20261026/ops-wallboard-p1/验收记录.md、main-reverify-and-agent-readonly.md、browser-acceptance.json、populated-browser-acceptance.json；真实浏览器、11项导航、空态/失败、只读桥与合成标记",
+    "remaining": "动作桥、真实模型质量与付费抓取未开放",
+    "completion": "已合入main并有主干复验；工作树注销，分支引用已删除；本地辅助文件另行保留"
   }
 ]
