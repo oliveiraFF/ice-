@@ -1,0 +1,87 @@
+{
+  "origin": "http://127.0.0.1:8880",
+  "rows": {
+    "kpis": {
+      "todo": 0,
+      "in_progress": 3,
+      "review": 2,
+      "blocked": 0
+    },
+    "pipeline": [
+      "4",
+      "3",
+      "2",
+      "1",
+      "0"
+    ],
+    "syntheticLabel": true,
+    "recent": true,
+    "completeAlerts": true
+  },
+  "requests": [
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8880",
+      "path": "/ops-wallboard"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8880",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8880",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8880",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8880",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8880",
+      "path": "/ops-wallboard.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8880",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8880",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8880",
+      "path": "/ops-wallboard.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8880",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8880",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8880",
+      "path": "/api/agent/view-model"
+    }
+  ],
+  "errors": [],
+  "fixture_sha256_before": "1249d654d1567d7595d40ff40332c3c51ccebfb2ed5e0016e02b92858624b538",
+  "fixture_sha256_after": "1249d654d1567d7595d40ff40332c3c51ccebfb2ed5e0016e02b92858624b538",
+  "result": "PASS"
+}

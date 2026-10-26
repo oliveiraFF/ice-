@@ -1,0 +1,28 @@
+Python compilation and related unit tests
+test_cli_writes_only_outside_workspace_and_preserves_explicit_zero (tests.test_agent_bridge.AgentBridgeReadOnlyTests.test_cli_writes_only_outside_workspace_and_preserves_explicit_zero) ... ok
+test_template_read_is_read_only_and_missing_counts_are_not_zero (tests.test_agent_bridge.AgentBridgeReadOnlyTests.test_template_read_is_read_only_and_missing_counts_are_not_zero) ... ok
+test_source_bundle_contains_new_runtime_dependency (tests.test_agent_bundle.AgentBundleTests.test_source_bundle_contains_new_runtime_dependency) ... ok
+test_bad_transport_cannot_erase_previous_result_or_trigger_retry (tests.test_agent_api.AgentAPITests.test_bad_transport_cannot_erase_previous_result_or_trigger_retry) ... ok
+test_concurrent_generate_and_save_cannot_duplicate_model_call (tests.test_agent_api.AgentAPITests.test_concurrent_generate_and_save_cannot_duplicate_model_call) ... ok
+test_edit_is_new_version_and_changed_inputs_cannot_relabel_old_result (tests.test_agent_api.AgentAPITests.test_edit_is_new_version_and_changed_inputs_cannot_relabel_old_result) ... ok
+test_generate_receives_frozen_account_and_survives_server_restart (tests.test_agent_api.AgentAPITests.test_generate_receives_frozen_account_and_survives_server_restart) ... ok
+test_invalid_response_is_archived_before_validation_and_survives_restart (tests.test_agent_api.AgentAPITests.test_invalid_response_is_archived_before_validation_and_survives_restart) ... ok
+test_no_confirmation_or_stale_version_never_calls_model (tests.test_agent_api.AgentAPITests.test_no_confirmation_or_stale_version_never_calls_model) ... ok
+test_nonempty_transcript_cannot_be_labeled_as_missing_source (tests.test_agent_api.AgentAPITests.test_nonempty_transcript_cannot_be_labeled_as_missing_source) ... ok
+test_successful_retry_uses_frozen_rules_and_records_local_repairs (tests.test_agent_api.AgentAPITests.test_successful_retry_uses_frozen_rules_and_records_local_repairs) ... ok
+test_truncated_frame_is_rejected_without_creating_task (tests.test_agent_api.AgentAPITests.test_truncated_frame_is_rejected_without_creating_task) ... ok
+test_failed_backup_prevents_migration (tests.test_agent_tasks.AgentTaskTests.test_failed_backup_prevents_migration) ... ok
+test_interrupted_attempt_becomes_uncertain_without_losing_raw_response (tests.test_agent_tasks.AgentTaskTests.test_interrupted_attempt_becomes_uncertain_without_losing_raw_response) ... ok
+test_interrupted_migration_rolls_back_all_new_tables (tests.test_agent_tasks.AgentTaskTests.test_interrupted_migration_rolls_back_all_new_tables) ... ok
+test_media_is_deduplicated_and_invalid_type_is_rejected (tests.test_agent_tasks.AgentTaskTests.test_media_is_deduplicated_and_invalid_type_is_rejected) ... ok
+test_migration_backs_up_old_database_without_changing_old_columns (tests.test_agent_tasks.AgentTaskTests.test_migration_backs_up_old_database_without_changing_old_columns) ... ok
+test_reopen_preserves_account_media_inputs_rules_and_result (tests.test_agent_tasks.AgentTaskTests.test_reopen_preserves_account_media_inputs_rules_and_result) ... ok
+test_unknown_media_cannot_create_task (tests.test_agent_tasks.AgentTaskTests.test_unknown_media_cannot_create_task) ... ok
+test_versions_remain_immutable_and_conflicting_save_is_rejected (tests.test_agent_tasks.AgentTaskTests.test_versions_remain_immutable_and_conflicting_save_is_rejected) ... ok
+test_wal_backup_has_verified_manifest_and_can_restore_old_schema (tests.test_agent_tasks.AgentTaskTests.test_wal_backup_has_verified_manifest_and_can_restore_old_schema) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 11.861s
+
+OK
+RESULT: PASS

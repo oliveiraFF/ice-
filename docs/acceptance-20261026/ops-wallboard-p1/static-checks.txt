@@ -1,0 +1,5 @@
+node --check static\ops-wallboard.js
+node --check tests\test_ops_wallboard_browser.cjs
+node --check tests\test_ops_wallboard_populated_browser.cjs
+git -c core.whitespace=cr-at-eol diff --check
+RESULT: PASS

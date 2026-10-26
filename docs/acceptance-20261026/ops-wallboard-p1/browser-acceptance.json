@@ -1,0 +1,2584 @@
+{
+  "origin": "http://127.0.0.1:8879",
+  "viewports": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "documentWidth": 1920,
+      "bodyWidth": 1920,
+      "navItems": 11,
+      "kpis": 4,
+      "pipeline": 5,
+      "controlHeights": [
+        {
+          "height": 44,
+          "minHeight": "44px",
+          "cssHeight": "44px"
+        },
+        {
+          "height": 44,
+          "minHeight": "44px",
+          "cssHeight": "44px"
+        }
+      ],
+      "boardBackground": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "width": 2560,
+      "height": 1440,
+      "documentWidth": 2560,
+      "bodyWidth": 2560,
+      "navItems": 11,
+      "kpis": 4,
+      "pipeline": 5,
+      "controlHeights": [
+        {
+          "height": 44,
+          "minHeight": "44px",
+          "cssHeight": "44px"
+        },
+        {
+          "height": 44,
+          "minHeight": "44px",
+          "cssHeight": "44px"
+        }
+      ],
+      "boardBackground": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "width": 320,
+      "height": 844,
+      "documentWidth": 320,
+      "bodyWidth": 320,
+      "navItems": 11,
+      "kpis": 4,
+      "pipeline": 5,
+      "controlHeights": [
+        {
+          "height": 44,
+          "minHeight": "44px",
+          "cssHeight": "44px"
+        },
+        {
+          "height": 44,
+          "minHeight": "44px",
+          "cssHeight": "44px"
+        }
+      ],
+      "boardBackground": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "width": 375,
+      "height": 844,
+      "documentWidth": 375,
+      "bodyWidth": 375,
+      "navItems": 11,
+      "kpis": 4,
+      "pipeline": 5,
+      "controlHeights": [
+        {
+          "height": 44,
+          "minHeight": "44px",
+          "cssHeight": "44px"
+        },
+        {
+          "height": 44,
+          "minHeight": "44px",
+          "cssHeight": "44px"
+        }
+      ],
+      "boardBackground": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "documentWidth": 390,
+      "bodyWidth": 390,
+      "navItems": 11,
+      "kpis": 4,
+      "pipeline": 5,
+      "controlHeights": [
+        {
+          "height": 44,
+          "minHeight": "44px",
+          "cssHeight": "44px"
+        },
+        {
+          "height": 44,
+          "minHeight": "44px",
+          "cssHeight": "44px"
+        }
+      ],
+      "boardBackground": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "width": 414,
+      "height": 844,
+      "documentWidth": 414,
+      "bodyWidth": 414,
+      "navItems": 11,
+      "kpis": 4,
+      "pipeline": 5,
+      "controlHeights": [
+        {
+          "height": 44,
+          "minHeight": "44px",
+          "cssHeight": "44px"
+        },
+        {
+          "height": 44,
+          "minHeight": "44px",
+          "cssHeight": "44px"
+        }
+      ],
+      "boardBackground": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "width": 768,
+      "height": 900,
+      "documentWidth": 768,
+      "bodyWidth": 768,
+      "navItems": 11,
+      "kpis": 4,
+      "pipeline": 5,
+      "controlHeights": [
+        {
+          "height": 44,
+          "minHeight": "44px",
+          "cssHeight": "44px"
+        },
+        {
+          "height": 44,
+          "minHeight": "44px",
+          "cssHeight": "44px"
+        }
+      ],
+      "boardBackground": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "documentWidth": 1280,
+      "bodyWidth": 1280,
+      "navItems": 11,
+      "kpis": 4,
+      "pipeline": 5,
+      "controlHeights": [
+        {
+          "height": 44,
+          "minHeight": "44px",
+          "cssHeight": "44px"
+        },
+        {
+          "height": 44,
+          "minHeight": "44px",
+          "cssHeight": "44px"
+        }
+      ],
+      "boardBackground": "rgba(0, 0, 0, 0)"
+    }
+  ],
+  "navigation": [
+    {
+      "label": "运营工作台",
+      "href": "/dashboard",
+      "status": 200
+    },
+    {
+      "label": "运营建议",
+      "href": "/advice",
+      "status": 200
+    },
+    {
+      "label": "发现内容",
+      "href": "/",
+      "status": 200
+    },
+    {
+      "label": "研究稿",
+      "href": "/draft",
+      "status": 200
+    },
+    {
+      "label": "研究增强",
+      "href": "/research",
+      "status": 200
+    },
+    {
+      "label": "成片审阅",
+      "href": "/media-review",
+      "status": 200
+    },
+    {
+      "label": "内容任务",
+      "href": "/script",
+      "status": 200
+    },
+    {
+      "label": "反馈复盘",
+      "href": "/feedback",
+      "status": 200
+    },
+    {
+      "label": "账号策略",
+      "href": "/strategy",
+      "status": 200
+    },
+    {
+      "label": "API 市场",
+      "href": "/market",
+      "status": 200
+    },
+    {
+      "label": "工具管理",
+      "href": "/tools",
+      "status": 200
+    }
+  ],
+  "states": [
+    {
+      "name": "refresh failure",
+      "result": "old view model retained; stale notice shown"
+    },
+    {
+      "name": "first-load offline",
+      "result": "offline state shown without claiming data"
+    }
+  ],
+  "requests": [
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/agent/view-model"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/research"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/script.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/research.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/research.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/ops/research/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/ops/research/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/ops/industry/catalog"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/strategy"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/pain/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/reference/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/ops/draft/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/ops/research/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/ops/research/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/feedback/records"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/agent/view-model"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/agent/view-model"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/agent/view-model"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/agent/view-model"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/agent/view-model"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/agent/view-model"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/agent/view-model"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/agent/view-model"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/agent/view-model"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/agent/view-model"
+    }
+  ],
+  "navigation_requests": [
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/agent/view-model"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/dashboard"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/dashboard.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/dashboard-data.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/dashboard.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/ops/dashboard"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/ops/dashboard"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/ops/advice/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/ops/draft/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/ops/media-review/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/ops/advice/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/ops/reminders/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/agent/account"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/agent/tasks"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/agent/view-model"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/advice"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/script.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/advice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/advice.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/pain/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/ops/advice/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/reference/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/agent/view-model"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/discovery.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/browser-import.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/radar-data.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/app.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/catalog"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-semibold.ttf"
+    },
+    {
+      "method": "POST",
+      "host": "127.0.0.1:8879",
+      "path": "/api/ai/cache"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/agent/view-model"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/draft"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/draft.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/draft.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/ops/industry/catalog"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/pain/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/ops/draft/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/reference/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/ops/research/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/ops/research/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/agent/view-model"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/research"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/script.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/research.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/research.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/ops/research/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/ops/research/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/ops/industry/catalog"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/strategy"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/pain/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/reference/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/ops/draft/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/ops/research/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/ops/research/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/feedback/records"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/agent/view-model"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/media-review"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/media-review.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/media-review.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/ops/draft/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/ops/media-review/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/agent/view-model"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/script"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/script.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/script.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/script/tasks"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/reference/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/strategy"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/topics/combo"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/pain/list"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/agent/view-model"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/feedback"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/script.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/feedback.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/feedback.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/feedback/records"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/feedback/reviews"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/feedback/records"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/agent/view-model"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/strategy"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/script.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/strategy.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/strategy.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/strategy"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/agent/view-model"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/market"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/market.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/market-data.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/market.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/catalog"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ops-wallboard.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/agent/view-model"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/tools"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/market.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/tools.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/icons.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/free-tools-data.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/tools.js"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/site.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice.css"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/ice-avatar.jpg"
+    },
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/state"
+    }
+  ],
+  "errors": [],
+  "hashes": {
+    "fixture_before": "75b7b7d8b8338b4403d5785edb7254e1c49f83627729498463e1f29a1ba7307f",
+    "template_before": "75b7b7d8b8338b4403d5785edb7254e1c49f83627729498463e1f29a1ba7307f",
+    "fixture_after": "75b7b7d8b8338b4403d5785edb7254e1c49f83627729498463e1f29a1ba7307f",
+    "template_after": "75b7b7d8b8338b4403d5785edb7254e1c49f83627729498463e1f29a1ba7307f"
+  },
+  "model_config": {
+    "connected": false,
+    "endpointConfigured": false,
+    "modelConfigured": false
+  },
+  "verification_requests": [
+    {
+      "method": "GET",
+      "host": "127.0.0.1:8879",
+      "path": "/api/ai/config"
+    }
+  ],
+  "pipeline_navigation": {
+    "source": "pipeline stage",
+    "href": "/research",
+    "result": "/research"
+  },
+  "navigation_existing_side_effect": [
+    {
+      "method": "POST",
+      "host": "127.0.0.1:8879",
+      "path": "/api/ai/cache"
+    }
+  ],
+  "result": "PASS"
+}

@@ -31,6 +31,7 @@ from video_creative import VideoCreative, MAX_REQUEST_BYTES, MAX_VIDEO_BYTES, TA
 from agent_tasks import AgentTasks
 from client_credentials import CredentialVault
 from ops import OpsStore, ensure_tables
+from agent_bridge import build_view_model, empty_view_model
 
 # 复用 OPS 脚本工作流：发布包默认从包内 _ops 加载；开发模式保留 OPS_PROJECT_ROOT / D 盘默认。
 def _executable_dir():
@@ -3978,6 +3979,17 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                     query = parse_qs(parsed.query)
                     if parsed.path == '/api/agent/account':
                         return self.send({'account': agent_tasks.account(), 'strategy': ops.get_strategy()})
+                    if parsed.path == '/api/agent/view-model':
+                        workspace_root = os.environ.get('SHORT_VIDEO_OPS_WORKSPACE', '').strip()
+                        if not workspace_root:
+                            return self.send(empty_view_model())
+                        try:
+                            return self.send(build_view_model(
+                                Path(workspace_root),
+                                fixture=os.environ.get('SHORT_VIDEO_OPS_WORKSPACE_MODE') == 'fixture'))
+                        except (OSError, ValueError) as exc:
+                            return self.send(empty_view_model('read_error',
+                                                              'Agent workspace 读取失败：' + type(exc).__name__), 503)
                     if parsed.path == '/api/agent/tasks':
                         rows = agent_tasks.list()
                         for item in rows:
@@ -4220,6 +4232,9 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                      '/market': ('market.html', 'text/html'), '/tools': ('tools.html', 'text/html'),
                      '/dashboard': ('dashboard.html', 'text/html'), '/dashboard.js': ('dashboard.js', 'text/javascript'),
                      '/dashboard-data.js': ('dashboard-data.js', 'text/javascript'), '/dashboard.css': ('dashboard.css', 'text/css'),
+                     '/ops-wallboard': ('ops-wallboard.html', 'text/html'),
+                     '/ops-wallboard.js': ('ops-wallboard.js', 'text/javascript'),
+                     '/ops-wallboard.css': ('ops-wallboard.css', 'text/css'),
                      '/icons.js': ('icons.js', 'text/javascript'), '/icons.css': ('icons.css', 'text/css'),
                      '/site.js': ('site.js', 'text/javascript'), '/site.css': ('site.css', 'text/css'),
                      '/radar-data.js': ('radar-data.js', 'text/javascript'), '/discovery.css': ('discovery.css', 'text/css'),
@@ -4242,6 +4257,7 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
             if client and parsed.path in ('/market','/market.js','/market.css','/market-data.js',
                                            '/browser-import','/browser-import.js','/browser-collector.zip',
                                            '/media-review','/media-review.js','/media-review.css',
+                                           '/ops-wallboard','/ops-wallboard.js','/ops-wallboard.css',
                                            '/draft','/draft.js','/draft.css','/advice','/advice.js','/advice.css',
                                            '/research','/research.js','/research.css'):
                 return self.send({'error': '页面不存在'}, 404)
