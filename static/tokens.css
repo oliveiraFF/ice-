@@ -16,6 +16,7 @@
   --ease:cubic-bezier(.25,.1,.25,1);
   --blur:saturate(180%) blur(24px);
   --blur-strong:saturate(180%) blur(40px);
+  --blur-glass:saturate(200%) blur(18px) brightness(1.04);
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
@@ -24,7 +25,11 @@
               radial-gradient(900px 640px at 100% 4%,rgba(191,90,242,.15),transparent 60%),
               radial-gradient(1000px 760px at 55% 112%,rgba(48,209,88,.10),transparent 60%);
   --glass:rgba(30,30,33,.62);--glass-strong:rgba(28,28,31,.72);
-  --glass-border:rgba(255,255,255,.09);--glass-highlight:inset 0 1px 0 rgba(255,255,255,.06);
+  --glass-border:rgba(255,255,255,.10);--glass-highlight:inset 0 1px 0 rgba(255,255,255,.08);
+  --glass-rim:inset 0 1px 0 rgba(255,255,255,.18),inset 0 -1px 1px rgba(255,255,255,.05),inset 0 0 0 1px rgba(255,255,255,.07);
+  --glass-sheen:linear-gradient(140deg,rgba(255,255,255,.10) 0%,rgba(255,255,255,.03) 38%,rgba(255,255,255,0) 60%,rgba(255,255,255,.05) 100%);
+  --glass-button:rgba(255,255,255,.09);--glass-button-hover:rgba(255,255,255,.15);
+  --switch-off:rgba(120,120,128,.36);--knob:#f5f5f7;
   --bg-panel:var(--glass);--bg-inset:rgba(58,58,64,.58);--bg-input:rgba(62,62,68,.62);--bg-hover:rgba(74,74,80,.66);
   --bg-raised:#48484d;
   --text-ink:#f5f5f7;--text-body:#d4d4d9;--text-muted:#9c9ca3;
@@ -45,12 +50,17 @@
 }
 :root[data-theme="light"]{
   color-scheme:light;
-  --bg-page:#f2f2f7;
-  --wallpaper:radial-gradient(1100px 700px at 12% -12%,rgba(0,122,255,.13),transparent 62%),
-              radial-gradient(900px 640px at 100% 4%,rgba(175,82,222,.10),transparent 60%),
-              radial-gradient(1000px 760px at 55% 112%,rgba(52,199,89,.08),transparent 60%);
-  --glass:rgba(255,255,255,.70);--glass-strong:rgba(250,250,252,.78);
-  --glass-border:rgba(255,255,255,.75);--glass-highlight:inset 0 1px 0 rgba(255,255,255,.8);
+  --bg-page:#f5f5f7;
+  --wallpaper:radial-gradient(900px 620px at 8% -8%,rgba(0,122,255,.16),transparent 62%),
+              radial-gradient(820px 600px at 100% 0%,rgba(175,82,222,.12),transparent 60%),
+              radial-gradient(900px 700px at 70% 105%,rgba(90,200,250,.14),transparent 62%),
+              radial-gradient(700px 520px at 25% 85%,rgba(255,204,0,.07),transparent 60%);
+  --glass:rgba(255,255,255,.62);--glass-strong:rgba(255,255,255,.66);
+  --glass-border:rgba(255,255,255,.80);--glass-highlight:inset 0 1px 0 rgba(255,255,255,.9);
+  --glass-rim:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -1px 1px rgba(255,255,255,.45),inset 0 0 0 1px rgba(255,255,255,.55),0 0 0 .5px rgba(0,0,0,.07);
+  --glass-sheen:linear-gradient(140deg,rgba(255,255,255,.70) 0%,rgba(255,255,255,.22) 36%,rgba(255,255,255,.04) 58%,rgba(255,255,255,.32) 100%);
+  --glass-button:rgba(255,255,255,.58);--glass-button-hover:rgba(255,255,255,.80);
+  --switch-off:rgba(120,120,128,.20);--knob:#ffffff;
   --bg-panel:var(--glass);--bg-inset:rgba(226,226,232,.72);--bg-input:rgba(226,226,232,.78);--bg-hover:rgba(214,214,220,.82);
   --bg-raised:#ffffff;
   --text-ink:#1d1d1f;--text-body:#3a3a3c;--text-muted:#6a6a70;
@@ -59,7 +69,7 @@
   --success:#1f7a34;--success-soft:rgba(52,199,89,.16);
   --warn:#a14d00;--warn-soft:rgba(255,149,0,.16);--danger:#c9150d;--danger-soft:rgba(255,59,48,.12);--danger-solid:#e0281e;
   --info:#0066cc;--info-soft:rgba(0,113,227,.10);
-  --shadow-card:0 1px 2px rgba(0,0,0,.04),0 8px 28px rgba(0,0,0,.06);
+  --shadow-card:0 1px 2px rgba(0,0,0,.03),0 10px 30px rgba(30,40,80,.07);
   --shadow-pop:0 24px 60px rgba(0,0,0,.16),0 0 0 1px var(--line);
   --focus-ring:0 0 0 4px rgba(0,113,227,.30);
 

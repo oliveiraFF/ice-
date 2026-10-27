@@ -21,12 +21,16 @@ body.site-app.owner-workspace ::selection{background:var(--accent-soft)}
   box-shadow:none;cursor:pointer;position:relative;
   transition:background-color .2s var(--ease),color .2s var(--ease),transform .12s var(--ease),opacity .2s;
 }
-:where(html[data-theme]) body.site-app.owner-workspace .primary{background:var(--accent);color:var(--on-accent)}
-:where(html[data-theme]) body.site-app.owner-workspace .primary:hover{background:var(--accent-hover);color:var(--on-accent)}
-:where(html[data-theme]) body.site-app.owner-workspace .secondary{background:var(--bg-inset);color:var(--text-ink);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur)}
-:where(html[data-theme]) body.site-app.owner-workspace .secondary:hover{background:var(--bg-hover);color:var(--text-ink)}
-:where(html[data-theme]) body.site-app.owner-workspace .danger{background:var(--bg-inset);color:var(--danger)}
-:where(html[data-theme]) body.site-app.owner-workspace .danger:hover{background:var(--danger-soft)}
+:where(html[data-theme]) body.site-app.owner-workspace .primary{background:linear-gradient(180deg,rgba(255,255,255,.24),rgba(255,255,255,0) 58%),var(--accent);color:var(--on-accent);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.38),inset 0 0 0 1px rgba(255,255,255,.12),0 4px 14px rgba(0,113,227,.28)}
+:where(html[data-theme]) body.site-app.owner-workspace .primary:hover{background:linear-gradient(180deg,rgba(255,255,255,.30),rgba(255,255,255,0) 58%),var(--accent-hover);color:var(--on-accent)}
+/* Secondary and danger buttons are clear glass: tint, sheen, and a bright rim that catches light. */
+:where(html[data-theme]) body.site-app.owner-workspace :is(.secondary,.danger){background:var(--glass-sheen),var(--glass-button);box-shadow:var(--glass-rim),0 1px 3px rgba(0,0,0,.06);
+  -webkit-backdrop-filter:var(--blur-glass);backdrop-filter:var(--blur-glass)}
+:where(html[data-theme]) body.site-app.owner-workspace .secondary{color:var(--text-ink)}
+:where(html[data-theme]) body.site-app.owner-workspace .secondary:hover{background:var(--glass-sheen),var(--glass-button-hover);color:var(--text-ink)}
+:where(html[data-theme]) body.site-app.owner-workspace .danger{color:var(--danger)}
+:where(html[data-theme]) body.site-app.owner-workspace .danger:hover{background:var(--glass-sheen),var(--danger-soft)}
 :where(html[data-theme]) body.site-app.owner-workspace .danger.is-confirming{background:var(--danger-solid);color:#fff}
 
 :where(html[data-theme]) body.site-app.owner-workspace .text-button{
@@ -42,11 +46,24 @@ html[data-theme] body.site-app.owner-workspace :is(.icon-button,.site-settings,.
   align-items:center;justify-content:center;gap:6px;place-items:center;
   min-width:32px;width:auto;height:32px;min-height:32px;padding:0 9px;
   background:transparent;border:0;border-radius:var(--radius-full);box-shadow:none;
-  color:var(--text-muted);font:500 var(--fs-13)/1 var(--font-sans);cursor:pointer;flex-shrink:0;
+  color:var(--text-body);font:500 var(--fs-13)/1 var(--font-sans);cursor:pointer;flex-shrink:0;
   transition:background-color .2s var(--ease),color .2s var(--ease)}
 html[data-theme] body.site-app.owner-workspace :is(.icon-button,.site-settings,.site-menu,.theme-toggle):hover{background:var(--bg-hover);color:var(--text-ink)}
+html[data-theme] body.site-app.owner-workspace :is(.site-settings,.site-menu){width:34px;min-width:34px;height:34px;min-height:34px;padding:0;
+  background:var(--glass-sheen),var(--glass-button);box-shadow:var(--glass-rim),0 1px 3px rgba(0,0,0,.06);-webkit-backdrop-filter:var(--blur-glass);backdrop-filter:var(--blur-glass)}
+html[data-theme] body.site-app.owner-workspace :is(.site-settings,.site-menu):hover{background:var(--glass-sheen),var(--glass-button-hover)}
+
+/* Theme toggle is a real switch (role=switch, aria-checked = dark). The sun/moon rides on the knob. */
+html[data-theme] body.site-app.owner-workspace .theme-toggle{position:relative;width:52px;min-width:52px;height:30px;min-height:30px;padding:0;border-radius:var(--radius-full);
+  background:var(--switch-off);box-shadow:inset 0 0 0 .5px rgba(0,0,0,.06),inset 0 1px 2px rgba(0,0,0,.10);transition:background-color .25s var(--ease)}
+html[data-theme] body.site-app.owner-workspace .theme-toggle:hover{background:var(--switch-off)}
+html[data-theme] body.site-app.owner-workspace .theme-toggle[aria-checked="true"],html[data-theme] body.site-app.owner-workspace .theme-toggle[aria-checked="true"]:hover{background:var(--accent)}
+html[data-theme] body.site-app.owner-workspace .theme-toggle .theme-label{display:none}
+html[data-theme] body.site-app.owner-workspace .theme-toggle>span:first-child{position:absolute;top:3px;left:3px;width:24px;height:24px;display:grid;place-items:center;border-radius:50%;
+  background:linear-gradient(180deg,#fff,var(--knob));color:#8e8e93;font-size:13px;line-height:1;
+  box-shadow:0 2px 6px rgba(0,0,0,.18),0 0 0 .5px rgba(0,0,0,.06),inset 0 1px 0 #fff;transition:transform .3s cubic-bezier(.3,1.4,.5,1)}
+html[data-theme] body.site-app.owner-workspace .theme-toggle[aria-checked="true"]>span:first-child{transform:translateX(22px);color:var(--accent)}
 html[data-theme] body.site-app.owner-workspace :is(.icon-button,.site-settings,.site-menu) svg{width:18px;height:18px}
-html[data-theme] body.site-app.owner-workspace .theme-toggle>span:first-child{font-size:15px;line-height:1}
 
 /* sizes */
 :where(html[data-theme]) body.site-app.owner-workspace :is(.primary,.secondary,.danger).compact{min-height:var(--ctl-sm);padding:0 12px;font-size:var(--fs-13)}
@@ -57,8 +74,8 @@ html[data-theme] body.site-app.owner-workspace .theme-toggle>span:first-child{fo
 :where(html[data-theme]) body.site-app.owner-workspace :is(.primary,.secondary,.danger,.icon-button):active:not(:disabled){transform:scale(.96)}
 :where(html[data-theme]) body.site-app.owner-workspace :is(.primary,.secondary,.danger,.text-button,.icon-button,.site-settings,.site-menu,.theme-toggle):focus-visible{outline:none;box-shadow:var(--focus-ring)}
 :where(html[data-theme]) body.site-app.owner-workspace :is(.primary,.secondary,.danger,.text-button,.icon-button):is(:disabled,[aria-disabled="true"]){opacity:.35;cursor:not-allowed;transform:none}
-:where(html[data-theme]) body.site-app.owner-workspace .primary:disabled:hover{background:var(--accent)}
-:where(html[data-theme]) body.site-app.owner-workspace :is(.secondary,.danger):disabled:hover{background:var(--bg-inset)}
+:where(html[data-theme]) body.site-app.owner-workspace .primary:disabled:hover{background:linear-gradient(180deg,rgba(255,255,255,.24),rgba(255,255,255,0) 58%),var(--accent)}
+:where(html[data-theme]) body.site-app.owner-workspace :is(.secondary,.danger):disabled:hover{background:var(--glass-sheen),var(--glass-button)}
 :where(html[data-theme]) body.site-app.owner-workspace :is(.primary,.secondary,.danger):is([aria-busy="true"],.is-loading){color:transparent!important;pointer-events:none}
 :where(html[data-theme]) body.site-app.owner-workspace :is(.primary,.secondary,.danger):is([aria-busy="true"],.is-loading)::after{
   content:"";position:absolute;inset:0;margin:auto;width:14px;height:14px;border-radius:50%;
@@ -76,20 +93,28 @@ body.site-app.owner-workspace :is(input[type=checkbox],input[type=radio]){accent
 /* ---------- Shell: header and sidebar are glass over the page ---------- */
 html[data-theme] body.site-app.owner-workspace :is(.site-header,.site-nav){
   background:var(--glass-strong)!important;-webkit-backdrop-filter:var(--blur-strong);backdrop-filter:var(--blur-strong);box-shadow:none}
-html[data-theme] body.site-app.owner-workspace .site-header{border-bottom:1px solid var(--line)!important}
+html[data-theme] body.site-app.owner-workspace .site-header{border-bottom:0!important;box-shadow:0 1px 0 var(--line)}
 html[data-theme] body.site-app.owner-workspace .site-nav{border-right:1px solid var(--line)!important}
 :where(html[data-theme]) body.site-app.owner-workspace .site-context{font-size:var(--fs-13)}
 :where(html[data-theme]) body.site-app.owner-workspace .site-local{font-size:var(--fs-12)}
-html[data-theme] body.site-app.owner-workspace .site-search{height:var(--ctl-md);border:0!important;border-radius:var(--radius-sm);background:var(--bg-input)!important;overflow:hidden;box-shadow:none;transition:box-shadow .2s var(--ease)}
+html[data-theme] body.site-app.owner-workspace .site-search{height:var(--ctl-md);border:0!important;border-radius:var(--radius-full);background:var(--glass-sheen),var(--glass-button)!important;overflow:hidden;
+  box-shadow:var(--glass-rim),0 1px 3px rgba(0,0,0,.05);-webkit-backdrop-filter:var(--blur-glass);backdrop-filter:var(--blur-glass);transition:box-shadow .2s var(--ease)}
 html[data-theme] body.site-app.owner-workspace .site-search:focus-within{box-shadow:var(--focus-ring)}
 html[data-theme] body.site-app.owner-workspace .site-search :is(input,select){min-height:0;height:100%;border:0!important;border-radius:0;background:transparent!important;font-size:var(--fs-13);box-shadow:none!important}
-html[data-theme] body.site-app.owner-workspace .site-search select{border-right:1px solid var(--line)!important}
+html[data-theme] body.site-app.owner-workspace .site-search select{border-right:1px solid var(--line)!important;padding-left:14px}
 html[data-theme] body.site-app.owner-workspace .site-search button{width:34px;height:100%;color:var(--text-muted);background:transparent;border:0}
 
 html[data-theme] body.site-app.owner-workspace .site-nav>a:not(.site-brand){border-radius:var(--radius-sm);font-size:var(--fs-14);font-weight:400;transition:background-color .2s var(--ease)}
 html[data-theme] body.site-app.owner-workspace .site-nav>a.active:not(.site-brand){font-weight:600}
 html[data-theme] body.site-app.owner-workspace .nav-group{font-size:var(--fs-12);font-weight:600}
 html[data-theme] body.site-app.owner-workspace .site-logo img{border-radius:10px}
+html[data-theme] body.site-app.owner-workspace .site-nav>a.active:not(.site-brand){box-shadow:var(--glass-rim)}
+/* Desktop: the sidebar floats inside the window as a rounded glass slab. */
+@media(min-width:901px){
+  html[data-theme] body.site-app.owner-workspace .site-nav{top:10px!important;bottom:10px;left:10px;height:auto!important;max-height:calc(100dvh - 20px);width:calc(var(--rail) - 12px)!important;
+    border:0!important;border-radius:var(--radius-lg);background:var(--glass-sheen),var(--glass-strong)!important;
+    box-shadow:var(--shadow-card),var(--glass-rim)}
+}
 
 /* In-page breadcrumbs repeat what the header already says. */
 body.site-app.owner-workspace main .breadcrumbs{display:none}
@@ -101,8 +126,8 @@ html[data-theme] body.site-app.owner-workspace main h3{font:600 var(--fs-14)/1.4
 
 /* ---------- Cards: frosted glass, hairline edge, soft shadow ---------- */
 html[data-theme] body.site-app.owner-workspace :is(.ice-card,.wb-panel,.screen-panel,.creative-task-panel,.creative-source,.creative-results,.creative-guide,.script-card,.script-form,.script-result,.script-tasks,.research-paper,.feature-tool,.api-card,.market-filters,.credit-panel,.filter-panel,.ranking-panel,.tool-card,.tool-panel,.keyword-search-panel,.only-panel,.content-card,.heat-kpi,.wallboard-card){
-  background:var(--glass)!important;border:1px solid var(--glass-border)!important;border-radius:var(--radius-md)!important;
-  box-shadow:var(--shadow-card),var(--glass-highlight)!important;-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur)}
+  background:var(--glass-sheen),var(--glass)!important;border:0!important;border-radius:var(--radius-md)!important;
+  box-shadow:var(--shadow-card),var(--glass-rim)!important;-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur)}
 /* Items inside a card sit on a gray fill instead of stacking another glass layer. */
 html[data-theme] body.site-app.owner-workspace :is(.script-task,.script-beat,.research-item,.research-evidence,.research-source-block,.advice-history-item,.draft-version-item,.mr-history-item){
   background:var(--bg-inset)!important;border-color:transparent!important;box-shadow:none!important;border-radius:var(--radius-sm)}
@@ -124,14 +149,15 @@ html[data-theme] body.site-app.owner-workspace :is(.ice-tag,.wb-pill).bad{backgr
 /* ---------- Steps: a segmented control ---------- */
 html[data-theme] body.site-app.owner-workspace .ice-steps{
   display:inline-flex;gap:2px;max-width:100%;padding:2px;margin-bottom:var(--sp-16);
-  background:var(--bg-inset);border:0;border-radius:var(--radius-sm);overflow-x:auto}
+  background:var(--bg-inset);border:0;border-radius:var(--radius-sm);box-shadow:inset 0 1px 2px rgba(0,0,0,.06);overflow-x:auto}
 html[data-theme] body.site-app.owner-workspace .ice-steps button{
   flex:none;min-height:30px;padding:0 16px;margin:0;
   background:transparent!important;border:0!important;border-radius:8px;
   color:var(--text-body)!important;font-size:var(--fs-13);font-weight:500;box-shadow:none;cursor:pointer;opacity:1;
   transition:background-color .2s var(--ease),color .2s var(--ease)}
 html[data-theme] body.site-app.owner-workspace .ice-steps button:hover:not(:disabled):not(.is-current){color:var(--text-ink)!important}
-html[data-theme] body.site-app.owner-workspace .ice-steps button.is-current{background:var(--bg-raised)!important;color:var(--text-ink)!important;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.14),0 0 0 .5px rgba(0,0,0,.04)}
+html[data-theme] body.site-app.owner-workspace .ice-steps button.is-current{background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0)),var(--bg-raised)!important;color:var(--text-ink)!important;font-weight:600;
+  box-shadow:0 2px 6px rgba(0,0,0,.12),0 0 0 .5px rgba(0,0,0,.05),inset 0 1px 0 rgba(255,255,255,.6)}
 html[data-theme] body.site-app.owner-workspace .ice-steps button:disabled{color:var(--text-muted)!important;opacity:.6;cursor:default}
 
 /* ---------- Page adjustments (move into page CSS once its legacy layers are retired) ---------- */
@@ -139,11 +165,11 @@ html[data-theme] body.site-app.owner-workspace .ice-steps button:disabled{color:
 html[data-theme] body.site-app.owner-workspace.creative-app .ice-task-layout>.ice-card:first-child{background:transparent!important;border:0!important;padding:0;box-shadow:none!important;-webkit-backdrop-filter:none;backdrop-filter:none}
 html[data-theme] body.site-app.owner-workspace.creative-app .ice-task-layout>.ice-card:first-child .ice-muted{font-size:var(--fs-12);color:var(--text-muted)!important;margin-top:var(--sp-8)}
 html[data-theme] body.site-app.owner-workspace.creative-app .ice-stage{
-  gap:6px;padding:14px 16px;border:1px solid var(--glass-border);border-radius:var(--radius-md);
-  background:var(--glass);box-shadow:var(--shadow-card),var(--glass-highlight);color:var(--text-ink);
+  gap:6px;padding:14px 16px;border:1px solid transparent;border-radius:var(--radius-md);
+  background:var(--glass-sheen),var(--glass);box-shadow:var(--shadow-card),var(--glass-rim);color:var(--text-ink);
   -webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
 html[data-theme] body.site-app.owner-workspace.creative-app .ice-stage:hover{transform:translateY(-1px)}
-html[data-theme] body.site-app.owner-workspace.creative-app .ice-stage.current{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),var(--shadow-card)}
+html[data-theme] body.site-app.owner-workspace.creative-app .ice-stage.current{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent),var(--shadow-card),var(--glass-rim)}
 html[data-theme] body.site-app.owner-workspace.creative-app .ice-stage strong{font-size:var(--fs-14)}
 html[data-theme] body.site-app.owner-workspace.creative-app .ice-stage small{font-size:var(--fs-12);color:var(--text-muted)!important}
 html[data-theme] body.site-app.owner-workspace.creative-app .ice-check{padding:11px 0;border-bottom:1px solid var(--line)}
@@ -159,13 +185,12 @@ html[data-theme] body.site-app.owner-workspace.dashboard-app #workbench .wb-head
 html[data-theme] body.site-app.owner-workspace.dashboard-app #workbench .wb-read-status{font-size:var(--fs-12);color:var(--text-muted)}
 html[data-theme] body.site-app.owner-workspace.dashboard-app #workbench .wb-section-head h2{font-size:var(--fs-14)}
 html[data-theme] body.site-app.owner-workspace.dashboard-app #workbench .wb-focus{border-radius:var(--radius-md);box-shadow:var(--shadow-card)}
-html[data-theme] body.site-app.owner-workspace.dashboard-app #workbench .wb-focus>a{border-radius:var(--radius-full);font-size:var(--fs-14);min-height:var(--ctl-md);padding:0 18px;-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur)}
+html[data-theme] body.site-app.owner-workspace.dashboard-app #workbench .wb-focus>a{box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 4px 12px rgba(0,0,0,.15);border-radius:var(--radius-full);font-size:var(--fs-14);min-height:var(--ctl-md);padding:0 18px;-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur)}
 html[data-theme] body.site-app.owner-workspace.dashboard-app #workbench :is(.wb-metric strong,.wb-focus h2 strong){font-family:var(--font-display);font-weight:700;letter-spacing:-.02em}
 
 @media(max-width:600px){
   :where(html[data-theme]) body.site-app.owner-workspace :is(.primary,.secondary,.danger){min-height:40px}
-  html[data-theme] body.site-app.owner-workspace :is(.site-settings,.site-menu,.theme-toggle){min-width:40px;height:40px;min-height:40px}
-  :where(html[data-theme]) body.site-app.owner-workspace .theme-toggle .theme-label{display:none}
+  html[data-theme] body.site-app.owner-workspace :is(.site-settings,.site-menu){width:40px;min-width:40px;height:40px;min-height:40px}
 }
 @media(prefers-reduced-transparency:reduce){
   :root[data-theme="dark"]{--glass:#1c1c1f;--glass-strong:#1c1c1f}
@@ -174,3 +199,15 @@ html[data-theme] body.site-app.owner-workspace.dashboard-app #workbench :is(.wb-
 @media(prefers-reduced-motion:reduce){
   body.site-app.owner-workspace *{transition:none!important;animation-duration:.01ms!important}
 }
+
+/* ---------- Liquid Glass page details ---------- */
+/* The legacy input rule outranks .site-search; restate it with matching weight so the field reads as one glass pill. */
+html[data-theme] body.site-app.owner-workspace .site-search :is(input:not([type=checkbox]):not([type=radio]),select){background:transparent!important;box-shadow:none!important}
+/* 运营工作台: today's focus becomes a blue glass hero card in the accent color, not an orange block. */
+html[data-theme] body.site-app.owner-workspace.dashboard-app{
+  --today-orange-light:#0a6fe0;--today-orange:#0050b8;--today-orange-ink:#ffffff;--today-orange-muted:rgba(255,255,255,.78);
+  --today-ring:rgba(255,255,255,.14);--today-button:rgba(255,255,255,.20)}
+html[data-theme] body.site-app.owner-workspace.dashboard-app #workbench .wb-focus{box-shadow:0 12px 32px rgba(0,80,184,.28),inset 0 1px 0 rgba(255,255,255,.35),inset 0 0 0 1px rgba(255,255,255,.12)}
+html[data-theme] body.site-app.owner-workspace.dashboard-app #workbench .wb-focus :is(p,span){color:rgba(255,255,255,.86)!important}
+html[data-theme] body.site-app.owner-workspace.dashboard-app #workbench .wb-focus>a{color:#fff!important;-webkit-backdrop-filter:var(--blur-glass);backdrop-filter:var(--blur-glass)}
+html[data-theme] body.site-app.owner-workspace.dashboard-app #workbench .wb-focus>a:hover{background:rgba(255,255,255,.30);opacity:1}
