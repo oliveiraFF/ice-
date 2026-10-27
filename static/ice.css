@@ -410,3 +410,136 @@ body.site-app.owner-workspace.dashboard-app .ice-tag.bad{background:var(--ice-re
 body.site-app.owner-workspace.dashboard-app #workbench .ice-card{background:var(--dash-panel);border-color:var(--dash-line);color:var(--dash-ink-2);box-shadow:var(--dash-shadow)}
 body.site-app.owner-workspace.dashboard-app #workbench .ice-card h2{color:var(--dash-ink)}
 body.site-app.owner-workspace.dashboard-app #workbench .ice-card .ice-muted{color:var(--dash-ink-3)}
+
+/* Today operations: user reference composition, populated only from local records. */
+:root{
+  --today-panel:#181e27;--today-inset:#202630;--today-line:rgba(218,229,241,.08);
+  --today-orange:#ff9845;--today-orange-light:#ffba63;--today-orange-ink:#37230e;
+  --today-orange-muted:#654219;--today-ring:rgba(255,223,178,.24);
+  --today-muted:#a5b1c2;--today-blue:#7fa5f4;--today-blue-end:rgba(127,165,244,.24);
+  --today-mint-soft:rgba(111,227,193,.10);--today-warn-soft:rgba(255,177,88,.12);
+  --today-blue-soft:rgba(127,165,244,.12);--today-button:#503b24;
+}
+body.site-app.owner-workspace.dashboard-app #workbench{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr);gap:16px;min-width:0;margin-bottom:24px}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-heading{grid-column:1/-1;margin:0 0 4px;align-items:flex-start}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-heading h1{font-size:28px;line-height:1.25;overflow-wrap:anywhere}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-heading p{font-size:11px;line-height:1.7;max-width:500px}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-heading .breadcrumbs{display:none}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-heading-actions{align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:8px;max-width:390px}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-heading-actions :is(a,button){font-size:11px;min-height:36px;padding:8px 11px;white-space:nowrap}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-read-status{flex-basis:100%;text-align:right;font-size:10px;color:var(--today-muted)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-notice{grid-column:1/-1;margin:0;color:var(--dash-amber);background:var(--today-warn-soft);border-color:var(--today-line)}
+body.site-app.owner-workspace.dashboard-app #workbench :is(.wb-top-grid,.wb-analysis-grid){display:contents}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-focus{grid-column:1;grid-row:2;position:relative;isolation:isolate;overflow:clip;min-height:238px;padding:22px;border-radius:20px;background:linear-gradient(120deg,var(--today-orange-light),var(--today-orange));color:var(--today-orange-ink);display:flex;flex-direction:column}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-focus::before{content:"";position:absolute;z-index:-1;pointer-events:none;width:250px;height:250px;right:-138px;top:-72px;border:30px solid var(--today-ring);border-radius:50%}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-focus-kicker{font-size:10px;letter-spacing:1.5px;font-weight:700;color:var(--today-orange-muted);margin:0}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-focus-kicker span{letter-spacing:0;margin-left:8px}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-focus h2{display:flex;align-items:baseline;gap:8px;margin:8px 0 4px;font-size:15px;line-height:1.2;flex-wrap:wrap}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-focus h2 strong{font-size:68px;line-height:1;font-weight:750;letter-spacing:-3px;font-variant-numeric:tabular-nums}
+body.site-app.owner-workspace.dashboard-app #workbench #wbFocusCopy{font-size:12px;line-height:1.8;color:var(--today-orange-muted);max-width:330px;margin:8px 0 16px}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-focus>a{align-self:flex-end;margin-top:auto;color:var(--dash-ink);background:var(--today-button);border:1px solid transparent;border-radius:12px;padding:11px 14px;font-size:11px;font-weight:650;white-space:nowrap;transition:opacity .15s}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-focus>a:hover{opacity:.85}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-focus>a:focus-visible{outline-color:var(--today-orange-ink)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-metric-stack{grid-column:2;grid-row:2;display:grid;gap:14px;grid-template-rows:repeat(2,minmax(0,1fr))}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-panel{margin:0;padding:18px;background:var(--today-panel);border-color:var(--today-line);border-radius:18px;box-shadow:none;min-width:0}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-section-head{align-items:center;margin-bottom:12px;gap:8px}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-section-head h2{font-size:12px;font-weight:650;line-height:1.5}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-section-head :is(p,span,a){font-size:10px;line-height:1.6;color:var(--today-muted)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-section-head p{margin-top:3px}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-section-head>a{white-space:nowrap;color:var(--dash-mint)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-metric .wb-section-head h2{font-size:11px;color:var(--today-muted);font-weight:500}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-metric .wb-section-head{margin-bottom:6px}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-metric>strong{display:block;font-size:30px;line-height:1.1;color:var(--dash-ink);letter-spacing:-1px;font-variant-numeric:tabular-nums}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-metric>p{font-size:10px;line-height:1.5;color:var(--today-muted);margin-top:6px}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-pill{display:inline-block;white-space:nowrap;font-size:10px;line-height:1.5;padding:3px 7px;border-radius:30px;background:var(--today-inset);color:var(--today-muted)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-pill.mint{background:var(--today-mint-soft);color:var(--dash-mint)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-pill.blue{background:var(--today-blue-soft);color:var(--today-blue)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-pill.warn{background:var(--today-warn-soft);color:var(--dash-amber)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-projects-panel{grid-column:3;grid-row:2/4}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-projects-panel .wb-section-head{margin-bottom:14px}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-project{display:flex;align-items:center;gap:8px;background:var(--today-inset);border:1px solid var(--today-line);border-radius:14px;padding:14px 11px;margin-bottom:8px;color:var(--dash-ink);transition:border-color .15s}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-project:hover{border-color:var(--dash-mint)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-project>div{flex:1;min-width:0}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-project strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;font-weight:600}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-project small{display:block;color:var(--today-muted);font-size:10px;line-height:1.5;margin-top:3px;overflow-wrap:anywhere}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-panel-note{font-size:10px;line-height:1.7;color:var(--today-muted);margin:10px 0 0}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-week-panel{grid-column:1;grid-row:3;min-height:204px}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-week-chart{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px;min-width:0;margin-top:14px}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-day{min-width:0;text-align:center;font-size:10px;color:var(--today-muted)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-day strong{font-weight:500;display:block;color:var(--dash-ink-2);font-variant-numeric:tabular-nums}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-day-track{height:104px;border-bottom:1px solid var(--today-line)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-day svg{height:100%;width:100%;max-width:50px}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-day span{display:block;margin-top:8px}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-bar-top{stop-color:var(--today-blue)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-bar-bottom{stop-color:var(--today-blue-end)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-day:last-child .wb-bar-top{stop-color:var(--today-orange-light)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-structure-panel{grid-column:2;grid-row:3}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-structure-body{display:flex;align-items:center;gap:12px;min-height:142px}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-structure-ring{position:relative;flex:0 1 120px;min-width:90px}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-structure-ring svg{display:block;width:100%;height:auto}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-ring-track{fill:none;stroke:var(--today-inset);stroke-width:18}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-ring-center strong{font-size:26px;color:var(--dash-ink)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-ring-center span{font-size:9px;color:var(--today-muted)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-structure-message{flex:1;min-width:0;font-size:10px;line-height:1.7;color:var(--today-muted)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-structure-message strong{color:var(--dash-ink-2);font-size:11px}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-structure-message p{margin:4px 0 8px}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-structure-message a{color:var(--dash-mint)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-activity-panel{grid-column:1/-1}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-table-wrap{width:100%;min-width:0}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-activity-table{width:100%;table-layout:fixed;border-collapse:collapse;font-size:11px;color:var(--dash-ink-2)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-activity-table th{font-size:10px;color:var(--today-muted);font-weight:500;text-align:left}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-activity-table :is(th,td){padding:10px 8px;border-bottom:1px solid var(--today-line);overflow-wrap:anywhere;vertical-align:middle}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-activity-table th:nth-child(1){width:15%}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-activity-table th:nth-child(2){width:38%}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-activity-table th:nth-child(3){width:18%}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-activity-table th:nth-child(4){width:19%}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-activity-table th:nth-child(5){width:10%}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-activity-table td a{color:var(--dash-ink-2)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-activity-table td:nth-child(2)>a{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-activity-table .wb-view{display:inline-flex;align-items:center;min-height:28px;white-space:nowrap}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-activity-table a:hover{color:var(--dash-mint)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-table-empty{padding:16px 8px;text-align:center}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-context{grid-column:1/-1;min-width:0}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-context>summary{padding:12px 0;color:var(--today-muted);font-size:11px;cursor:pointer}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-context .wb-panel{margin:10px 0}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-empty{color:var(--today-muted);font-size:11px;line-height:1.9}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-empty a{display:inline-flex;white-space:nowrap}
+body.site-app.owner-workspace.dashboard-app .site-menu{background:var(--today-panel);border:1px solid var(--today-line);color:var(--dash-ink)}
+@media(max-width:1100px){
+  body.site-app.owner-workspace.dashboard-app #workbench{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}
+  body.site-app.owner-workspace.dashboard-app #workbench .wb-projects-panel{grid-column:1/-1;grid-row:4}
+  body.site-app.owner-workspace.dashboard-app #workbench #wbProjects{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  body.site-app.owner-workspace.dashboard-app #workbench .wb-project{margin:0}
+  body.site-app.owner-workspace.dashboard-app #workbench .wb-projects-panel .wb-empty{grid-column:1/-1}
+}
+@media(max-width:600px){
+  body.site-app.owner-workspace.dashboard-app .screen-main{padding:20px 14px 30px}
+  body.site-app.owner-workspace.dashboard-app #workbench{display:flex;flex-direction:column;gap:12px}
+  body.site-app.owner-workspace.dashboard-app #workbench .wb-heading{gap:12px}
+  body.site-app.owner-workspace.dashboard-app #workbench .wb-heading h1{font-size:26px}
+  body.site-app.owner-workspace.dashboard-app #workbench .wb-heading-actions{justify-content:flex-start;max-width:none}
+  body.site-app.owner-workspace.dashboard-app #workbench .wb-heading-actions :is(a,button){min-height:44px}
+  body.site-app.owner-workspace.dashboard-app #workbench .wb-read-status{text-align:left}
+  body.site-app.owner-workspace.dashboard-app #workbench .wb-focus{min-height:236px;padding:22px}
+  body.site-app.owner-workspace.dashboard-app #workbench .wb-focus>a{min-height:44px;display:inline-flex;align-items:center;gap:8px}
+  body.site-app.owner-workspace.dashboard-app #workbench .wb-metric-stack{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto;gap:12px}
+  body.site-app.owner-workspace.dashboard-app #workbench .wb-metric{padding:16px 12px}
+  body.site-app.owner-workspace.dashboard-app #workbench .wb-metric .wb-pill{display:none}
+  body.site-app.owner-workspace.dashboard-app #workbench #wbProjects{grid-template-columns:minmax(0,1fr)}
+  body.site-app.owner-workspace.dashboard-app #workbench .wb-project{min-height:58px}
+  body.site-app.owner-workspace.dashboard-app #workbench .wb-empty a{min-height:44px;align-items:center}
+  body.site-app.owner-workspace.dashboard-app #workbench .wb-activity-table :is(thead,th){display:none}
+  body.site-app.owner-workspace.dashboard-app #workbench .wb-activity-table :is(tbody,tr,td){display:block;width:100%}
+  body.site-app.owner-workspace.dashboard-app #workbench .wb-activity-table tr{padding:12px 0;border-bottom:1px solid var(--today-line)}
+  body.site-app.owner-workspace.dashboard-app #workbench .wb-activity-table td{border:0;padding:4px 0;font-size:11px}
+  body.site-app.owner-workspace.dashboard-app #workbench .wb-activity-table td[data-label]::before{content:attr(data-label);display:inline-block;min-width:40px;color:var(--today-muted);font-size:10px}
+  body.site-app.owner-workspace.dashboard-app #workbench .wb-activity-table td:nth-child(2)>a{white-space:normal;display:inline;overflow-wrap:anywhere}
+  body.site-app.owner-workspace.dashboard-app #workbench .wb-activity-table .wb-view{min-height:44px}
+  body.site-app.owner-workspace.dashboard-app #workbench .wb-day-track{height:120px}
+  body.site-app.owner-workspace.dashboard-app #workbench .wb-structure-ring{flex-basis:140px}
+  body.site-app.owner-workspace.dashboard-app #workbench .wb-section-head>a{display:inline-flex;align-items:center;min-height:44px}
+}
+@media(prefers-reduced-motion:reduce){
+  body.site-app.owner-workspace.dashboard-app #workbench :is(a,button){transition:none}
+}

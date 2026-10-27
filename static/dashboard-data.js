@@ -21,6 +21,45 @@ const DashboardData = (() => {
       updatedAt:Math.max(0,...posts.map(p=>p.updated_at||0))||null
     };
   }
-  return {summarize};
+  function operationsSummary(data, adviceActions = []) {
+    const businessDate = data.business_date;
+    const timezone = /^[+-]\d{4}$/.test(data.timezone || '') ? data.timezone : '+0000';
+    const minutes = (Number(timezone.slice(1,3)) * 60 + Number(timezone.slice(3))) * (timezone[0] === '-' ? -1 : 1);
+    const dayAt = timestamp => {
+      if (typeof timestamp !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}.*(?:Z|[+-]\d{2}:?\d{2})$/.test(timestamp)) return null;
+      const epoch = Date.parse(timestamp);
+      return Number.isFinite(epoch) ? new Date(epoch + minutes * 60000).toISOString().slice(0,10) : null;
+    };
+    const seen = new Set();
+    const records = (data.published?.records || []).filter(item => {
+      const key = item.platform + ':' + item.platform_post_id;
+      if (item.simulated || seen.has(key)) return false;
+      seen.add(key); return true;
+    });
+    const dated = records.map(item => ({...item, day:dayAt(item.published_at)}));
+    const knownDates = dated.filter(item => item.day);
+    const unknownDates = dated.length - knownDates.length;
+    const base = Date.parse(businessDate + 'T12:00:00Z');
+    const monday = new Date(base - ((new Date(base).getUTCDay() + 6) % 7) * 86400000).toISOString().slice(0,10);
+    const week = Array.from({length:7}, (_,i) => {
+      const day = new Date(base - (6 - i) * 86400000).toISOString().slice(0,10);
+      return {day, count:knownDates.filter(item => item.day === day).length};
+    });
+    const groups = [['draft','待补资料','warn'],['pending_review','待审核','blue'],['approved_unpublished','待登记','mint']];
+    const projects = groups.flatMap(([key,label,tone]) => (data.tasks?.[key] || []).map(item => ({
+      ...item, label, tone,
+      path:(key === 'approved_unpublished' ? '/feedback' : '/script') + '?task=' + encodeURIComponent(item.task_uid) + '&version=' + encodeURIComponent(item.version)
+    })));
+    const actions = data.actions || [];
+    const openAdvice = adviceActions.filter(item => !['done','cancelled'].includes(item.state));
+    return {
+      records, week, unknownDates, projects,
+      weekOutput:knownDates.length || !records.length ? knownDates.filter(item => item.day >= monday && item.day <= businessDate).length : null,
+      focusCount:actions.length + openAdvice.length,
+      firstAction:actions[0] || null,
+      contentTypesKnown:false
+    };
+  }
+  return {summarize, operationsSummary};
 })();
 if (typeof module !== 'undefined' && module.exports) module.exports = DashboardData;
