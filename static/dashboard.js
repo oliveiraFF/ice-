@@ -62,83 +62,100 @@ document.addEventListener('fullscreenchange',()=>{const active=Boolean(document.
 function clock(){$('screenClock').textContent=new Date().toLocaleString('zh-CN',{timeZone:'America/Los_Angeles',hour12:false});}
 clock();setInterval(clock,1000);load();
 
-/* Read-only overview of existing records. Refresh never generates or collects. */
+/* The today view reads existing local records; refreshing never generates or collects. */
 (() => {
   if (!document.getElementById('workbench')) return;
   const node = id => document.getElementById(id);
-  const safe = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const icon = name => RadarIcons.svg(name);
-  const empty = (text, path, label) => '<p class="wb-empty">' + text + (path ? ' <a href="' + path + '">' + label + ' →</a>' : '') + '</p>';
-  const sourceLabel = item => item.source === 'llm' ? '模型生成' : item.source === 'demo' ? '演示' : '未分析';
-  let entries = [], filter = 'all', sequence = 0;
-  function renderCards() {
-    const query = node('wbQuery').value.trim().toLowerCase();
-    const shown = entries.filter(item => (filter === 'all' || item.kind === filter) && (item.title + ' ' + item.text).toLowerCase().includes(query));
-    node('wbRecordCount').textContent = shown.length + ' 条记录 · 各类仅载入最近 30 条';
-    node('wbCards').innerHTML = shown.length ? shown.map(item =>
-      '<a class="wb-card" href="' + item.path + '?id=' + encodeURIComponent(item.uid) + '">' +
-      '<div class="wb-preview ' + item.kind + '"><div class="wb-card-tags"><span>' + item.label + '</span><span class="demo">' + sourceLabel(item) + '</span></div>' +
-      '<div class="wb-paper"><span>' + item.caption + '</span><h3>' + safe(item.title) + '</h3><p>' + safe(item.text || '打开查看输入、来源与历史记录。') + '</p></div></div>' +
-      '<div class="wb-card-body"><strong title="' + safe(item.title) + '">' + safe(item.title) + '</strong><p><span>' + safe(item.meta) + '</span><span>查看记录 ↗</span></p></div></a>'
-    ).join('') : empty(query || filter !== 'all' ? '没有匹配的记录，试试其他分类或关键词。' : '还没有内容记录。先从一个明确主题开始。', '/draft', '新建研究稿');
-  }
-  function row(path, title, detail, label, state, symbol) {
-    return '<a class="wb-row" href="' + safe(path) + '"><span class="wb-row-icon">' + icon(symbol || 'file-text') + '</span><div><strong title="' + safe(title) + '">' + safe(title) + '</strong><small>' + safe(detail) + '</small></div><span class="wb-status ' + (state || '') + '">' + safe(label) + '</span></a>';
-  }
+  const safe = esc;
+  const empty = (text, href, label) => '<p class="wb-empty">' + text + (href ? ' <a href="' + href + '">' + label + ' →</a>' : '') + '</p>';
+  const at = value => typeof value === 'number' ? value * 1000 : Date.parse(value);
+  const time = value => Number.isFinite(at(value)) ? new Date(at(value)).toLocaleString('zh-CN', {month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}) : '时间未提供';
+  const badge = (label, tone) => '<span class="wb-pill ' + (tone || '') + '">' + safe(label) + '</span>';
+  let sequence = 0;
   async function read(path) {
     const response = await fetch(path);
-    if (!response.ok) throw new Error('读取失败：' + path);
+    if (!response.ok) throw new Error('本机运营记录读取失败');
     return response.json();
+  }
+  function renderWeek(summary) {
+    const maximum = Math.max(1, ...summary.week.map(day => day.count));
+    const labels = ['日','一','二','三','四','五','六'];
+    node('wbWeekChart').innerHTML = summary.week.map((day,i) => {
+      const label = '周' + labels[new Date(day.day + 'T12:00:00Z').getUTCDay()];
+      return '<div class="wb-day" title="' + safe(day.day) + ' · ' + day.count + ' 篇"><strong>' + day.count + '</strong><div class="wb-day-track"><svg viewBox="0 0 50 124" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="wbBar' + i + '" x1="0" y1="0" x2="0" y2="1"><stop class="wb-bar-top" offset="0"/><stop class="wb-bar-bottom" offset="1"/></linearGradient></defs><rect fill="url(#wbBar' + i + ')" x="7" y="' + (124 - day.count / maximum * 112) + '" width="36" height="' + day.count / maximum * 112 + '" rx="7"/></svg></div><span>' + label + '</span></div>';
+    }).join('');
+    node('wbWeekChart').setAttribute('aria-label', summary.week.map(day=>day.day+'：'+day.count+'篇').join('；'));
+    node('wbWeekNote').textContent = summary.unknownDates ? summary.unknownDates + ' 篇缺少有效发布时间，未计入图表。' : '按本机业务时区统计；登记数据尚未经平台核实。';
   }
   async function loadWorkbench() {
     const seq = ++sequence;
-    const button = node('wbRefresh'); button.disabled = true;
+    node('wbRefresh').disabled = true;
+    node('wbReadStatus').textContent = '本机记录 · 正在读取';
     try {
-      const paths = ['/api/ops/dashboard', '/api/ops/advice/list', '/api/ops/draft/list', '/api/ops/media-review/list'];
-      const [operations, advices, drafts, reviews] = await Promise.all(paths.map(read));
-      const latest = advices.find(item => item.result_json && (item.result_json.week_actions || []).length);
-      const advice = latest ? await read('/api/ops/advice?id=' + encodeURIComponent(latest.advice_uid)) : null;
+      const [operations, advices, drafts, reviews, videoTasks] = await Promise.all([
+        '/api/ops/dashboard','/api/ops/advice/list','/api/ops/draft/list','/api/ops/media-review/list','/api/agent/tasks'
+      ].map(read));
+      const latest = advices.find(item => item.result_json && (item.result_json.week_actions || []).length && item.source !== 'demo' && !item.simulated);
+      const actions = latest ? (latest.result_json.week_actions || []).map(action => ({
+        text:action.action, state:(latest.actions || []).find(item=>item.action_id === action.id)?.status || 'todo'
+      })) : [];
+      const videoDetails = await Promise.all(videoTasks.slice(0,4).map(item => read('/api/agent/task?id=' + encodeURIComponent(item.task_uid))));
       if (seq !== sequence) return;
-      const actions = advice ? (advice.result_json.week_actions || []).map(action => {
-        const progress = (advice.actions || []).find(item => item.action_id === action.id);
-        return {text:action.action, next:action.next || action.why || '打开建议查看条件与依据', state:progress ? progress.status : 'todo'};
-      }) : [];
-      const counts = operations.tasks.counts;
-      const values = [actions.filter(item => item.state !== 'done').length, drafts.length, counts.pending_review, counts.approved_unpublished, operations.published.count];
-      values.forEach((value, i) => { node('wbCount' + i).textContent = value; });
-      if(node('iceTodoCount'))node('iceTodoCount').textContent=values[0];
-      node('wbDate').textContent = '业务日 ' + operations.business_date;
-      node('wbReadAt').textContent = '本地记录 · 刚刚刷新';
-      const todo = [...(operations.actions || []).map(item => row(item.target, item.reason, '来自当前运营记录', '去处理', '', 'arrow'))];
-      if (counts.pending_review) todo.push(row('/script', '审阅 ' + counts.pending_review + ' 个待审版本', '查看稿件内容、依据与待补资料', '待审核', '', 'file-text'));
-      if (counts.approved_unpublished) todo.push(row('/feedback', '登记 ' + counts.approved_unpublished + ' 个已审任务', '仅登记你已经实际发布的作品', '待登记', '', 'calendar'));
-      if (!operations.strategy.confirmed) todo.push(row('/strategy', operations.strategy.configured ? '检查并确认账号策略' : '补充业务与账号策略', '方向、受众、资源与排除项', '待确认', '', 'compass'));
-      node('wbToday').dataset.followupCount = todo.length;
-      node('wbWeek').innerHTML = actions.length ? actions.slice(0, 4).map(item => row('/advice?id=' + encodeURIComponent(advice.advice_uid), item.text, item.next, {todo:'待开始',doing:'进行中',done:'已完成'}[item.state] || '待开始', item.state, 'calendar')).join('') : empty('还没有行动建议。填写业务现状，建立下一步。', '/advice', '获取运营建议');
-      node('wbWeekNote').textContent = advice ? '最近建议 · ' + new Date(advice.created_at * 1000).toLocaleDateString('zh-CN') + ' · 未提供周排期（按建议日期展示，不代表本周已排期）' : '建议仅供参考，不代表已经排进本周。';
-      entries = [
-        ...drafts.map(item => {
-          const version = (item.versions || []).slice(-1)[0], content = version ? version.content_json : {};
-          return {kind:'draft', label:'研究稿', caption:'RESEARCH DRAFT', path:'/draft', uid:item.draft_uid, title:item.topic || '未命名研究稿', text:content.draft_markdown || content.summary || '', meta:version ? 'v' + version.version + ' · 已保存' : '主题草稿 · 未生成', source:version ? version.source : 'draft', at:item.updated_at};
-        }),
-        ...reviews.map(item => ({kind:'review',label:'成片审阅',caption:'MEDIA REVIEW',path:'/media-review',uid:item.review_uid,title:item.goal || '未命名审阅',text:item.summary || '',meta:((item.scope_json || {}).frames || []).length + ' 张采样帧',source:item.source,at:item.created_at})),
-        ...advices.map(item => ({kind:'advice',label:'运营建议',caption:'OPERATIONS NOTE',path:'/advice',uid:item.advice_uid,title:(item.status_json || {}).business || '业务现状草稿',text:((item.result_json || {}).week_actions || []).map(action => action.action).join('；'),meta:item.draft ? '现状草稿 · 未分析' : '建议与行动跟进',source:item.source,at:item.created_at}))
-      ].sort((a,b) => b.at - a.at);
-      renderCards(); node('wbError').hidden = true;
+      const summary = DashboardData.operationsSummary(operations, actions);
+      node('wbBusinessDate').textContent = '业务日 ' + operations.business_date;
+      node('wbFocusCount').textContent = summary.focusCount;
+      node('wbWeekOutput').textContent = summary.weekOutput === null ? '—' : (summary.unknownDates ? '≥ ' : '') + summary.weekOutput;
+      node('wbWeekOutput').title = summary.unknownDates ? summary.unknownDates + ' 篇缺少有效发布时间，未计入' : '按发布时间统计本周已登记作品';
+      node('wbPendingCount').textContent = summary.projects.length;
+      const focusLink = node('wbFocusAction');
+      const openAdvice = actions.find(item=>!['done','cancelled'].includes(item.state));
+      if (summary.firstAction) {
+        node('wbFocusCopy').textContent = '先处理：' + summary.firstAction.reason + '。进度与依据可在任务内继续查看。';
+        focusLink.href = summary.firstAction.target;
+        focusLink.innerHTML = '处理当前任务 <span aria-hidden="true">→</span>';
+      } else if (openAdvice) {
+        node('wbFocusCopy').textContent = '下一步：' + openAdvice.text + '。来自最近一次已保存的运营建议。';
+        focusLink.href = '/advice?id=' + encodeURIComponent(latest.advice_uid);
+        focusLink.innerHTML = '查看行动建议 <span aria-hidden="true">→</span>';
+      } else {
+        node('wbFocusCopy').textContent = '当前没有已登记的待办。从一个真实主题或本地视频开始，保存资料后继续创作。';
+        focusLink.href = '/creative';
+        focusLink.innerHTML = '新建内容任务 <span aria-hidden="true">→</span>';
+      }
+      const projects = [
+        ...summary.projects.map(item=>({title:item.product || item.task_uid, meta:'内容任务 · v'+item.version, path:item.path, label:item.label, tone:item.tone})),
+        ...videoDetails.filter(item=>!item.result).map(item=>{
+          const attempt = (item.attempts || []).filter(row=>row.input_version === item.version).at(-1);
+          const label = {processing:'处理中',validation_failed:'检查失败',failed:'生成失败',result_unconfirmed:'结果待确认'}[attempt?.status] || '待补资料';
+          return {title:item.input?.product || '未命名视频任务',meta:'视频任务 · v'+item.version+' · '+time(item.updated_at),path:'/creative?task='+encodeURIComponent(item.task_uid),label,tone:attempt?.status === 'processing'?'blue':'warn'};
+        })
+      ];
+      node('wbActiveCount').textContent = Math.min(projects.length,4) + ' 项';
+      node('wbProjects').innerHTML = projects.length ? projects.slice(0,4).map(item=>'<a class="wb-project" href="'+safe(item.path)+'"><div><strong title="'+safe(item.title)+'">'+safe(item.title)+'</strong><small>'+safe(item.meta)+'</small></div>'+badge(item.label,item.tone)+'</a>').join('') : empty('尚无进行中的项目，先保存一条内容任务。','/creative','新建任务');
+      node('wbProjects').nextElementSibling.textContent = projects.length ? '内容待办与最近 4 条视频任务中的未完成项，显示前 ' + Math.min(projects.length,4) + ' 项。' : '任务会保留输入、成果和历史版本。';
+      renderWeek(summary);
+      node('wbStructureValue').textContent = '—';
+      node('wbStructureMessage').innerHTML = '<strong>分类待接入</strong><p>当前记录未保存口播、产品、探店等内容类型，暂时无法统计占比。</p><a href="/feedback">查看发布记录 →</a>';
+      node('wbStructureDonut').setAttribute('aria-label','尚无可统计的内容分类；不显示示例占比');
+      const entries = [
+        ...drafts.map(item=>({title:item.topic || '未命名研究稿',at:item.updated_at,label:'研究稿 · v'+(item.versions?.at(-1)?.version || 0),source:item.versions?.at(-1)?.source === 'demo'?'演示':item.versions?.at(-1)?.source === 'llm'?'模型生成':'手动',path:'/draft?id='+encodeURIComponent(item.draft_uid),tone:'blue'})),
+        ...reviews.map(item=>({title:item.goal || '未命名审阅',at:item.created_at,label:'已审阅',source:item.source === 'demo'?'演示':'成片审阅',path:'/media-review?id='+encodeURIComponent(item.review_uid),tone:'mint'})),
+        ...advices.map(item=>({title:item.status_json?.business || '运营建议',at:item.created_at,label:item.draft?'草稿':'已分析',source:item.source === 'demo'?'演示':'运营建议',path:'/advice?id='+encodeURIComponent(item.advice_uid),tone:item.draft?'':'mint'})),
+        ...summary.records.map(item=>({title:item.snapshot_json?.product || item.platform_post_id,at:item.registered_at,label:'已登记发布',source:platformName(item.platform)+' · '+(item.source === 'manual'?'手动登记':'本机登记'),path:'/feedback?record='+encodeURIComponent(item.record_uid),tone:'mint'})),
+        ...videoTasks.map(item=>({title:(()=>{try{return JSON.parse(item.input_json || '{}').product || '视频任务';}catch{return '视频任务';}})(),at:item.updated_at,label:'视频任务 · v'+item.current_version,source:'本机保存',path:'/creative?task='+encodeURIComponent(item.task_uid),tone:'blue'}))
+      ].sort((a,b)=>(at(b.at)||0)-(at(a.at)||0));
+      node('wbRecentRows').innerHTML = entries.length ? entries.slice(0,6).map(item=>'<tr><td data-label="时间">'+safe(time(item.at))+'</td><td data-label="条目"><a href="'+safe(item.path)+'" title="'+safe(item.title)+'">'+safe(item.title)+'</a></td><td data-label="状态">'+badge(item.label,item.tone)+'</td><td data-label="来源">'+safe(item.source)+'</td><td data-label="操作"><a class="wb-view" href="'+safe(item.path)+'">查看 →</a></td></tr>').join('') : '<tr><td class="wb-table-empty" colspan="5">'+empty('还没有本机工作记录。保存一个主题或任务后会出现在这里。','/creative','新建任务')+'</td></tr>';
+      node('wbRecentCount').textContent = '显示最近 ' + Math.min(entries.length,6) + ' 条；研究稿、审阅、建议与视频任务各读取最近 30 条。';
+      node('wbReadAt').textContent = '业务日 ' + operations.business_date + ' · 本机保存与发布登记';
+      node('wbReadStatus').textContent = '本机记录 · 刚刚更新';
+      node('wbError').hidden = true;
     } catch (error) {
       if (seq !== sequence) return;
-      node('wbError').textContent = error.message + '。保留上次显示；尚未读取的统计显示为“—”，请重试。';
+      node('wbReadStatus').textContent = '读取失败';
+      node('wbError').textContent = error.message + '。保留上次显示，请点击刷新重试。';
       node('wbError').hidden = false;
-    } finally { if (seq === sequence) button.disabled = false; }
+    } finally { if (seq === sequence) node('wbRefresh').disabled = false; }
   }
-  document.querySelectorAll('[data-wb-filter]').forEach(button => {
-    button.onclick = () => {
-      filter = button.dataset.wbFilter;
-      document.querySelectorAll('[data-wb-filter]').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
-      renderCards();
-    };
-  });
-  node('wbQuery').addEventListener('input', renderCards);
   node('wbRefresh').onclick = loadWorkbench;
   loadWorkbench();
 })();

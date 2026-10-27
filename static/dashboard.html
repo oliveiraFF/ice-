@@ -1,7 +1,90 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>运营工作台 · ice运营台</title><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/icons.css"><link rel="stylesheet" href="/dashboard.css"><script defer src="/icons.js"></script><script defer src="/site.js"></script><script defer src="/dashboard-data.js"></script><script defer src="/dashboard.js"></script><link rel="stylesheet" href="/site.css">
 <link rel="stylesheet" href="/ice.css"><link rel="icon" href="/favicon.ico">
 </head>
-<body class="dashboard-app"><header class="topbar"></header><main class="screen-main"><details class="wb-details" open><summary>数据与运营明细 · 查看内容样本、指标和任务记录</summary><div class="breadcrumbs">数据大屏 › 总览</div>
+<body class="dashboard-app"><header class="topbar"></header><main class="screen-main"><section id="workbench" aria-labelledby="wbTitle">
+  <header class="wb-heading">
+    <div>
+      <div class="breadcrumbs">工作空间 / 今日</div>
+      <h1 id="wbTitle">今日运营</h1>
+      <p>先处理当前待办，再查看本机已登记的产出。 <span class="wb-date" id="wbBusinessDate">业务日读取中…</span></p>
+    </div>
+    <div class="wb-heading-actions">
+      <span class="wb-read-status" id="wbReadStatus">本机记录 · 正在读取</span>
+      <a class="secondary" href="/ops-wallboard">Agent 数据总览</a>
+      <a class="primary" href="/creative">新建任务</a>
+      <button class="secondary" id="wbRefresh" type="button"><span data-icon="refresh"></span> 刷新</button>
+    </div>
+  </header>
+  <div class="wb-notice" id="wbError" role="status" hidden></div>
+  <div class="wb-top-grid">
+    <section class="wb-focus" aria-labelledby="wbFocusHeading">
+      <p class="wb-focus-kicker">TODAY'S FOCUS <span>今日重点</span></p>
+      <h2 id="wbFocusHeading"><strong id="wbFocusCount">—</strong><span>项待跟进</span></h2>
+      <p id="wbFocusCopy">正在读取本机待办…</p>
+      <a id="wbFocusAction" href="/creative">查看今日任务 <span aria-hidden="true">→</span></a>
+    </section>
+    <div class="wb-metric-stack" aria-label="运营指标">
+      <article class="wb-panel wb-metric">
+        <div class="wb-section-head"><h2>本周产出</h2><span class="wb-pill">已登记</span></div>
+        <strong id="wbWeekOutput">—</strong>
+        <p>篇作品 · 本机登记数据</p>
+      </article>
+      <article class="wb-panel wb-metric">
+        <div class="wb-section-head"><h2>待处理</h2><span class="wb-pill">内容任务</span></div>
+        <strong id="wbPendingCount">—</strong>
+        <p>待补资料、待审核或待登记</p>
+      </article>
+    </div>
+    <section class="wb-panel wb-projects-panel" aria-labelledby="wbProjectsHeading">
+      <div class="wb-section-head">
+        <h2 id="wbProjectsHeading">进行中的项目</h2>
+        <span class="wb-count-pill" id="wbActiveCount">—</span>
+      </div>
+      <div id="wbProjects" aria-live="polite"><p class="wb-empty">读取本机任务中…</p></div>
+      <p class="wb-panel-note">仅列出当前仍需推进的任务</p>
+    </section>
+  </div>
+  <div class="wb-analysis-grid">
+    <section class="wb-panel wb-week-panel" aria-labelledby="wbWeekHeading">
+      <div class="wb-section-head">
+        <div><h2 id="wbWeekHeading">7 日内容产出</h2><p>按实际发布时间统计本机登记作品</p></div>
+        <span>篇 / 日</span>
+      </div>
+      <div class="wb-week-chart" id="wbWeekChart" role="img" aria-label="最近七日登记作品数"></div>
+      <p class="wb-panel-note" id="wbWeekNote">登记数据不代表平台核实结果。</p>
+    </section>
+    <section class="wb-panel wb-structure-panel" aria-labelledby="wbStructureHeading">
+      <div class="wb-section-head">
+        <div><h2 id="wbStructureHeading">内容结构</h2><p>按已登记作品的内容类型统计</p></div>
+        <span>本机记录</span>
+      </div>
+      <div class="wb-structure-body">
+        <div class="wb-structure-ring">
+          <svg id="wbStructureDonut" viewBox="0 0 160 160" role="img" aria-label="尚无内容类型数据">
+            <circle class="wb-ring-track" cx="80" cy="80" r="58"></circle>
+          </svg>
+          <div class="wb-ring-center"><strong id="wbStructureValue">—</strong><span>内容分类</span></div>
+        </div>
+        <div id="wbStructureMessage" class="wb-structure-message">正在读取分类资料…</div>
+      </div>
+      <p class="wb-panel-note">未记录的类型不推算、不补齐。</p>
+    </section>
+  </div>
+  <section class="wb-panel wb-activity-panel" aria-labelledby="wbActivityHeading">
+    <div class="wb-section-head">
+      <div><h2 id="wbActivityHeading">最近动态</h2><p id="wbReadAt">本机运营记录</p></div>
+      <a href="/feedback">查看发布登记 <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="wb-table-wrap">
+      <table class="wb-activity-table">
+        <thead><tr><th scope="col">时间</th><th scope="col">条目</th><th scope="col">状态</th><th scope="col">来源</th><th scope="col">操作</th></tr></thead>
+        <tbody id="wbRecentRows"><tr><td colspan="5">正在读取本机动态…</td></tr></tbody>
+      </table>
+    </div>
+    <p class="wb-panel-note" id="wbRecentCount">只显示本机已保存记录，不包含未登记的外部发布。</p>
+  </section>
+  <details class="wb-context"><summary>账号、策略与创作详情</summary><section class="wb-panel"><h2>当前视频任务</h2><div id="wbToday">读取中…</div></section><div class="wb-library"></div></details>
+</section><details class="wb-details" open><summary>数据与运营明细 · 查看内容样本、指标和任务记录</summary><div class="breadcrumbs">数据大屏 › 总览</div>
 <div class="screen-heading"><div><h1>内容数据总览<span class="live-label"><i></i>本地数据</span></h1><p>发现高播放作品，观察本地内容样本。</p></div><div class="dashboard-actions"><span id="dashboardUpdated"></span><button class="primary" id="refreshDashboard"><span data-icon="refresh"></span>刷新本地数据</button><button class="icon-button" id="fullScreen" aria-label="进入全屏" title="进入全屏"><span data-icon="maximize"></span></button></div></div>
 <div id="dashboardError" class="screen-error" role="status" hidden></div>
 <section class="screen-kpis" aria-label="关键指标"><article class="screen-kpi"><div class="kpi-label"><span>已收录视频</span><span data-icon="play"></span></div><strong id="videoTotal">—</strong><p>条本地视频样本</p></article><article class="screen-kpi highlight"><div class="kpi-label"><span>已知播放量合计</span><span data-icon="trending-up"></span></div><strong id="playsTotal">—</strong><p id="playsCoverage">读取中…</p></article><article class="screen-kpi"><div class="kpi-label"><span>单条最高播放量</span><span data-icon="chart"></span></div><strong id="highestPlays">—</strong><p>仅在已收录视频中比较</p></article><article class="screen-kpi"><div class="kpi-label"><span>关键词覆盖</span><span data-icon="hash"></span></div><strong id="keywordsCovered">—</strong><p>有本地结果 / 全部监测词</p></article></section>
