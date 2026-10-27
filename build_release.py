@@ -16,7 +16,7 @@ OPS = Path('D:/自媒体运营/project')
 BUILD_ROOT = Path('E:/leida-build/fusion-owner')
 RADAR_MODULES = (
     'app.py', 'agent_bridge.py', 'catalog.py', 'free_tools.py', 'browser_collector.py', 'demo.py',
-    'ai_directions.py', 'video_creative.py', 'agent_tasks.py', 'ops.py', 'customer_api.py', 'client_credentials.py',
+    'ai_directions.py', 'video_creative.py', 'agent_tasks.py', 'local_asr.py', 'ops.py', 'customer_api.py', 'client_credentials.py',
     'topics.py', 'reviews.py',
 )
 OPS_FILES = (

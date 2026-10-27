@@ -24,3 +24,6 @@ const exportText=provenance(task,false);
 assert.match(exportText,/validation_failed/);
 assert.match(exportText,/remove_unselected_deliverables/);
 assert.doesNotMatch(exportText,/PRIVATE_RAW|PRIVATE_BASE64/);
+const {toSrt}=require('../static/creative.js');
+assert.equal(toSrt({transcript_source:'local_asr',transcript_segments:[{start:0,end:1.25,text:'本地测试'}]}),'1\n00:00:00,000 --> 00:00:01,250\n本地测试\n');
+assert.throws(()=>toSrt({transcript_source:'manual'}));

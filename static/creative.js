@@ -18,7 +18,13 @@ const CreativeData=(()=>{
     const snapshot={account_uid:task.account.account_uid,identity_state:task.account.identity_state,
       strategy:task.strategy,media:task.media,source:task.source,input,
       validation:task.result?.validation||null,generation_attempts:(task.attempts||[]).map(({attempt_uid,input_version,status,model,validation})=>({attempt_uid,input_version,status,model,validation}))};
-    return `# 任务 ${task.task_uid} · 已保存 v${task.version}\n\n${dirty?'当前导出含未保存修改，不属于已保存版本；下面的依据是该版本的输入快照。':'成果与依据来自已保存版本。'}\n\n规则 ${task.rules.version} · ${task.rules.sha256}\n\n人工逐字稿未做时间对齐；采样时间是原视频证据时间，分镜时间是建议安排。\n\n## 已保存的输入与来源快照\n\n\`\`\`json\n${JSON.stringify(snapshot,null,2)}\n\`\`\`\n\n`;
+    const subtitleScope=input.transcript_source==='local_asr'?'本地ASR字幕时间为自动估计，未经人工校对；不代表完整音轨听觉分析。':'人工逐字稿未做时间对齐';
+    return `# 任务 ${task.task_uid} · 已保存 v${task.version}\n\n${dirty?'当前导出含未保存修改，不属于已保存版本；下面的依据是该版本的输入快照。':'成果与依据来自已保存版本。'}\n\n规则 ${task.rules.version} · ${task.rules.sha256}\n\n${subtitleScope}；采样时间是原视频证据时间，分镜时间是建议安排。\n\n## 已保存的输入与来源快照\n\n\`\`\`json\n${JSON.stringify(snapshot,null,2)}\n\`\`\`\n\n`;
+  }
+  function toSrt(input){
+    if(input.transcript_source!=='local_asr'||!input.transcript_segments?.length)throw new Error('当前文字没有可导出的ASR时间轴');
+    const stamp=seconds=>{const n=Math.round(seconds*1000);return `${String(Math.floor(n/3600000)).padStart(2,'0')}:${String(Math.floor(n/60000)%60).padStart(2,'0')}:${String(Math.floor(n/1000)%60).padStart(2,'0')},${String(n%1000).padStart(3,'0')}`;};
+    return input.transcript_segments.map((s,i)=>`${i+1}\n${stamp(s.start)} --> ${stamp(s.end)}\n${s.text}`).join('\n\n')+'\n';
   }
   function sameMedia(task,media){return Boolean(task&&media&&task.media.media_id===media.media_id);}
   function taskPresentation(task,dirty=false){
@@ -29,13 +35,14 @@ const CreativeData=(()=>{
     const checks=[['JSON 合法',dirty?'需重跑':task?.result?'通过':'未测'],['引用存在','未测'],['来源类型匹配','未测'],['无编造事实','未测'],['逐镜信息完整','未测']];
     return {state,checks,qualityUnlocked:false,error:recovered?'':attempt?.validation?.error||'',retained:Object.keys(task?.result?.report?.deliverables||{}).length};
   }
-  return {names,sampleTimes,clock,checkBrief,provenance,sameMedia,taskPresentation};
+  return {names,sampleTimes,clock,checkBrief,provenance,toSrt,sameMedia,taskPresentation};
 })();
 if(typeof module!=='undefined')module.exports=CreativeData;
 if(typeof document!=='undefined')(()=>{
   const el=id=>document.getElementById(id),esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   let file=null,url='',frames=[],duration=0,busy=false,config=null,token='',result=null,transcriptOrigin='';
   let currentTask=null,savedMedia=null,accountInfo=null,uiBaseline='',tasksEnabled=false;
+  let localTranscript=null,localAsrReady=false;
   const initial=fetch('/api/state?mode=live').then(async r=>{if(!r.ok)throw new Error('本机连接失败，请重新打开页面');const state=await r.json();token=state.token;tasksEnabled=state.agent_tasks_enabled===true;el('creativeTaskTitle').closest('section').hidden=!tasksEnabled;el('saveCreativeInput').hidden=!tasksEnabled;});
   initial.catch(error=>{el('creativeStatus').textContent=error.message;});
   async function request(path,body,headers={}){
@@ -61,7 +68,7 @@ if(typeof document!=='undefined')(()=>{
     el('creativeAccountScope').textContent=taskScope();
     const task=currentTask;
     el('creativeTaskVersion').innerHTML=task?task.versions.map(v=>`<option value="${v.version}" ${v.version===task.version?'selected':''}>v${v.version} · ${esc(v.source)}</option>`).join(''):'<option value="">—</option>';
-    el('creativeTaskEvidence').textContent=task?`${taskScope()}。规则 ${task.rules.version}（${task.rules.sha256.slice(0,12)}）；台词来源：${{manual:'人工逐字稿',transcription:'外部转写',none:'未提供'}[task.input.transcript_source]||'用户资料'}。视频、采样、输入与成果按版本保留；没有读取其他账号或平台指标。`:'保存后保留账号、策略、规则、原视频、采样画面和台词。保存不调用模型。';
+    el('creativeTaskEvidence').textContent=task?`${taskScope()}。规则 ${task.rules.version}（${task.rules.sha256.slice(0,12)}）；台词来源：${{manual:'人工逐字稿',transcription:'外部转写',local_asr:'本地自动字幕（待校对）',none:'未提供'}[task.input.transcript_source]||'用户资料'}。视频、采样、输入与成果按版本保留；没有读取其他账号或平台指标。`:'保存后保留账号、策略、规则、原视频、采样画面和台词。保存不调用模型。';
     el('creativeTaskStatus').textContent=task?`任务 ${task.task_uid} · v${task.version}${taskReadOnly()?' · 历史版本只读，请打开最新版本继续。':' · 已保存，可关闭后继续。'}`:'先选择视频并填写资料，可以仅保存输入，稍后继续。';
     const attempt=task?.attempts?.filter(a=>a.input_version===task.version||(task.result&&a.input_version<=task.version)).at(-1);
     if(attempt&&!taskReadOnly())el('creativeTaskStatus').textContent+=` 最近生成：${{processing:'处理中',success:'成功',validation_failed:'校验失败，待人工处理',result_unconfirmed:'结果未确认',failed:'失败'}[attempt.status]||attempt.status}。${attempt.validation?.error||''}`;
@@ -76,7 +83,7 @@ if(typeof document!=='undefined')(()=>{
     const tag=(text)=>`<span class="ice-tag ${text==='失败'||text==='未过'?'bad':text==='成功'||text==='通过'?'good':text==='待补资料'||text==='需重跑'?'warn':''}">${esc(text)}</span>`;
     el('iceTaskState').innerHTML=tag(busy?'处理中':view.state);
     el('iceStages').innerHTML=['账号诊断','选题与参考','视频资料','分析与创作','审核与反馈'].map((name,i)=>`<a class="ice-stage ${i===3?'current':''}" href="${['/strategy','/research','#sourceTitle','#creativeResults','/feedback'][i]}"><strong>${name}</strong>${tag(i===3?(busy?'处理中':view.state):i===2?(!el('iceMissingMedia').hidden?'素材失联':savedMedia?'成功':'待补资料'):'未测')}<small>${i===2?(!el('iceMissingMedia').hidden?'请重新关联素材':savedMedia?'已关联本地保存素材':'选择本地视频'):i===3?'当前生成尝试':'未提供关联阶段执行记录'}</small></a>`).join('');
-    target.innerHTML=`<h2>硬性检查与追溯</h2><div>${view.checks.map(([name,status])=>`<p class="ice-check"><span>${name}</span>${tag(status)}</p>`).join('')}</div><div class="ice-quality" aria-disabled="true"><strong>质量评审 · 未开放</strong><p>等硬性检查都通过后，再来看内容质量。</p><button disabled>下一步</button></div><h3>输入快照</h3><p>来源：${savedMedia?'本地视频':'—'}<br>台词：${task?.input.transcript_source==='manual'?'人工逐字稿，无时间轴':task?.input.transcript_source==='transcription'?'外部转写，非字幕时间轴':'—'}<br>画面范围：${frames.length} 张采样画面<br>规则版本：${esc(task?.rules.version||'—')}</p><p>结构化逐镜检查待接入；文本成果不等于检查通过。</p>`;
+    target.innerHTML=`<h2>硬性检查与追溯</h2><div>${view.checks.map(([name,status])=>`<p class="ice-check"><span>${name}</span>${tag(status)}</p>`).join('')}</div><div class="ice-quality" aria-disabled="true"><strong>质量评审 · 未开放</strong><p>等硬性检查都通过后，再来看内容质量。</p><button disabled>下一步</button></div><h3>输入快照</h3><p>来源：${savedMedia?'本地视频':'—'}<br>台词：${task?.input.transcript_source==='manual'?'人工逐字稿，无时间轴':task?.input.transcript_source==='transcription'?'外部转写，非字幕时间轴':task?.input.transcript_source==='local_asr'?'本地ASR估计时间轴，待校对':'—'}<br>画面范围：${frames.length} 张采样画面<br>规则版本：${esc(task?.rules.version||'—')}</p><p>结构化逐镜检查待接入；文本成果不等于检查通过。</p>`;
     const failure=el('iceFailure');failure.hidden=!['失败','结果未确认'].includes(view.state);
     failure.textContent=`分析与创作这次没有生成成功：${view.error||view.state}。已保存的输入、历史版本和${view.retained}项当前成果都已为你保留。${recoverableAttempt()?'可先从保留原文本地恢复，不调用模型；':''}补充资料后手动重新生成将调用模型。`;
     el('iceInputs').textContent=`策略 ${task?.strategy?.version?'v'+task.strategy.version:'—'} · ${task?.source==='test'?'演示 · ':''}用户提供，未经平台核实 · ${frames.length}张采样画面 · ${task?.input.transcript?'人工/转写台词':'台词未提供'}`;
@@ -133,7 +140,8 @@ if(typeof document!=='undefined')(()=>{
       el('creativeFrames').innerHTML=frames.map((f,i)=>`<figure class="creative-frame"><img src="${f.image}" alt="采样画面 ${i+1}"><figcaption>${CreativeData.clock(f.at)}</figcaption></figure>`).join('');el('creativeFramesHeading').hidden=false;
       for(const [key,id] of Object.entries({product:'creativeProduct',audience:'creativeAudience',facts:'creativeFacts',goal:'creativeGoal',target_seconds:'creativeSeconds',format:'creativeFormat',style:'creativeStyle',reference:'creativeReference',conditions:'creativeConditions',details:'creativeDetails',transcript:'creativeTranscript'}))el(id).value=task.input[key]??'';
       document.querySelectorAll('[name="creativeOutput"]').forEach(box=>{box.checked=task.input.outputs.includes(box.value);});
-      transcriptOrigin=task.input.transcript_source==='transcription'?'transcription':'user';
+      transcriptOrigin=['transcription','local_asr'].includes(task.input.transcript_source)?task.input.transcript_source:'user';
+      localTranscript=transcriptOrigin==='local_asr'?{text:task.input.transcript,segments:task.input.transcript_segments,metadata:task.input.transcript_asr}:null;renderLocalTranscript();
       el('creativeConsent').checked=false;el('creativeTranscribe').checked=false;el('creativeSpeechField').hidden=true;el('creativeSpeechModel').required=false;
       uiBaseline=inputKey(brief());showTask();await loadTaskList();
       if(result)renderResult();else el('creativeResults').hidden=true;
@@ -143,7 +151,7 @@ if(typeof document!=='undefined')(()=>{
   }
   async function refreshConfig(){config=await request('/api/ai/config');el('creativeModelStatus').textContent=config.endpoint?`当前模型：${config.model} · ${config.connected||config.local?'可提交请求；需模型支持图片输入':'需填写本次运行的模型密钥'}`:'尚未配置模型，请打开 AI 模型设置。';return config;}
   refreshConfig().catch(error=>{el('creativeModelStatus').textContent=error.message;});
-  function locked(value){busy=value;const readonly=taskReadOnly();el('creativeFile').disabled=value||readonly;el('openCreativeBrief').disabled=value||!frames.length;el('openCreativeModel').disabled=value;el('replaceCreativeFile').disabled=value||readonly;el('creativeBriefFields').disabled=value||readonly;el('generateCreative').disabled=value||readonly;el('cancelCreativeBrief').disabled=value;el('closeCreativeBrief').disabled=value;el('saveCreativeTask').disabled=value||readonly||!frames.length;el('saveCreativeInput').disabled=value||readonly;el('openCreativeTask').disabled=value;el('creativeTaskChoice').disabled=value;el('creativeTaskVersion').disabled=value;el('recoverCreativeTask').disabled=value||!recoverableAttempt();renderTrace();}
+  function locked(value){busy=value;const readonly=taskReadOnly();el('creativeFile').disabled=value||readonly;el('openCreativeBrief').disabled=value||!frames.length;el('openCreativeModel').disabled=value;el('replaceCreativeFile').disabled=value||readonly;el('creativeBriefFields').disabled=value||readonly;el('generateCreative').disabled=value||readonly;el('cancelCreativeBrief').disabled=value;el('closeCreativeBrief').disabled=value;el('saveCreativeTask').disabled=value||readonly||!frames.length;el('saveCreativeInput').disabled=value||readonly;el('openCreativeTask').disabled=value;el('creativeTaskChoice').disabled=value;el('creativeTaskVersion').disabled=value;el('recoverCreativeTask').disabled=value||!recoverableAttempt();el('extractLocalAsr').disabled=value||readonly||!frames.length||!localAsrReady;el('saveLocalAsrConfig').disabled=value;el('downloadLocalSrt').disabled=value||!localTranscript||transcriptOrigin!=='local_asr';for(const id of ['localAsrFfmpeg','localAsrWhisper','localAsrModel'])el(id).disabled=value;renderTrace();}
   function eventOnce(target,event,action){return new Promise((resolve,reject)=>{
     const timer=setTimeout(()=>finish(new Error('视频读取超时，请换用可正常播放的 MP4/WebM')),20000);
     function done(){finish();}function fail(){finish(new Error('当前视频编码无法读取，请换用可正常播放的 MP4/WebM'));}
@@ -152,7 +160,7 @@ if(typeof document!=='undefined')(()=>{
   });}
   async function selectVideo(selected){
     if(busy||!selected)return;locked(true);file=null;savedMedia=null;frames=[];result=null;el('creativeResults').hidden=true;el('creativeFrames').replaceChildren();el('creativeFramesHeading').hidden=true;el('creativeConsent').checked=false;
-    el('creativeTranscript').value='';transcriptOrigin='';el('creativeTranscribe').checked=false;el('creativeSpeechField').hidden=true;el('creativeSpeechModel').required=false;
+    el('creativeTranscript').value='';transcriptOrigin='';localTranscript=null;renderLocalTranscript();el('creativeTranscribe').checked=false;el('creativeSpeechField').hidden=true;el('creativeSpeechModel').required=false;
     const video=el('creativeVideo');video.pause();video.removeAttribute('src');video.load();if(url){URL.revokeObjectURL(url);url='';}
     try{
       if(selected.size>20*1024*1024||!selected.size)throw new Error('请选择20MB以内的视频');
@@ -186,9 +194,9 @@ if(typeof document!=='undefined')(()=>{
   el('closeCreativeBrief').onclick=el('cancelCreativeBrief').onclick=()=>el('creativeBriefDialog').close();
   el('creativeBriefDialog').addEventListener('cancel',event=>{if(busy)event.preventDefault();});
   el('creativeTranscribe').onchange=()=>{el('creativeSpeechField').hidden=!el('creativeTranscribe').checked;el('creativeSpeechModel').required=el('creativeTranscribe').checked;el('creativeConsent').checked=false;sendScope();};
-  el('creativeTranscript').oninput=()=>{transcriptOrigin='user';el('creativeConsent').checked=false;sendScope();};
+  el('creativeTranscript').oninput=()=>{const hadLocal=transcriptOrigin==='local_asr';transcriptOrigin='user';localTranscript=null;renderLocalTranscript();if(hadLocal)el('localAsrStatus').textContent='已改为人工逐字稿，当前稿不再沿用原ASR时间轴；原字幕保留在已保存的历史版本中。';el('creativeConsent').checked=false;sendScope();};
   el('creativeBriefForm').oninput=()=>{el('creativeBriefError').textContent='';renderTrace();};
-  function brief(){const transcript=el('creativeTranscript').value.trim();return {confirmed:el('creativeConsent').checked,duration,frames,product:el('creativeProduct').value.trim(),audience:el('creativeAudience').value.trim(),facts:el('creativeFacts').value.trim(),outputs:[...document.querySelectorAll('[name="creativeOutput"]:checked')].map(n=>n.value),goal:el('creativeGoal').value,format:el('creativeFormat').value,style:el('creativeStyle').value,target_seconds:Number(el('creativeSeconds').value),reference:el('creativeReference').value,conditions:el('creativeConditions').value.trim(),details:el('creativeDetails').value.trim(),transcript,transcript_source:transcript?(transcriptOrigin==='transcription'?'transcription':'manual'):'none'};}
+  function brief(){const transcript=el('creativeTranscript').value.trim();const body={confirmed:el('creativeConsent').checked,duration,frames,product:el('creativeProduct').value.trim(),audience:el('creativeAudience').value.trim(),facts:el('creativeFacts').value.trim(),outputs:[...document.querySelectorAll('[name="creativeOutput"]:checked')].map(n=>n.value),goal:el('creativeGoal').value,format:el('creativeFormat').value,style:el('creativeStyle').value,target_seconds:Number(el('creativeSeconds').value),reference:el('creativeReference').value,conditions:el('creativeConditions').value.trim(),details:el('creativeDetails').value.trim(),transcript,transcript_source:transcript?(['transcription','local_asr'].includes(transcriptOrigin)?transcriptOrigin:'manual'):'none'};if(body.transcript_source==='local_asr'&&localTranscript)Object.assign(body,{transcript_segments:localTranscript.segments,transcript_asr:localTranscript.metadata});return body;}
   el('creativeBriefForm').onsubmit=async event=>{
     event.preventDefault();if(busy)return;
     try{
@@ -202,7 +210,7 @@ if(typeof document!=='undefined')(()=>{
         el('creativeStatus').textContent='正在识别参考视频口播；完成后继续分析…';
         if(!file&&savedMedia){const response=await fetch('/api/agent/media?id='+savedMedia.media_id);if(!response.ok)throw new Error('已保存视频读取失败');file=new File([await response.blob()],savedMedia.filename,{type:savedMedia.mime});}
         const audio=await request('/api/video/transcribe',file,{'Content-Type':/\.webm$/i.test(file.name)?'video/webm':'video/mp4','X-Radar-Speech-Model':model,'X-Radar-Confirmed':'true'});
-        body.transcript=audio.text;el('creativeTranscript').value=audio.text;transcriptOrigin='transcription';el('creativeTranscribe').checked=false;el('creativeSpeechField').hidden=true;el('creativeSpeechModel').required=false;
+        body.transcript=audio.text;el('creativeTranscript').value=audio.text;transcriptOrigin='transcription';localTranscript=null;renderLocalTranscript();el('creativeTranscribe').checked=false;el('creativeSpeechField').hidden=true;el('creativeSpeechModel').required=false;
         body.transcript_source='transcription';
         sendScope();
       }
@@ -262,6 +270,37 @@ if(typeof document!=='undefined')(()=>{
   }
   el('creativeModelForm').onsubmit=event=>{event.preventDefault();saveModel();};el('forgetCreativeModelKey').onclick=()=>saveModel(true);
   el('saveCreativeTask').onclick=()=>saveCurrentTask(true);
+  function renderLocalTranscript(){
+    const ready=Boolean(localTranscript&&transcriptOrigin==='local_asr');
+    el('localAsrPreview').hidden=!ready;el('localAsrPreview').textContent=ready?CreativeData.toSrt({transcript_source:'local_asr',transcript_segments:localTranscript.segments}):'';
+    el('downloadLocalSrt').disabled=busy||!ready;
+    if(ready)el('localAsrStatus').textContent=`已取得 ${localTranscript.segments.length} 段估计字幕，未经人工校对；背景歌声可能被识别为文字。保存任务后可重开，修改逐字稿会转为人工稿。`;
+    else el('localAsrStatus').textContent=localAsrReady?'当前版本没有可导出的本地时间轴；可提取本地字幕或使用人工逐字稿。':'请先配置本地字幕引擎；也可人工粘贴逐字稿继续。';
+  }
+  async function refreshLocalAsr(){
+    const value=await request('/api/agent/asr-config');localAsrReady=value.configured;
+    for(const [key,id] of [['ffmpeg','localAsrFfmpeg'],['whisper','localAsrWhisper'],['model','localAsrModel']])el(id).value=value[key]||'';
+    if(!localTranscript)el('localAsrStatus').textContent=value.message;
+    el('extractLocalAsr').disabled=busy||taskReadOnly()||!frames.length||!localAsrReady;
+  }
+  el('saveLocalAsrConfig').onclick=async()=>{
+    if(busy)return;locked(true);
+    try{await request('/api/agent/asr-config',{ffmpeg:el('localAsrFfmpeg').value.trim(),whisper:el('localAsrWhisper').value.trim(),model:el('localAsrModel').value.trim()});await refreshLocalAsr();el('localAsrSettings').open=false;}
+    catch(error){el('localAsrStatus').textContent=error.message;}finally{locked(false);}
+  };
+  el('extractLocalAsr').onclick=async()=>{
+    if(busy||taskReadOnly())return;locked(true);el('localAsrStatus').textContent='正在本机提取音轨并识别字幕，可能需要几分钟；不联网、不调用分析模型。';el('localAsrPanel').setAttribute('aria-busy','true');
+    try{
+      let media=file;if(!media&&savedMedia){const response=await fetch('/api/agent/media?id='+savedMedia.media_id);if(!response.ok)throw new Error('已保存素材不可读，请重新关联视频');media=new File([await response.blob()],savedMedia.filename,{type:savedMedia.mime});}
+      if(!media)throw new Error('请先选择或打开本地视频');
+      localTranscript=await request('/api/agent/transcribe-local',media,{'Content-Type':/\.webm$/i.test(media.name)?'video/webm':'video/mp4','X-Radar-Confirmed':'true'});
+      el('creativeTranscript').value=localTranscript.text;transcriptOrigin='local_asr';el('creativeTranscribe').checked=false;el('creativeSpeechField').hidden=true;el('creativeSpeechModel').required=false;el('creativeConsent').checked=false;renderLocalTranscript();sendScope();renderTrace();
+    }catch(error){el('localAsrStatus').textContent=error.message;}finally{el('localAsrPanel').removeAttribute('aria-busy');locked(false);}
+  };
+  el('downloadLocalSrt').onclick=()=>{
+    if(!localTranscript||transcriptOrigin!=='local_asr')return;
+    const href=URL.createObjectURL(new Blob(['\ufeff'+CreativeData.toSrt({transcript_source:'local_asr',transcript_segments:localTranscript.segments})],{type:'application/x-subrip;charset=utf-8'}));const link=document.createElement('a');link.href=href;link.download='本地自动字幕-待校对.srt';document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(href),60000);
+  };
   el('recoverCreativeTask').onclick=async()=>{
     const attempt=recoverableAttempt();if(busy||!attempt)return;
     if(unsaved()){el('creativeTaskStatus').textContent='当前有未保存修改，请先打开已保存版本；本地恢复不会使用新资料。';return;}
@@ -277,5 +316,5 @@ if(typeof document!=='undefined')(()=>{
   el('openCreativeTask').onclick=()=>openTask(el('creativeTaskChoice').value);
   el('creativeTaskVersion').onchange=()=>{if(currentTask)openTask(currentTask.task_uid,el('creativeTaskVersion').value);};
   window.addEventListener('beforeunload',event=>{if(tasksEnabled&&unsaved()){event.preventDefault();event.returnValue='';}});
-  initial.then(async()=>{if(!tasksEnabled)return;accountInfo=await request('/api/agent/account');showTask();await loadTaskList();const params=new URLSearchParams(location.search),uid=params.get('task');if(uid&&/^[a-f0-9]{12}$/.test(uid))await openTask(uid,params.get('version'));}).catch(error=>{el('creativeTaskStatus').textContent=error.message;});
+  initial.then(async()=>{if(!tasksEnabled)return;el('localAsrPanel').hidden=false;await refreshLocalAsr();accountInfo=await request('/api/agent/account');showTask();await loadTaskList();const params=new URLSearchParams(location.search),uid=params.get('task');if(uid&&/^[a-f0-9]{12}$/.test(uid))await openTask(uid,params.get('version'));}).catch(error=>{el('creativeTaskStatus').textContent=error.message;});
 })();

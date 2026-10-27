@@ -23,6 +23,17 @@
       <p id="creativeStatus" class="creative-status" role="status" aria-live="polite">选择视频后在本机提取关键画面，不会立即发送给模型。</p>
       <div class="creative-section-head" id="creativeFramesHeading" hidden><h3>采样画面</h3><span>时间来自原视频</span></div><div id="creativeFrames" class="creative-filmstrip"></div>
       <div class="creative-source-actions"><button class="primary" id="openCreativeBrief" disabled>填写 3 项必填信息</button><button class="text-button" id="replaceCreativeFile" hidden>重新关联</button></div>
+      <section id="localAsrPanel" class="local-asr-panel" aria-labelledby="localAsrTitle" hidden>
+        <h3 id="localAsrTitle">本地字幕</h3><p>在本机提取音频和字幕，不发送视频到外部服务，不触发分析模型。</p>
+        <div class="local-asr-actions"><button type="button" class="secondary" id="extractLocalAsr" disabled>提取本地字幕</button><button type="button" class="secondary" id="downloadLocalSrt" disabled>下载 SRT</button></div>
+        <p id="localAsrStatus" role="status" aria-live="polite">尚未配置本地字幕引擎。</p><pre id="localAsrPreview" hidden></pre>
+        <details id="localAsrSettings"><summary>本地字幕引擎设置</summary><p>选择本机已有的程序和模型。保存设置不会运行转写；模型不会打入安装包。</p>
+          <label>音视频处理程序<input id="localAsrFfmpeg" maxlength="2000" placeholder="ffmpeg.exe 的完整路径"></label>
+          <label>语音识别程序<input id="localAsrWhisper" maxlength="2000" placeholder="whisper-cli.exe 的完整路径"></label>
+          <label>语音模型<input id="localAsrModel" maxlength="2000" placeholder="Whisper .bin 模型的完整路径"></label>
+          <button type="button" class="secondary" id="saveLocalAsrConfig">保存本地设置</button>
+        </details>
+      </section>
     </section>
     <aside class="creative-guide"><span class="creative-kicker">下一步 · 3 项必填资料</span><h2>先补齐真实信息</h2><p>填写商品名称、目标人群和已确认的真实卖点。其他生成选项可保持默认，也可展开后调整。</p><ul><li><strong>真人拍摄改编稿</strong><span>分镜、口播、字幕与拍摄准备。</span></li><li><strong>AI 视频生成提示词</strong><span>逐镜头画面、动作与连续性要求。</span></li><li><strong>视频写稿提示词</strong><span>可反复交给文字模型使用的写作指令。</span></li></ul><div class="creative-boundary">分析采样画面，不能验证真实播放与成交。逐字稿没有时间轴；未转写时不分析音轨。</div><details><summary>查看固定分析规则</summary><p>判断引用证据，事实、推测与建议分开；未知信息不编造。三类成果按选择生成。</p><a href="/creative-rules.txt" target="_blank" rel="noopener">打开完整规则 V1.1 ↗</a></details><p id="creativeModelStatus" class="creative-model-status" role="status">正在读取模型设置…</p></aside>
   </div>
