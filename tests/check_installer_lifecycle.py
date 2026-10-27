@@ -34,11 +34,14 @@ def execute(executable,args):
 
 def wait_data_released(data):
     """Wait for Windows/child-process cleanup, without deleting or unlocking anything."""
+    kernel=ctypes.WinDLL('kernel32',use_last_error=True)
+    kernel.CreateFileW.restype=ctypes.c_void_p
     for _ in range(100):
-        try:
-            with (data/'desktop.lock').open('r+b') as stream:stream.read(1)
+        handle=kernel.CreateFileW(ctypes.c_wchar_p(str(data/'desktop.lock')),0xC0000000,0,None,3,128,None)
+        if handle!=ctypes.c_void_p(-1).value:
+            kernel.CloseHandle(ctypes.c_void_p(handle))
             return
-        except PermissionError:time.sleep(.1)
+        time.sleep(.1)
     raise RuntimeError('Closed test application data still locked')
 
 
