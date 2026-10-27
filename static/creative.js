@@ -189,7 +189,7 @@ if(typeof document!=='undefined')(()=>{
     const speech=el('creativeTranscribe').checked;
     el('creativeSendScope').textContent=`${tasksEnabled?taskScope()+'。\n':''}${frames.length} 张采样画面、采样时间、商品资料与创作选项${el('creativeTranscript').value.trim()?'、参考台词':''}。\n模型：${config?.model||'尚未配置'} · ${config?.endpoint?new URL(config.endpoint).host:'请先设置模型'}。\n${speech?'另发送原视频至同一服务转写口播，然后发送1次分析请求，共最多2次模型请求。':'发送1次分析请求，不发送原视频和音轨。'}`;
   }
-  async function openBrief(){if(!frames.length)return;el('creativeBriefError').textContent='';el('creativeConsent').checked=false;try{await refreshConfig();}catch(error){el('creativeBriefError').textContent=error.message;}sendScope();el('creativeBriefDialog').showModal();}
+  async function openBrief(){if(!frames.length)return;el('creativeBriefError').textContent='';el('creativeConsent').checked=false;try{await refreshConfig();if(tasksEnabled&&!currentTask&&!el('creativeAudience').value.trim()){accountInfo=await request('/api/agent/account');const audience=accountInfo?.strategy?.data?.audience;if(typeof audience==='string')el('creativeAudience').value=audience;}}catch(error){el('creativeBriefError').textContent=error.message;}sendScope();el('creativeBriefDialog').showModal();}
   el('creativeFile').onchange=event=>selectVideo(event.target.files[0]);el('replaceCreativeFile').onclick=()=>el('creativeFile').click();el('openCreativeBrief').onclick=openBrief;
   el('closeCreativeBrief').onclick=el('cancelCreativeBrief').onclick=()=>el('creativeBriefDialog').close();
   el('creativeBriefDialog').addEventListener('cancel',event=>{if(busy)event.preventDefault();});

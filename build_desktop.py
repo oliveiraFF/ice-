@@ -49,6 +49,7 @@ def main():
                '--icon', str(ROOT / 'radar.ico'), '--add-data', str(ROOT / 'static') + ';static',
                '--add-data', str(ROOT / 'catalog.json') + ';.', '--add-data', str(ROOT / 'radar.ico') + ';.',
                '--add-data', str(ROOT / '_runtime' / 'codex-rejected-cas.pem') + ';.',
+               '--add-data', str(ROOT / '_runtime' / 'account-workspace-template.json') + ';_runtime',
                '--hidden-import', 'webview.platforms.edgechromium', '--hidden-import', 'webview.platforms.winforms',
                '--exclude-module', 'webview.platforms.qt', '--exclude-module', 'webview.platforms.gtk',
                '--exclude-module', 'webview.platforms.cef', str(ROOT / 'desktop.py')]

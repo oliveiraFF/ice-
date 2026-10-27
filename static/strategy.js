@@ -56,7 +56,7 @@
       strategy = await request('/api/strategy/save', { data: collect(), provenance: '页面填写',
                                                        expected_version: strategy ? strategy.version : 0 });
       render();
-      el('strategyNotice').textContent = '已保存草稿 v' + strategy.version + '；确认后可用于正式任务。';
+      el('strategyNotice').textContent = '已保存草稿 v' + strategy.version + '；确认后可用于正式任务。' + (strategy.workspace_sync_error || '');
       el('strategyConfirmPanel').hidden = true;
     } catch (error) { el('strategyError').textContent = error.message; }
   };
@@ -74,7 +74,7 @@
         strategy = await request('/api/strategy/confirm', { expected_version: strategy.version });
         render();
         el('strategyConfirmPanel').hidden = true;
-        el('strategyNotice').textContent = '已确认 v' + strategy.version + '，正式任务门禁已打开。';
+        el('strategyNotice').textContent = '已确认 v' + strategy.version + '，正式任务门禁已打开。' + (strategy.workspace_sync_error || '');
       } catch (error) {
         el('strategyConfirmPanel').hidden = true;
         el('strategyError').textContent = error.message;

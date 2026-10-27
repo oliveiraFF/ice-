@@ -31,6 +31,7 @@ from ai_directions import AIDirections
 from video_creative import VideoCreative, MAX_REQUEST_BYTES, MAX_VIDEO_BYTES, TASK_RULES
 from agent_tasks import AgentTasks
 from agent_loop import AgentLoop
+from account_onboarding import AccountOnboarding
 from local_asr import LocalASR
 from client_credentials import CredentialVault
 from ops import OpsStore, ensure_tables
@@ -3953,6 +3954,8 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
     ops = OpsStore(store.path)
     agent_tasks = AgentTasks(store.path, TASK_RULES) if not client else None
     agent_loop = AgentLoop(data_dir, ops, ai, test_enabled=(not client and os.environ.get('ICE_AGENT_LOOP_TEST') == '1'))
+    onboarding = AccountOnboarding(data_dir, ops, lambda: (api_key[0], ai.snapshot()['key']),
+                                   os.environ.get('SHORT_VIDEO_OPS_WORKSPACE', '').strip())
     agent_task_lock = threading.Lock()
     ai_request_lock = threading.Lock()
 
@@ -3983,6 +3986,11 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
             if parsed.path.startswith('/api/agent/'):
                 try:
                     query = parse_qs(parsed.query)
+                    if parsed.path == '/api/agent/onboarding':
+                        try:
+                            return self.send(onboarding.state())
+                        except (OSError, ValueError, KeyError):
+                            return self.send({'error': '账号资料读取失败，请检查目录权限或在高级设置查看原连接；不会覆盖旧资料'}, 503)
                     if parsed.path == '/api/agent/loop':
                         uid = query.get('run_uid', [''])[0]
                         return self.send(agent_loop.get(uid, query.get('version', [None])[0]) if uid else agent_loop.listing())
@@ -4013,6 +4021,7 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                             'message': message,
                         })
                     if parsed.path == '/api/agent/view-model':
+                        onboarding.sync_strategy()
                         if client:
                             return self.send({'error': '接口不存在'}, 404)
                         workspace_root = os.environ.get('SHORT_VIDEO_OPS_WORKSPACE', '').strip()
@@ -4277,6 +4286,8 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                      '/agent-loop.js': ('agent-loop.js', 'text/javascript'),
                      '/agent-loop.css': ('agent-loop.css', 'text/css'),
                      '/agent-workspace-settings.js': ('agent-workspace-settings.js', 'text/javascript'),
+                     '/account-onboarding.js': ('account-onboarding.js', 'text/javascript'),
+                     '/account-onboarding.css': ('account-onboarding.css', 'text/css'),
                      '/agent-workspace-settings.css': ('agent-workspace-settings.css', 'text/css'),
                      '/icons.js': ('icons.js', 'text/javascript'), '/icons.css': ('icons.css', 'text/css'),
                      '/site.js': ('site.js', 'text/javascript'), '/site.css': ('site.css', 'text/css'),
@@ -4380,6 +4391,13 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                 body = json.loads(self.rfile.read(length).decode('utf-8'))
                 if not isinstance(body, dict):
                     raise ValueError('请求格式无效')
+                if self.path == '/api/agent/onboarding/create':
+                    return self.send(onboarding.create(body))
+                if self.path == '/api/agent/onboarding/backup':
+                    return self.send(onboarding.backup(), content_type='application/zip')
+                if self.path == '/api/agent/onboarding/open':
+                    onboarding.open_folder()
+                    return self.send({'opened': True})
                 if self.path == '/api/agent/loop/action':
                     if not agent_loop.enabled:
                         raise ValueError('本实例未开启隔离测试')
@@ -4422,10 +4440,11 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                 if self.path == '/api/agent/workspace-config':
                     if client:
                         return self.send({'error': '接口不存在'}, 404)
-                    if body.get('clear') is True:
-                        clear_workspace_config(data_dir)
-                        return self.send({'configured': False, 'message': '已清除 ICE 本机保存的路径；Agent workspace 文件未改动。'})
-                    root = save_workspace_config(data_dir, body.get('workspace_path'))
+                    with onboarding.lock:
+                        if body.get('clear') is True:
+                            clear_workspace_config(data_dir)
+                            return self.send({'configured': False, 'message': '已清除 ICE 本机保存的路径；Agent workspace 文件未改动。'})
+                        root = save_workspace_config(data_dir, body.get('workspace_path'))
                     return self.send({'configured': True, 'valid': True,
                                       'message': 'Agent workspace 已校验并保存在本机数据目录。',
                                       'workspace_name': root.name})
@@ -4700,10 +4719,16 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                                           body.get('evidence', ''), body.get('evidence_role', 'audience_pain'))
                     return self.send({'id': ident, 'ok': True})
                 if self.path == '/api/strategy/save':
-                    return self.send(ops.save_strategy(body.get('data'), body.get('provenance'),
-                                                       body.get('expected_version')))
+                    with onboarding.lock:
+                        record = ops.save_strategy(body.get('data'), body.get('provenance'), body.get('expected_version'))
+                        record['workspace_sync_error'] = onboarding.sync_strategy(record=record)
+                        return self.send(record)
                 if self.path == '/api/strategy/confirm':
-                    return self.send(ops.confirm_strategy(body.get('expected_version')))
+                    with onboarding.lock:
+                        onboarding.ensure_confirmable()
+                        record = ops.confirm_strategy(body.get('expected_version'))
+                        record['workspace_sync_error'] = onboarding.sync_strategy(record=record)
+                        return self.send(record)
                 if self.path == '/api/topics/build':
                     return self.send(topics_build(body, store, ops))
                 if self.path == '/api/topics/select':

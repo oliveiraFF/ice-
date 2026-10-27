@@ -16,10 +16,13 @@
     <section class="agent-workspace-settings" aria-labelledby="agentWorkspaceTitle">
       <div class="agent-workspace-heading">
         <div>
-          <h3 id="agentWorkspaceTitle">Agent workspace <span class="agent-readonly-tag">只读</span></h3>
-          <p>连接你的 short-video-ops-kit 工作区，供运营总览读取资料。ICE 只保存目录路径，不改写工作区文件。</p>
+          <h3 id="agentWorkspaceTitle">账号资料</h3>
+          <p>填写账号信息后，软件自动准备和连接资料；已保存的信息可继续完善。</p>
         </div>
       </div>
+      <button id="accountSetupLaunch" class="secondary" type="button">新建或查看账号资料</button>
+      <details><summary>高级：连接已有 Agent workspace</summary>
+      <p>外部目录保持只读，不自动替换当前策略；软件创建的本账号目录会随策略保存同步。</p>
       <form id="agentWorkspaceForm" novalidate>
         <label for="agentWorkspacePath">本机工作区目录</label>
         <div class="agent-workspace-path-row">
@@ -33,7 +36,7 @@
           <button id="agentWorkspaceClear" class="text-button" type="button">清除路径绑定</button>
           <button id="agentWorkspaceSave" class="primary" type="submit">校验并保存</button>
         </div>
-      </form>
+      </form></details>
     </section>`);
 
   const el = id => document.getElementById(id);
@@ -42,6 +45,10 @@
   const saveButton = el('agentWorkspaceSave');
   const clearButton = el('agentWorkspaceClear');
   const status = el('agentWorkspaceStatus');
+  el('accountSetupLaunch').onclick = () => {
+    dialog.close();
+    document.dispatchEvent(new Event('ice-open-account-setup'));
+  };
   let busy = false;
 
   function setStatus(message, kind = 'info') {
