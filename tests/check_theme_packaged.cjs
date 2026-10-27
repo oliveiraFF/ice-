@@ -40,7 +40,7 @@ async function browser(){
  try{
   origin=await start();let page=await browser();
   await page.goto(origin+'/dashboard');await page.waitForLoadState('networkidle');
-  assert.equal(await page.locator('html').getAttribute('data-theme'),'dark');
+  assert.equal(await page.locator('html').getAttribute('data-theme'),'light','first launch opens in light mode');
   for(const theme of ['dark','light']){
     if(await page.locator('html').getAttribute('data-theme')!==theme)await page.locator('#themeToggle').click();
     for(const route of ['/dashboard','/creative']){

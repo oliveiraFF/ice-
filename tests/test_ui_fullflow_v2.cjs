@@ -105,13 +105,14 @@ function luminance(rgb) {
             artifact: getComputedStyle(document.querySelector('#workbench .ice-card:not(.ice-home-grid .ice-card)')).backgroundColor,
             dataPanel: getComputedStyle(document.querySelector('.screen-grid .screen-panel')).backgroundColor
           }));
-          assert(luminance(palette.page) < 64, `dashboard should use the reference's dark overview, got ${palette.page}`);
-          assert(luminance(palette.rail) < 64, `shared navigation should use the reference's dark rail, got ${palette.rail}`);
-          assert(luminance(palette.brand) > 100, `sidebar brand text should remain readable, got ${palette.brand}`);
-          assert(luminance(palette.panel) < 64, `real workbench panels should use the dark palette, got ${palette.panel}`);
-          assert(luminance(palette.account) < 64, `the live account summary should use the dark palette, got ${palette.account}`);
-          assert(luminance(palette.artifact) < 64, `recent creative results should use the dark palette, got ${palette.artifact}`);
-          assert(luminance(palette.dataPanel) < 64, `expanded data panels should use the dark palette, got ${palette.dataPanel}`);
+          // First launch opens in the light (white / light gray glass) theme.
+          assert(luminance(palette.page) > 200, `dashboard should use the light overview, got ${palette.page}`);
+          assert(luminance(palette.rail) > 200, `shared navigation should use the light glass rail, got ${palette.rail}`);
+          assert(luminance(palette.brand) < 100, `sidebar brand text should remain readable, got ${palette.brand}`);
+          assert(luminance(palette.panel) > 200, `real workbench panels should use the light palette, got ${palette.panel}`);
+          assert(luminance(palette.account) > 200, `the live account summary should use the light palette, got ${palette.account}`);
+          assert(luminance(palette.artifact) > 200, `recent creative results should use the light palette, got ${palette.artifact}`);
+          assert(luminance(palette.dataPanel) > 200, `expanded data panels should use the light palette, got ${palette.dataPanel}`);
           assert(palette.focus.includes('linear-gradient'), `the first real KPI should use the warm focus accent, got ${palette.focus}`);
           assert.equal(await page.locator('#workbench .wb-focus').count(), 1, 'one primary today focus');
           const placement = await page.evaluate(() => {

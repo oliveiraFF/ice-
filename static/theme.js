@@ -8,7 +8,7 @@ window.IceTheme = (() => {
       if (valid(cookie)) return cookie;
     } catch {}
     try { const saved = localStorage.getItem(key); if (valid(saved)) return saved; } catch {}
-    return 'dark';
+    return 'light';
   }
   function apply(mode, save = false) {
     if (!valid(mode)) return;
