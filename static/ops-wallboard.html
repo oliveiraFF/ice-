@@ -13,6 +13,8 @@
   <script defer src="/icons.js"></script>
   <script defer src="/site.js"></script>
   <script defer src="/ops-wallboard.js"></script>
+  <script defer src="/agent-loop.js"></script>
+  <link rel="stylesheet" href="/agent-loop.css">
   <link rel="icon" href="/favicon.ico">
 <link rel="stylesheet" href="/theme.css"></head>
 <body class="dashboard-app wallboard-app">
@@ -37,6 +39,31 @@
     </section>
     <p id="freshnessNotice" class="wallboard-freshness" role="status" hidden></p>
     <p id="workspaceNotice" class="wallboard-workspace-notice" hidden></p>
+    <section id="agentLoop" class="wallboard-panel agent-loop" hidden aria-labelledby="agentLoopTitle">
+      <div class="wallboard-panel-heading"><div><h2 id="agentLoopTitle">Agent 流程 · 隔离测试</h2><p>正式账号不改动。每步手动启动；不自动续费或重试。测试草稿与演练复盘不代表实际发布效果。</p></div></div>
+      <div class="agent-loop-toolbar"><label>已保存运行<select id="loopRuns"><option value="">新建测试</option></select></label><button id="loopNew" class="secondary" type="button">建立测试运行</button><button id="loopExport" class="secondary" type="button" disabled>导出此版本</button></div>
+      <p id="loopStatus" role="status" aria-live="polite">正在读取运行记录…</p>
+      <ol id="loopProgress" class="agent-loop-progress" aria-label="测试进度"></ol>
+      <div class="agent-loop-actions">
+        <button data-loop-action="diagnose" type="button">1 诊断资料</button>
+        <button data-loop-action="select" type="button">2 确认测试选题</button>
+        <button data-loop-action="fetch" type="button">3 抓取参考 · 最多1次</button>
+        <button data-loop-action="reference" type="button">4 分析标题 · 最多1次</button>
+        <button data-loop-action="creation" type="button">5 生成分镜 · 最多1次</button>
+        <button data-loop-action="handoff" type="button">6 保存创作稿</button>
+        <button data-loop-action="feedback" type="button">7 登记未发布</button>
+        <button id="loopSynthetic" class="secondary" type="button">可选：合成反馈演练</button>
+        <button data-loop-action="review" type="button">8 本地复盘</button>
+      </div>
+      <details class="agent-loop-inputs"><summary>测试选题与证据（仅3项必填，其余折叠）</summary>
+        <label>选题标题<input id="loopTopic" value="自动字幕之后，还要校对什么？文字、时间轴与SRT导出"></label>
+        <label>原始证据链接<input id="loopSource" type="url" value="https://support.google.com/youtube/answer/6373554?hl=en"></label>
+        <label>证据摘录<textarea id="loopExcerpt">YouTube官方帮助要求复核自动字幕；背景噪音、口音等可能造成识别错误。它支持校对任务，不证明账号需求量。</textarea></label>
+        <details><summary>参考作品与演练指标</summary><label>公开抖音作品ID<input id="loopVideo" value="7063277801121615112" inputmode="numeric"></label><label>演练播放数<input id="loopPlays" type="number" min="0" value="100"></label><label>演练评论数<input id="loopComments" type="number" min="0" value="2"></label></details>
+      </details>
+      <div id="loopResult" class="agent-loop-result"></div>
+      <details><summary>检查证据、策略与版本</summary><label>历史版本<select id="loopVersions" disabled></select></label><pre id="loopEvidence"></pre></details>
+    </section>
 
     <section class="wallboard-kpis" aria-label="今日运营指标">
       <article class="wallboard-kpi">

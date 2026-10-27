@@ -13,6 +13,7 @@ import time
 import uuid
 import webbrowser
 from contextlib import closing
+from datetime import datetime, timezone
 
 import topics
 import reviews
@@ -29,6 +30,7 @@ from browser_collector import browser_posts
 from ai_directions import AIDirections
 from video_creative import VideoCreative, MAX_REQUEST_BYTES, MAX_VIDEO_BYTES, TASK_RULES
 from agent_tasks import AgentTasks
+from agent_loop import AgentLoop
 from local_asr import LocalASR
 from client_credentials import CredentialVault
 from ops import OpsStore, ensure_tables
@@ -3950,6 +3952,7 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
     creative = VideoCreative(ai)
     ops = OpsStore(store.path)
     agent_tasks = AgentTasks(store.path, TASK_RULES) if not client else None
+    agent_loop = AgentLoop(data_dir, ops, ai, test_enabled=(not client and os.environ.get('ICE_AGENT_LOOP_TEST') == '1'))
     agent_task_lock = threading.Lock()
     ai_request_lock = threading.Lock()
 
@@ -3980,6 +3983,9 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
             if parsed.path.startswith('/api/agent/'):
                 try:
                     query = parse_qs(parsed.query)
+                    if parsed.path == '/api/agent/loop':
+                        uid = query.get('run_uid', [''])[0]
+                        return self.send(agent_loop.get(uid, query.get('version', [None])[0]) if uid else agent_loop.listing())
                     if parsed.path == '/api/agent/asr-config':
                         return self.send(local_asr.config())
                     if parsed.path == '/api/agent/account':
@@ -4268,6 +4274,8 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                      '/ops-wallboard': ('ops-wallboard.html', 'text/html'),
                      '/ops-wallboard.js': ('ops-wallboard.js', 'text/javascript'),
                      '/ops-wallboard.css': ('ops-wallboard.css', 'text/css'),
+                     '/agent-loop.js': ('agent-loop.js', 'text/javascript'),
+                     '/agent-loop.css': ('agent-loop.css', 'text/css'),
                      '/agent-workspace-settings.js': ('agent-workspace-settings.js', 'text/javascript'),
                      '/agent-workspace-settings.css': ('agent-workspace-settings.css', 'text/css'),
                      '/icons.js': ('icons.js', 'text/javascript'), '/icons.css': ('icons.css', 'text/css'),
@@ -4370,6 +4378,45 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                 body = json.loads(self.rfile.read(length).decode('utf-8'))
                 if not isinstance(body, dict):
                     raise ValueError('请求格式无效')
+                if self.path == '/api/agent/loop/action':
+                    if not agent_loop.enabled:
+                        raise ValueError('本实例未开启隔离测试')
+                    action = body.get('action')
+                    uid, expected = body.get('run_uid'), body.get('expected_version')
+                    if action == 'create':
+                        return self.send(agent_loop.create(body))
+                    if action in ('diagnose','handoff','review'):
+                        return self.send(getattr(agent_loop, action)(uid, expected))
+                    if action in ('select','feedback'):
+                        return self.send(getattr(agent_loop, action)(uid, expected, body))
+                    if action in ('reference','creation'):
+                        if not ai_request_lock.acquire(False):
+                            raise ValueError('模型正在处理，请等待完成')
+                        try:
+                            return self.send(agent_loop.model(uid, expected, action))
+                        finally:
+                            ai_request_lock.release()
+                    if action == 'fetch':
+                        def fetch_reference(video_id):
+                            if not api_key[0]:
+                                raise ValueError('请先配置 TikHub Key')
+                            route = '/api/v1/douyin/app/v3/fetch_one_video'
+                            info = tikhub_json('/api/v1/tikhub/user/get_endpoint_info', params={'endpoint':route}).get('data') or {}
+                            price = money(info.get('endpoint_cost'))
+                            if info.get('endpoint_uri') != route or price is None or price * 10 > 1:
+                                raise ValueError('接口价格未确认或超预算，不发送业务请求')
+                            raw = tikhub_json(route, key=api_key[0], params={'aweme_id':video_id})
+                            posts = extract_posts(raw, 'dy')
+                            post = next((p for p in posts if p['external_id']==video_id), None)
+                            if not post:
+                                raise ValueError('没有对应视频字段，不自动重试')
+                            # Only public content fields cross into the test artifacts; no upstream auth/URL echoes.
+                            return dict(title=str(post.get('title') or '')[:1000],
+                                author=str(post.get('author') or '')[:200],
+                                source_url='https://www.douyin.com/video/'+video_id,
+                                fetched_at=datetime.now(timezone.utc).isoformat(),priced_usd=str(price))
+                        return self.send(agent_loop.fetch(uid, expected, body, fetch_reference))
+                    raise ValueError('流程操作不存在')
                 if self.path == '/api/agent/workspace-config':
                     if client:
                         return self.send({'error': '接口不存在'}, 404)

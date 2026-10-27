@@ -722,6 +722,8 @@ class OpsStore:
                               (task_uid,)).fetchone()
             if not task:
                 raise ValueError('任务不存在')
+            if task['data_source'] == 'agent_test' and not simulated:
+                raise ValueError('Agent 隔离测试稿不能登记为真实发布')
             if int(task['approved_version'] or 0) != version:
                 raise ValueError('只能登记当前已批准的稿件版本')
             item = db.execute('SELECT * FROM content_version WHERE task_id=? AND version=?',
