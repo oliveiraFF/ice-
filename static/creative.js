@@ -225,7 +225,7 @@ if(typeof document!=='undefined')(()=>{
   el('creativeDeliverables').addEventListener('input',renderTrace);
   el('creativeVideo').addEventListener('error',()=>{el('iceMissingMedia').hidden=false;renderTrace();});
   el('creativeVideo').addEventListener('loadeddata',()=>{el('iceMissingMedia').hidden=true;renderTrace();});
-  document.querySelectorAll('[data-ice-step]').forEach(b=>b.onclick=()=>{const id=b.dataset.iceStep;document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'});});
+  document.querySelectorAll('[data-ice-step]').forEach(b=>b.onclick=()=>{const id=b.dataset.iceStep;document.querySelectorAll('[data-ice-step]').forEach(step=>{const current=step===b;step.classList.toggle('is-current',current);if(current)step.setAttribute('aria-current','step');else step.removeAttribute('aria-current');});document.getElementById(id)?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});});
   el('iceRelink').onclick=()=>el('replaceCreativeFile').click();
   el('creativeDeliverables').onclick=async event=>{const button=event.target.closest('[data-copy-creative]');if(!button)return;const area=el('creativeText-'+button.dataset.copyCreative);try{await navigator.clipboard.writeText(area.value);button.textContent='已复制';setTimeout(()=>{button.textContent='复制内容';},1800);}catch{area.focus();area.select();button.textContent='已选中，请按 Ctrl+C';}};
   el('saveReference').onclick=async()=>{
