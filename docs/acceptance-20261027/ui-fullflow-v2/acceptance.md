@@ -21,6 +21,12 @@
 - Python 回归：`python -B -m unittest discover -s tests -v`，40 项通过、4 项跳过。跳过项需要 `SHORT_VIDEO_OPS_TEMPLATE` 指向获批模板。
 - Finesse 检查：检测器结果 P0=0、P1=0；P2 为现有样式表中的色值字面量和通用 `--paper` 变量提醒。
 
+## 主干闭环
+
+- 功能提交：`8bc2f6f`；合入提交：`365e02e`（本地 `main`）。
+- 合入后的主干复验：同一套真实 Chrome/Playwright 本地服务验收通过；Python 回归 40 项通过、4 项因缺少获批模板路径跳过。
+- 功能工作树 `feat/ui-fullflow-v2` 在提交后无未提交修改；截图、浏览器报告和本记录随合入提交保存。
+
 ## 截图与日志
 
 - [运营总览 1280×900](dashboard-1280.png)
