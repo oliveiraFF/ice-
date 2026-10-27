@@ -65,6 +65,11 @@ def main():
     try:
         assert not request(origin,'/api/state?mode=live')['connected']
         request(origin,'/api/keyword',{'name':'installer-retention-test'})
+        account=request(origin,'/api/agent/onboarding/create',dict(request_id='c'*32,
+            name='合成安装验收账号',direction='手工制作过程',audience='手作爱好者'))
+        assert account['kind']=='managed' and not account['strategy_confirmed']
+        workspace=Path(account['workspace_path'])
+        assert workspace.is_relative_to(data)
         # Actual running executable is protected; no process termination by installer/uninstaller.
         assert execute(args.installer,['/S','/D='+str(target)])==2
         assert process.poll() is None
@@ -80,7 +85,8 @@ def main():
     extra=['data/keep-user-config.json','downloads/keep-user-file.txt','workspace/keep-user-file.txt','_internal/keep-user-note.txt']
     for name in extra:
         p=target/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text('explicit synthetic retention sentinel',encoding='utf-8')
-    preserved=['data/radar.sqlite3',*extra]
+    preserved=['data/radar.sqlite3','data/agent-workspace.json',*extra,
+               *(p.relative_to(target).as_posix() for p in workspace.rglob('*') if p.is_file())]
     before={name:hashlib.sha256((target/name).read_bytes()).hexdigest() for name in preserved}
     assert execute(args.installer,['/S','/D='+str(target)])==0
     for name,checksum in before.items():assert hashlib.sha256((target/name).read_bytes()).hexdigest()==checksum
@@ -88,6 +94,9 @@ def main():
     try:
         state=request(origin,'/api/state?mode=live')
         assert any(k['name']=='installer-retention-test' for k in state['keywords'])
+        reopened=request(origin,'/api/agent/onboarding')
+        assert reopened['account_uid']==account['account_uid'] and reopened['kind']=='managed'
+        assert request(origin,'/api/strategy')['data']['direction']=='手工制作过程'
     finally:close_cleanly(process,origin,data)
     wait_data_released(data)
     before={name:hashlib.sha256((target/name).read_bytes()).hexdigest() for name in preserved}
@@ -103,6 +112,7 @@ def main():
         install_files_verified=len(expected),installed_exe_start_exit=True,upgrade_preserved_data=True,
         upgrade_while_running_rejected=True,uninstall_while_running_rejected=True,
         data_lock_without_running_app_rejected=True,uninstall_preserved_files=preserved,
+        initialized_account_survived_upgrade=True,workspace_preserved_after_uninstall=True,
         shortcuts_and_uninstall_registry=True,uninstall_removed_program_files=True,paid_calls=0)
     (args.output/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
     print(json.dumps(result,ensure_ascii=False))

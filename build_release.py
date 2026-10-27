@@ -17,7 +17,7 @@ BUILD_ROOT = Path('E:/leida-build/fusion-owner')
 RADAR_MODULES = (
     'app.py', 'agent_bridge.py', 'catalog.py', 'free_tools.py', 'browser_collector.py', 'demo.py',
     'ai_directions.py', 'video_creative.py', 'agent_tasks.py', 'agent_loop.py', 'local_asr.py', 'ops.py', 'customer_api.py', 'client_credentials.py',
-    'topics.py', 'reviews.py',
+    'topics.py', 'reviews.py', 'account_onboarding.py', '_runtime/account-workspace-template.json',
 )
 OPS_FILES = (
     'fixtures/sample_facts.json',

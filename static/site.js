@@ -195,3 +195,10 @@ const SiteUI=(()=>{
 const agentSettingsScript = document.createElement('script');
 agentSettingsScript.src = '/agent-workspace-settings.js';
 document.head.append(agentSettingsScript);
+const accountSetupStyles = document.createElement('link');
+accountSetupStyles.rel = 'stylesheet';
+accountSetupStyles.href = '/account-onboarding.css';
+document.head.append(accountSetupStyles);
+const accountSetupScript = document.createElement('script');
+accountSetupScript.src = '/account-onboarding.js';
+document.head.append(accountSetupScript);

@@ -18,7 +18,7 @@ import sqlite3
 import time
 import urllib.parse
 import uuid
-from contextlib import closing
+from contextlib import closing, nullcontext
 
 TABLES = '''
 CREATE TABLE IF NOT EXISTS account_profile (
@@ -545,7 +545,7 @@ class OpsStore:
         item['data'] = json.loads(item.get('data') or '{}')
         return item
 
-    def save_strategy(self, data, provenance='', expected_version=None):
+    def save_strategy(self, data, provenance='', expected_version=None, database=None):
         if not isinstance(data, dict):
             raise ValueError('策略内容格式无效')
         if expected_version is None:
@@ -556,8 +556,9 @@ class OpsStore:
             raise ValueError('版本号无效')
         now = time.time()
         payload = json.dumps(data, ensure_ascii=False)
-        with closing(self.connect()) as db:
-            db.execute('BEGIN IMMEDIATE')
+        with (closing(self.connect()) if database is None else nullcontext(database)) as db:
+            if database is None:
+                db.execute('BEGIN IMMEDIATE')
             row = db.execute('SELECT version FROM account_profile WHERE id=1').fetchone()
             current = int(row['version']) if row else 0
             if expected_version != current:
@@ -571,7 +572,10 @@ class OpsStore:
                 db.execute(
                     'INSERT INTO account_profile(id,data,confirmed,provenance,version,updated_at) VALUES(1,?,?,?,?,?)',
                     (payload, 0, str(provenance or '')[:200], version, now))
-            db.commit()
+            if database is None:
+                db.commit()
+            else:
+                return dict(db.execute('SELECT * FROM account_profile WHERE id=1').fetchone())
         return self.get_strategy()
 
     def confirm_strategy(self, expected_version):
