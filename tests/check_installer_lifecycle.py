@@ -73,6 +73,10 @@ def main():
         assert process.poll() is None and exe.exists() and registry_present()
     finally:close_cleanly(process,origin,data)
     wait_data_released(data)
+    with (data/'desktop.lock').open('r+b'):
+        assert execute(args.installer,['/S','/D='+str(target)])==2
+        assert execute(target/'UninstallICE.exe',['/S','_?='+str(target)])==2
+        assert exe.exists() and registry_present()
     extra=['data/keep-user-config.json','downloads/keep-user-file.txt','workspace/keep-user-file.txt','_internal/keep-user-note.txt']
     for name in extra:
         p=target/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text('explicit synthetic retention sentinel',encoding='utf-8')
@@ -97,7 +101,8 @@ def main():
     for name,checksum in before.items():assert hashlib.sha256((target/name).read_bytes()).hexdigest()==checksum
     result=dict(passed=True,installer_sha256=hashlib.sha256(args.installer.read_bytes()).hexdigest(),
         install_files_verified=len(expected),installed_exe_start_exit=True,upgrade_preserved_data=True,
-        upgrade_while_running_rejected=True,uninstall_while_running_rejected=True,uninstall_preserved_files=preserved,
+        upgrade_while_running_rejected=True,uninstall_while_running_rejected=True,
+        data_lock_without_running_app_rejected=True,uninstall_preserved_files=preserved,
         shortcuts_and_uninstall_registry=True,uninstall_removed_program_files=True,paid_calls=0)
     (args.output/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
     print(json.dumps(result,ensure_ascii=False))
