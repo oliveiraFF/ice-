@@ -1,0 +1,93 @@
+{
+  "release": {
+    "path": "E:\\leida-build\\ice-final-release-20261027\\20261027-071733\\ice运营台",
+    "source_commit": "2da45894fc71df4c015dad96b55b0218a08e4a54",
+    "source_dirty": false,
+    "verified_distribution_files": 268,
+    "verified_source_inputs": 169
+  },
+  "real_run": {
+    "task_uid": "5b529130cb2a",
+    "tikhub_business_requests": 3,
+    "tikhub_http_statuses": [
+      401,
+      401,
+      200
+    ],
+    "first_two_failures": "acceptance key reader truncated Base64 punctuation; fixed and tested before third explicitly authorized request",
+    "deepseek_requests": 1,
+    "automatic_retries": 0,
+    "model_response_retained": true,
+    "model_initial_validation": "failed_extra_unselected_writing_prompt",
+    "local_recovery": "user-confirmed; drops only unselected known deliverable; selected content unchanged",
+    "original_failure_retained": true,
+    "versions": [
+      1,
+      2,
+      3
+    ],
+    "real_audio_extracted": true,
+    "asr_invoked": false,
+    "quality_review": "not_scored"
+  },
+  "cost": {
+    "authorized_tikhub_cny": 3,
+    "authorized_deepseek_cny": 1,
+    "tikhub_catalog_usd_each": 0.001,
+    "deepseek_tokens": {
+      "prompt_tokens": 3001,
+      "completion_tokens": 4764,
+      "total_tokens": 7765,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "prompt_cache_hit_tokens": 1280,
+      "prompt_cache_miss_tokens": 1721
+    },
+    "conservative_cny_estimate": 0.096171,
+    "conversion_safety_factor_cny_per_usd": 10,
+    "is_actual_provider_invoice": false,
+    "note": "Assumes all three TikHub target requests charged and DeepSeek peak/cache-miss rates; actual 401 billing unknown."
+  },
+  "workspace": {
+    "path": "E:\\deepseek工作区\\short-video-ops-data\\my-account",
+    "valid": true,
+    "saved_and_restored_in_final_exe": true,
+    "account_profiles": "still template",
+    "strategy_confirmed": false,
+    "private_workspace_not_written": true
+  },
+  "ui": {
+    "packaged": true,
+    "task_uid": "5b529130cb2a",
+    "recovery_requests": 1,
+    "model_calls": 0,
+    "attempt_count": 1,
+    "original_failed_attempt_retained": true,
+    "versions": [
+      1,
+      2,
+      3
+    ],
+    "actual_ui_export": true,
+    "exit_restart": true,
+    "theme_persistence": true,
+    "widths": [
+      390,
+      1280
+    ],
+    "errors": [],
+    "external": [],
+    "writes": [
+      "/api/agent/task/recover",
+      "/api/agent/task/save"
+    ]
+  },
+  "scope_limits": [
+    "public sample is gameplay footage, not user account/product proof",
+    "no ASR or audio-based analysis in this run",
+    "no automated catalogue-to-creative UI integration claimed; fetched via production adapter then locally imported",
+    "hard checks beyond JSON and manual quality review remain unverified",
+    "native window visual capture not claimed; actual EXE server tested through Chrome"
+  ]
+}

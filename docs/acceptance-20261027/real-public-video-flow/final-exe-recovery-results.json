@@ -1,0 +1,26 @@
+{
+  "packaged": true,
+  "task_uid": "5b529130cb2a",
+  "recovery_requests": 1,
+  "model_calls": 0,
+  "attempt_count": 1,
+  "original_failed_attempt_retained": true,
+  "versions": [
+    1,
+    2,
+    3
+  ],
+  "actual_ui_export": true,
+  "exit_restart": true,
+  "theme_persistence": true,
+  "widths": [
+    390,
+    1280
+  ],
+  "errors": [],
+  "external": [],
+  "writes": [
+    "/api/agent/task/recover",
+    "/api/agent/task/save"
+  ]
+}
