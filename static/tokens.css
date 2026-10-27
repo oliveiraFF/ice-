@@ -61,7 +61,7 @@
   --glass-sheen:linear-gradient(140deg,rgba(255,255,255,.70) 0%,rgba(255,255,255,.22) 36%,rgba(255,255,255,.04) 58%,rgba(255,255,255,.32) 100%);
   --glass-button:rgba(255,255,255,.58);--glass-button-hover:rgba(255,255,255,.80);
   --switch-off:rgba(120,120,128,.20);--knob:#ffffff;
-  --bg-panel:var(--glass);--bg-inset:rgba(226,226,232,.72);--bg-input:rgba(226,226,232,.78);--bg-hover:rgba(214,214,220,.82);
+  --bg-panel:var(--glass);--bg-inset:rgba(234,234,239,.66);--bg-input:rgba(255,255,255,.72);--bg-hover:rgba(222,222,228,.78);
   --bg-raised:#ffffff;
   --text-ink:#1d1d1f;--text-body:#3a3a3c;--text-muted:#6a6a70;
   --line:rgba(0,0,0,.08);--line-strong:rgba(0,0,0,.14);

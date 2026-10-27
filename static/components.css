@@ -84,7 +84,7 @@ html[data-theme] body.site-app.owner-workspace :is(.icon-button,.site-settings,.
 @keyframes ice-spin{to{transform:rotate(360deg)}}
 
 /* ---------- Inputs: soft gray fills, no outlines ---------- */
-html[data-theme] body.site-app.owner-workspace :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=file]),select,textarea){border-color:transparent!important}
+html[data-theme] body.site-app.owner-workspace :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=file]),select,textarea){border-color:transparent!important;box-shadow:inset 0 0 0 1px var(--line),inset 0 1px 2px rgba(0,0,0,.03)!important}
 :where(html[data-theme]) body.site-app.owner-workspace :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=file]),select){min-height:var(--ctl-md);border-radius:var(--radius-sm);font-size:var(--fs-14)}
 :where(html[data-theme]) body.site-app.owner-workspace textarea{border-radius:var(--radius-sm);font-size:var(--fs-14)}
 html[data-theme] body.site-app.owner-workspace :is(input:not([type=checkbox]):not([type=radio]),select,textarea):focus-visible{outline:none!important;box-shadow:var(--focus-ring)!important}
@@ -202,7 +202,7 @@ html[data-theme] body.site-app.owner-workspace.dashboard-app #workbench :is(.wb-
 
 /* ---------- Liquid Glass page details ---------- */
 /* The legacy input rule outranks .site-search; restate it with matching weight so the field reads as one glass pill. */
-html[data-theme] body.site-app.owner-workspace .site-search :is(input:not([type=checkbox]):not([type=radio]),select){background:transparent!important;box-shadow:none!important}
+html[data-theme] body.site-app.owner-workspace .site-search :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=file]),select){background:transparent!important;box-shadow:none!important}
 /* 运营工作台: today's focus becomes a blue glass hero card in the accent color, not an orange block. */
 html[data-theme] body.site-app.owner-workspace.dashboard-app{
   --today-orange-light:#0a6fe0;--today-orange:#0050b8;--today-orange-ink:#ffffff;--today-orange-muted:rgba(255,255,255,.78);
@@ -211,3 +211,49 @@ html[data-theme] body.site-app.owner-workspace.dashboard-app #workbench .wb-focu
 html[data-theme] body.site-app.owner-workspace.dashboard-app #workbench .wb-focus :is(p,span){color:rgba(255,255,255,.86)!important}
 html[data-theme] body.site-app.owner-workspace.dashboard-app #workbench .wb-focus>a{color:#fff!important;-webkit-backdrop-filter:var(--blur-glass);backdrop-filter:var(--blur-glass)}
 html[data-theme] body.site-app.owner-workspace.dashboard-app #workbench .wb-focus>a:hover{background:rgba(255,255,255,.30);opacity:1}
+
+/* ---------- Chips, filters and segmented choices (all pages) ---------- */
+/* Filter chips: glass pills; the chosen one is tinted with the accent. */
+html[data-theme] body.site-app.owner-workspace main :is(.filter-chip,.tag-list button,.draft-chip,.ice-source-option){
+  display:inline-flex;align-items:center;gap:6px;min-height:30px;padding:0 14px;
+  border:0!important;border-radius:var(--radius-full)!important;
+  background:var(--glass-sheen),var(--glass-button)!important;color:var(--text-body)!important;
+  box-shadow:var(--glass-rim)!important;font-size:var(--fs-13);font-weight:500;
+  transition:background-color .2s var(--ease),color .2s var(--ease)}
+html[data-theme] body.site-app.owner-workspace main :is(.filter-chip,.tag-list button):hover{background:var(--glass-sheen),var(--glass-button-hover)!important;color:var(--text-ink)!important}
+html[data-theme] body.site-app.owner-workspace main :is(.filter-chip,.tag-list button,.draft-chip):is([aria-pressed="true"],.selected,.active){
+  background:var(--accent-soft)!important;color:var(--accent-text)!important;box-shadow:inset 0 0 0 1px var(--accent-soft)!important;font-weight:600}
+html[data-theme] body.site-app.owner-workspace main .filter-chip svg{width:14px;height:14px}
+
+/* Segmented controls: a recessed track with a raised glass thumb (the sliding indicator from site.js). */
+html[data-theme] body.site-app.owner-workspace main :is(.market-segments,.only-options,.mode-options,.rank-sort){
+  padding:2px;border:0!important;border-radius:var(--radius-sm)!important;background:var(--bg-inset)!important;box-shadow:inset 0 1px 2px rgba(0,0,0,.06)!important}
+html[data-theme] body.site-app.owner-workspace main :is(.market-segments,.only-options,.mode-options,.rank-sort) button{border-radius:8px!important;color:var(--text-body)!important;font-size:var(--fs-13)}
+html[data-theme] body.site-app.owner-workspace main :is(.market-segments,.only-options,.mode-options,.rank-sort) :is(button[aria-pressed="true"],button.selected){color:var(--text-ink)!important;font-weight:600}
+html[data-theme] body.site-app.owner-workspace main .ui-seg-indicator{border-radius:8px!important;background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0)),var(--bg-raised)!important;box-shadow:0 2px 6px rgba(0,0,0,.12),0 0 0 .5px rgba(0,0,0,.05)!important}
+
+/* Step rails (研究稿) read as progress, not buttons. */
+html[data-theme] body.site-app.owner-workspace main .draft-step-rail span{border:0!important;border-radius:var(--radius-sm);background:var(--bg-inset)!important;color:var(--text-body)!important;box-shadow:none}
+html[data-theme] body.site-app.owner-workspace main .draft-step-rail span.active{background:var(--accent-soft)!important;color:var(--accent-text)!important;font-weight:600}
+
+/* Keyword tiles (发现内容). */
+html[data-theme] body.site-app.owner-workspace main .keywords .keyword{border:0!important;border-radius:var(--radius-sm)!important;background:var(--glass-sheen),var(--glass-button)!important;box-shadow:var(--glass-rim)!important;color:var(--text-ink)}
+html[data-theme] body.site-app.owner-workspace main .keywords .keyword.active{background:var(--accent-soft)!important;color:var(--accent-text)!important;box-shadow:inset 0 0 0 1px var(--accent)!important}
+
+/* Tables: hairline rows, quiet headers. */
+html[data-theme] body.site-app.owner-workspace main table th{font-size:var(--fs-12);font-weight:600;color:var(--text-muted)!important;background:transparent!important}
+html[data-theme] body.site-app.owner-workspace main table :is(th,td){border-color:var(--line)!important}
+
+/* The theme switch keeps its size even where a page enlarges every header button. */
+html[data-theme] body.site-app.owner-workspace .site-header .theme-toggle{height:30px!important;min-height:30px!important;width:52px!important}
+
+/* Fieldsets: a hairline group, not a bright box. */
+html[data-theme] body.site-app.owner-workspace main fieldset{border:1px solid var(--line)!important;border-radius:var(--radius-sm);background:transparent}
+html[data-theme] body.site-app.owner-workspace main legend{padding:0 6px;font-size:var(--fs-13);font-weight:600;color:var(--text-ink)}
+
+/* 发现内容: ranking KPI tiles and the empty result well follow the glass surfaces. */
+html[data-theme] body.site-app.owner-workspace main .heat-kpis>div{border:0!important;border-radius:var(--radius-sm)!important;background:var(--glass-sheen),var(--glass-button)!important;box-shadow:var(--glass-rim)!important}
+html[data-theme] body.site-app.owner-workspace main .heat-kpis :is(span,small){color:var(--text-muted)!important}
+html[data-theme] body.site-app.owner-workspace main .heat-kpis strong{color:var(--text-ink)!important}
+/* Empty states: a quiet recessed well with a dashed hairline, in every page. */
+html[data-theme] body.site-app.owner-workspace main :is(.empty-state,.draft-empty-state,.heat-empty,.direction-empty){background:var(--bg-inset)!important;border:1px dashed var(--line-strong)!important;border-radius:var(--radius-md)!important;color:var(--text-body)!important;box-shadow:none!important}

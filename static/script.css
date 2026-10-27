@@ -16,7 +16,7 @@
 .script-actions{display:flex;gap:10px;margin-top:14px}
 .script-badge{font-size:12px;color:#374151;background:#f3f4f6;border-radius:999px;padding:3px 10px}
 .script-status{font-size:13px;margin:0 0 12px}
-.script-status.is-ready{color:#047857}
+.script-status.is-ready{color:var(--accent-text)}
 .script-status.is-draft{color:#b45309}
 .script-beats{display:grid;gap:10px}
 .script-beat{border:1px solid #eef0f3;border-radius:10px;padding:10px 12px;background:#fafafa}

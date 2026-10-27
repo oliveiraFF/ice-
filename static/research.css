@@ -18,7 +18,7 @@
 .script-app .research-summary{font-size:14px;line-height:1.9;color:#39443f}
 .script-app .research-history-item{display:block;width:100%;text-align:left;border:1px solid #e5e9e7;background:#fff;border-radius:8px;padding:10px 12px;margin-bottom:8px;cursor:pointer}
 .script-app .research-history-item small{display:block;color:#8a958e;margin-top:4px}
-.script-app .research-history-item.active{border-color:#b7d4c2;background:#f6fbf7}
+.script-app .research-history-item.active{border-color:var(--line-strong);background:#f6fbf7}
 @media(max-width:600px){.script-app .research-sources{grid-template-columns:1fr}}
 
 .script-app .research-frozen-selected{border:1px solid #f0d9b5;background:#fffaf1;border-radius:8px;padding:10px 12px;margin:8px 0}
@@ -42,22 +42,22 @@
 .script-app .topics-candidate{border:1px solid #e5e9e7;border-radius:10px;padding:12px 14px;background:#fff;min-width:0;overflow-wrap:anywhere}
 .script-app .topics-candidate-head{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:6px}
 .script-app .topics-candidate-head strong{font-size:14px}
-.script-app .topics-state{font-size:12px;border-radius:999px;padding:2px 8px;background:#eef4f0;color:#3f6b50;white-space:nowrap}
+.script-app .topics-state{font-size:12px;border-radius:999px;padding:2px 8px;background:#eef4f0;color:var(--accent-text);white-space:nowrap}
 .script-app .topics-state.needs_validation{background:#fff6e6;color:#8a6320}
 .script-app .topics-field{margin:0 0 5px;line-height:1.8;font-size:13px}
 .script-app .topics-field b{color:#4d5c52}
 .script-app .topics-candidate details{margin:6px 0}
-.script-app .topics-candidate summary{cursor:pointer;color:#2f6b4a;font-size:12px}
+.script-app .topics-candidate summary{cursor:pointer;color:var(--accent-text);font-size:12px}
 .script-app .topics-basis-row{border-top:1px dashed #e5e9e7;padding:6px 0;font-size:12px;line-height:1.8}
 .script-app .topics-basis-row:first-child{border-top:0}
 .script-app .topics-basis-row small{color:#8a958e}
 .script-app .topics-basis-text{white-space:pre-wrap}
 .script-app .topics-declared{color:#8a6d3b}
 .script-app .topics-convert{margin-top:6px}
-.script-app .topics-draft-result{border:1px solid #b7d4c2;background:#f6fbf7;border-radius:8px;padding:8px 12px;margin:8px 0;line-height:1.8;overflow-wrap:anywhere}
+.script-app .topics-draft-result{border:1px solid var(--line-strong);background:#f6fbf7;border-radius:8px;padding:8px 12px;margin:8px 0;line-height:1.8;overflow-wrap:anywhere}
 .script-app .topics-history-item{display:block;width:100%;text-align:left;border:1px solid #e5e9e7;background:#fff;border-radius:8px;padding:10px 12px;margin-bottom:8px;cursor:pointer;overflow-wrap:anywhere}
 .script-app .topics-history-item small{display:block;color:#8a958e;margin-top:4px}
-.script-app .topics-history-item.active{border-color:#b7d4c2;background:#f6fbf7}
+.script-app .topics-history-item.active{border-color:var(--line-strong);background:#f6fbf7}
 @media(max-width:600px){.script-app .topics-role-row{grid-template-columns:1fr}}
 
 /* M05-C 参考适配：只增加本页 C 区块，沿用 A/B 样式，不改变公共 UI。 */
@@ -69,11 +69,11 @@
 .script-app .adaptation-patterns{display:grid;gap:12px;margin:10px 0}
 .script-app .adaptation-pattern{border:1px solid #e5e9e7;border-radius:10px;padding:12px 14px;background:#fff;min-width:0;overflow-wrap:anywhere}
 .script-app .adaptation-pattern-head{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:6px}
-.script-app .adaptation-aspect{font-size:12px;border-radius:999px;padding:2px 8px;background:#eef4f0;color:#3f6b50;white-space:nowrap}
+.script-app .adaptation-aspect{font-size:12px;border-radius:999px;padding:2px 8px;background:#eef4f0;color:var(--accent-text);white-space:nowrap}
 .script-app .adaptation-field{margin:0 0 5px;line-height:1.8;font-size:13px;overflow-wrap:anywhere}
 .script-app .adaptation-field b{color:#4d5c52}
 .script-app .adaptation-pattern details{margin:6px 0}
-.script-app .adaptation-pattern summary{cursor:pointer;color:#2f6b4a;font-size:12px}
+.script-app .adaptation-pattern summary{cursor:pointer;color:var(--accent-text);font-size:12px}
 .script-app .adaptation-basis-row{border-top:1px dashed #e5e9e7;padding:6px 0;font-size:12px;line-height:1.8;overflow-wrap:anywhere}
 .script-app .adaptation-basis-row:first-child{border-top:0}
 .script-app .adaptation-basis-text{white-space:pre-wrap}
@@ -82,6 +82,6 @@
 .script-app .adaptation-non{border:1px solid #f0d9b5;background:#fffaf1;border-radius:10px;padding:12px 14px;margin-bottom:10px;overflow-wrap:anywhere}
 .script-app .adaptation-history-item{display:block;width:100%;text-align:left;border:1px solid #e5e9e7;background:#fff;border-radius:8px;padding:10px 12px;margin-bottom:8px;cursor:pointer;overflow-wrap:anywhere}
 .script-app .adaptation-history-item small{display:block;color:#8a958e;margin-top:4px}
-.script-app .adaptation-history-item.active{border-color:#b7d4c2;background:#f6fbf7}
+.script-app .adaptation-history-item.active{border-color:var(--line-strong);background:#f6fbf7}
 .script-app .adaptation-over{color:#a33}
 @media(max-width:600px){.script-app .adaptation-business{grid-template-columns:1fr}}
