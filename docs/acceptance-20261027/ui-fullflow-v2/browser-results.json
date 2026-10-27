@@ -1,0 +1,2588 @@
+{
+  "viewports": [
+    {
+      "route": "/dashboard",
+      "viewport": 320,
+      "document": 320,
+      "body": 320,
+      "nav": 11
+    },
+    {
+      "route": "/creative",
+      "viewport": 320,
+      "document": 320,
+      "body": 320,
+      "nav": 11
+    },
+    {
+      "route": "/dashboard",
+      "viewport": 375,
+      "document": 375,
+      "body": 375,
+      "nav": 11
+    },
+    {
+      "route": "/creative",
+      "viewport": 375,
+      "document": 375,
+      "body": 375,
+      "nav": 11
+    },
+    {
+      "route": "/dashboard",
+      "viewport": 390,
+      "document": 390,
+      "body": 390,
+      "nav": 11
+    },
+    {
+      "route": "/creative",
+      "viewport": 390,
+      "document": 390,
+      "body": 390,
+      "nav": 11
+    },
+    {
+      "route": "/dashboard",
+      "viewport": 414,
+      "document": 414,
+      "body": 414,
+      "nav": 11
+    },
+    {
+      "route": "/creative",
+      "viewport": 414,
+      "document": 414,
+      "body": 414,
+      "nav": 11
+    },
+    {
+      "route": "/dashboard",
+      "viewport": 768,
+      "document": 768,
+      "body": 768,
+      "nav": 11
+    },
+    {
+      "route": "/creative",
+      "viewport": 768,
+      "document": 768,
+      "body": 768,
+      "nav": 11
+    },
+    {
+      "route": "/dashboard",
+      "viewport": 1280,
+      "document": 1280,
+      "body": 1280,
+      "nav": 11
+    },
+    {
+      "route": "/creative",
+      "viewport": 1280,
+      "document": 1280,
+      "body": 1280,
+      "nav": 11
+    }
+  ],
+  "navigation": [
+    {
+      "name": "运营工作台",
+      "href": "/dashboard"
+    },
+    {
+      "name": "运营建议",
+      "href": "/advice"
+    },
+    {
+      "name": "发现内容",
+      "href": "/"
+    },
+    {
+      "name": "研究稿",
+      "href": "/draft"
+    },
+    {
+      "name": "研究增强",
+      "href": "/research"
+    },
+    {
+      "name": "成片审阅",
+      "href": "/media-review"
+    },
+    {
+      "name": "内容任务",
+      "href": "/script"
+    },
+    {
+      "name": "反馈复盘",
+      "href": "/feedback"
+    },
+    {
+      "name": "账号策略",
+      "href": "/strategy"
+    },
+    {
+      "name": "API 市场",
+      "href": "/market"
+    },
+    {
+      "name": "工具管理",
+      "href": "/tools"
+    }
+  ],
+  "requests": [
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/style.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard-data.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice-avatar.jpg",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/dashboard",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/dashboard",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/advice/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/draft/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/media-review/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/advice/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/reminders/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/agent/account",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/agent/tasks",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/creative",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/style.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/creative.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/creative.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice-avatar.jpg",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ai/config",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/agent/account",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/agent/tasks",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/style.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard-data.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice-avatar.jpg",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/dashboard",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/dashboard",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/advice/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/draft/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/media-review/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/advice/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/reminders/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/agent/account",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/agent/tasks",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/creative",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/style.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/creative.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/creative.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice-avatar.jpg",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ai/config",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/agent/account",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/agent/tasks",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/style.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard-data.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice-avatar.jpg",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/dashboard",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/dashboard",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/advice/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/draft/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/media-review/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/advice/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/reminders/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/agent/account",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/agent/tasks",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/creative",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/style.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/creative.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/creative.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice-avatar.jpg",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ai/config",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/agent/account",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/agent/tasks",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/style.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard-data.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice-avatar.jpg",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/dashboard",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/dashboard",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/advice/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/draft/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/media-review/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/advice/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/reminders/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/agent/account",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/agent/tasks",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/creative",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/style.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/creative.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/creative.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice-avatar.jpg",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ai/config",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/agent/account",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/agent/tasks",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/style.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard-data.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice-avatar.jpg",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/dashboard",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/dashboard",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/advice/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/draft/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/media-review/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/advice/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/reminders/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/agent/account",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/agent/tasks",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/creative",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/style.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/creative.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/creative.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice-avatar.jpg",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ai/config",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/agent/account",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/agent/tasks",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/style.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard-data.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice-avatar.jpg",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/dashboard",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/dashboard",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/advice/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/draft/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/media-review/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/advice/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/reminders/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/agent/account",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/agent/tasks",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/creative",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/style.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/creative.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/creative.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice-avatar.jpg",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ai/config",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/agent/account",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/agent/tasks",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/style.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard-data.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice-avatar.jpg",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/dashboard",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/dashboard",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/advice/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/draft/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/media-review/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/advice/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/reminders/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/agent/account",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/agent/tasks",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/style.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard-data.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/dashboard.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice-avatar.jpg",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/dashboard",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/dashboard",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/advice/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/draft/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/media-review/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/advice/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/reminders/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/agent/account",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/agent/tasks",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/advice",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/style.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/script.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/advice.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/advice.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice-avatar.jpg",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/pain/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/advice/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/reference/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/style.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/discovery.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/browser-import.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/radar-data.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/app.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice-avatar.jpg",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/catalog",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice-semibold.ttf",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ai/cache",
+      "method": "POST"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/draft",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/style.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/draft.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/draft.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice-avatar.jpg",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/industry/catalog",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/pain/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/draft/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/reference/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/research/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/research/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/research",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/style.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/script.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/research.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/research.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice-avatar.jpg",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/research/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/research/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/industry/catalog",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/strategy",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/pain/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/reference/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/draft/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/research/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/research/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/feedback/records",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/media-review",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/style.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/media-review.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/media-review.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice-avatar.jpg",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/draft/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/ops/media-review/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/script",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/style.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/script.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/script.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice-avatar.jpg",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/script/tasks",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/reference/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/strategy",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/topics/combo",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/pain/list",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/feedback",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/style.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/script.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/feedback.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/feedback.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice-avatar.jpg",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/feedback/records",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/feedback/reviews",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/feedback/records",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/strategy",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/style.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/script.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/strategy.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/strategy.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice-avatar.jpg",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/strategy",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/market",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/style.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/market.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/market-data.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/market.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice-avatar.jpg",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/catalog",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/tools",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/style.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/market.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/tools.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/icons.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/free-tools-data.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/tools.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/site.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice.css",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/ice-avatar.jpg",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/api/state",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.js",
+      "method": "GET"
+    },
+    {
+      "host": "127.0.0.1:53576",
+      "path": "/agent-workspace-settings.css",
+      "method": "GET"
+    }
+  ],
+  "errors": [],
+  "dashboardPalette": {
+    "page": "rgb(8, 11, 16)",
+    "rail": "rgb(17, 22, 31)",
+    "brand": "rgb(244, 247, 251)",
+    "panel": "rgb(17, 24, 33)",
+    "focus": "linear-gradient(135deg, rgb(245, 173, 91), rgb(255, 139, 61))",
+    "account": "rgb(17, 24, 33)",
+    "artifact": "rgb(17, 24, 33)",
+    "dataPanel": "rgb(17, 24, 33)"
+  },
+  "workflowLayout": {
+    "columns": "700px 292px",
+    "stages": {
+      "x": 244,
+      "y": 523.0625,
+      "width": 1008,
+      "height": 166.640625,
+      "right": 1252
+    },
+    "workflow": {
+      "x": 244,
+      "y": 705.703125,
+      "width": 700,
+      "height": 1573.671875,
+      "right": 944
+    },
+    "trace": {
+      "x": 960,
+      "y": 705.703125,
+      "width": 292,
+      "height": 659.15625,
+      "right": 1252
+    },
+    "optionalFieldsCollapsed": true,
+    "optionalFields": "creativeMore"
+  }
+}

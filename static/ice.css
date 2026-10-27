@@ -161,3 +161,252 @@ body.site-app.owner-workspace .creative-task-actions label{flex:1 1 180px;min-wi
 body.site-app.owner-workspace .creative-task-actions button{flex:none;white-space:nowrap}
 body.site-app.owner-workspace :is(button,.primary,.secondary){white-space:nowrap}
 @media(max-width:700px){body.site-app.owner-workspace.creative-app .creative-page{padding:22px 14px 36px}body.site-app.owner-workspace .creative-evaluations{grid-template-columns:minmax(0,1fr)}body.site-app.owner-workspace .creative-dialog-actions{flex-wrap:wrap}body.site-app.owner-workspace .creative-form-body{grid-template-columns:minmax(0,1fr)}body.site-app.owner-workspace .creative-more-grid{grid-template-columns:minmax(0,1fr)}}
+
+
+/* finesse · product implementation · dark overview + light video workflow · preserve ICE teal status semantics · reduced motion supported */
+:root{
+  --ice-dark:#080b10;--ice-dark-panel:#11161f;--ice-dark-panel-2:#151c26;--ice-dark-line:rgba(255,255,255,.07);
+  --ice-dark-text:#f4f7fb;--ice-dark-muted:#8c97a8;--ice-dark-strong:#23160a;--ice-dark-input:#111821;--ice-dark-panel-3:#17212c;--ice-dark-panel-blue:#1c2633;--ice-dark-panel-warm:#29251f;
+  --ice-dark-hover:rgba(255,255,255,.06);--ice-dark-header:rgba(17,22,31,.94);--ice-dark-text-muted:rgba(35,22,10,.72);
+  --ice-orange:#ffb35e;--ice-orange-deep:#ff8b3d;--ice-orange-soft:rgba(255,179,94,.12);--ice-mint:#6fe3c1;--ice-mint-bright:#8be8cc;--ice-mint-glow:rgba(111,227,193,.08);--ice-mint-soft:rgba(111,227,193,.1);--ice-mint-border:rgba(111,227,193,.35);--ice-blue-soft:rgba(142,175,255,.1);--ice-red-soft:rgba(255,109,122,.12);--ice-red-text:#ff9ca5;
+  --ice-light-bg:#f3f5f8;--ice-light-panel:#fbfcfd;--ice-light-text:#18212b;--ice-light-muted:#6d7887;
+  --ice-light-line:#e6ebf0;--ice-light-surface:#f7f9fb;--ice-light-surface-alt:#f7faf9;--ice-light-control:#f9fafb;--ice-light-header:rgba(251,252,253,.96);
+  --ice-teal:#2f7d73;--ice-teal-dark:#1f625a;--ice-teal-soft:#eaf5ef;--ice-teal-border:#b8d9c9;--ice-teal-faint:#d3e5db;--ice-teal-line:#dbe8e2;--ice-teal-outline:#9bbdb5;--ice-teal-wash:#f4f8f7;--ice-teal-selected:#f1f8f3;--ice-teal-hover:#9ac9b0;--ice-teal-ink:#10251f;
+  --ice-shadow-card:0 1px 2px rgba(20,30,40,.04),0 8px 24px rgba(20,30,40,.04);--ice-shadow-card-soft:0 1px 2px rgba(20,30,40,.03)
+}
+
+/* Keep all eleven destinations in one consistent dark rail. */
+body.site-app.owner-workspace .site-nav{background:var(--ice-dark-panel);border-right:1px solid var(--ice-dark-line)}
+body.site-app.owner-workspace .site-nav .site-brand{color:var(--ice-dark-text)}
+body.site-app.owner-workspace .site-nav .site-brand>span:last-child{color:var(--ice-dark-text)}
+body.site-app.owner-workspace .site-nav .site-brand small{color:var(--ice-dark-muted)}
+body.site-app.owner-workspace .site-nav .site-logo{background:linear-gradient(135deg,var(--ice-orange),var(--ice-orange-deep));color:var(--ice-dark-strong)}
+body.site-app.owner-workspace .site-nav .nav-group{color:var(--ice-dark-muted)}
+body.site-app.owner-workspace .site-nav>a:not(.site-brand){color:var(--ice-dark-muted)}
+body.site-app.owner-workspace .site-nav>a:not(.site-brand):hover{background:var(--ice-dark-hover);color:var(--ice-dark-text)}
+body.site-app.owner-workspace .site-nav>a.active:not(.site-brand){background:var(--ice-mint-soft);color:var(--ice-mint)}
+body.site-app.owner-workspace .site-nav .nav-foot{color:var(--ice-dark-muted)}
+body.site-app.owner-workspace .site-nav .nav-foot i{background:var(--ice-mint)}
+body.site-app.owner-workspace :is(.site-nav a,.site-menu,.site-settings):focus-visible{outline:2px solid var(--ice-mint);outline-offset:2px}
+body.site-app.owner-workspace.dashboard-app .site-header{background:var(--ice-dark-header);border-bottom:1px solid var(--ice-dark-line);color:var(--ice-dark-text)}
+body.site-app.owner-workspace.dashboard-app .site-context{color:var(--ice-dark-muted)}
+body.site-app.owner-workspace.dashboard-app .site-context strong{color:var(--ice-dark-text)}
+body.site-app.owner-workspace.dashboard-app .site-search{background:var(--ice-dark-panel-2);border-color:var(--ice-dark-line);color:var(--ice-dark-muted)}
+body.site-app.owner-workspace.dashboard-app .site-search input{color:var(--ice-dark-text)}
+body.site-app.owner-workspace.dashboard-app .site-search select{color:var(--ice-dark-muted)}
+body.site-app.owner-workspace.dashboard-app .site-search button{color:var(--ice-dark-muted)}
+body.site-app.owner-workspace.dashboard-app .site-settings{background:var(--ice-dark-panel-2);border-color:var(--ice-dark-line);color:var(--ice-dark-text)}
+body.site-app.owner-workspace.dashboard-app .site-menu{color:var(--ice-dark-text)}
+
+/* Match the reference's dark overview while keeping every number sourced from ICE records. */
+body.site-app.owner-workspace.dashboard-app{background:
+  radial-gradient(900px 500px at 10% -10%,var(--ice-orange-soft),transparent 60%),
+  radial-gradient(700px 420px at 100% 0%,var(--ice-mint-glow),transparent 60%),
+  var(--ice-dark);color:var(--ice-dark-text)}
+body.site-app.owner-workspace.dashboard-app .screen-main{background:transparent}
+body.site-app.owner-workspace.dashboard-app .wb-details>summary{color:var(--ice-dark-muted)}
+body.site-app.owner-workspace.dashboard-app .screen-kpi:first-child{background:linear-gradient(135deg,var(--ice-orange),var(--ice-orange-deep));border-color:transparent}
+body.site-app.owner-workspace.dashboard-app .screen-kpi.highlight{border-top-color:var(--ice-mint)}
+body.site-app.owner-workspace.dashboard-app #opsPanel .reminder-form button{background:var(--ice-mint);color:var(--ice-teal-ink);border-color:var(--ice-mint)}
+body.site-app.owner-workspace.dashboard-app #opsPanel .reminder-form button:hover{background:var(--ice-mint-bright)}
+body.site-app.owner-workspace.dashboard-app .site-footer{border-color:var(--ice-dark-line);color:var(--ice-dark-muted)}
+
+/* Video workflow: source, saved task, evidence and hard checks stay visible together. */
+body.site-app.owner-workspace.creative-app{background:var(--ice-light-bg);color:var(--ice-light-text)}
+body.site-app.owner-workspace.creative-app .site-header{background:var(--ice-light-header);border-bottom:1px solid var(--ice-light-line);color:var(--ice-light-text)}
+body.site-app.owner-workspace.creative-app .site-context{color:var(--ice-light-muted)}
+body.site-app.owner-workspace.creative-app .site-context strong{color:var(--ice-light-text)}
+body.site-app.owner-workspace.creative-app .site-search{background:var(--ice-light-surface);border-color:var(--ice-light-line)}
+body.site-app.owner-workspace.creative-app .site-settings{background:var(--ice-light-panel);border-color:var(--ice-light-line);color:var(--ice-light-text)}
+body.site-app.owner-workspace.creative-app .creative-page{max-width:1440px;padding:24px 28px 44px}
+body.site-app.owner-workspace.creative-app .creative-heading{margin:18px 0 20px}
+body.site-app.owner-workspace.creative-app .creative-heading h1{color:var(--ice-light-text)}
+body.site-app.owner-workspace.creative-app .creative-heading p{max-width:780px;color:var(--ice-light-muted)}
+body.site-app.owner-workspace.creative-app .creative-task-panel{background:var(--ice-light-panel);border:1px solid var(--ice-light-line);border-radius:18px;box-shadow:var(--ice-shadow-card)}
+body.site-app.owner-workspace.creative-app .creative-task-panel .creative-section-head{margin-bottom:4px}
+body.site-app.owner-workspace.creative-app .creative-task-actions{gap:10px}
+body.site-app.owner-workspace.creative-app .creative-task-actions select{border-color:var(--ice-light-line);background:var(--ice-light-control);color:var(--ice-light-text)}
+body.site-app.owner-workspace.creative-app .ice-task-layout{grid-template-columns:minmax(0,1fr) 292px;gap:16px;align-items:start}
+body.site-app.owner-workspace.creative-app .ice-task-layout>aside:first-child{grid-column:1/-1}
+body.site-app.owner-workspace.creative-app .ice-task-center{grid-column:1;grid-template-columns:minmax(0,1fr);gap:14px}
+body.site-app.owner-workspace.creative-app #iceTrace{grid-column:2;grid-row:2;position:sticky;top:78px;background:var(--ice-light-panel);border:1px solid var(--ice-light-line);border-radius:18px}
+body.site-app.owner-workspace.creative-app #iceTrace h2{color:var(--ice-light-text)}
+body.site-app.owner-workspace.creative-app .ice-task-layout>.ice-card:first-child{background:transparent;border:0;box-shadow:none;padding:0}
+body.site-app.owner-workspace.creative-app .ice-task-layout>.ice-card:first-child h2{margin:0 0 8px}
+body.site-app.owner-workspace.creative-app #iceStages{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+body.site-app.owner-workspace.creative-app .ice-stage{height:100%;margin:0;padding:12px;border:1px solid var(--ice-light-line);border-radius:12px;background:var(--ice-light-panel);color:var(--ice-light-text);box-shadow:var(--ice-shadow-card-soft)}
+body.site-app.owner-workspace.creative-app .ice-stage.current{background:var(--ice-teal-soft);border-color:var(--ice-teal-border)}
+body.site-app.owner-workspace.creative-app .ice-stage small{color:var(--ice-light-muted);line-height:1.6}
+body.site-app.owner-workspace.creative-app .ice-muted{color:var(--ice-light-muted)}
+body.site-app.owner-workspace.creative-app .ice-steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+body.site-app.owner-workspace.creative-app .ice-steps button{min-width:0;border:1px solid var(--ice-light-line);border-radius:10px;background:var(--ice-light-panel);color:var(--ice-light-muted);font-size:12px}
+body.site-app.owner-workspace.creative-app .ice-steps button.is-current{background:var(--ice-teal-soft);border-color:var(--ice-teal-border);color:var(--ice-teal-dark);font-weight:600}
+body.site-app.owner-workspace.creative-app .ice-steps button:disabled{opacity:.55}
+body.site-app.owner-workspace.creative-app .ice-task-center>.ice-card{border:1px solid var(--ice-light-line);border-radius:14px;background:var(--ice-light-panel)}
+body.site-app.owner-workspace.creative-app .ice-task-center>.ice-card h2{color:var(--ice-light-text)}
+body.site-app.owner-workspace.creative-app .ice-task-center>.ice-card>p{color:var(--ice-light-muted);overflow-wrap:anywhere}
+body.site-app.owner-workspace.creative-app .creative-workspace{grid-template-columns:minmax(0,1fr) minmax(230px,.58fr);gap:14px;align-items:start}
+body.site-app.owner-workspace.creative-app .creative-source,
+body.site-app.owner-workspace.creative-app .creative-guide,
+body.site-app.owner-workspace.creative-app .creative-results{background:var(--ice-light-panel);border:1px solid var(--ice-light-line);border-radius:16px;padding:18px;box-shadow:var(--ice-shadow-card)}
+body.site-app.owner-workspace.creative-app .creative-guide{background:linear-gradient(180deg,var(--ice-light-panel),var(--ice-light-surface-alt));border-color:var(--ice-teal-line)}
+body.site-app.owner-workspace.creative-app .creative-source .creative-section-head h2,
+body.site-app.owner-workspace.creative-app .creative-guide h2{color:var(--ice-light-text)}
+body.site-app.owner-workspace.creative-app .creative-source .creative-section-head span,
+body.site-app.owner-workspace.creative-app .creative-guide>p,
+body.site-app.owner-workspace.creative-app .creative-guide li span,
+body.site-app.owner-workspace.creative-app .creative-guide details{color:var(--ice-light-muted)}
+body.site-app.owner-workspace.creative-app .creative-guide li{border-left:0;border-bottom:1px solid var(--ice-teal-faint);padding-left:0;padding-bottom:12px}
+body.site-app.owner-workspace.creative-app .creative-kicker,
+body.site-app.owner-workspace.creative-app .creative-guide a{color:var(--ice-teal)}
+body.site-app.owner-workspace.creative-app .creative-upload{min-height:210px;border-color:var(--ice-teal-outline);background:var(--ice-teal-wash);color:var(--ice-teal-dark)}
+body.site-app.owner-workspace.creative-app .creative-upload:focus-within{outline-color:var(--ice-teal)}
+body.site-app.owner-workspace.creative-app .creative-status{color:var(--ice-light-muted);overflow-wrap:anywhere}
+body.site-app.owner-workspace.creative-app .ice-source-options>*{border-color:var(--ice-light-line);border-radius:10px;background:var(--ice-light-surface);color:var(--ice-light-text);font-size:12px;line-height:1.6}
+body.site-app.owner-workspace.creative-app .ice-source-options small{color:var(--ice-light-muted);font-size:10px}
+body.site-app.owner-workspace.creative-app .ice-source-option{background:var(--ice-teal-soft)!important;border-color:var(--ice-teal-border)!important;color:var(--ice-teal-dark)}
+body.site-app.owner-workspace.creative-app .ice-source-options button:disabled{opacity:.75}
+body.site-app.owner-workspace.creative-app .creative-more{border-top:1px solid var(--ice-light-line);padding-top:8px}
+body.site-app.owner-workspace.creative-app .creative-more summary{color:var(--ice-light-text)}
+body.site-app.owner-workspace.creative-app .creative-more-grid{min-width:0}
+body.site-app.owner-workspace.creative-app .creative-output-options label:has(input:checked){border-color:var(--ice-teal-hover);background:var(--ice-teal-selected)}
+body.site-app.owner-workspace.creative-app .creative-confirmation{background:var(--ice-light-surface)}
+body.site-app.owner-workspace.creative-app .creative-dialog{background:var(--ice-light-panel);color:var(--ice-light-text)}
+body.site-app.owner-workspace.creative-app .creative-dialog-head{border-color:var(--ice-light-line)}
+body.site-app.owner-workspace.creative-app :is(.creative-dialog input:not([type=checkbox]),.creative-dialog textarea,.creative-dialog select){border-color:var(--ice-light-line)}
+body.site-app.owner-workspace.creative-app :is(.creative-dialog input:focus-visible,.creative-dialog textarea:focus-visible,.creative-dialog select:focus-visible,.creative-deliverable textarea:focus-visible){outline-color:var(--ice-teal)}
+body.site-app.owner-workspace.creative-app .creative-dialog-actions{border-color:var(--ice-light-line)}
+body.site-app.owner-workspace.creative-app .creative-results{min-width:0}
+body.site-app.owner-workspace.creative-app .creative-section-actions{display:flex;flex-wrap:wrap;gap:8px}
+body.site-app.owner-workspace.creative-app .creative-deliverable textarea{max-width:100%;min-width:0}
+body.site-app.owner-workspace.creative-app :is(#iceTranscriptPreview,.creative-analysis-summary,.creative-observation,.creative-adaptation,.creative-deliverable){overflow-wrap:anywhere}
+
+@media(max-width:1180px){
+  body.site-app.owner-workspace.creative-app .ice-task-layout{grid-template-columns:minmax(0,1fr)}
+  body.site-app.owner-workspace.creative-app .ice-task-layout>aside:first-child,
+  body.site-app.owner-workspace.creative-app .ice-task-center,
+  body.site-app.owner-workspace.creative-app #iceTrace{grid-column:1;grid-row:auto;position:static}
+  body.site-app.owner-workspace.creative-app .creative-workspace{grid-template-columns:minmax(0,1.2fr) minmax(220px,.8fr)}
+}
+@media(max-width:900px){
+  body.site-app.owner-workspace.creative-app .creative-workspace{grid-template-columns:minmax(0,1fr)}
+  body.site-app.owner-workspace.creative-app .ice-task-layout{gap:12px}
+}
+@media(max-width:700px){
+  body.site-app.owner-workspace.creative-app .creative-page{padding:20px 14px 32px}
+  body.site-app.owner-workspace.creative-app .ice-task-layout{grid-template-columns:minmax(0,1fr)}
+  body.site-app.owner-workspace.creative-app #iceStages{grid-template-columns:repeat(2,minmax(0,1fr))}
+  body.site-app.owner-workspace.creative-app .ice-steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  body.site-app.owner-workspace.creative-app .creative-source,
+  body.site-app.owner-workspace.creative-app .creative-guide,
+  body.site-app.owner-workspace.creative-app .creative-results{padding:16px}
+  body.site-app.owner-workspace.creative-app .creative-heading{align-items:flex-start}
+  body.site-app.owner-workspace.creative-app .creative-heading h1{font-size:24px}
+  body.site-app.owner-workspace.creative-app .creative-heading>button{white-space:nowrap}
+  body.site-app.owner-workspace.creative-app .creative-task-panel{padding:16px}
+  body.site-app.owner-workspace.creative-app .creative-task-actions{align-items:stretch}
+  body.site-app.owner-workspace.creative-app .creative-task-actions button{flex:1 1 0;white-space:normal}
+  body.site-app.owner-workspace.creative-app .ice-task-center .creative-section-head{align-items:flex-start}
+  body.site-app.owner-workspace.creative-app .ice-source-options{grid-template-columns:minmax(0,1fr)}
+  body.site-app.owner-workspace.creative-app .creative-output-options{grid-template-columns:minmax(0,1fr)}
+  body.site-app.owner-workspace.creative-app .creative-form-body,
+  body.site-app.owner-workspace.creative-app .creative-more-grid{grid-template-columns:minmax(0,1fr)}
+  body.site-app.owner-workspace.creative-app .creative-span{grid-column:1}
+  body.site-app.owner-workspace.creative-app .creative-dialog-head,
+  body.site-app.owner-workspace.creative-app .creative-form-body,
+  body.site-app.owner-workspace.creative-app .creative-model-fields{padding:18px}
+  body.site-app.owner-workspace.creative-app .creative-dialog-actions{padding:14px 18px;gap:8px}
+  body.site-app.owner-workspace.creative-app .creative-dialog-actions button{flex:1 1 auto}
+}
+@media(max-width:560px){
+  body.site-app.owner-workspace.dashboard-app .site-header{flex-wrap:wrap;height:auto;min-height:64px;padding:10px 14px;gap:10px}
+  body.site-app.owner-workspace.dashboard-app .site-search{order:3;flex:1 1 100%;max-width:none;margin-left:0}
+  body.site-app.owner-workspace.dashboard-app .site-local{display:none}
+  body.site-app.owner-workspace.dashboard-app .site-menu{display:grid}
+}
+
+
+/* Operations home is the real ICE workbench; style its actual records instead of the prototype's demo metrics. */
+body.site-app.owner-workspace.dashboard-app #workbench .wb-heading h1{color:var(--dash-ink)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-heading p{color:var(--dash-ink-3)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-date{color:var(--dash-ink-3)}
+body.site-app.owner-workspace.dashboard-app #workbench :is(.wb-kpi,.wb-panel,.wb-card){background:var(--dash-panel);border:1px solid var(--dash-line);border-radius:16px;color:var(--dash-ink-2);box-shadow:var(--dash-shadow)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-kpi:first-child{background:linear-gradient(135deg,var(--dash-amber),var(--ice-orange-deep));border-color:transparent;color:var(--ice-dark-strong)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-kpi:first-child span,
+body.site-app.owner-workspace.dashboard-app #workbench .wb-kpi:first-child small{color:var(--ice-dark-text-muted)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-kpi:first-child strong,
+body.site-app.owner-workspace.dashboard-app #workbench .wb-kpi:first-child svg{color:var(--ice-dark-strong)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-kpi span{color:var(--dash-ink-3)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-kpi svg{color:var(--dash-mint)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-kpi strong{color:var(--dash-ink);font-variant-numeric:tabular-nums}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-kpi small{color:var(--dash-ink-3)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-section-head h2{color:var(--dash-ink)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-section-head h2 svg{color:var(--dash-mint)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-section-head>a,
+body.site-app.owner-workspace.dashboard-app #workbench .wb-empty a{color:var(--dash-mint)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-row{border-color:var(--dash-line);color:var(--dash-ink-2)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-row-icon{background:var(--dash-panel-2);color:var(--dash-mint)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-row small,
+body.site-app.owner-workspace.dashboard-app #workbench .wb-row>b,
+body.site-app.owner-workspace.dashboard-app #workbench .wb-empty,
+body.site-app.owner-workspace.dashboard-app #workbench .wb-row small{color:var(--dash-ink-3)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-status{background:var(--dash-panel-2);color:var(--dash-ink-3)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-status.doing{background:var(--ice-mint-soft);color:var(--dash-mint)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-status.done{background:var(--ice-blue-soft);color:var(--dash-blue)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-library-head input{background:var(--dash-panel);border-color:var(--dash-line);color:var(--dash-ink)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-library-note,
+body.site-app.owner-workspace.dashboard-app #workbench .wb-tabs button{color:var(--dash-ink-3)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-tabs button[aria-pressed=true]{background:var(--dash-panel-2);color:var(--dash-ink)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-card:hover{border-color:var(--ice-mint-border)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-preview{background:var(--dash-panel-2)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-preview.review{background:var(--ice-dark-panel-blue)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-preview.advice{background:var(--ice-dark-panel-warm)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-paper{background:var(--ice-dark-panel-3);border-color:var(--dash-line);box-shadow:none}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-paper>span,
+body.site-app.owner-workspace.dashboard-app #workbench .wb-card-body p{color:var(--dash-ink-3)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-paper h3,
+body.site-app.owner-workspace.dashboard-app #workbench .wb-card-body strong{color:var(--dash-ink-2)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-card-tags span{background:var(--ice-dark-panel-3);border-color:var(--dash-line);color:var(--dash-ink-2)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-card-tags .demo{color:var(--dash-ink-3)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-details{border-color:var(--dash-line)}
+body.site-app.owner-workspace.dashboard-app #workbench .wb-details>summary{color:var(--dash-ink-3)}
+body.site-app.owner-workspace.dashboard-app .screen-kpi,
+body.site-app.owner-workspace.dashboard-app .screen-panel{background:var(--dash-panel);border-color:var(--dash-line);color:var(--dash-ink-2)}
+body.site-app.owner-workspace.dashboard-app .screen-kpi:first-child{background:linear-gradient(135deg,var(--dash-amber),var(--ice-orange-deep));border-color:transparent}
+body.site-app.owner-workspace.dashboard-app .screen-kpi:first-child .kpi-label,
+body.site-app.owner-workspace.dashboard-app .screen-kpi:first-child p{color:var(--ice-dark-text-muted)}
+body.site-app.owner-workspace.dashboard-app .screen-kpi:first-child strong,
+body.site-app.owner-workspace.dashboard-app .screen-kpi:first-child .kpi-label svg{color:var(--ice-dark-strong)}
+body.site-app.owner-workspace.dashboard-app #opsPanel :is(input,textarea,select){background:var(--ice-dark-input);border-color:var(--dash-line);color:var(--dash-ink)}
+body.site-app.owner-workspace.dashboard-app #opsPanel .reminder-card{border-color:var(--dash-line)}
+
+/* Keep the saved-task controls readable at narrow widths. */
+@media(max-width:700px){
+  body.site-app.owner-workspace.creative-app .creative-task-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+  body.site-app.owner-workspace.creative-app .creative-task-actions label{grid-column:1/-1;min-width:0;width:100%}
+  body.site-app.owner-workspace.creative-app .creative-task-actions button{min-width:0;min-height:44px;white-space:normal}
+}
+
+/* Dashboard account summaries are rendered by the live workflow data adapter. */
+body.site-app.owner-workspace.dashboard-app .ice-home-grid>.ice-card,
+body.site-app.owner-workspace.dashboard-app main>.ice-card{background:var(--dash-panel);border-color:var(--dash-line);color:var(--dash-ink-2);box-shadow:var(--dash-shadow)}
+body.site-app.owner-workspace.dashboard-app .ice-home-grid .ice-card h2,
+body.site-app.owner-workspace.dashboard-app main>.ice-card h2{color:var(--dash-ink)}
+body.site-app.owner-workspace.dashboard-app .ice-info dt,
+body.site-app.owner-workspace.dashboard-app .ice-muted{color:var(--dash-ink-3)}
+body.site-app.owner-workspace.dashboard-app .ice-info dd,
+body.site-app.owner-workspace.dashboard-app .ice-home-grid .ice-card p{color:var(--dash-ink-2)}
+body.site-app.owner-workspace.dashboard-app .ice-home-stages a{background:var(--dash-panel);border-color:var(--dash-line);color:var(--dash-ink-2)}
+body.site-app.owner-workspace.dashboard-app .ice-table-scroll{border-color:var(--dash-line)}
+body.site-app.owner-workspace.dashboard-app .ice-table th,
+body.site-app.owner-workspace.dashboard-app .ice-table td{border-color:var(--dash-line);color:var(--dash-ink-2)}
+body.site-app.owner-workspace.dashboard-app .ice-table th{color:var(--dash-ink-3)}
+body.site-app.owner-workspace.dashboard-app .ice-tag{background:var(--dash-panel-2);color:var(--dash-ink-2)}
+body.site-app.owner-workspace.dashboard-app .ice-tag.good{background:var(--ice-mint-soft);color:var(--dash-mint)}
+body.site-app.owner-workspace.dashboard-app .ice-tag.warn{background:var(--ice-orange-soft);color:var(--dash-amber)}
+body.site-app.owner-workspace.dashboard-app .ice-tag.bad{background:var(--ice-red-soft);color:var(--ice-red-text)}
+
+
+body.site-app.owner-workspace.dashboard-app #workbench .ice-card{background:var(--dash-panel);border-color:var(--dash-line);color:var(--dash-ink-2);box-shadow:var(--dash-shadow)}
+body.site-app.owner-workspace.dashboard-app #workbench .ice-card h2{color:var(--dash-ink)}
+body.site-app.owner-workspace.dashboard-app #workbench .ice-card .ice-muted{color:var(--dash-ink-3)}
