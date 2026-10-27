@@ -1,0 +1,65 @@
+{
+  "feature_branches": [
+    {
+      "branch": "feat/ui-theme-switch",
+      "head": "931994b",
+      "main_merge": "951984307f273bbd6387eaf13b2a2b03eb6403ad",
+      "closed": true
+    },
+    {
+      "branch": "fix/agent-local-response-recovery",
+      "head": "2be13808df62a88421e30ac7d1e0a0e35529c331",
+      "main_merge": "7f39b1daa3052660566aa057cc37c734976730f2",
+      "closed": true
+    },
+    {
+      "branch": "fix/ui-theme-result-surfaces",
+      "head": "a64ff753766395d377070f6887e80cd1ca1e9fb7",
+      "main_merge": "2da45894fc71df4c015dad96b55b0218a08e4a54",
+      "closed": true
+    },
+    {
+      "branch": "test/real-public-video-flow",
+      "head": "96ccd9759e111c7f9f0d674aff9496b172a3b174",
+      "main_merge": "4383a09641ab78df68ec4ba9c2c7b07b2671f636",
+      "validation_complete": true,
+      "cleanup": "after this evidence commit; final actual Git snapshot retained outside repo"
+    }
+  ],
+  "main_python_tests": {
+    "run": 46,
+    "passed": 46,
+    "skipped": 0
+  },
+  "main_theme": {
+    "pages": 14,
+    "modes": 2,
+    "widths": [
+      320,
+      375,
+      390,
+      414,
+      768,
+      1280
+    ],
+    "passed": true
+  },
+  "packaged_ui": {
+    "real_response_local_recovery": true,
+    "actual_ui_download": true,
+    "save_and_restart": true,
+    "original_failure_retained": true,
+    "new_model_calls": 0
+  },
+  "release_code_commit": "2da45894fc71df4c015dad96b55b0218a08e4a54",
+  "release": "E:/leida-build/ice-final-release-20261027/20261027-071733/ice运营台",
+  "source_inputs_match": 169,
+  "distribution_hashes_match": 268,
+  "remote_push": false,
+  "remaining_human_gates": [
+    "confirm actual account profiles and strategy",
+    "provide transcript/ASR for audio/subtitle acceptance",
+    "final human content-quality review"
+  ],
+  "full_p0_quality_accepted": false
+}

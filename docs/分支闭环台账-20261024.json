@@ -192,9 +192,10 @@
     "branch": "test/t01-ui-export",
     "goal": "UI下载与状态历史分区",
     "validation": "下载内容/来源/保密/调用数/原库哈希通过",
-    "main_merge": "合并后见外部最终分支闭环.json",
+    "main_merge": "5c19b147428a0f1d30c9dcf338cbe224406f0ff8",
     "remaining": "项目人工评分与增强待办",
-    "completion": "已验证，待合并收尾"
+    "completion": "已验证、已合入、工作树已安全移除",
+    "head": "4e3b4188f1f7ab35ac0ba8d13173bb590e493eb1"
   },
   {
     "branch": "test/ice-ui-final-validation",
@@ -271,10 +272,19 @@
   {
     "branch": "test/real-public-video-flow",
     "goal": "公开样本真实抓取、分析、异常恢复、保存重开导出与费用审计",
-    "head": "收尾提交见closure.json",
-    "main_merge": "收尾合入后见closure.json",
+    "head": "96ccd9759e111c7f9f0d674aff9496b172a3b174",
+    "main_merge": "4383a09641ab78df68ec4ba9c2c7b07b2671f636",
     "validation": "docs/acceptance-20261027/real-public-video-flow/验收报告.md、result.json；最终EXE实际UI下载与重开、密钥不落日志/导出/仓库、workspace保存重开及后台加密凭据恢复",
     "remaining": "真实账号资料与策略确认、ASR/逐字稿、人工评分；未冒充完整P0质量通过",
-    "completion": "真实技术验收完成，等待证据分支合入与最终主干复验"
+    "completion": "真实技术验收通过，已合main；46项主干Python全部通过、最终EXE和14页主题复验通过；证据提交后安全注销工作树和分支"
+  },
+  {
+    "branch": "feat/ice-ui-redesign",
+    "goal": "ICE界面改造：已有状态与输入追溯、Key面板及响应式样式",
+    "validation": "docs/acceptance-20261024/界面改造交付.md",
+    "main_merge": "1e100ac0cc03fa92091099f8872bd3ed3ccb543c",
+    "head": "df2d0f7",
+    "remaining": "后端缺失能力仍待接入；本次界面最终复验缺口已由 test/ice-ui-final-validation 补齐",
+    "completion": "已验证、已合入、工作树已安全移除"
   }
 ]
