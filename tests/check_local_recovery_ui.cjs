@@ -55,6 +55,14 @@ const get=(origin,version)=>fetch(origin+'/api/agent/task?id='+taskId+(version?'
   assert.match(await page.locator('#iceTaskState').innerText(),/已本地恢复/);
   for(const theme of ['dark','light']){
    if(await page.locator('html').getAttribute('data-theme')!==theme)await page.locator('#themeToggle').click();
+   await page.locator('.creative-analysis-details').evaluateAll(items=>items.forEach(item=>{item.open=true;}));
+   for(const selector of ['.ice-quality','.creative-evaluation']){
+    const palette=await page.locator(selector).first().evaluate(el=>({background:getComputedStyle(el).backgroundColor,color:getComputedStyle(el).color}));
+    const rgb=value=>(value.match(/[\d.]+/g)||[]).slice(0,3).map(Number),brightness=rgb(palette.background).reduce((a,b)=>a+b,0)/3;
+    assert(theme==='dark'?brightness<70:brightness>200,selector+' follows '+theme+' palette');
+    const lum=color=>rgb(color).map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4;}).reduce((n,v,i)=>n+v*[.2126,.7152,.0722][i],0);
+    const a=lum(palette.background),b=lum(palette.color);assert((Math.max(a,b)+.05)/(Math.min(a,b)+.05)>=4.5,selector+' text contrast');
+   }
    for(const width of [390,1280]){await page.setViewportSize({width,height:900});assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));}
    await page.locator('#creativeResults').scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,theme+'-recovered.png'),animations:'disabled'});
   }
