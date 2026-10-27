@@ -313,5 +313,14 @@
     "validation": "docs/acceptance-20261027/windows-installer/acceptance.md；63项Python无失败（4跳过）、主干安装器4专项、实际安装271文件/运行中与独立数据锁保护/升级回读/卸载保留数据",
     "remaining": "安装程序未签名；需要WebView2及兼容.NET运行时；不自动迁移旧便携版数据",
     "completion": "已真实验收、合入主干并复验，工作树与分支安全注销，安装程序交付桌面"
+  },
+  {
+    "branch": "build/repackage-20261027-2",
+    "goal": "按25ad88a最新Liquid Glass主干重打2026.10.27.2安装包",
+    "head": "62a6e63",
+    "main_merge": "a39173894b937e2f009fed8bb9140fe809f61348",
+    "validation": "docs/acceptance-20261027/windows-installer/repackage-v2.md；63项Python无失败（4跳过），175输入与主干同哈希；实际EXE亮暗主题/六宽度/重开及安装升级卸载保留数据通过，273文件核验",
+    "remaining": "安装包未签名，依赖兼容WebView2/.NET；不包含个人workspace或密钥",
+    "completion": "已验证交付桌面、记录合入本地主干；本轮工作树和分支安全注销，原有快捷方式校验恢复"
   }
 ]
