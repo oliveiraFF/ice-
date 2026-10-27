@@ -32,6 +32,16 @@ def execute(executable,args):
     return subprocess.run([str(executable),*args],startupinfo=startup,timeout=90).returncode
 
 
+def wait_data_released(data):
+    """Wait for Windows/child-process cleanup, without deleting or unlocking anything."""
+    for _ in range(100):
+        try:
+            with (data/'desktop.lock').open('r+b') as stream:stream.read(1)
+            return
+        except PermissionError:time.sleep(.1)
+    raise RuntimeError('Closed test application data still locked')
+
+
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--installer',type=Path,required=True)
     parser.add_argument('--release',type=Path,required=True);parser.add_argument('--output',type=Path,required=True)
@@ -59,6 +69,7 @@ def main():
         assert execute(target/'UninstallICE.exe',['/S','_?='+str(target)])==2
         assert process.poll() is None and exe.exists() and registry_present()
     finally:close_cleanly(process,origin,data)
+    wait_data_released(data)
     extra=['data/keep-user-config.json','downloads/keep-user-file.txt','workspace/keep-user-file.txt','_internal/keep-user-note.txt']
     for name in extra:
         p=target/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text('explicit synthetic retention sentinel',encoding='utf-8')
@@ -71,6 +82,7 @@ def main():
         state=request(origin,'/api/state?mode=live')
         assert any(k['name']=='installer-retention-test' for k in state['keywords'])
     finally:close_cleanly(process,origin,data)
+    wait_data_released(data)
     before={name:hashlib.sha256((target/name).read_bytes()).hexdigest() for name in preserved}
     assert execute(target/'UninstallICE.exe',['/S'])==0
     for _ in range(120):
