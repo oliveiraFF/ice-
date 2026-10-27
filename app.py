@@ -4292,6 +4292,8 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                      '/free-tools-data.js': ('free-tools-data.js', 'text/javascript')}
             files.update({'/theme.js': ('theme.js', 'text/javascript'),
                           '/theme.css': ('theme.css', 'text/css'),
+                          '/tokens.css': ('tokens.css', 'text/css'),
+                          '/components.css': ('components.css', 'text/css'),
                           '/ice.css': ('ice.css', 'text/css'),
                           '/ice-avatar.jpg': ('ice-assets/avatar.jpg', 'image/jpeg'),
                           '/ice-regular.ttf': ('ice-assets/MapleMono-CN-Regular.ttf', 'font/ttf'),

@@ -31,7 +31,7 @@ body.wallboard-app .wallboard-main h2{margin:0;font-size:20px;line-height:1.3;le
 .wallboard-controls{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}
 body.site-app.owner-workspace.wallboard-app .wallboard-controls button{min-height:44px}
 .wallboard-connection{display:grid;grid-template-columns:10px auto;align-items:center;column-gap:8px;min-width:138px;color:var(--wb-ink);font-size:13px;font-weight:650}
-.wallboard-connection small{grid-column:2;color:var(--wb-muted);font-size:11px;font-weight:400}
+.wallboard-connection small{grid-column:2;color:var(--wb-muted);font-size:12px;font-weight:400}
 .wallboard-dot{width:9px;height:9px;border-radius:50%;background:var(--wb-dot-muted);box-shadow:0 0 0 4px var(--wb-dot-muted-halo)}
 .wallboard-dot.is-connected{background:var(--wb-accent);box-shadow:0 0 0 4px var(--wb-dot-accent-halo)}
 .wallboard-dot.is-stale{background:var(--wb-warn);box-shadow:0 0 0 4px var(--wb-dot-warn-halo)}
@@ -41,12 +41,12 @@ body.site-app.owner-workspace.wallboard-app .wallboard-controls button{min-heigh
 .wallboard-kpi,.wallboard-panel{min-width:0;border:1px solid var(--wb-line);border-radius:14px;background:var(--wb-surface);box-shadow:var(--wb-shadow)}
 .wallboard-kpi{padding:17px 19px 16px}
 .wallboard-kpi-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
-.wallboard-kpi-icon{display:inline-flex;align-items:center;justify-content:center;min-width:38px;height:32px;padding:0 7px;border-radius:9px;background:var(--wb-accent-soft);color:var(--wb-accent);font-size:9px;font-weight:750;letter-spacing:.04em}
-.wallboard-status-chip{padding:4px 8px;border:1px solid var(--wb-line);border-radius:999px;color:var(--wb-muted);font-size:11px;font-weight:600}
+.wallboard-kpi-icon{display:inline-flex;align-items:center;justify-content:center;min-width:38px;height:32px;padding:0 7px;border-radius:9px;background:var(--wb-accent-soft);color:var(--wb-accent);font-size:12px;font-weight:750;letter-spacing:.04em}
+.wallboard-status-chip{padding:4px 8px;border:1px solid var(--wb-line);border-radius:999px;color:var(--wb-muted);font-size:12px;font-weight:600}
 .wallboard-kpi p{margin:0;color:var(--wb-muted);font-size:13px;line-height:1.4}
 .wallboard-kpi strong{display:block;margin:4px 0;color:var(--wb-ink);font-size:clamp(34px,3vw,48px);font-weight:720;font-variant-numeric:tabular-nums;letter-spacing:-.04em;line-height:1.12;overflow-wrap:anywhere}
-.wallboard-kpi strong.is-unavailable{font-size:23px;letter-spacing:-.01em;color:var(--wb-muted)}
-.wallboard-kpi small{display:block;color:var(--wb-muted);font-size:11px;line-height:1.45;overflow-wrap:anywhere}
+.wallboard-kpi strong.is-unavailable{font-size:24px;letter-spacing:-.01em;color:var(--wb-muted)}
+.wallboard-kpi small{display:block;color:var(--wb-muted);font-size:12px;line-height:1.45;overflow-wrap:anywhere}
 .wallboard-kpi-attention .wallboard-kpi-icon{background:var(--wb-warn-fill);color:var(--wb-warn)}
 .wallboard-panel{padding:18px 20px}
 .wallboard-panel-heading{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:15px}
@@ -56,9 +56,9 @@ body.site-app.owner-workspace.wallboard-app .wallboard-controls button{min-heigh
 .wallboard-pipeline-item{position:relative;min-width:0;min-height:122px;padding:15px 15px 13px;border:1px solid var(--wb-line);border-radius:11px;background:var(--wb-surface-soft)}
 .wallboard-pipeline-item:not(:last-child)::after{position:absolute;top:23px;right:-11px;z-index:1;width:10px;height:1px;background:var(--wb-accent);content:""}
 .wallboard-pipeline-item>span,.wallboard-pipeline-link>span{display:block;color:var(--wb-muted);font-size:13px;font-weight:600}
-.wallboard-pipeline-item strong,.wallboard-pipeline-link strong{display:block;margin:11px 0 4px;color:var(--wb-ink);font-size:27px;font-variant-numeric:tabular-nums;line-height:1.15}
+.wallboard-pipeline-item strong,.wallboard-pipeline-link strong{display:block;margin:11px 0 4px;color:var(--wb-ink);font-size:28px;font-variant-numeric:tabular-nums;line-height:1.15}
 .wallboard-pipeline-item strong.is-unavailable,.wallboard-pipeline-link strong.is-unavailable{font-size:16px;color:var(--wb-muted)}
-.wallboard-pipeline-item small,.wallboard-pipeline-link small{display:block;color:var(--wb-muted);font-size:11px;line-height:1.45;overflow-wrap:anywhere}
+.wallboard-pipeline-item small,.wallboard-pipeline-link small{display:block;color:var(--wb-muted);font-size:12px;line-height:1.45;overflow-wrap:anywhere}
 .wallboard-pipeline-link{display:block;min-height:44px;color:inherit;text-decoration:none}
 .wallboard-pipeline-item a:hover{text-decoration:underline;text-decoration-color:var(--wb-accent);text-underline-offset:3px}
 .wallboard-pipeline-link:focus-visible,.wallboard-alert-item a:focus-visible,.wallboard-table a:focus-visible{outline:2px solid var(--wb-accent);outline-offset:3px;border-radius:4px}
@@ -74,7 +74,7 @@ body.site-app.owner-workspace.wallboard-app .wallboard-controls button{min-heigh
 .wallboard-empty{padding:17px 12px;border:1px dashed var(--wb-line);border-radius:10px;color:var(--wb-muted);font-size:13px;line-height:1.6;text-align:center}
 .wallboard-table-wrap{width:100%;overflow-x:auto}
 .wallboard-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:12px}
-.wallboard-table th{padding:9px 8px;border-bottom:1px solid var(--wb-line);color:var(--wb-muted);font-size:11px;font-weight:650;text-align:left}
+.wallboard-table th{padding:9px 8px;border-bottom:1px solid var(--wb-line);color:var(--wb-muted);font-size:12px;font-weight:650;text-align:left}
 .wallboard-table td{padding:11px 8px;border-bottom:1px solid var(--wb-line);color:var(--wb-ink);line-height:1.45;overflow-wrap:anywhere;vertical-align:top}
 .wallboard-table tr:last-child td{border-bottom:0}
 .wallboard-table th:first-child,.wallboard-table td:first-child{width:112px;font-variant-numeric:tabular-nums}
@@ -83,43 +83,43 @@ body.site-app.owner-workspace.wallboard-app .wallboard-controls button{min-heigh
 .wallboard-table th:last-child,.wallboard-table td:last-child{width:66px;text-align:right}
 .wallboard-table a{color:var(--wb-accent);font-weight:650;text-decoration:none}
 .wallboard-table a:hover{text-decoration:underline;text-underline-offset:3px}
-.wallboard-state{display:inline-flex;align-items:center;min-height:24px;padding:3px 8px;border-radius:999px;background:var(--wb-accent-soft);color:var(--wb-accent);font-size:10px;font-weight:650}
+.wallboard-state{display:inline-flex;align-items:center;min-height:24px;padding:3px 8px;border-radius:999px;background:var(--wb-accent-soft);color:var(--wb-accent);font-size:12px;font-weight:650}
 .wallboard-state.is-warning{background:var(--wb-warn-fill);color:var(--wb-warn)}
 .wallboard-insights{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:16px;margin-top:16px}
 .wallboard-insights .wallboard-panel{min-width:0}
 .wallboard-insight-summary{margin:0 0 13px;color:var(--wb-muted);font-size:13px;line-height:1.6;overflow-wrap:anywhere}
 .wallboard-insight-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:12px}
 .wallboard-insight-fact{min-width:0;padding:10px 11px;border:1px solid var(--wb-line);border-radius:10px;background:var(--wb-surface-soft)}
-.wallboard-insight-fact span{display:block;color:var(--wb-muted);font-size:11px;line-height:1.4}
+.wallboard-insight-fact span{display:block;color:var(--wb-muted);font-size:12px;line-height:1.4}
 .wallboard-insight-fact strong{display:block;margin-top:3px;color:var(--wb-ink);font-size:14px;line-height:1.5;overflow-wrap:anywhere}
-.wallboard-insight-fact small{display:block;margin-top:4px;color:var(--wb-muted);font-size:10px;line-height:1.45;overflow-wrap:anywhere}
+.wallboard-insight-fact small{display:block;margin-top:4px;color:var(--wb-muted);font-size:12px;line-height:1.45;overflow-wrap:anywhere}
 .wallboard-subheading,.wallboard-account-assessment h3,.wallboard-account-profile h3,.wallboard-draft-preview h3,.wallboard-reference-preview h3{margin:13px 0 7px;color:var(--wb-ink);font-size:13px;line-height:1.45}
 .wallboard-blocker-list,.wallboard-account-profile ul,.wallboard-account-assessment ul,.wallboard-reference-preview ul{display:grid;gap:8px;margin:0;padding:0;list-style:none}
 .wallboard-blocker{padding:10px 11px;border:1px solid var(--wb-line);border-radius:10px;background:var(--wb-surface-soft)}
 .wallboard-blocker strong{display:block;color:var(--wb-ink);font-size:12px;line-height:1.5}
-.wallboard-blocker p{margin:4px 0 0;color:var(--wb-muted);font-size:11px;line-height:1.55;overflow-wrap:anywhere}
-.wallboard-blocker small,.wallboard-provenance{display:block;margin-top:5px;color:var(--wb-muted);font-size:10px;line-height:1.5;overflow-wrap:anywhere}
+.wallboard-blocker p{margin:4px 0 0;color:var(--wb-muted);font-size:12px;line-height:1.55;overflow-wrap:anywhere}
+.wallboard-blocker small,.wallboard-provenance{display:block;margin-top:5px;color:var(--wb-muted);font-size:12px;line-height:1.5;overflow-wrap:anywhere}
 .wallboard-account-profile,.wallboard-account-assessment{margin-top:12px;padding-top:10px;border-top:1px solid var(--wb-line)}
-.wallboard-account-profile li,.wallboard-account-assessment li{color:var(--wb-muted);font-size:11px;line-height:1.55;overflow-wrap:anywhere}
+.wallboard-account-profile li,.wallboard-account-assessment li{color:var(--wb-muted);font-size:12px;line-height:1.55;overflow-wrap:anywhere}
 .wallboard-account-assessment p{margin:0;color:var(--wb-ink);font-size:12px;line-height:1.6;overflow-wrap:anywhere}
 .wallboard-plan-summary{padding:11px 12px;border:1px solid var(--wb-line);border-radius:10px;background:var(--wb-surface-soft)}
-.wallboard-plan-summary span{display:block;color:var(--wb-muted);font-size:11px}
+.wallboard-plan-summary span{display:block;color:var(--wb-muted);font-size:12px}
 .wallboard-plan-summary strong{display:block;margin:3px 0;color:var(--wb-ink);font-size:14px;line-height:1.5;overflow-wrap:anywhere}
-.wallboard-plan-summary small{display:block;color:var(--wb-muted);font-size:10px;line-height:1.5;overflow-wrap:anywhere}
-.wallboard-plan-summary p{margin:6px 0 0;color:var(--wb-warn);font-size:11px;line-height:1.5;overflow-wrap:anywhere}
+.wallboard-plan-summary small{display:block;color:var(--wb-muted);font-size:12px;line-height:1.5;overflow-wrap:anywhere}
+.wallboard-plan-summary p{margin:6px 0 0;color:var(--wb-warn);font-size:12px;line-height:1.5;overflow-wrap:anywhere}
 .wallboard-material-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:10px 0 0;padding:0;list-style:none}
 .wallboard-material{min-width:0;padding:9px 10px;border:1px solid var(--wb-line);border-radius:9px;background:var(--wb-surface)}
-.wallboard-material span{display:block;color:var(--wb-muted);font-size:10px;line-height:1.4}
-.wallboard-material strong{display:block;margin:3px 0;color:var(--wb-ink);font-size:15px;line-height:1.4}
-.wallboard-material small{display:block;color:var(--wb-muted);font-size:9px;line-height:1.4;overflow-wrap:anywhere}
+.wallboard-material span{display:block;color:var(--wb-muted);font-size:12px;line-height:1.4}
+.wallboard-material strong{display:block;margin:3px 0;color:var(--wb-ink);font-size:14px;line-height:1.4}
+.wallboard-material small{display:block;color:var(--wb-muted);font-size:12px;line-height:1.4;overflow-wrap:anywhere}
 .wallboard-draft-preview,.wallboard-reference-preview{margin-top:12px;padding-top:10px;border-top:1px solid var(--wb-line)}
 .wallboard-draft-preview blockquote{max-height:220px;overflow:auto;margin:0;padding:10px 11px;border:1px solid var(--wb-line);border-radius:8px;background:var(--wb-surface-soft);color:var(--wb-ink);font-size:12px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere}
-.wallboard-draft-preview small{display:block;margin-top:5px;color:var(--wb-muted);font-size:10px;line-height:1.5;overflow-wrap:anywhere}
+.wallboard-draft-preview small{display:block;margin-top:5px;color:var(--wb-muted);font-size:12px;line-height:1.5;overflow-wrap:anywhere}
 .wallboard-reference-preview li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 10px;align-items:start;padding:9px 10px;border:1px solid var(--wb-line);border-radius:9px;background:var(--wb-surface-soft)}
-.wallboard-reference-preview strong{color:var(--wb-ink);font-size:11px;line-height:1.45;overflow-wrap:anywhere}
-.wallboard-reference-preview span,.wallboard-reference-preview small{color:var(--wb-muted);font-size:10px;line-height:1.45;overflow-wrap:anywhere}
+.wallboard-reference-preview strong{color:var(--wb-ink);font-size:12px;line-height:1.45;overflow-wrap:anywhere}
+.wallboard-reference-preview span,.wallboard-reference-preview small{color:var(--wb-muted);font-size:12px;line-height:1.45;overflow-wrap:anywhere}
 .wallboard-reference-preview small{grid-column:1/-1}
-.wallboard-footnote{margin:14px 2px 0;color:var(--wb-muted);font-size:11px;line-height:1.5}
+.wallboard-footnote{margin:14px 2px 0;color:var(--wb-muted);font-size:12px;line-height:1.5}
 @media(max-width:1260px){
   .wallboard-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
   .wallboard-pipeline{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -146,17 +146,17 @@ body.site-app.owner-workspace.wallboard-app .wallboard-controls button{min-heigh
   .wallboard-kpi{padding:13px 12px}
   .wallboard-kpi-head{align-items:flex-start}
   .wallboard-kpi strong{font-size:32px}
-  .wallboard-kpi strong.is-unavailable{font-size:17px}
-  .wallboard-kpi small{font-size:10px}
+  .wallboard-kpi strong.is-unavailable{font-size:16px}
+  .wallboard-kpi small{font-size:12px}
   .wallboard-pipeline-panel,.wallboard-panel{padding:15px 13px}
   .wallboard-pipeline{grid-template-columns:minmax(0,1fr);gap:8px}
   .wallboard-pipeline-item{min-height:78px;padding:11px 13px}
   .wallboard-pipeline-item:not(:last-child)::after{top:auto;bottom:-9px;right:auto;left:22px;width:1px;height:8px}
   .wallboard-pipeline-item:nth-child(3)::after{display:block}
-  .wallboard-pipeline-item strong{margin:5px 0 2px;font-size:21px}
+  .wallboard-pipeline-item strong{margin:5px 0 2px;font-size:20px}
   .wallboard-pipeline-item strong.is-unavailable{font-size:14px}
   .wallboard-panel-heading{align-items:flex-start}
-  .wallboard-panel-meta{font-size:10px}
+  .wallboard-panel-meta{font-size:12px}
   .wallboard-insight-facts,.wallboard-material-list{grid-template-columns:minmax(0,1fr)}
   .wallboard-table{table-layout:auto;min-width:600px}
   .wallboard-table th:first-child,.wallboard-table td:first-child{width:98px}

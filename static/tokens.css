@@ -1,0 +1,48 @@
+/* ice运营台 design tokens — the single source of color, type, spacing and radius.
+   Every page loads this first. Legacy names (--theme-*, --ice-*, --dash-* …) are
+   mapped onto these in theme.css; new CSS should use the names below directly. */
+:root{
+  --font-sans:'Segoe UI Variable','Segoe UI','Microsoft YaHei UI','Microsoft YaHei','PingFang SC',sans-serif;
+  --font-mono:IceMaple,'Cascadia Mono',Consolas,monospace;
+
+  --fs-12:12px;--fs-13:13px;--fs-14:14px;--fs-16:16px;--fs-20:20px;--fs-24:24px;
+  --sp-4:4px;--sp-8:8px;--sp-12:12px;--sp-16:16px;--sp-24:24px;--sp-32:32px;
+  --radius-sm:6px;--radius-md:10px;--radius-full:999px;
+
+  --ctl-sm:28px;--ctl-md:36px;--ctl-lg:44px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg-page:#0b0f14;--bg-panel:#131920;--bg-inset:#1a222c;--bg-input:#0f151c;--bg-hover:#202a35;
+  --text-ink:#e9eef4;--text-body:#c2ccd8;--text-muted:#94a1b2;
+  --line:#253040;--line-strong:#34414f;
+  --accent:#5fd4b0;--accent-hover:#7fe0c2;--accent-soft:#163029;--on-accent:#06261b;
+  --warn:#f0bb6c;--warn-soft:#2f2617;--danger:#ff9d94;--danger-soft:#33201f;--danger-solid:#d9483e;
+  --info:#a3bdfb;--info-soft:#1d2a40;
+  --shadow-pop:0 12px 32px rgba(0,0,0,.45),0 0 0 1px var(--line);
+  --focus-ring:0 0 0 2px var(--bg-page),0 0 0 4px var(--accent);
+
+  --theme-page:var(--bg-page);--theme-panel:var(--bg-panel);--theme-inset:var(--bg-inset);--theme-input:var(--bg-input);
+  --theme-ink:var(--text-ink);--theme-body:var(--text-body);--theme-muted:var(--text-muted);--theme-line:var(--line);
+  --theme-accent:var(--accent);--theme-accent-strong:var(--accent-hover);--theme-accent-soft:var(--accent-soft);--theme-on-accent:var(--on-accent);
+  --theme-warn:var(--warn);--theme-warn-soft:var(--warn-soft);--theme-error:var(--danger);--theme-error-soft:var(--danger-soft);
+  --theme-blue:var(--info);--theme-blue-soft:var(--info-soft);--theme-shadow:none;
+}
+:root[data-theme="light"]{
+  color-scheme:light;
+  --bg-page:#f5f7f9;--bg-panel:#ffffff;--bg-inset:#f1f4f7;--bg-input:#ffffff;--bg-hover:#eaeff3;
+  --text-ink:#17232e;--text-body:#3a4a58;--text-muted:#617285;
+  --line:#e2e8ee;--line-strong:#cdd6df;
+  --accent:#0f7a57;--accent-hover:#0b6548;--accent-soft:#e3f2ec;--on-accent:#ffffff;
+  --warn:#8a5410;--warn-soft:#fdf1dc;--danger:#b2342c;--danger-soft:#fbe9e7;--danger-solid:#c23b32;
+  --info:#315a9e;--info-soft:#e7eefb;
+  --shadow-pop:0 12px 32px rgba(23,35,46,.14),0 0 0 1px var(--line);
+  --focus-ring:0 0 0 2px var(--bg-page),0 0 0 4px var(--accent);
+
+  --theme-page:var(--bg-page);--theme-panel:var(--bg-panel);--theme-inset:var(--bg-inset);--theme-input:var(--bg-input);
+  --theme-ink:var(--text-ink);--theme-body:var(--text-body);--theme-muted:var(--text-muted);--theme-line:var(--line);
+  --theme-accent:var(--accent);--theme-accent-strong:var(--accent-hover);--theme-accent-soft:var(--accent-soft);--theme-on-accent:var(--on-accent);
+  --theme-warn:var(--warn);--theme-warn-soft:var(--warn-soft);--theme-error:var(--danger);--theme-error-soft:var(--danger-soft);
+  --theme-blue:var(--info);--theme-blue-soft:var(--info-soft);--theme-shadow:none;
+}
