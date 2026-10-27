@@ -151,9 +151,28 @@ class VideoCreative:
                     frames=[dict(frame=i+1,at=f['at']) for i,f in enumerate(cleaned)],
                     audio='已提供台词（非音轨听觉分析）' if data['transcript'] else '未读取音轨')
         origin = body.get('transcript_source', 'manual' if data['transcript'] else 'none')
-        if origin not in ('none', 'manual', 'transcription') or bool(data['transcript']) != (origin != 'none'):
+        if origin not in ('none', 'manual', 'transcription', 'local_asr') or bool(data['transcript']) != (origin != 'none'):
             raise ValueError('台词来源无效')
         data['transcript_source'] = origin
+        if origin == 'local_asr':
+            segments, metadata = body.get('transcript_segments'), body.get('transcript_asr')
+            if not isinstance(segments, list) or not 1 <= len(segments) <= 500 or not isinstance(metadata, dict):
+                raise ValueError('本地字幕时间轴或来源凭证缺失')
+            previous = 0
+            cleaned_segments = []
+            for segment in segments:
+                if not isinstance(segment, dict):
+                    raise ValueError('本地字幕段格式无效')
+                start, end = segment.get('start'), segment.get('end')
+                if (any(type(v) not in (int, float) or not math.isfinite(v) for v in (start, end))
+                        or not previous <= start < end <= duration + .02):
+                    raise ValueError('本地字幕时间轴无效')
+                cleaned_segments.append(dict(start=start, end=end, text=text(segment.get('text'), '字幕', 3000, True)))
+                previous = end
+            if ' '.join(s['text'] for s in cleaned_segments) != data['transcript']:
+                raise ValueError('文字已改动，不能继续使用原ASR时间轴；请作为人工逐字稿保存')
+            data.update(transcript_segments=cleaned_segments, transcript_asr=metadata,
+                        audio='本地ASR估计字幕，未经人工校对（非音轨听觉分析）')
         return data,cleaned
 
     def validate(self, report, count, outputs):

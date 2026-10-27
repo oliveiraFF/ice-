@@ -171,6 +171,34 @@ class AgentAPITests(unittest.TestCase):
         self.assertEqual(opened['input']['transcript_source'], 'manual')
         self.assertEqual(opened['account'], saved['account'])
 
+    def test_local_subtitles_are_saved_with_receipt_and_manual_edits_drop_time_axis(self):
+        import hashlib
+        from local_asr import LocalASR
+        media = b'\x00\x00\x00\x18ftypisom0000'
+        metadata = dict(receipt_id='a'*32, media_sha256=hashlib.sha256(media).hexdigest(), reviewed=False)
+        generated = dict(text='合成测试字幕', segments=[dict(start=0,end=1,text='合成测试字幕')], metadata=metadata)
+        LocalASR(self.folder.name).write(Path(self.folder.name)/'local-asr/results'/('a'*32+'.json'), generated)
+        with patch.object(app.LocalASR, 'transcribe', return_value=generated) as local, patch('ai_directions.build_opener') as network:
+            result = self.request('/api/agent/transcribe-local', media,
+                                  {'Content-Type':'video/mp4','X-Radar-Confirmed':'true'})
+            self.assertEqual(local.call_count,1)
+            network.assert_not_called()
+        stored = self.request('/api/agent/media',media,{'Content-Type':'video/mp4'})
+        inputs = dict(self.inputs, transcript=result['text'], transcript_source='local_asr',
+                      transcript_segments=result['segments'], transcript_asr=result['metadata'])
+        task = self.request('/api/agent/task/save',dict(input=inputs,media_id=stored['media_id'],expected_version=0))
+        self.assertEqual(task['input']['transcript_segments'],result['segments'])
+        self.stop_server();self.start_server()
+        self.assertEqual(self.request('/api/agent/task?id='+task['task_uid'])['input'],task['input'])
+        changed = dict(inputs, transcript='人工改写的文字')
+        with self.assertRaises(HTTPError):
+            self.request('/api/agent/task/save',dict(task_uid=task['task_uid'],input=changed,media_id=stored['media_id'],expected_version=1))
+        changed['transcript_source']='manual'
+        saved = self.request('/api/agent/task/save',dict(task_uid=task['task_uid'],input=changed,media_id=stored['media_id'],expected_version=1))
+        self.assertNotIn('transcript_segments',saved['input'])
+        self.assertNotIn('transcript_asr',saved['input'])
+        self.assertEqual(self.request('/api/agent/task?id='+task['task_uid']+'&version=1')['input']['transcript_source'],'local_asr')
+
     def test_no_confirmation_or_stale_version_never_calls_model(self):
         draft = self.saved_input()
         with patch.object(app.VideoCreative, 'generate') as generate:

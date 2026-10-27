@@ -29,6 +29,7 @@ from browser_collector import browser_posts
 from ai_directions import AIDirections
 from video_creative import VideoCreative, MAX_REQUEST_BYTES, MAX_VIDEO_BYTES, TASK_RULES
 from agent_tasks import AgentTasks
+from local_asr import LocalASR
 from client_credentials import CredentialVault
 from ops import OpsStore, ensure_tables
 from agent_bridge import (build_view_model, clear_workspace_config, empty_view_model,
@@ -3914,6 +3915,7 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
     data_dir = Path(data_dir) if data_dir is not None else ROOT / 'data'
     downloads_dir = Path(downloads_dir) if downloads_dir is not None else ROOT / 'downloads'
     data_dir.mkdir(parents=True, exist_ok=True)
+    local_asr = LocalASR(data_dir)
     store = Store(data_dir / 'radar.sqlite3')
     store.seed()
     if edition == 'customer' and catalog_snapshot is None:
@@ -3978,6 +3980,8 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
             if parsed.path.startswith('/api/agent/'):
                 try:
                     query = parse_qs(parsed.query)
+                    if parsed.path == '/api/agent/asr-config':
+                        return self.send(local_asr.config())
                     if parsed.path == '/api/agent/account':
                         return self.send({'account': agent_tasks.account(), 'strategy': ops.get_strategy()})
                     if parsed.path == '/api/agent/workspace-config':
@@ -4328,7 +4332,7 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                 return self.send({'error': '接口不存在'}, 404)
             try:
                 length = int(self.headers.get('Content-Length', '0'))
-                limit = (MAX_VIDEO_BYTES if self.path in ('/api/video/transcribe', '/api/agent/media') else
+                limit = (MAX_VIDEO_BYTES if self.path in ('/api/video/transcribe', '/api/agent/media', '/api/agent/transcribe-local') else
                          MAX_REQUEST_BYTES if self.path in ('/api/video/generate', '/api/reference/save',
                                                             '/api/ops/media-review/analyze', '/api/agent/task/save') else
                          M04_OPS_BYTES if self.path in M04_OPS_PATHS else
@@ -4343,6 +4347,17 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                         raise ValueError('视频传输不完整')
                     return self.send(agent_tasks.put_media(media, self.headers.get('Content-Type'),
                         unquote(self.headers.get('X-Radar-Filename', 'video'))))
+                if self.path == '/api/agent/transcribe-local':
+                    if not agent_task_lock.acquire(False):
+                        raise ValueError('当前任务正在处理，请稍后提取本地字幕')
+                    try:
+                        media = self.rfile.read(length)
+                        if len(media) != length:
+                            raise ValueError('视频传输不完整')
+                        return self.send(local_asr.transcribe(media, self.headers.get('Content-Type'),
+                            self.headers.get('X-Radar-Confirmed') == 'true'))
+                    finally:
+                        agent_task_lock.release()
                 if self.path == '/api/video/transcribe':
                     if not ai_request_lock.acquire(False): raise ValueError('模型正在处理，请等待完成')
                     try:
@@ -4365,6 +4380,8 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                     return self.send({'configured': True, 'valid': True,
                                       'message': 'Agent workspace 已校验并保存在本机数据目录。',
                                       'workspace_name': root.name})
+                if self.path == '/api/agent/asr-config':
+                    return self.send(local_asr.configure(body))
                 if self.path == '/api/desktop/exit':
                     if on_exit is None:
                         return self.send({'error': '仅桌面版支持退出程序'}, 404)
@@ -4379,6 +4396,8 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                         raw = body.get('input')
                         if not isinstance(raw, dict):
                             raise ValueError('缺少任务输入')
+                        if raw.get('transcript_source') == 'local_asr':
+                            local_asr.verify(raw, body.get('media_id'))
                         prepared, frames = creative.prepare(dict(raw, confirmed=True))
                         prepared.update(frames=frames, confirmed=False)
                         task_uid = body.get('task_uid') or None
@@ -4456,6 +4475,8 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                     finally:
                         agent_task_lock.release()
                 if self.path == '/api/video/generate':
+                    if body.get('transcript_source') == 'local_asr':
+                        local_asr.verify(body, (body.get('transcript_asr') or {}).get('media_sha256'))
                     if not ai_request_lock.acquire(False): raise ValueError('模型正在处理，请等待完成')
                     try: return self.send(creative.generate(body))
                     finally: ai_request_lock.release()
