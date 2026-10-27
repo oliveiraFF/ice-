@@ -1,9 +1,10 @@
 <!doctype html><html lang="zh-CN" data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>账号初始化控件状态 · 审核辅助</title><link rel="stylesheet" href="../../../static/tokens.css"><link rel="stylesheet" href="../../../static/theme.css"><link rel="stylesheet" href="../../../static/components.css"><link rel="stylesheet" href="../../../static/account-onboarding.css"></head><body class="site-app owner-workspace"><main><section class="account-setup-panel">
-<h2>账号初始化控件八状态</h2><p>静态审核辅助，非产品入口；不创建目录或发起请求。</p>
+<style>.account-setup-panel .is-hover{filter:brightness(1.06)}.account-setup-panel .is-focus{outline:2px solid var(--theme-accent);outline-offset:3px}.account-setup-panel .is-active{transform:translateY(1px)}</style>
+<h2>账号初始化控件八状态</h2><p>静态审核辅助，非产品入口；不创建目录或发起请求。悬停、焦点与按下状态固定展示。</p>
 <p>默认</p><button class="primary">创建账号并继续</button>
-<p>悬停：移动鼠标到按钮</p><button class="primary">创建账号并继续</button>
-<p>焦点：按Tab查看焦点描边</p><button class="primary">创建账号并继续</button>
-<p>按下：按住按钮查看按压反馈</p><button class="primary">创建账号并继续</button>
+<p>悬停</p><button class="primary is-hover">创建账号并继续</button>
+<p>焦点</p><button class="primary is-focus">创建账号并继续</button>
+<p>按下</p><button class="primary is-active">创建账号并继续</button>
 <p>不可用</p><button class="primary" disabled>创建账号并继续</button>
 <p>处理中（示意）</p><button class="primary" disabled aria-busy="true">正在创建…</button>
 <p data-error="true">错误：请填写目标人群，再点击创建；没有发起收费调用。</p>
