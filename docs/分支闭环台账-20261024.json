@@ -304,5 +304,14 @@
     "validation": "docs/acceptance-20261027/agent-ops-loop/acceptance.md；主干59项Python无失败（4跳过），真实UI与EXE保存/历史/下载/退出重开；270分发哈希、173构建输入匹配",
     "remaining": "正式账号未改；标题资料分析未核验画面；实际拍摄发布、经营指标及最终人工质量待验",
     "completion": "已实现、验证、合入本地主干、主干复验，无未保存工作后Git安全注销工作树与分支"
+  },
+  {
+    "branch": "build/windows-installer",
+    "goal": "Windows当前用户安装程序、快捷方式与保留数据的卸载入口",
+    "head": "99e79b4",
+    "main_merge": "ee7242e10fe86a5cf847d82c55b652a1aeb1e19b",
+    "validation": "docs/acceptance-20261027/windows-installer/acceptance.md；63项Python无失败（4跳过）、主干安装器4专项、实际安装271文件/运行中与独立数据锁保护/升级回读/卸载保留数据",
+    "remaining": "安装程序未签名；需要WebView2及兼容.NET运行时；不自动迁移旧便携版数据",
+    "completion": "已真实验收、合入主干并复验，工作树与分支安全注销，安装程序交付桌面"
   }
 ]
