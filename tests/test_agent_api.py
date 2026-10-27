@@ -86,6 +86,74 @@ class AgentAPITests(unittest.TestCase):
         return dict(model='test-double-no-network',version='creative-v1.1',report=report,
             scope=dict(duration=body['duration'],frames=[dict(frame=1,at=0)],audio='人工台词',limitation='合成测试'))
 
+    def failed_extra_response(self, mutate=None):
+        draft = self.saved_input()
+        report = self.fake_generate(self.inputs)['report']
+        report['deliverables']['writing_prompt'] = '未勾选的额外成果'
+        if mutate:
+            mutate(report)
+        raw = json.dumps({'choices': [{'message': {'content': json.dumps(report)}}]}).encode()
+        self.request('/api/ai/config', {'endpoint': 'http://127.0.0.1:1/v1', 'model': 'offline-double'})
+        with patch('ai_directions.build_opener') as opener:
+            opener.return_value.open.return_value = io.BytesIO(raw)
+            with self.assertRaises(HTTPError):
+                self.request('/api/agent/task/generate',
+                    {'task_uid': draft['task_uid'], 'expected_version': 1, 'confirm': True})
+        task = self.request('/api/agent/task?id=' + draft['task_uid'])
+        return task, task['attempts'][-1], raw
+
+    def test_local_recovery_preserves_failure_and_selected_content_without_model(self):
+        task, attempt, raw = self.failed_extra_response()
+        payload = dict(task_uid=task['task_uid'], attempt_uid=attempt['attempt_uid'], expected_version=1, confirm=True)
+        self.request('/api/ai/config', {'endpoint': 'http://127.0.0.1:1/v1', 'model': 'offline-double', 'clear_key': True})
+        with patch('ai_directions.build_opener') as opener:
+            recovered = self.request('/api/agent/task/recover', payload)
+            opener.assert_not_called()
+        self.assertEqual(recovered['version'], 2)
+        self.assertEqual(recovered['result']['report']['deliverables'],
+                         {'shooting': '合成分镜', 'video_prompt': '合成提示词'})
+        self.assertEqual(recovered['attempts'][0]['status'], 'validation_failed')
+        recovery = recovered['result']['validation']['recovery']
+        self.assertEqual(recovery['attempt_uid'], attempt['attempt_uid'])
+        self.assertEqual(recovery['original_status'], 'validation_failed')
+        self.assertIn('remove_unselected_deliverables:writing_prompt', recovered['result']['validation']['repairs'])
+        with closing(sqlite3.connect(Path(self.folder.name) / 'radar.sqlite3')) as db:
+            self.assertEqual(db.execute('SELECT raw_response FROM agent_task_attempt').fetchone()[0], raw)
+        self.stop_server()
+        self.start_server()
+        self.assertEqual(self.request('/api/agent/task?id=' + task['task_uid'])['result'], recovered['result'])
+        self.assertIsNone(self.request('/api/agent/task?id=' + task['task_uid'] + '&version=1')['result'])
+        with self.assertRaises(HTTPError):
+            self.request('/api/agent/task/recover', dict(payload, expected_version=2))
+
+    def test_local_recovery_rejects_missing_or_unknown_content_without_network(self):
+        for mutation in (lambda r: r['deliverables'].pop('shooting'),
+                         lambda r: r['deliverables'].update(unrecognized='unknown'),
+                         lambda r: r['evaluations'][0].update(frames=[99])):
+            task, attempt, raw = self.failed_extra_response(mutation)
+            with patch('ai_directions.build_opener') as opener:
+                with self.assertRaises(HTTPError) as error:
+                    self.request('/api/agent/task/recover', dict(task_uid=task['task_uid'],
+                        attempt_uid=attempt['attempt_uid'], expected_version=1, confirm=True))
+                self.assertEqual(error.exception.code, 400)
+                opener.assert_not_called()
+            self.assertEqual(self.request('/api/agent/task?id=' + task['task_uid'])['version'], 1)
+
+    def test_local_recovery_requires_confirmation_exact_version_and_own_attempt(self):
+        task, attempt, raw = self.failed_extra_response()
+        payload = dict(task_uid=task['task_uid'], attempt_uid=attempt['attempt_uid'], expected_version=1, confirm=True)
+        for overrides in ({'confirm':False}, {'expected_version':0}, {'attempt_uid':'0'*12}):
+            with self.assertRaises(HTTPError) as error:
+                self.request('/api/agent/task/recover', dict(payload, **overrides))
+            self.assertEqual(error.exception.code, 400)
+        other = self.saved_input()
+        with self.assertRaises(HTTPError):
+            self.request('/api/agent/task/recover', dict(payload, task_uid=other['task_uid']))
+        self.request('/api/agent/task/save', dict(task_uid=task['task_uid'], expected_version=1,
+            media_id=task['media']['media_id'], input=dict(self.inputs, product='修改后的商品')))
+        with self.assertRaises(HTTPError):
+            self.request('/api/agent/task/recover', dict(payload, expected_version=2))
+
     def test_generate_receives_frozen_account_and_survives_server_restart(self):
         draft = self.saved_input()
         self.request('/api/ai/config', {'endpoint': 'http://127.0.0.1:1/v1', 'model': 'offline-double'})

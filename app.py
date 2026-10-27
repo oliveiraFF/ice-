@@ -4435,6 +4435,26 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                         if acquired_ai:
                             ai_request_lock.release()
                         agent_task_lock.release()
+                if self.path == '/api/agent/task/recover':
+                    if body.get('confirm') is not True:
+                        raise ValueError('请先确认本地恢复；此操作不调用模型')
+                    if not agent_task_lock.acquire(False):
+                        raise ValueError('当前任务正在处理，请稍后恢复')
+                    try:
+                        task = agent_tasks.get(body.get('task_uid'))
+                        if type(body.get('expected_version')) is not int or body['expected_version'] != task['current_version']:
+                            raise ValueError('任务版本已变化，请重新打开最新版本')
+                        attempt = agent_tasks.archived_attempt(task['task_uid'], body.get('attempt_uid'), task['version'])
+                        result = creative.recover(dict(task['input'], confirmed=True), attempt['raw_response'], attempt['model'])
+                        # Keep the failed attempt and its original response unchanged.
+                        result['validation']['recovery'] = dict(attempt_uid=attempt['attempt_uid'],
+                            original_status=attempt['status'], input_version=attempt['input_version'],
+                            response_sha256=attempt['response_sha256'], recovered_at=time.time(), network_requests=0)
+                        return self.send(agent_tasks.save(task['input'], task['media']['media_id'],
+                            task['strategy'], result=result, source='llm', task_uid=task['task_uid'],
+                            expected_version=task['current_version'], rules=task['rules']))
+                    finally:
+                        agent_task_lock.release()
                 if self.path == '/api/video/generate':
                     if not ai_request_lock.acquire(False): raise ValueError('模型正在处理，请等待完成')
                     try: return self.send(creative.generate(body))

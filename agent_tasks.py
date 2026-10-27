@@ -180,7 +180,7 @@ class AgentTasks:
                 'SELECT version,source,created_at FROM agent_task_version WHERE task_uid=? ORDER BY version',
                 (task_uid,))]
             attempts = [dict(item) for item in db.execute(
-                'SELECT attempt_uid,input_version,status,model,validation_json,started_at,finished_at FROM agent_task_attempt WHERE task_uid=? ORDER BY started_at',
+                'SELECT attempt_uid,input_version,status,model,validation_json,started_at,finished_at,length(raw_response) AS response_bytes FROM agent_task_attempt WHERE task_uid=? ORDER BY started_at',
                 (task_uid,))]
             for attempt in attempts:
                 attempt['validation'] = json.loads(attempt.pop('validation_json'))
@@ -191,6 +191,18 @@ class AgentTasks:
                       attempts=attempts,
                       media={key: value for key, value in self.read_media(row['media_id']).items() if key != 'data'})
         return result
+
+    def archived_attempt(self, task_uid, attempt_uid, input_version):
+        if not isinstance(attempt_uid, str) or not re.fullmatch(r'[a-f0-9]{32}', attempt_uid):
+            raise ValueError('请选择有效的本机生成记录')
+        with closing(self.connect()) as db:
+            row = db.execute('SELECT * FROM agent_task_attempt WHERE task_uid=? AND attempt_uid=? AND input_version=?',
+                             (task_uid, attempt_uid, input_version)).fetchone()
+        if not row or row['status'] not in ('validation_failed', 'result_unconfirmed', 'failed'):
+            raise ValueError('只能恢复当前输入版本的失败响应；请重新打开最新任务')
+        if not row['raw_response']:
+            raise ValueError('此次请求未保留模型响应，无法本地恢复；不会调用模型')
+        return dict(row, response_sha256=hashlib.sha256(row['raw_response']).hexdigest())
 
     def begin_attempt(self, task, model):
         ident = uuid.uuid4().hex

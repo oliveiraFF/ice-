@@ -198,10 +198,34 @@ class VideoCreative:
             rules = account_context.get('rules', {}).get('text', TASK_RULES) if account_context is not None else RULES
             payload=dict(model=config['model'],stream=False,max_tokens=6000,messages=[dict(role='system',content=rules),dict(role='user',content=content)])
             response=request_completion(config['endpoint'],self.ai.key,payload, response_sink=response_sink)
+        return self.response_result(response, data, frames, config['model'])
+
+    def recover(self, body, raw, model):
+        """Recheck an archived response locally; never consult model configuration."""
+        data, frames = self.prepare(body)
+        if not isinstance(raw, bytes) or not 0 < len(raw) <= 524288:
+            raise GenerationError('没有完整的模型原文，无法本地恢复；不会调用模型')
+        try:
+            response = json.loads(raw)
+        except (ValueError, UnicodeError):
+            raise GenerationError('保留原文不是有效响应，无法本地恢复；不会调用模型') from None
+        return self.response_result(response, data, frames, model, discard_unselected=True)
+
+    def response_result(self, response, data, frames, model, discard_unselected=False):
         repairs = []
         try:
             raw=response['choices'][0]['message']['content']
             parsed, repairs = parse_report(raw)
+            if discard_unselected and isinstance(parsed, dict):
+                deliverables = parsed.get('deliverables')
+                if (isinstance(deliverables, dict)
+                        and set(data['outputs']).issubset(deliverables)
+                        and set(deliverables).issubset(OUTPUTS)
+                        and all(isinstance(v, str) for v in deliverables.values())):
+                    extra = sorted(set(deliverables) - set(data['outputs']))
+                    if extra:
+                        parsed['deliverables'] = {key: deliverables[key] for key in data['outputs']}
+                        repairs.append('remove_unselected_deliverables:' + ','.join(extra))
             report=self.validate(parsed,len(frames),data['outputs'])
         except GenerationError:
             raise
@@ -210,7 +234,7 @@ class VideoCreative:
         writing = report['deliverables'].get('writing_prompt','')
         if any(phrase in writing for phrase in ('你要做的是可复用的写稿指令','不是一次性成稿')):
             raise GenerationError('写稿提示词包含让下游再次生成提示词的冲突指令，未采用；请求可能已计费，不会自动重试', repairs)
-        return dict(version='creative-v1.1',model=config['model'],report=report,
+        return dict(version='creative-v1.1',model=model,report=report,
                     validation=dict(repairs=repairs),
                     scope=dict(duration=data['duration'],frames=data['frames'],audio=data['audio'],
                                limitation='仅分析采样画面与已提供文字，无法验证完整动作、音轨或真实传播和成交效果'))
