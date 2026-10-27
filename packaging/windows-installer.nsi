@@ -43,6 +43,16 @@ VIAddVersionKey "LegalCopyright" "ICE 运营台项目"
     ${EndIf}
     System::Call 'kernel32::CloseHandle(p r0)'
   ${EndIf}
+  ${If} ${FileExists} "$INSTDIR\data\desktop.lock"
+    System::Call 'kernel32::CreateFileW(w "$INSTDIR\data\desktop.lock", i 0xC0000000, i 0, p 0, i 3, i 128, p 0) p.r0'
+    ${If} $0 == -1
+      IfSilent +2
+      MessageBox MB_OK|MB_ICONEXCLAMATION "数据仍被使用或正在退出收尾。请等待软件完全退出后重试；不会修改用户数据。"
+      SetErrorLevel 2
+      Abort
+    ${EndIf}
+    System::Call 'kernel32::CloseHandle(p r0)'
+  ${EndIf}
 !macroend
 
 Function .onInit

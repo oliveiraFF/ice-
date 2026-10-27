@@ -32,6 +32,19 @@ def execute(executable,args):
     return subprocess.run([str(executable),*args],startupinfo=startup,timeout=90).returncode
 
 
+def wait_data_released(data):
+    """Wait for Windows/child-process cleanup, without deleting or unlocking anything."""
+    kernel=ctypes.WinDLL('kernel32',use_last_error=True)
+    kernel.CreateFileW.restype=ctypes.c_void_p
+    for _ in range(100):
+        handle=kernel.CreateFileW(ctypes.c_wchar_p(str(data/'desktop.lock')),0xC0000000,0,None,3,128,None)
+        if handle!=ctypes.c_void_p(-1).value:
+            kernel.CloseHandle(ctypes.c_void_p(handle))
+            return
+        time.sleep(.1)
+    raise RuntimeError('Closed test application data still locked')
+
+
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--installer',type=Path,required=True)
     parser.add_argument('--release',type=Path,required=True);parser.add_argument('--output',type=Path,required=True)
@@ -59,6 +72,11 @@ def main():
         assert execute(target/'UninstallICE.exe',['/S','_?='+str(target)])==2
         assert process.poll() is None and exe.exists() and registry_present()
     finally:close_cleanly(process,origin,data)
+    wait_data_released(data)
+    with (data/'desktop.lock').open('r+b'):
+        assert execute(args.installer,['/S','/D='+str(target)])==2
+        assert execute(target/'UninstallICE.exe',['/S','_?='+str(target)])==2
+        assert exe.exists() and registry_present()
     extra=['data/keep-user-config.json','downloads/keep-user-file.txt','workspace/keep-user-file.txt','_internal/keep-user-note.txt']
     for name in extra:
         p=target/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text('explicit synthetic retention sentinel',encoding='utf-8')
@@ -71,6 +89,7 @@ def main():
         state=request(origin,'/api/state?mode=live')
         assert any(k['name']=='installer-retention-test' for k in state['keywords'])
     finally:close_cleanly(process,origin,data)
+    wait_data_released(data)
     before={name:hashlib.sha256((target/name).read_bytes()).hexdigest() for name in preserved}
     assert execute(target/'UninstallICE.exe',['/S'])==0
     for _ in range(120):
@@ -82,7 +101,8 @@ def main():
     for name,checksum in before.items():assert hashlib.sha256((target/name).read_bytes()).hexdigest()==checksum
     result=dict(passed=True,installer_sha256=hashlib.sha256(args.installer.read_bytes()).hexdigest(),
         install_files_verified=len(expected),installed_exe_start_exit=True,upgrade_preserved_data=True,
-        upgrade_while_running_rejected=True,uninstall_while_running_rejected=True,uninstall_preserved_files=preserved,
+        upgrade_while_running_rejected=True,uninstall_while_running_rejected=True,
+        data_lock_without_running_app_rejected=True,uninstall_preserved_files=preserved,
         shortcuts_and_uninstall_registry=True,uninstall_removed_program_files=True,paid_calls=0)
     (args.output/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
     print(json.dumps(result,ensure_ascii=False))
