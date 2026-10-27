@@ -55,7 +55,8 @@ def main():
         # Actual running executable is protected; no process termination by installer/uninstaller.
         assert execute(args.installer,['/S','/D='+str(target)])==2
         assert process.poll() is None
-        assert execute(target/'UninstallICE.exe',['/S'])==2
+        # _?= skips the NSIS temporary launcher, so this is the actual blocked process exit code.
+        assert execute(target/'UninstallICE.exe',['/S','_?='+str(target)])==2
         assert process.poll() is None and exe.exists() and registry_present()
     finally:close_cleanly(process,origin,data)
     extra=['data/keep-user-config.json','downloads/keep-user-file.txt','workspace/keep-user-file.txt','_internal/keep-user-note.txt']
