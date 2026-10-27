@@ -240,5 +240,13 @@
     "remaining": "内容类型字段待接入；原生截图采集异常未作为通过证据；项目真实模型质量仍待人工评审",
     "completion": "前端目标与main浏览器复验完成；独立EXE构建、启动及本机页面通过。工作树和分支已安全注销；原生视觉采集未确认，详见验收记录",
     "head": "5e04dc8"
+  },
+  {
+    "branch": "feat/ui-theme-switch",
+    "goal": "全软件暗色/亮色切换与持久偏好",
+    "validation": "docs/acceptance-20261027/theme-switch/acceptance.md；14页面两主题六宽度、刷新与浏览器/服务新端口重启、键盘及存储异常降级，原工作流与40项Python回归",
+    "main_merge": "待合入",
+    "remaining": "真实接口验收另行授权和记录，不在主题切换中发起收费请求",
+    "completion": "独立分支已验证，等待合入主干复验"
   }
 ]
