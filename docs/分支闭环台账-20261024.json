@@ -286,5 +286,14 @@
     "head": "df2d0f7",
     "remaining": "后端缺失能力仍待接入；本次界面最终复验缺口已由 test/ice-ui-final-validation 补齐",
     "completion": "已验证、已合入、工作树已安全移除"
+  },
+  {
+    "branch": "feat/local-asr-subtitles",
+    "goal": "离线ASR、可追溯时间轴、SRT下载与版本保存",
+    "head": "38db8fd697ebfb9170450c43a584f32d74517674",
+    "main_merge": "42dd9b9c74ac7c4eaf9a3117d321c3a99449bdec",
+    "validation": "docs/acceptance-20261027/local-asr/acceptance.md；51项主干Python、14页两主题六宽度、实际EXE离线识别/下载/保存/退出重开；268分发哈希、170构建输入通过",
+    "remaining": "ASR内容准确性需人工校对；账号资料和正式策略待用户确认；本轮新增收费0次",
+    "completion": "已合入主干并通过真实EXE复验；证据提交后安全注销工作树"
   }
 ]

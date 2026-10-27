@@ -1,0 +1,36 @@
+{
+  "packaged": true,
+  "task_uid": "5b529130cb2a",
+  "local_recognitions": 1,
+  "provider_calls": 0,
+  "segments": 8,
+  "duration": 18.088375,
+  "asr_version": 4,
+  "manual_version": 5,
+  "manual_reviewed": false,
+  "actual_srt_download": true,
+  "restart_restores_config_and_subtitles": true,
+  "manual_edit_drops_current_time_axis": true,
+  "historical_asr_retained": true,
+  "original_results_retained": true,
+  "themes": [
+    "dark",
+    "light"
+  ],
+  "widths": [
+    320,
+    375,
+    390,
+    414,
+    768,
+    1280
+  ],
+  "errors": [],
+  "external": [],
+  "writes": [
+    "/api/agent/asr-config",
+    "/api/agent/transcribe-local",
+    "/api/agent/task/save",
+    "/api/agent/task/save"
+  ]
+}
