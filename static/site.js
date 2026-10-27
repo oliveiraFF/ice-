@@ -9,7 +9,7 @@ const SiteUI=(()=>{
   themeButton.id='themeToggle';themeButton.className='theme-toggle';themeButton.type='button';
   themeButton.setAttribute('role','switch');themeButton.setAttribute('aria-label','暗色模式');
   document.getElementById('siteSettings').before(themeButton);
-  window.IceTheme.apply(document.documentElement.dataset.theme||'dark');
+  window.IceTheme.apply(document.documentElement.dataset.theme||'light');
   themeButton.onclick=()=>window.IceTheme.apply(document.documentElement.dataset.theme==='dark'?'light':'dark',true);
   document.getElementById('siteMenu').onclick=()=>{const open=document.body.classList.toggle('nav-open');document.getElementById('siteMenu').setAttribute('aria-expanded',String(open));};
   document.addEventListener('keydown',event=>{if(event.key==='Escape'){document.body.classList.remove('nav-open');document.getElementById('siteMenu').setAttribute('aria-expanded','false');}});

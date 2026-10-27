@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>研究稿 · ice运营台</title>
-  <script src="/theme.js"></script><link rel="stylesheet" href="/style.css">
+  <script src="/theme.js"></script><link rel="stylesheet" href="/tokens.css"><link rel="stylesheet" href="/style.css">
 <link rel="stylesheet" href="/icons.css">
 
 <script defer src="/icons.js"></script>
 <script defer src="/site.js"></script>
 <link rel="stylesheet" href="/site.css">
 <link rel="stylesheet" href="/ice.css"><link rel="stylesheet" href="/draft.css"><link rel="icon" href="/favicon.ico">
-<link rel="stylesheet" href="/theme.css"></head>
+<link rel="stylesheet" href="/theme.css"><link rel="stylesheet" href="/components.css"></head>
 <body class="draft-app">
 <header class="topbar"></header>
 <main class="script-main"><div class="breadcrumbs">工作空间 / 研究稿</div><div class="script-heading"><h1>研究稿工作台</h1><p>从一个主题开始，补充真实资料，生成或优化研究稿。每个版本都可追溯；研究稿不等于正式批准。</p></div>
@@ -74,7 +74,7 @@
     <div class="draft-run-row">
       <label>执行模式<select id="draftExecutionMode"><option value="test">演示试跑 · 不调用模型</option><option value="real">真实调用 · 可能产生费用</option></select></label>
       <button id="draftSave" class="secondary compact">只保存主题</button>
-      <button id="draftRun" class="draft-run-button">生成研究稿（演示）</button>
+      <button id="draftRun" class="primary draft-run-button">生成研究稿（演示）</button>
     </div>
     <p id="draftRunNotice" class="script-hint">演示试跑不会调用模型；仅验证本地流程并保存演示版本。</p>
     <p id="draftOptimizeStatus" class="script-hint" role="status"></p>

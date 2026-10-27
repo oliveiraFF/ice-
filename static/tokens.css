@@ -1,0 +1,81 @@
+/* ice运营台 design tokens — the single source of color, type, spacing, radius and glass.
+   Visual language: Apple-style frosted glass. Surfaces are translucent and blur
+   what is behind them; one blue accent; pill buttons; generous radii.
+   Legacy names (--theme-*, --ice-*, --dash-* …) are mapped onto these in theme.css;
+   new CSS should use the names below directly. */
+:root{
+  --font-sans:-apple-system,BlinkMacSystemFont,'SF Pro Text','PingFang SC','Segoe UI Variable','Segoe UI','Microsoft YaHei UI','Microsoft YaHei',sans-serif;
+  --font-display:-apple-system,BlinkMacSystemFont,'SF Pro Display','PingFang SC','Segoe UI Variable Display','Segoe UI','Microsoft YaHei UI',sans-serif;
+  --font-mono:'SF Mono',IceMaple,'Cascadia Mono',Consolas,monospace;
+
+  --fs-12:12px;--fs-13:13px;--fs-14:14px;--fs-16:16px;--fs-20:20px;--fs-24:24px;--fs-28:28px;
+  --sp-4:4px;--sp-8:8px;--sp-12:12px;--sp-16:16px;--sp-24:24px;--sp-32:32px;
+  --radius-sm:10px;--radius-md:16px;--radius-lg:22px;--radius-full:999px;
+
+  --ctl-sm:28px;--ctl-md:36px;--ctl-lg:44px;
+  --ease:cubic-bezier(.25,.1,.25,1);
+  --blur:saturate(180%) blur(24px);
+  --blur-strong:saturate(180%) blur(40px);
+  --blur-glass:saturate(200%) blur(18px) brightness(1.04);
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg-page:#0b0b0d;
+  --wallpaper:radial-gradient(1100px 700px at 12% -12%,rgba(10,132,255,.20),transparent 62%),
+              radial-gradient(900px 640px at 100% 4%,rgba(191,90,242,.15),transparent 60%),
+              radial-gradient(1000px 760px at 55% 112%,rgba(48,209,88,.10),transparent 60%);
+  --glass:rgba(30,30,33,.62);--glass-strong:rgba(28,28,31,.72);
+  --glass-border:rgba(255,255,255,.10);--glass-highlight:inset 0 1px 0 rgba(255,255,255,.08);
+  --glass-rim:inset 0 1px 0 rgba(255,255,255,.18),inset 0 -1px 1px rgba(255,255,255,.05),inset 0 0 0 1px rgba(255,255,255,.07);
+  --glass-sheen:linear-gradient(140deg,rgba(255,255,255,.10) 0%,rgba(255,255,255,.03) 38%,rgba(255,255,255,0) 60%,rgba(255,255,255,.05) 100%);
+  --glass-button:rgba(255,255,255,.09);--glass-button-hover:rgba(255,255,255,.15);
+  --switch-off:rgba(120,120,128,.36);--knob:#f5f5f7;
+  --bg-panel:var(--glass);--bg-inset:rgba(58,58,64,.58);--bg-input:rgba(62,62,68,.62);--bg-hover:rgba(74,74,80,.66);
+  --bg-raised:#48484d;
+  --text-ink:#f5f5f7;--text-body:#d4d4d9;--text-muted:#9c9ca3;
+  --line:rgba(255,255,255,.08);--line-strong:rgba(255,255,255,.16);
+  --accent:#0071e3;--accent-hover:#0a7cf0;--accent-text:#4aa3ff;--accent-soft:rgba(10,132,255,.20);--on-accent:#ffffff;
+  --success:#32d74b;--success-soft:rgba(50,215,75,.16);
+  --warn:#ffb340;--warn-soft:rgba(255,159,10,.18);--danger:#ff6961;--danger-soft:rgba(255,69,58,.18);--danger-solid:#e5372c;
+  --info:#64b5ff;--info-soft:rgba(10,132,255,.16);
+  --shadow-card:0 10px 30px rgba(0,0,0,.30);
+  --shadow-pop:0 24px 60px rgba(0,0,0,.55),0 0 0 1px var(--glass-border);
+  --focus-ring:0 0 0 4px rgba(10,132,255,.45);
+
+  --theme-page:var(--bg-page);--theme-panel:var(--bg-panel);--theme-inset:var(--bg-inset);--theme-input:var(--bg-input);
+  --theme-ink:var(--text-ink);--theme-body:var(--text-body);--theme-muted:var(--text-muted);--theme-line:var(--line);
+  --theme-accent:var(--accent-text);--theme-accent-strong:var(--accent-hover);--theme-accent-soft:var(--accent-soft);--theme-on-accent:var(--on-accent);
+  --theme-warn:var(--warn);--theme-warn-soft:var(--warn-soft);--theme-error:var(--danger);--theme-error-soft:var(--danger-soft);
+  --theme-blue:var(--info);--theme-blue-soft:var(--info-soft);--theme-shadow:var(--shadow-card);
+}
+:root[data-theme="light"]{
+  color-scheme:light;
+  --bg-page:#f5f5f7;
+  --wallpaper:radial-gradient(900px 620px at 8% -8%,rgba(0,122,255,.16),transparent 62%),
+              radial-gradient(820px 600px at 100% 0%,rgba(175,82,222,.12),transparent 60%),
+              radial-gradient(900px 700px at 70% 105%,rgba(90,200,250,.14),transparent 62%),
+              radial-gradient(700px 520px at 25% 85%,rgba(255,204,0,.07),transparent 60%);
+  --glass:rgba(255,255,255,.62);--glass-strong:rgba(255,255,255,.66);
+  --glass-border:rgba(255,255,255,.80);--glass-highlight:inset 0 1px 0 rgba(255,255,255,.9);
+  --glass-rim:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -1px 1px rgba(255,255,255,.45),inset 0 0 0 1px rgba(255,255,255,.55),0 0 0 .5px rgba(0,0,0,.07);
+  --glass-sheen:linear-gradient(140deg,rgba(255,255,255,.70) 0%,rgba(255,255,255,.22) 36%,rgba(255,255,255,.04) 58%,rgba(255,255,255,.32) 100%);
+  --glass-button:rgba(255,255,255,.58);--glass-button-hover:rgba(255,255,255,.80);
+  --switch-off:rgba(120,120,128,.20);--knob:#ffffff;
+  --bg-panel:var(--glass);--bg-inset:rgba(234,234,239,.66);--bg-input:rgba(255,255,255,.72);--bg-hover:rgba(222,222,228,.78);
+  --bg-raised:#ffffff;
+  --text-ink:#1d1d1f;--text-body:#3a3a3c;--text-muted:#6a6a70;
+  --line:rgba(0,0,0,.08);--line-strong:rgba(0,0,0,.14);
+  --accent:#0071e3;--accent-hover:#0077ed;--accent-text:#0066cc;--accent-soft:rgba(0,113,227,.12);--on-accent:#ffffff;
+  --success:#1f7a34;--success-soft:rgba(52,199,89,.16);
+  --warn:#a14d00;--warn-soft:rgba(255,149,0,.16);--danger:#c9150d;--danger-soft:rgba(255,59,48,.12);--danger-solid:#e0281e;
+  --info:#0066cc;--info-soft:rgba(0,113,227,.10);
+  --shadow-card:0 1px 2px rgba(0,0,0,.03),0 10px 30px rgba(30,40,80,.07);
+  --shadow-pop:0 24px 60px rgba(0,0,0,.16),0 0 0 1px var(--line);
+  --focus-ring:0 0 0 4px rgba(0,113,227,.30);
+
+  --theme-page:var(--bg-page);--theme-panel:var(--bg-panel);--theme-inset:var(--bg-inset);--theme-input:var(--bg-input);
+  --theme-ink:var(--text-ink);--theme-body:var(--text-body);--theme-muted:var(--text-muted);--theme-line:var(--line);
+  --theme-accent:var(--accent-text);--theme-accent-strong:var(--accent-hover);--theme-accent-soft:var(--accent-soft);--theme-on-accent:var(--on-accent);
+  --theme-warn:var(--warn);--theme-warn-soft:var(--warn-soft);--theme-error:var(--danger);--theme-error-soft:var(--danger-soft);
+  --theme-blue:var(--info);--theme-blue-soft:var(--info-soft);--theme-shadow:var(--shadow-card);
+}

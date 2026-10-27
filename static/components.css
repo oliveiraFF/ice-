@@ -1,0 +1,259 @@
+/* ice运营台 shared components — buttons, controls, shell, cards, badges, steps.
+   Visual language: Apple-style frosted glass (see tokens.css).
+   Loaded after every legacy stylesheet so this is the one definition of each part.
+   Colors/sizes come only from tokens.css. Page CSS may position a component
+   (margin, width, flex) but should not restyle it. */
+
+/* ---------- Base: wallpaper behind the glass ---------- */
+html[data-theme] body.site-app.owner-workspace{
+  background:var(--wallpaper),var(--bg-page)!important;background-attachment:fixed!important;
+  font-family:var(--font-sans);font-size:var(--fs-14);line-height:1.6;letter-spacing:.01em;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body.site-app.owner-workspace .ui-ripple{display:none!important}
+body.site-app.owner-workspace ::selection{background:var(--accent-soft)}
+
+/* ---------- Buttons: pill shapes, filled not outlined ---------- */
+:where(html[data-theme]) body.site-app.owner-workspace :is(.primary,.secondary,.danger){
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  min-height:var(--ctl-md);height:auto;padding:0 18px;
+  border:0;border-radius:var(--radius-full);
+  font:500 var(--fs-14)/1.2 var(--font-sans);letter-spacing:0;white-space:nowrap;text-decoration:none;
+  box-shadow:none;cursor:pointer;position:relative;
+  transition:background-color .2s var(--ease),color .2s var(--ease),transform .12s var(--ease),opacity .2s;
+}
+:where(html[data-theme]) body.site-app.owner-workspace .primary{background:linear-gradient(180deg,rgba(255,255,255,.24),rgba(255,255,255,0) 58%),var(--accent);color:var(--on-accent);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.38),inset 0 0 0 1px rgba(255,255,255,.12),0 4px 14px rgba(0,113,227,.28)}
+:where(html[data-theme]) body.site-app.owner-workspace .primary:hover{background:linear-gradient(180deg,rgba(255,255,255,.30),rgba(255,255,255,0) 58%),var(--accent-hover);color:var(--on-accent)}
+/* Secondary and danger buttons are clear glass: tint, sheen, and a bright rim that catches light. */
+:where(html[data-theme]) body.site-app.owner-workspace :is(.secondary,.danger){background:var(--glass-sheen),var(--glass-button);box-shadow:var(--glass-rim),0 1px 3px rgba(0,0,0,.06);
+  -webkit-backdrop-filter:var(--blur-glass);backdrop-filter:var(--blur-glass)}
+:where(html[data-theme]) body.site-app.owner-workspace .secondary{color:var(--text-ink)}
+:where(html[data-theme]) body.site-app.owner-workspace .secondary:hover{background:var(--glass-sheen),var(--glass-button-hover);color:var(--text-ink)}
+:where(html[data-theme]) body.site-app.owner-workspace .danger{color:var(--danger)}
+:where(html[data-theme]) body.site-app.owner-workspace .danger:hover{background:var(--glass-sheen),var(--danger-soft)}
+:where(html[data-theme]) body.site-app.owner-workspace .danger.is-confirming{background:var(--danger-solid);color:#fff}
+
+:where(html[data-theme]) body.site-app.owner-workspace .text-button{
+  display:inline-flex;align-items:center;gap:4px;min-height:var(--ctl-sm);padding:0;
+  background:none;border:0;border-radius:var(--radius-sm);box-shadow:none;
+  font:400 var(--fs-14)/1.2 var(--font-sans);color:var(--accent-text);cursor:pointer;text-decoration:none;
+  transition:opacity .2s var(--ease)}
+:where(html[data-theme]) body.site-app.owner-workspace .text-button:hover{background:none;color:var(--accent-text);opacity:.7}
+
+/* Header controls share the icon-button look; .site-menu keeps the shell's own show/hide rule. */
+html[data-theme] body.site-app.owner-workspace :is(.icon-button,.site-settings,.theme-toggle){display:inline-flex}
+html[data-theme] body.site-app.owner-workspace :is(.icon-button,.site-settings,.site-menu,.theme-toggle){
+  align-items:center;justify-content:center;gap:6px;place-items:center;
+  min-width:32px;width:auto;height:32px;min-height:32px;padding:0 9px;
+  background:transparent;border:0;border-radius:var(--radius-full);box-shadow:none;
+  color:var(--text-body);font:500 var(--fs-13)/1 var(--font-sans);cursor:pointer;flex-shrink:0;
+  transition:background-color .2s var(--ease),color .2s var(--ease)}
+html[data-theme] body.site-app.owner-workspace :is(.icon-button,.site-settings,.site-menu,.theme-toggle):hover{background:var(--bg-hover);color:var(--text-ink)}
+html[data-theme] body.site-app.owner-workspace :is(.site-settings,.site-menu){width:34px;min-width:34px;height:34px;min-height:34px;padding:0;
+  background:var(--glass-sheen),var(--glass-button);box-shadow:var(--glass-rim),0 1px 3px rgba(0,0,0,.06);-webkit-backdrop-filter:var(--blur-glass);backdrop-filter:var(--blur-glass)}
+html[data-theme] body.site-app.owner-workspace :is(.site-settings,.site-menu):hover{background:var(--glass-sheen),var(--glass-button-hover)}
+
+/* Theme toggle is a real switch (role=switch, aria-checked = dark). The sun/moon rides on the knob. */
+html[data-theme] body.site-app.owner-workspace .theme-toggle{position:relative;width:52px;min-width:52px;height:30px;min-height:30px;padding:0;border-radius:var(--radius-full);
+  background:var(--switch-off);box-shadow:inset 0 0 0 .5px rgba(0,0,0,.06),inset 0 1px 2px rgba(0,0,0,.10);transition:background-color .25s var(--ease)}
+html[data-theme] body.site-app.owner-workspace .theme-toggle:hover{background:var(--switch-off)}
+html[data-theme] body.site-app.owner-workspace .theme-toggle[aria-checked="true"],html[data-theme] body.site-app.owner-workspace .theme-toggle[aria-checked="true"]:hover{background:var(--accent)}
+html[data-theme] body.site-app.owner-workspace .theme-toggle .theme-label{display:none}
+html[data-theme] body.site-app.owner-workspace .theme-toggle>span:first-child{position:absolute;top:3px;left:3px;width:24px;height:24px;display:grid;place-items:center;border-radius:50%;
+  background:linear-gradient(180deg,#fff,var(--knob));color:#8e8e93;font-size:13px;line-height:1;
+  box-shadow:0 2px 6px rgba(0,0,0,.18),0 0 0 .5px rgba(0,0,0,.06),inset 0 1px 0 #fff;transition:transform .3s cubic-bezier(.3,1.4,.5,1)}
+html[data-theme] body.site-app.owner-workspace .theme-toggle[aria-checked="true"]>span:first-child{transform:translateX(22px);color:var(--accent)}
+html[data-theme] body.site-app.owner-workspace :is(.icon-button,.site-settings,.site-menu) svg{width:18px;height:18px}
+
+/* sizes */
+:where(html[data-theme]) body.site-app.owner-workspace :is(.primary,.secondary,.danger).compact{min-height:var(--ctl-sm);padding:0 12px;font-size:var(--fs-13)}
+:where(html[data-theme]) body.site-app.owner-workspace :is(.primary,.secondary,.danger).large{min-height:var(--ctl-lg);padding:0 24px;font-size:var(--fs-16)}
+:where(html[data-theme]) body.site-app.owner-workspace :is(.primary,.secondary,.danger) svg{width:16px;height:16px;flex:none}
+
+/* states */
+:where(html[data-theme]) body.site-app.owner-workspace :is(.primary,.secondary,.danger,.icon-button):active:not(:disabled){transform:scale(.96)}
+:where(html[data-theme]) body.site-app.owner-workspace :is(.primary,.secondary,.danger,.text-button,.icon-button,.site-settings,.site-menu,.theme-toggle):focus-visible{outline:none;box-shadow:var(--focus-ring)}
+:where(html[data-theme]) body.site-app.owner-workspace :is(.primary,.secondary,.danger,.text-button,.icon-button):is(:disabled,[aria-disabled="true"]){opacity:.35;cursor:not-allowed;transform:none}
+:where(html[data-theme]) body.site-app.owner-workspace .primary:disabled:hover{background:linear-gradient(180deg,rgba(255,255,255,.24),rgba(255,255,255,0) 58%),var(--accent)}
+:where(html[data-theme]) body.site-app.owner-workspace :is(.secondary,.danger):disabled:hover{background:var(--glass-sheen),var(--glass-button)}
+:where(html[data-theme]) body.site-app.owner-workspace :is(.primary,.secondary,.danger):is([aria-busy="true"],.is-loading){color:transparent!important;pointer-events:none}
+:where(html[data-theme]) body.site-app.owner-workspace :is(.primary,.secondary,.danger):is([aria-busy="true"],.is-loading)::after{
+  content:"";position:absolute;inset:0;margin:auto;width:14px;height:14px;border-radius:50%;
+  border:2px solid var(--text-muted);border-top-color:transparent;animation:ice-spin .8s linear infinite}
+:where(html[data-theme]) body.site-app.owner-workspace .primary:is([aria-busy="true"],.is-loading)::after{border-color:var(--on-accent);border-top-color:transparent}
+@keyframes ice-spin{to{transform:rotate(360deg)}}
+
+/* ---------- Inputs: soft gray fills, no outlines ---------- */
+html[data-theme] body.site-app.owner-workspace :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=file]),select,textarea){border-color:transparent!important;box-shadow:inset 0 0 0 1px var(--line),inset 0 1px 2px rgba(0,0,0,.03)!important}
+:where(html[data-theme]) body.site-app.owner-workspace :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=file]),select){min-height:var(--ctl-md);border-radius:var(--radius-sm);font-size:var(--fs-14)}
+:where(html[data-theme]) body.site-app.owner-workspace textarea{border-radius:var(--radius-sm);font-size:var(--fs-14)}
+html[data-theme] body.site-app.owner-workspace :is(input:not([type=checkbox]):not([type=radio]),select,textarea):focus-visible{outline:none!important;box-shadow:var(--focus-ring)!important}
+body.site-app.owner-workspace :is(input[type=checkbox],input[type=radio]){accent-color:var(--accent)}
+
+/* ---------- Shell: header and sidebar are glass over the page ---------- */
+html[data-theme] body.site-app.owner-workspace :is(.site-header,.site-nav){
+  background:var(--glass-strong)!important;-webkit-backdrop-filter:var(--blur-strong);backdrop-filter:var(--blur-strong);box-shadow:none}
+html[data-theme] body.site-app.owner-workspace .site-header{border-bottom:0!important;box-shadow:0 1px 0 var(--line)}
+html[data-theme] body.site-app.owner-workspace .site-nav{border-right:1px solid var(--line)!important}
+:where(html[data-theme]) body.site-app.owner-workspace .site-context{font-size:var(--fs-13)}
+:where(html[data-theme]) body.site-app.owner-workspace .site-local{font-size:var(--fs-12)}
+html[data-theme] body.site-app.owner-workspace .site-search{height:var(--ctl-md);border:0!important;border-radius:var(--radius-full);background:var(--glass-sheen),var(--glass-button)!important;overflow:hidden;
+  box-shadow:var(--glass-rim),0 1px 3px rgba(0,0,0,.05);-webkit-backdrop-filter:var(--blur-glass);backdrop-filter:var(--blur-glass);transition:box-shadow .2s var(--ease)}
+html[data-theme] body.site-app.owner-workspace .site-search:focus-within{box-shadow:var(--focus-ring)}
+html[data-theme] body.site-app.owner-workspace .site-search :is(input,select){min-height:0;height:100%;border:0!important;border-radius:0;background:transparent!important;font-size:var(--fs-13);box-shadow:none!important}
+html[data-theme] body.site-app.owner-workspace .site-search select{border-right:1px solid var(--line)!important;padding-left:14px}
+html[data-theme] body.site-app.owner-workspace .site-search button{width:34px;height:100%;color:var(--text-muted);background:transparent;border:0}
+
+html[data-theme] body.site-app.owner-workspace .site-nav>a:not(.site-brand){border-radius:var(--radius-sm);font-size:var(--fs-14);font-weight:400;transition:background-color .2s var(--ease)}
+html[data-theme] body.site-app.owner-workspace .site-nav>a.active:not(.site-brand){font-weight:600}
+html[data-theme] body.site-app.owner-workspace .nav-group{font-size:var(--fs-12);font-weight:600}
+html[data-theme] body.site-app.owner-workspace .site-logo img{border-radius:10px}
+html[data-theme] body.site-app.owner-workspace .site-nav>a.active:not(.site-brand){box-shadow:var(--glass-rim)}
+/* Desktop: the sidebar floats inside the window as a rounded glass slab. */
+@media(min-width:901px){
+  html[data-theme] body.site-app.owner-workspace .site-nav{top:10px!important;bottom:10px;left:10px;height:auto!important;max-height:calc(100dvh - 20px);width:calc(var(--rail) - 12px)!important;
+    border:0!important;border-radius:var(--radius-lg);background:var(--glass-sheen),var(--glass-strong)!important;
+    box-shadow:var(--shadow-card),var(--glass-rim)}
+}
+
+/* In-page breadcrumbs repeat what the header already says. */
+body.site-app.owner-workspace main .breadcrumbs{display:none}
+
+/* ---------- Type: large bold titles, quiet body ---------- */
+html[data-theme] body.site-app.owner-workspace main h1{font:700 var(--fs-28)/1.25 var(--font-display);letter-spacing:-.01em}
+html[data-theme] body.site-app.owner-workspace main h2{font:600 var(--fs-16)/1.4 var(--font-display);letter-spacing:0}
+html[data-theme] body.site-app.owner-workspace main h3{font:600 var(--fs-14)/1.4 var(--font-sans);letter-spacing:0}
+
+/* ---------- Cards: frosted glass, hairline edge, soft shadow ---------- */
+html[data-theme] body.site-app.owner-workspace :is(.ice-card,.wb-panel,.screen-panel,.creative-task-panel,.creative-source,.creative-results,.creative-guide,.script-card,.script-form,.script-result,.script-tasks,.research-paper,.feature-tool,.api-card,.market-filters,.credit-panel,.filter-panel,.ranking-panel,.tool-card,.tool-panel,.keyword-search-panel,.only-panel,.content-card,.heat-kpi,.wallboard-card){
+  background:var(--glass-sheen),var(--glass)!important;border:0!important;border-radius:var(--radius-md)!important;
+  box-shadow:var(--shadow-card),var(--glass-rim)!important;-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur)}
+/* Items inside a card sit on a gray fill instead of stacking another glass layer. */
+html[data-theme] body.site-app.owner-workspace :is(.script-task,.script-beat,.research-item,.research-evidence,.research-source-block,.advice-history-item,.draft-version-item,.mr-history-item){
+  background:var(--bg-inset)!important;border-color:transparent!important;box-shadow:none!important;border-radius:var(--radius-sm)}
+html[data-theme] body.site-app.owner-workspace :is(dialog,.modal,.site-search-dialog,.detail-drawer){
+  background:var(--glass-strong)!important;border:1px solid var(--glass-border)!important;border-radius:var(--radius-lg)!important;
+  box-shadow:var(--shadow-pop)!important;-webkit-backdrop-filter:var(--blur-strong);backdrop-filter:var(--blur-strong)}
+body.site-app.owner-workspace dialog::backdrop{background:rgba(0,0,0,.25);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+
+/* ---------- Badges: tinted pills; neutral status stays quiet text ---------- */
+html[data-theme] body.site-app.owner-workspace :is(.ice-tag,.wb-pill){
+  display:inline-flex;align-items:center;gap:5px;width:auto;justify-self:start;align-self:start;min-height:0;padding:2px 0;
+  background:transparent!important;border:0!important;border-radius:var(--radius-full);
+  color:var(--text-muted)!important;font-size:var(--fs-12);font-weight:500;line-height:1.5;white-space:nowrap}
+html[data-theme] body.site-app.owner-workspace :is(.ice-tag,.wb-pill):is(.good,.ok,.warn,.bad){padding:2px 10px}
+html[data-theme] body.site-app.owner-workspace :is(.ice-tag,.wb-pill):is(.good,.ok){background:var(--success-soft)!important;color:var(--success)!important}
+html[data-theme] body.site-app.owner-workspace :is(.ice-tag,.wb-pill).warn{background:var(--warn-soft)!important;color:var(--warn)!important}
+html[data-theme] body.site-app.owner-workspace :is(.ice-tag,.wb-pill).bad{background:var(--danger-soft)!important;color:var(--danger)!important}
+
+/* ---------- Steps: a segmented control ---------- */
+html[data-theme] body.site-app.owner-workspace .ice-steps{
+  display:inline-flex;gap:2px;max-width:100%;padding:2px;margin-bottom:var(--sp-16);
+  background:var(--bg-inset);border:0;border-radius:var(--radius-sm);box-shadow:inset 0 1px 2px rgba(0,0,0,.06);overflow-x:auto}
+html[data-theme] body.site-app.owner-workspace .ice-steps button{
+  flex:none;min-height:30px;padding:0 16px;margin:0;
+  background:transparent!important;border:0!important;border-radius:8px;
+  color:var(--text-body)!important;font-size:var(--fs-13);font-weight:500;box-shadow:none;cursor:pointer;opacity:1;
+  transition:background-color .2s var(--ease),color .2s var(--ease)}
+html[data-theme] body.site-app.owner-workspace .ice-steps button:hover:not(:disabled):not(.is-current){color:var(--text-ink)!important}
+html[data-theme] body.site-app.owner-workspace .ice-steps button.is-current{background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0)),var(--bg-raised)!important;color:var(--text-ink)!important;font-weight:600;
+  box-shadow:0 2px 6px rgba(0,0,0,.12),0 0 0 .5px rgba(0,0,0,.05),inset 0 1px 0 rgba(255,255,255,.6)}
+html[data-theme] body.site-app.owner-workspace .ice-steps button:disabled{color:var(--text-muted)!important;opacity:.6;cursor:default}
+
+/* ---------- Page adjustments (move into page CSS once its legacy layers are retired) ---------- */
+/* 视频分析与改编: the stage strip is a row of glass tiles, not a card holding cards. */
+html[data-theme] body.site-app.owner-workspace.creative-app .ice-task-layout>.ice-card:first-child{background:transparent!important;border:0!important;padding:0;box-shadow:none!important;-webkit-backdrop-filter:none;backdrop-filter:none}
+html[data-theme] body.site-app.owner-workspace.creative-app .ice-task-layout>.ice-card:first-child .ice-muted{font-size:var(--fs-12);color:var(--text-muted)!important;margin-top:var(--sp-8)}
+html[data-theme] body.site-app.owner-workspace.creative-app .ice-stage{
+  gap:6px;padding:14px 16px;border:1px solid transparent;border-radius:var(--radius-md);
+  background:var(--glass-sheen),var(--glass);box-shadow:var(--shadow-card),var(--glass-rim);color:var(--text-ink);
+  -webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
+html[data-theme] body.site-app.owner-workspace.creative-app .ice-stage:hover{transform:translateY(-1px)}
+html[data-theme] body.site-app.owner-workspace.creative-app .ice-stage.current{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent),var(--shadow-card),var(--glass-rim)}
+html[data-theme] body.site-app.owner-workspace.creative-app .ice-stage strong{font-size:var(--fs-14)}
+html[data-theme] body.site-app.owner-workspace.creative-app .ice-stage small{font-size:var(--fs-12);color:var(--text-muted)!important}
+html[data-theme] body.site-app.owner-workspace.creative-app .ice-check{padding:11px 0;border-bottom:1px solid var(--line)}
+html[data-theme] body.site-app.owner-workspace.creative-app .ice-check:last-of-type{border-bottom:0}
+html[data-theme] body.site-app.owner-workspace.creative-app .ice-quality{background:var(--bg-inset)!important;border:0!important;border-radius:var(--radius-sm)}
+html[data-theme] body.site-app.owner-workspace.creative-app .ice-source-options>*{border-radius:var(--radius-sm)}
+html[data-theme] body.site-app.owner-workspace.creative-app .creative-heading{align-items:flex-start;margin-bottom:var(--sp-24)}
+html[data-theme] body.site-app.owner-workspace.creative-app .creative-heading p{color:var(--text-muted)!important;font-size:var(--fs-14)}
+html[data-theme] body.site-app.owner-workspace.creative-app :is(h2,h3)+.ice-tag{margin-left:var(--sp-8);vertical-align:middle}
+
+/* 运营工作台 */
+html[data-theme] body.site-app.owner-workspace.dashboard-app #workbench .wb-heading p{color:var(--text-muted)!important;font-size:var(--fs-14)}
+html[data-theme] body.site-app.owner-workspace.dashboard-app #workbench .wb-read-status{font-size:var(--fs-12);color:var(--text-muted)}
+html[data-theme] body.site-app.owner-workspace.dashboard-app #workbench .wb-section-head h2{font-size:var(--fs-14)}
+html[data-theme] body.site-app.owner-workspace.dashboard-app #workbench .wb-focus{border-radius:var(--radius-md);box-shadow:var(--shadow-card)}
+html[data-theme] body.site-app.owner-workspace.dashboard-app #workbench .wb-focus>a{box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 4px 12px rgba(0,0,0,.15);border-radius:var(--radius-full);font-size:var(--fs-14);min-height:var(--ctl-md);padding:0 18px;-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur)}
+html[data-theme] body.site-app.owner-workspace.dashboard-app #workbench :is(.wb-metric strong,.wb-focus h2 strong){font-family:var(--font-display);font-weight:700;letter-spacing:-.02em}
+
+@media(max-width:600px){
+  :where(html[data-theme]) body.site-app.owner-workspace :is(.primary,.secondary,.danger){min-height:40px}
+  html[data-theme] body.site-app.owner-workspace :is(.site-settings,.site-menu){width:40px;min-width:40px;height:40px;min-height:40px}
+}
+@media(prefers-reduced-transparency:reduce){
+  :root[data-theme="dark"]{--glass:#1c1c1f;--glass-strong:#1c1c1f}
+  :root[data-theme="light"]{--glass:#ffffff;--glass-strong:#fbfbfd}
+}
+@media(prefers-reduced-motion:reduce){
+  body.site-app.owner-workspace *{transition:none!important;animation-duration:.01ms!important}
+}
+
+/* ---------- Liquid Glass page details ---------- */
+/* The legacy input rule outranks .site-search; restate it with matching weight so the field reads as one glass pill. */
+html[data-theme] body.site-app.owner-workspace .site-search :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=file]),select){background:transparent!important;box-shadow:none!important}
+/* 运营工作台: today's focus becomes a blue glass hero card in the accent color, not an orange block. */
+html[data-theme] body.site-app.owner-workspace.dashboard-app{
+  --today-orange-light:#0a6fe0;--today-orange:#0050b8;--today-orange-ink:#ffffff;--today-orange-muted:rgba(255,255,255,.78);
+  --today-ring:rgba(255,255,255,.14);--today-button:rgba(255,255,255,.20)}
+html[data-theme] body.site-app.owner-workspace.dashboard-app #workbench .wb-focus{box-shadow:0 12px 32px rgba(0,80,184,.28),inset 0 1px 0 rgba(255,255,255,.35),inset 0 0 0 1px rgba(255,255,255,.12)}
+html[data-theme] body.site-app.owner-workspace.dashboard-app #workbench .wb-focus :is(p,span){color:rgba(255,255,255,.86)!important}
+html[data-theme] body.site-app.owner-workspace.dashboard-app #workbench .wb-focus>a{color:#fff!important;-webkit-backdrop-filter:var(--blur-glass);backdrop-filter:var(--blur-glass)}
+html[data-theme] body.site-app.owner-workspace.dashboard-app #workbench .wb-focus>a:hover{background:rgba(255,255,255,.30);opacity:1}
+
+/* ---------- Chips, filters and segmented choices (all pages) ---------- */
+/* Filter chips: glass pills; the chosen one is tinted with the accent. */
+html[data-theme] body.site-app.owner-workspace main :is(.filter-chip,.tag-list button,.draft-chip,.ice-source-option){
+  display:inline-flex;align-items:center;gap:6px;min-height:30px;padding:0 14px;
+  border:0!important;border-radius:var(--radius-full)!important;
+  background:var(--glass-sheen),var(--glass-button)!important;color:var(--text-body)!important;
+  box-shadow:var(--glass-rim)!important;font-size:var(--fs-13);font-weight:500;
+  transition:background-color .2s var(--ease),color .2s var(--ease)}
+html[data-theme] body.site-app.owner-workspace main :is(.filter-chip,.tag-list button):hover{background:var(--glass-sheen),var(--glass-button-hover)!important;color:var(--text-ink)!important}
+html[data-theme] body.site-app.owner-workspace main :is(.filter-chip,.tag-list button,.draft-chip):is([aria-pressed="true"],.selected,.active){
+  background:var(--accent-soft)!important;color:var(--accent-text)!important;box-shadow:inset 0 0 0 1px var(--accent-soft)!important;font-weight:600}
+html[data-theme] body.site-app.owner-workspace main .filter-chip svg{width:14px;height:14px}
+
+/* Segmented controls: a recessed track with a raised glass thumb (the sliding indicator from site.js). */
+html[data-theme] body.site-app.owner-workspace main :is(.market-segments,.only-options,.mode-options,.rank-sort){
+  padding:2px;border:0!important;border-radius:var(--radius-sm)!important;background:var(--bg-inset)!important;box-shadow:inset 0 1px 2px rgba(0,0,0,.06)!important}
+html[data-theme] body.site-app.owner-workspace main :is(.market-segments,.only-options,.mode-options,.rank-sort) button{border-radius:8px!important;color:var(--text-body)!important;font-size:var(--fs-13)}
+html[data-theme] body.site-app.owner-workspace main :is(.market-segments,.only-options,.mode-options,.rank-sort) :is(button[aria-pressed="true"],button.selected){color:var(--text-ink)!important;font-weight:600}
+html[data-theme] body.site-app.owner-workspace main .ui-seg-indicator{border-radius:8px!important;background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0)),var(--bg-raised)!important;box-shadow:0 2px 6px rgba(0,0,0,.12),0 0 0 .5px rgba(0,0,0,.05)!important}
+
+/* Step rails (研究稿) read as progress, not buttons. */
+html[data-theme] body.site-app.owner-workspace main .draft-step-rail span{border:0!important;border-radius:var(--radius-sm);background:var(--bg-inset)!important;color:var(--text-body)!important;box-shadow:none}
+html[data-theme] body.site-app.owner-workspace main .draft-step-rail span.active{background:var(--accent-soft)!important;color:var(--accent-text)!important;font-weight:600}
+
+/* Keyword tiles (发现内容). */
+html[data-theme] body.site-app.owner-workspace main .keywords .keyword{border:0!important;border-radius:var(--radius-sm)!important;background:var(--glass-sheen),var(--glass-button)!important;box-shadow:var(--glass-rim)!important;color:var(--text-ink)}
+html[data-theme] body.site-app.owner-workspace main .keywords .keyword.active{background:var(--accent-soft)!important;color:var(--accent-text)!important;box-shadow:inset 0 0 0 1px var(--accent)!important}
+
+/* Tables: hairline rows, quiet headers. */
+html[data-theme] body.site-app.owner-workspace main table th{font-size:var(--fs-12);font-weight:600;color:var(--text-muted)!important;background:transparent!important}
+html[data-theme] body.site-app.owner-workspace main table :is(th,td){border-color:var(--line)!important}
+
+/* The theme switch keeps its size even where a page enlarges every header button. */
+html[data-theme] body.site-app.owner-workspace .site-header .theme-toggle{height:30px!important;min-height:30px!important;width:52px!important}
+
+/* Fieldsets: a hairline group, not a bright box. */
+html[data-theme] body.site-app.owner-workspace main fieldset{border:1px solid var(--line)!important;border-radius:var(--radius-sm);background:transparent}
+html[data-theme] body.site-app.owner-workspace main legend{padding:0 6px;font-size:var(--fs-13);font-weight:600;color:var(--text-ink)}
+
+/* 发现内容: ranking KPI tiles and the empty result well follow the glass surfaces. */
+html[data-theme] body.site-app.owner-workspace main .heat-kpis>div{border:0!important;border-radius:var(--radius-sm)!important;background:var(--glass-sheen),var(--glass-button)!important;box-shadow:var(--glass-rim)!important}
+html[data-theme] body.site-app.owner-workspace main .heat-kpis :is(span,small){color:var(--text-muted)!important}
+html[data-theme] body.site-app.owner-workspace main .heat-kpis strong{color:var(--text-ink)!important}
+/* Empty states: a quiet recessed well with a dashed hairline, in every page. */
+html[data-theme] body.site-app.owner-workspace main :is(.empty-state,.draft-empty-state,.heat-empty,.direction-empty){background:var(--bg-inset)!important;border:1px dashed var(--line-strong)!important;border-radius:var(--radius-md)!important;color:var(--text-body)!important;box-shadow:none!important}

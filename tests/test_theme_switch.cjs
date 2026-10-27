@@ -32,7 +32,7 @@ function contrast(a,b){const lum=color=>rgb(color).map(v=>{v/=255;return v<=.040
   page.on('request',request=>{const url=new URL(request.url());if(/^https?:$/.test(url.protocol)&&!['127.0.0.1','localhost'].includes(url.hostname))results.external.push(url.hostname);if(request.method()!=='GET')results.writes.push(url.pathname);});
   await open(page,origin+'/dashboard');
   assert.equal(await page.locator('#themeToggle').count(),1,'one shared theme toggle is available');
-  assert.equal(await page.locator('html').getAttribute('data-theme'),'dark','first launch stays dark');
+  assert.equal(await page.locator('html').getAttribute('data-theme'),'light','first launch opens in light mode');
   for(const mode of ['light','dark']){
    const beforeSwitchWrites=results.writes.length;
    if(await page.locator('html').getAttribute('data-theme')!==mode)await page.locator('#themeToggle').click();
@@ -84,7 +84,7 @@ function contrast(a,b){const lum=color=>rgb(color).map(v=>{v/=255;return v<=.040
   const unavailable=await context.browser().newContext();
   await unavailable.addInitScript(()=>{Object.defineProperty(window,'localStorage',{get(){throw Error('storage unavailable');}});Object.defineProperty(document,'cookie',{get(){throw Error('cookies unavailable');},set(){throw Error('cookies unavailable');}});});
   const fallback=await unavailable.newPage();await open(fallback,origin+'/dashboard');await fallback.locator('#themeToggle').click();
-  assert.equal(await fallback.locator('html').getAttribute('data-theme'),'light','unavailable storage does not break the current page');await unavailable.close();
+  assert.equal(await fallback.locator('html').getAttribute('data-theme'),'dark','unavailable storage does not break the current page (light default, one click to dark)');await unavailable.close();
   assert.equal(results.errors.length,0,JSON.stringify(results.errors));assert.equal(results.external.length,0);
   assert(!results.writes.some(route=>/generate|transcrib|\/connect|\/collect/.test(route)),'no generation, credential changes or collection calls: '+JSON.stringify(results.writes));
   if(out)await fs.writeFile(path.join(out,'theme-results.json'),JSON.stringify(results,null,2));

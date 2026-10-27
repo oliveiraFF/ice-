@@ -1,10 +1,10 @@
 /* finesse component · ICE tokens · explicit actions / persisted receipts / truthful test states */
 .agent-loop{margin:18px 0;padding:22px;min-width:0;color:var(--theme-ink);background:var(--theme-panel);border:1px solid var(--theme-line);border-radius:16px}
-.agent-loop p{color:var(--theme-muted);font-size:13px;line-height:1.6}.agent-loop h2{margin:0}.agent-loop h3{font-size:15px}
+.agent-loop p{color:var(--theme-muted);font-size:13px;line-height:1.6}.agent-loop h2{margin:0}.agent-loop h3{font-size:14px}
 .agent-loop-toolbar,.agent-loop-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:end;margin:16px 0}
 .agent-loop label{display:grid;gap:6px;margin:10px 0;font-size:13px;min-width:0}.agent-loop input,.agent-loop select,.agent-loop textarea{min-height:44px;padding:10px;border:1px solid var(--theme-line);border-radius:8px;background:var(--theme-input);color:var(--theme-ink);max-width:100%;box-sizing:border-box}.agent-loop textarea{min-height:85px;resize:vertical}
 .agent-loop button{min-height:44px;min-width:120px;padding:10px 14px;background:var(--theme-accent);color:var(--theme-on-accent);border:1px solid transparent;border-radius:9px;cursor:pointer;font:inherit;font-size:13px}
-.agent-loop button.secondary{background:var(--theme-inset);color:var(--theme-ink);border-color:var(--theme-line)}
+
 .agent-loop button:focus-visible,.agent-loop input:focus-visible,.agent-loop select:focus-visible,.agent-loop summary:focus-visible{outline:2px solid var(--theme-accent);outline-offset:3px}
 .agent-loop button:active{transform:translateY(1px)}.agent-loop button:disabled{opacity:.5;cursor:not-allowed;transform:none}
 .agent-loop summary{cursor:pointer;min-height:35px;line-height:35px;color:var(--theme-body)}.agent-loop pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:440px;overflow:auto;font:12px/1.65 Consolas,monospace;background:var(--theme-inset);padding:14px;border-radius:10px;color:var(--theme-body)}
