@@ -20,4 +20,10 @@
 
 证据：theme-results.json、theme-check.txt、finesse-detection.json 以及两模式总览/视频/研究稿/API市场/Agent总览/设置/窄屏截图。
 
-合入提交及主干复验在收尾后补记。
+## 主干与打包复验
+
+- 功能提交 931994b；合入 main 951984307f273bbd6387eaf13b2a2b03eb6403ad。主干同一套14页、两主题、六宽度与重启检查通过，见 main-theme-check.txt / main-theme-results.json。
+- 从干净主干独立打包：E:/leida-build/ice-theme-release-20261027/20261027-030914/ice运营台。268项分发哈希、全部构建输入哈希与主干对应源码一致，未覆盖用户安装包和数据。
+- 新EXE独立数据目录实际启动、正常退出、重启两次；独立Chrome直接访问EXE的真实本机服务，检查总览和视频页、两主题、六宽度、11导航及主题重启恢复。无JS错误与外部请求，见 packaged-packaged-theme-results.json。
+- 图片是实际EXE服务在Chrome中的渲染；没有冒充原生窗口截图。原生截图工具的既有采集限制仍保留。
+- theme工作树无未提交源码、已验证为main祖先；finesse日志保留后安全注销。真实接口的成败另见公开样本验收，不作为主题通过条件。

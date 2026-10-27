@@ -1,0 +1,25 @@
+{
+  "exe": "E:\\leida-build\\ice-theme-release-20261027\\20261027-030914\\ice运营台\\ice运营台.exe",
+  "normal_exits": 2,
+  "pages": [
+    "/dashboard",
+    "/creative"
+  ],
+  "themes": [
+    "dark",
+    "light"
+  ],
+  "widths": [
+    320,
+    375,
+    390,
+    414,
+    768,
+    1280
+  ],
+  "navigation": 11,
+  "persistent_after_exe_restart": true,
+  "errors": [],
+  "external": [],
+  "native_visual_capture": "not tested; actual EXE server rendered through independent Chrome"
+}

@@ -1,0 +1,762 @@
+{
+  "pages": [
+    {
+      "mode": "light",
+      "route": "/dashboard",
+      "body": {
+        "background": "rgb(242, 245, 247)",
+        "color": "rgb(27, 42, 54)"
+      },
+      "nav": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "input": {
+        "background": "rgb(246, 248, 250)",
+        "color": "rgb(27, 42, 54)"
+      },
+      "header": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "surface": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "width": 1280,
+      "scroll": 1280,
+      "navCount": 11
+    },
+    {
+      "mode": "light",
+      "route": "/advice",
+      "body": {
+        "background": "rgb(242, 245, 247)",
+        "color": "rgb(27, 42, 54)"
+      },
+      "nav": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "input": {
+        "background": "rgb(246, 248, 250)",
+        "color": "rgb(27, 42, 54)"
+      },
+      "header": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "surface": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "width": 1280,
+      "scroll": 1280,
+      "navCount": 11
+    },
+    {
+      "mode": "light",
+      "route": "/",
+      "body": {
+        "background": "rgb(242, 245, 247)",
+        "color": "rgb(27, 42, 54)"
+      },
+      "nav": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "input": {
+        "background": "rgb(246, 248, 250)",
+        "color": "rgb(27, 42, 54)"
+      },
+      "header": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "surface": null,
+      "width": 1280,
+      "scroll": 1280,
+      "navCount": 11
+    },
+    {
+      "mode": "light",
+      "route": "/draft",
+      "body": {
+        "background": "rgb(242, 245, 247)",
+        "color": "rgb(27, 42, 54)"
+      },
+      "nav": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "input": {
+        "background": "rgb(246, 248, 250)",
+        "color": "rgb(27, 42, 54)"
+      },
+      "header": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "surface": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "width": 1280,
+      "scroll": 1280,
+      "navCount": 11
+    },
+    {
+      "mode": "light",
+      "route": "/research",
+      "body": {
+        "background": "rgb(242, 245, 247)",
+        "color": "rgb(27, 42, 54)"
+      },
+      "nav": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "input": {
+        "background": "rgb(246, 248, 250)",
+        "color": "rgb(27, 42, 54)"
+      },
+      "header": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "surface": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "width": 1280,
+      "scroll": 1280,
+      "navCount": 11
+    },
+    {
+      "mode": "light",
+      "route": "/media-review",
+      "body": {
+        "background": "rgb(242, 245, 247)",
+        "color": "rgb(27, 42, 54)"
+      },
+      "nav": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "input": {
+        "background": "rgb(246, 248, 250)",
+        "color": "rgb(27, 42, 54)"
+      },
+      "header": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "surface": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "width": 1280,
+      "scroll": 1280,
+      "navCount": 11
+    },
+    {
+      "mode": "light",
+      "route": "/script",
+      "body": {
+        "background": "rgb(242, 245, 247)",
+        "color": "rgb(27, 42, 54)"
+      },
+      "nav": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "input": {
+        "background": "rgb(246, 248, 250)",
+        "color": "rgb(27, 42, 54)"
+      },
+      "header": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "surface": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "width": 1280,
+      "scroll": 1280,
+      "navCount": 11
+    },
+    {
+      "mode": "light",
+      "route": "/feedback",
+      "body": {
+        "background": "rgb(242, 245, 247)",
+        "color": "rgb(27, 42, 54)"
+      },
+      "nav": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "input": {
+        "background": "rgb(246, 248, 250)",
+        "color": "rgb(27, 42, 54)"
+      },
+      "header": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "surface": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "width": 1280,
+      "scroll": 1280,
+      "navCount": 11
+    },
+    {
+      "mode": "light",
+      "route": "/strategy",
+      "body": {
+        "background": "rgb(242, 245, 247)",
+        "color": "rgb(27, 42, 54)"
+      },
+      "nav": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "input": {
+        "background": "rgb(246, 248, 250)",
+        "color": "rgb(27, 42, 54)"
+      },
+      "header": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "surface": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "width": 1280,
+      "scroll": 1280,
+      "navCount": 11
+    },
+    {
+      "mode": "light",
+      "route": "/market",
+      "body": {
+        "background": "rgb(242, 245, 247)",
+        "color": "rgb(27, 42, 54)"
+      },
+      "nav": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "input": {
+        "background": "rgb(246, 248, 250)",
+        "color": "rgb(27, 42, 54)"
+      },
+      "header": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "surface": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "width": 1280,
+      "scroll": 1280,
+      "navCount": 11
+    },
+    {
+      "mode": "light",
+      "route": "/tools",
+      "body": {
+        "background": "rgb(242, 245, 247)",
+        "color": "rgb(27, 42, 54)"
+      },
+      "nav": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "input": {
+        "background": "rgb(246, 248, 250)",
+        "color": "rgb(27, 42, 54)"
+      },
+      "header": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "surface": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "width": 1280,
+      "scroll": 1280,
+      "navCount": 11
+    },
+    {
+      "mode": "light",
+      "route": "/creative",
+      "body": {
+        "background": "rgb(242, 245, 247)",
+        "color": "rgb(27, 42, 54)"
+      },
+      "nav": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "input": {
+        "background": "rgb(246, 248, 250)",
+        "color": "rgb(27, 42, 54)"
+      },
+      "header": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "surface": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "width": 1280,
+      "scroll": 1280,
+      "navCount": 11
+    },
+    {
+      "mode": "light",
+      "route": "/ops-wallboard",
+      "body": {
+        "background": "rgb(242, 245, 247)",
+        "color": "rgb(27, 42, 54)"
+      },
+      "nav": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "input": {
+        "background": "rgb(246, 248, 250)",
+        "color": "rgb(27, 42, 54)"
+      },
+      "header": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "surface": null,
+      "width": 1280,
+      "scroll": 1280,
+      "navCount": 11
+    },
+    {
+      "mode": "light",
+      "route": "/browser-import",
+      "body": {
+        "background": "rgb(242, 245, 247)",
+        "color": "rgb(27, 42, 54)"
+      },
+      "nav": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "input": {
+        "background": "rgb(246, 248, 250)",
+        "color": "rgb(27, 42, 54)"
+      },
+      "header": {
+        "background": "rgb(251, 252, 253)",
+        "color": "rgb(53, 73, 87)"
+      },
+      "surface": null,
+      "width": 1280,
+      "scroll": 1280,
+      "navCount": 11
+    },
+    {
+      "mode": "dark",
+      "route": "/dashboard",
+      "body": {
+        "background": "rgb(10, 14, 20)",
+        "color": "rgb(237, 242, 247)"
+      },
+      "nav": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "input": {
+        "background": "rgb(17, 25, 35)",
+        "color": "rgb(237, 242, 247)"
+      },
+      "header": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "surface": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "width": 1280,
+      "scroll": 1280,
+      "navCount": 11
+    },
+    {
+      "mode": "dark",
+      "route": "/advice",
+      "body": {
+        "background": "rgb(10, 14, 20)",
+        "color": "rgb(237, 242, 247)"
+      },
+      "nav": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "input": {
+        "background": "rgb(17, 25, 35)",
+        "color": "rgb(237, 242, 247)"
+      },
+      "header": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "surface": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "width": 1280,
+      "scroll": 1280,
+      "navCount": 11
+    },
+    {
+      "mode": "dark",
+      "route": "/",
+      "body": {
+        "background": "rgb(10, 14, 20)",
+        "color": "rgb(237, 242, 247)"
+      },
+      "nav": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "input": {
+        "background": "rgb(17, 25, 35)",
+        "color": "rgb(237, 242, 247)"
+      },
+      "header": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "surface": null,
+      "width": 1280,
+      "scroll": 1280,
+      "navCount": 11
+    },
+    {
+      "mode": "dark",
+      "route": "/draft",
+      "body": {
+        "background": "rgb(10, 14, 20)",
+        "color": "rgb(237, 242, 247)"
+      },
+      "nav": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "input": {
+        "background": "rgb(17, 25, 35)",
+        "color": "rgb(237, 242, 247)"
+      },
+      "header": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "surface": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "width": 1280,
+      "scroll": 1280,
+      "navCount": 11
+    },
+    {
+      "mode": "dark",
+      "route": "/research",
+      "body": {
+        "background": "rgb(10, 14, 20)",
+        "color": "rgb(237, 242, 247)"
+      },
+      "nav": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "input": {
+        "background": "rgb(17, 25, 35)",
+        "color": "rgb(237, 242, 247)"
+      },
+      "header": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "surface": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "width": 1280,
+      "scroll": 1280,
+      "navCount": 11
+    },
+    {
+      "mode": "dark",
+      "route": "/media-review",
+      "body": {
+        "background": "rgb(10, 14, 20)",
+        "color": "rgb(237, 242, 247)"
+      },
+      "nav": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "input": {
+        "background": "rgb(17, 25, 35)",
+        "color": "rgb(237, 242, 247)"
+      },
+      "header": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "surface": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "width": 1280,
+      "scroll": 1280,
+      "navCount": 11
+    },
+    {
+      "mode": "dark",
+      "route": "/script",
+      "body": {
+        "background": "rgb(10, 14, 20)",
+        "color": "rgb(237, 242, 247)"
+      },
+      "nav": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "input": {
+        "background": "rgb(17, 25, 35)",
+        "color": "rgb(237, 242, 247)"
+      },
+      "header": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "surface": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "width": 1280,
+      "scroll": 1280,
+      "navCount": 11
+    },
+    {
+      "mode": "dark",
+      "route": "/feedback",
+      "body": {
+        "background": "rgb(10, 14, 20)",
+        "color": "rgb(237, 242, 247)"
+      },
+      "nav": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "input": {
+        "background": "rgb(17, 25, 35)",
+        "color": "rgb(237, 242, 247)"
+      },
+      "header": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "surface": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "width": 1280,
+      "scroll": 1280,
+      "navCount": 11
+    },
+    {
+      "mode": "dark",
+      "route": "/strategy",
+      "body": {
+        "background": "rgb(10, 14, 20)",
+        "color": "rgb(237, 242, 247)"
+      },
+      "nav": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "input": {
+        "background": "rgb(17, 25, 35)",
+        "color": "rgb(237, 242, 247)"
+      },
+      "header": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "surface": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "width": 1280,
+      "scroll": 1280,
+      "navCount": 11
+    },
+    {
+      "mode": "dark",
+      "route": "/market",
+      "body": {
+        "background": "rgb(10, 14, 20)",
+        "color": "rgb(237, 242, 247)"
+      },
+      "nav": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "input": {
+        "background": "rgb(17, 25, 35)",
+        "color": "rgb(237, 242, 247)"
+      },
+      "header": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "surface": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "width": 1280,
+      "scroll": 1280,
+      "navCount": 11
+    },
+    {
+      "mode": "dark",
+      "route": "/tools",
+      "body": {
+        "background": "rgb(10, 14, 20)",
+        "color": "rgb(237, 242, 247)"
+      },
+      "nav": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "input": {
+        "background": "rgb(17, 25, 35)",
+        "color": "rgb(237, 242, 247)"
+      },
+      "header": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "surface": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "width": 1280,
+      "scroll": 1280,
+      "navCount": 11
+    },
+    {
+      "mode": "dark",
+      "route": "/creative",
+      "body": {
+        "background": "rgb(10, 14, 20)",
+        "color": "rgb(237, 242, 247)"
+      },
+      "nav": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "input": {
+        "background": "rgb(17, 25, 35)",
+        "color": "rgb(237, 242, 247)"
+      },
+      "header": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "surface": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "width": 1280,
+      "scroll": 1280,
+      "navCount": 11
+    },
+    {
+      "mode": "dark",
+      "route": "/ops-wallboard",
+      "body": {
+        "background": "rgb(10, 14, 20)",
+        "color": "rgb(237, 242, 247)"
+      },
+      "nav": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "input": {
+        "background": "rgb(17, 25, 35)",
+        "color": "rgb(237, 242, 247)"
+      },
+      "header": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "surface": null,
+      "width": 1280,
+      "scroll": 1280,
+      "navCount": 11
+    },
+    {
+      "mode": "dark",
+      "route": "/browser-import",
+      "body": {
+        "background": "rgb(10, 14, 20)",
+        "color": "rgb(237, 242, 247)"
+      },
+      "nav": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "input": {
+        "background": "rgb(17, 25, 35)",
+        "color": "rgb(237, 242, 247)"
+      },
+      "header": {
+        "background": "rgb(24, 30, 39)",
+        "color": "rgb(197, 208, 221)"
+      },
+      "surface": null,
+      "width": 1280,
+      "scroll": 1280,
+      "navCount": 11
+    }
+  ],
+  "errors": [],
+  "external": [],
+  "writes": [
+    "/api/ai/cache",
+    "/api/ai/cache",
+    "/api/ai/cache",
+    "/api/ai/cache",
+    "/api/ai/cache",
+    "/api/ai/cache",
+    "/api/ai/cache",
+    "/api/ai/cache",
+    "/api/ai/cache",
+    "/api/ai/cache",
+    "/api/ai/cache",
+    "/api/ai/cache"
+  ],
+  "restart": {
+    "newPort": true,
+    "restored": "light"
+  }
+}
