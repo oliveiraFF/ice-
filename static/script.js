@@ -145,7 +145,8 @@
       '<p>选题：' + esc((plan.topic_snapshot || {}).topic || '待补') + '</p>' +
       '<label>镜头（每行一个）<textarea id="planShots" rows="2">' + esc((plan.shots || []).join('\n')) + '</textarea></label>' +
       '<label>素材 / 证明<textarea id="planProof" rows="2">' + esc(plan.proof || '') + '</textarea></label>' +
-      '<label>下一动作<input id="planNext" value="' + esc(plan.next_action || '') + '"></label>';
+      '<label>下一动作<input id="planNext" value="' + esc(plan.next_action || '') + '"></label>' +
+      (plan.video_prompt ? '<h4>AI 辅助画面提示词（随此版本保存）</h4><p>' + esc(plan.video_prompt) + '</p>' : '');
     ['planShots', 'planProof', 'planNext'].forEach(id => {
       el(id).oninput = () => {
         planDirty = true;
@@ -216,6 +217,7 @@
     lines.push('镜头：' + ((plan.shots || []).length ? plan.shots.join('；') : '待补'));
     lines.push('素材/证明：' + (plan.proof || '待补'));
     lines.push('下一动作：' + (plan.next_action || '待补'));
+    if (plan.video_prompt) lines.push('', '## AI 辅助画面提示词', plan.video_prompt);
     const suggestions = data.suggestion_snapshot || [];
     lines.push('', '## 复盘建议（执行参考，不是商品事实）');
     suggestions.forEach(item => {
