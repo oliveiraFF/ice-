@@ -295,5 +295,14 @@
     "validation": "docs/acceptance-20261027/local-asr/acceptance.md；51项主干Python、14页两主题六宽度、实际EXE离线识别/下载/保存/退出重开；268分发哈希、170构建输入通过",
     "remaining": "ASR内容准确性需人工校对；账号资料和正式策略待用户确认；本轮新增收费0次",
     "completion": "已合入主干并通过真实EXE复验；证据提交后安全注销工作树"
+  },
+  {
+    "branch": "feat/agent-ops-loop",
+    "goal": "仅隔离测试workspace的软件内诊断至复盘单条链路",
+    "head": "2c75bcba483ed32b62ab17aa41c689a71397c5e4",
+    "main_merge": "e388e927f045c2e1591754d47e6b61e5348efa7d",
+    "validation": "docs/acceptance-20261027/agent-ops-loop/acceptance.md；主干59项Python无失败（4跳过），真实UI与EXE保存/历史/下载/退出重开；270分发哈希、173构建输入匹配",
+    "remaining": "正式账号未改；标题资料分析未核验画面；实际拍摄发布、经营指标及最终人工质量待验",
+    "completion": "已实现、验证、合入本地主干、主干复验，无未保存工作后Git安全注销工作树与分支"
   }
 ]
