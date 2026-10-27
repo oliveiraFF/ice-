@@ -1,0 +1,37 @@
+{
+  "feature_commit": "5e04dc8",
+  "main_merge": "2f2561b87520a794dd5bb260e50da921139ef4de",
+  "main_browser": "passed",
+  "aggregation_test": "passed",
+  "python_tests": {
+    "run": 40,
+    "passed": 36,
+    "skipped": 4
+  },
+  "build": {
+    "directory": "E:\\leida-build\\ice-today-operations-20261027\\20261027-022708\\ice运营台",
+    "source_commit": "2f2561b87520a794dd5bb260e50da921139ef4de",
+    "source_dirty": false,
+    "manifest_files": 266,
+    "manifest_mismatches": 0,
+    "main_input_mismatches": []
+  },
+  "packaged_page": {
+    "actual_exe_service": true,
+    "title": "今日运营",
+    "viewport": 1280,
+    "horizontal_overflow": false,
+    "javascript_errors": 0
+  },
+  "native_capture": {
+    "verified": false,
+    "reason": "原生观察工具的截图与目标窗口内容不一致，并曾提示检测到用户输入；未把该采集结果作为原生视觉通过证据"
+  },
+  "cleanup": {
+    "feature_merged": true,
+    "worktree_removed": true,
+    "branch_deleted": true,
+    "finesse_log_preserved": true
+  },
+  "paid_requests": 0
+}

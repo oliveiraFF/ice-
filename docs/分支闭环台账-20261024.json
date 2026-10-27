@@ -236,8 +236,9 @@
     "branch": "feat/ui-today-operations",
     "goal": "按照用户今日运营截图调整总览；真实本机数据、响应式布局和动态跳转",
     "validation": "docs/acceptance-20261027/today-operations/acceptance.md；六宽度与11项导航、合成记录实际落库读取、失败恢复、原视频工作流回归；40项Python回归含4项条件跳过",
-    "main_merge": "待合入",
-    "remaining": "内容类型分类字段未接入；真实业务质量仍按项目人工门槛执行",
-    "completion": "分支已验证，待合入主干复验和安全收尾"
+    "main_merge": "2f2561b87520a794dd5bb260e50da921139ef4de",
+    "remaining": "内容类型字段待接入；原生截图采集异常未作为通过证据；项目真实模型质量仍待人工评审",
+    "completion": "前端目标与main浏览器复验完成；独立EXE构建、启动及本机页面通过。工作树和分支已安全注销；原生视觉采集未确认，详见验收记录",
+    "head": "5e04dc8"
   }
 ]

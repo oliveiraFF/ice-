@@ -1,0 +1,1 @@
+PASS local ICE browser contract: 6 widths, today composition, real local synthetic fixtures, failed-read recovery, unchanged workflow, 11 navigation items, no paid/external requests

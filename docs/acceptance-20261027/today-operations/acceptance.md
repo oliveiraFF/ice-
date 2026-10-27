@@ -31,4 +31,15 @@
 - creative-1280.png、creative-390.png：原视频工作流回归
 - tests/test_today_operations.cjs、tests/test_ui_fullflow_v2.cjs
 
-合入与主干复验记录在完成后追加。
+## 合入、打包与安全收尾
+
+- 功能提交 5e04dc8；本地 main 合入提交 2f2561b87520a794dd5bb260e50da921139ef4de。
+- main 实际重新运行六宽度浏览器验收、非空临时数据库、失败恢复、11 导航及视频工作流回归，全部通过。另见 main-browser-results.json、main-browser-check.txt。
+- 用 Python 3.12.14 / PyInstaller 6.22.3 从干净 main 构建新 onedir 桌面包，路径为 E:/leida-build/ice-today-operations-20261027/20261027-022708/ice运营台。未覆盖现有安装包或用户数据库。
+- 新包 266 个分发文件哈希全部通过；构建输入与当前主干的对应源码哈希全部匹配。
+- 打包 EXE 用独立临时数据目录实际启动。独立 Chrome 直接访问该 EXE 提供的本机服务，渲染「今日运营」与真实空库状态，1280 宽无横向溢出，0 个 JS 错误，截图 packaged-dashboard-1280.png。
+- 原生窗口截图采集异常：观察工具曾返回灰色内容或不匹配目标窗口的画面，并提示检测到用户输入。未把这一结果记为原生视觉验收通过。此限制保留，不能用浏览器截图冒充原生窗口截图。
+- 额外隔离实例通过带同源与 token 保护的退出接口正常退出；供查看的首个隔离实例保留。
+- feat/ui-today-operations 已确认是 main 祖先，工作树无未提交文件后注销；分支已安全删除，finesse 日志已保留。未推送远端。
+
+本次前端目标、主干浏览器与打包启动检查完成；原生截图工具的采集限制及内容类型待接入均明确保留。详细机器记录见 closure.json。
