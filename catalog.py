@@ -13,6 +13,14 @@ PLATFORMS = {'douyin': '抖音', 'xiaohongshu': '小红书', 'tiktok': 'TikTok',
              'kuaishou': '快手', 'weibo': '微博', 'wechat': '微信', 'instagram': 'Instagram',
              'twitter': 'X / Twitter', 'demo': '演示接口', 'health': '服务健康检查'}
 
+MAX_RESPONSE_BYTES = 10 * 1024 * 1024
+DISPLAY_LIMIT = 300000
+
+
+class ResponseTooLarge(ValueError):
+    def __init__(self):
+        super().__init__('响应超过本机处理上限（10MiB），未收录；已停止，不自动重试。')
+
 
 def price(value):
     try:
@@ -310,7 +318,7 @@ class Catalog:
             db.commit()
             return row.lastrowid
 
-    def run(self, ident, key, params, body, call):
+    def run(self, ident, key, params, body, call, consume=None):
         item = self.get(ident)
         state = self.state()
         tool = state['tools'].get(ident)
@@ -352,22 +360,37 @@ class Catalog:
                 funding_source = 'balance'
             request_id = self.reserve(ident, Decimal(current), uses_balance=funding_source == 'balance')
         ok = False
+        response_too_large = False
         try:
             payload = call(item['path'], key=key if item['requires_key'] else None, params=params,
                            body=body if item['method'] == 'POST' else None)
+            encoded = json.dumps(payload, ensure_ascii=False, separators=(',', ':'), allow_nan=False)
+            if len(encoded.encode('utf-8')) > MAX_RESPONSE_BYTES:
+                raise ResponseTooLarge()
+            if key:
+                encoded = encoded.replace(json.dumps(key, ensure_ascii=False)[1:-1], '[密钥已隐藏]')
+            payload = json.loads(encoded)
             result = json.dumps(payload, ensure_ascii=False, indent=2)
             ok = payload.get('code', 200) in (0, 200)
         except ValueError as exc:
             result = str(exc)
+            response_too_large = isinstance(exc, ResponseTooLarge)
         if key:
             result = result.replace(key, '[密钥已隐藏]')
-        truncated = len(result) > 300000
-        result = result[:300000] + ('\n…响应超过显示上限，已截断。' if truncated else '')
+        truncated = len(result) > DISPLAY_LIMIT
+        result = result[:DISPLAY_LIMIT] + ('\n…仅页面预览已截断，是否收录请查看收录结果。' if truncated else '')
         at = time.time()
         with closing(sqlite3.connect(self.database, timeout=15)) as db:
             db.execute('UPDATE tools SET last_at=?,last_ok=?,last_result=? WHERE id=?', (at, int(ok), result if self.retain_result else None, ident))
             if request_id is not None:
                 db.execute('UPDATE api_requests SET outcome=? WHERE id=?', ('returned' if ok else 'uncertain', request_id))
             db.commit()
-        return dict(ok=ok, result=result, at=at, truncated=truncated, cost=current,
+        receipt = dict(ok=ok, result=result, at=at, truncated=truncated, cost=current,
+                    response_too_large=response_too_large,
                     funding_source=funding_source, access=self.access_state())
+        if ok and consume is not None:
+            try:
+                consume(payload)
+            except (ValueError, TypeError, KeyError, AttributeError, RecursionError):
+                receipt['processing_error'] = '接口已返回成功，但本机解析未完成；未自动重试。'
+        return receipt
