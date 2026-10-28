@@ -24,7 +24,7 @@ from socketserver import ThreadingMixIn
 from urllib.error import HTTPError, URLError
 from urllib.parse import parse_qs, urlencode, urlsplit, unquote
 from urllib.request import Request, urlopen
-from catalog import Catalog
+from catalog import Catalog, MAX_RESPONSE_BYTES, ResponseTooLarge
 from free_tools import download_cached_video, imported_posts, cached_media_url, resolved_media_url, validate_media_url
 from browser_collector import browser_posts
 from ai_directions import AIDirections
@@ -407,7 +407,10 @@ def tikhub_json(path, key=None, body=None, params=None):
     request = Request(url, data=json.dumps(body).encode('utf-8') if body is not None else None, headers=headers)
     try:
         with urlopen(request, timeout=30) as response:
-            payload = json.load(response)
+            raw = response.read(MAX_RESPONSE_BYTES + 1)
+            if len(raw) > MAX_RESPONSE_BYTES:
+                raise ResponseTooLarge()
+            payload = json.loads(raw)
     except HTTPError as exc:
         detail = ''
         try:
@@ -422,7 +425,9 @@ def tikhub_json(path, key=None, body=None, params=None):
         raise ValueError('数据服务 HTTP {}：{}'.format(exc.code, detail[:240] or '请求被拒绝；已停止，不自动重试'))
     except (URLError, TimeoutError, OSError):
         raise ValueError('数据服务连接超时或不可达；已停止，不自动重试')
-    except (ValueError, UnicodeError):
+    except ResponseTooLarge:
+        raise
+    except (ValueError, UnicodeError, RecursionError):
         raise ValueError('数据服务返回了无法识别的响应')
     if not isinstance(payload, dict) or payload.get('code') not in (0, 200, '200'):
         raise ValueError('数据服务未返回成功状态，请到供应商后台检查请求记录')
@@ -4638,10 +4643,12 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                             if not scan_lock.acquire(False):
                                 raise ValueError('已有接口请求正在运行，请等待完成')
                             try:
-                                result = catalog.run(resolver, api_key[0], {'aweme_id': post['external_id']}, None, tikhub_json)
-                                if not result['ok'] or result['truncated']:
+                                resolved = []
+                                result = catalog.run(resolver, api_key[0], {'aweme_id': post['external_id']}, None, tikhub_json,
+                                    consume=lambda payload: resolved.append(resolved_media_url(payload, post['external_id'])))
+                                if not result['ok'] or result.get('processing_error'):
                                     raise ValueError('获取直链失败；未下载，不自动重试：' + result['result'][:500])
-                                url = resolved_media_url(json.loads(result['result']), post['external_id'])
+                                url = resolved[0]
                                 post = store.set_video_url(ident, url)
                                 resolution_cost = result['cost']
                             finally:
@@ -4676,18 +4683,21 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                     try:
                         if body.get('collect') is True and catalog.get(str(body.get('id', ''))).get('collection_supported') is False:
                             raise ValueError('此接口只返回话题，不能收录为视频；请取消收录或选择视频接口。未发出供应商请求。')
+                        item = catalog.get(str(body.get('id', '')))
+                        posts = []
+                        consume = (lambda payload: posts.extend(extract_posts(payload, 'dy' if item['platform']=='douyin' else 'xhs'))) \
+                            if body.get('collect') is True and item['platform'] in ('douyin','xiaohongshu') else None
                         result = catalog.run(str(body.get('id', '')), api_key[0],
-                                             body.get('params', {}), body.get('body'), tikhub_json)
+                                             body.get('params', {}), body.get('body'), tikhub_json, consume=consume)
                         if body.get('collect') is True:
                             item = catalog.get(str(body.get('id', '')))
                             if item['platform'] not in ('douyin', 'xiaohongshu'):
                                 result['collection_message'] = '此平台暂不支持收录到发现内容，响应已保留。'
                             elif not result['ok']:
                                 result['collection_message'] = '接口执行失败，未收录视频。实际原因：' + result['result'][:500]
-                            elif result['truncated']:
-                                result['collection_message'] = '响应超过大小上限，未收录视频。'
+                            elif result.get('processing_error'):
+                                result['collection_message'] = result['processing_error']
                             else:
-                                posts = extract_posts(json.loads(result['result']), 'dy' if item['platform']=='douyin' else 'xhs')
                                 keyword = str(body.get('keyword') or 'TikHub采集').strip()
                                 if not keyword or len(keyword) > 40:
                                     result['collection_message'] = '收录关键词无效，响应已保留。'
@@ -4701,6 +4711,8 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                                     result['keyword_id'] = ident
                                 else:
                                     result['collection_message'] = '响应中没有可识别的作品，未收录。请检查原始响应。'
+                                if result['truncated']:
+                                    result['collection_message'] += ' 页面仅展示前30万字符，收录已使用完整响应。'
                         return self.send(result)
                     finally:
                         scan_lock.release()
