@@ -65,7 +65,28 @@ def example(schema):
     return [] if kind == 'array' else False if kind == 'boolean' else 0 if kind in ('integer', 'number') else ''
 
 
+# Confirmed by the local 2026-10-27 response; do not retry or infer a replacement route.
+UNAVAILABLE_ROUTES = {
+    '/api/v1/douyin/app/v1/fetch_hashtag_search_result':
+        '此历史话题搜索接口已返回 HTTP 404，已暂停调用；可使用视频分享链接收录或导入本地视频。',
+}
+
+
+def availability(item, last_ok=None):
+    if item['path'] in UNAVAILABLE_ROUTES:
+        status, label = 'unavailable', '不可用 · HTTP 404'
+    elif last_ok:
+        status, label = 'verified_response', '已验证响应'
+    elif item.get('legacy_documentation'):
+        status, label = 'legacy', '历史接口 · 待验证' if last_ok is None else '历史接口 · 最近失败'
+    else:
+        status, label = 'unverified', '待验证' if last_ok is None else '最近失败 · 待验证'
+    return dict(availability=status, availability_label=label)
+
+
 def execution_reason(item, allow_balance=False):
+    if item['path'] in UNAVAILABLE_ROUTES:
+        return UNAVAILABLE_ROUTES[item['path']]
     if re.search(r'live|webcast|livestream', item['path'], re.I):
         return '直播接口按设置停用'
     if not item['runnable']:
@@ -189,9 +210,11 @@ class Catalog:
     def state(self):
         with closing(sqlite3.connect(self.database, timeout=15)) as db:
             rows = db.execute('SELECT id,enabled,last_at,last_ok FROM tools WHERE added=1').fetchall()
+        last_ok = {r[0]: r[3] for r in rows}
         access = self.access_state()
         compact = [dict({k: v for k, v in i.items() if k not in ('description', 'query', 'body', 'parameters', 'body_schema')},
-                        execution_reason=execution_reason(i, access['allow_balance'])) for i in self.items]
+                        execution_reason=execution_reason(i, access['allow_balance']),
+                        **availability(i, last_ok.get(i['id']))) for i in self.items]
         return dict(items=compact, imported_at=self.snapshot['imported_at'], source=self.snapshot['source'],
                     access=access,
                     tools={r[0]: dict(enabled=bool(r[1]), last_at=r[2], last_ok=None if r[3] is None else bool(r[3]))
@@ -201,8 +224,9 @@ class Catalog:
         item = dict(self.get(ident))
         item['execution_reason'] = execution_reason(item, self.access_state()['allow_balance'])
         with closing(sqlite3.connect(self.database, timeout=15)) as db:
-            row = db.execute('SELECT last_result FROM tools WHERE id=?', (ident,)).fetchone()
+            row = db.execute('SELECT last_result,last_ok FROM tools WHERE id=?', (ident,)).fetchone()
         item['last_result'] = row[0] if row else None
+        item.update(availability(item, row[1] if row else None))
         return item
 
     def manage(self, ident, action):
