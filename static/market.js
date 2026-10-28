@@ -10,7 +10,7 @@ const moneyText = value => value === null || value === undefined ? '未知' : '$
 function toast(message){clearTimeout(toastTimer);$('marketToast').textContent=message;$('marketToast').hidden=false;toastTimer=setTimeout(()=>$('marketToast').hidden=true,6000);}
 async function api(path,body){const response=await fetch(path,body===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json','X-Radar-Token':model.token},body:JSON.stringify(body)});const value=await response.json();if(!response.ok)throw new Error(value.error||'请求失败');return value;}
 function methodBadge(row){return `<span class="api-method ${esc(row.method.toLowerCase())}">${row.method==='UNKNOWN'?'待核实':esc(row.method)}</span>`;}
-function feeBadges(row){return `${row.price==='0'?'<span class="api-badge free">$0 零费用</span>':''}<span class="api-badge ${row.free_credit?'credit':''}">${row.free_credit?RadarIcons.svg('gift')+'赠送额度':'⊗ 无赠送额度'}</span><span class="api-badge ${row.discount?'discount':''}">${row.discount?RadarIcons.svg('percent')+'折扣':'⊗ 无折扣'}</span>${row.legacy_documentation?'<span class="api-badge">历史文档 · 可用性未验证</span>':!row.documented?'<span class="api-badge">文档待补充</span>':''}`;}
+function feeBadges(row){return `${row.price==='0'?'<span class="api-badge free">$0 零费用</span>':''}<span class="api-badge ${row.free_credit?'credit':''}">${row.free_credit?RadarIcons.svg('gift')+'赠送额度':'⊗ 无赠送额度'}</span><span class="api-badge ${row.discount?'discount':''}">${row.discount?RadarIcons.svg('percent')+'折扣':'⊗ 无折扣'}</span><span class="api-badge" title="已验证响应仅指最近请求成功，不代表视频已收录或分析完成">${esc(row.availability_label||'待验证')}</span>${!row.documented?'<span class="api-badge">文档待补充</span>':''}`;}
 async function load(){model=await api('/api/catalog');render();if(detail)refreshDetail();}
 function filtered(){
   return model.items.filter(row=>MarketData.matches(row,{q:$('apiSearch').value.trim(),platform,feature,type,credit,discount,method:$('methodFilter').value,cost:$('priceFilter').value,managed:$('managedFilter').checked},model.tools));
@@ -49,7 +49,7 @@ function refreshDetail(){
   $('detailManage').disabled=Boolean(reasonNow&&!tool?.enabled)||busy;
   $('detailManage').textContent=tool?.enabled?'停用接口':reasonNow?'当前不可执行':'启用接口';
   $('runTool').disabled=busy||Boolean(reason);
-  $('runTool').textContent=busy?'正在运行…':`手动探针 · ${moneyText(detail.price)}`;
+  $('runTool').textContent=busy?'正在运行…':detail.availability==='unavailable'?'接口不可用 · 已暂停':`手动探针 · ${moneyText(detail.price)}`;
   $('runEligibility').textContent=reason||'执行前再次检查实时价格与额度';
 }
 async function openDetail(id){
@@ -64,6 +64,7 @@ async function openDetail(id){
   if(keyword){const query=JSON.parse($('queryInput').value),body=JSON.parse($('bodyInput').value);if(detail.parameters.some(p=>p.in==='query'&&p.name==='keyword'))query.keyword=keyword;else if(detail.body_schema?.properties?.keyword)body.keyword=keyword;else if(detail.body_schema?.properties?.query)body.query=keyword;$('queryInput').value=JSON.stringify(query,null,2);$('bodyInput').value=JSON.stringify(body,null,2);}
   if(detail.path==='/api/v1/douyin/app/v3/fetch_one_video_by_share_url'&&new URLSearchParams(location.search).get('collect')==='1'){const query=JSON.parse($('queryInput').value);query.share_url='';$('queryInput').value=JSON.stringify(query,null,2);}
   $('legacyNotice').hidden=!detail.legacy_documentation;
+  $('legacyNotice').textContent=detail.availability==='unavailable'?detail.execution_reason:'此接口参数来自官方历史SDK，当前服务可用性尚未验证。';
   $('collectionOptions').hidden=!['douyin','xiaohongshu'].includes(detail.platform);
   $('collectResult').checked=new URLSearchParams(location.search).get('collect')==='1'&&!$('collectionOptions').hidden;
   $('collectionKeyword').value=keyword||'TikHub采集';$('collectionStatus').textContent='';$('viewCollected').hidden=true;renderParameterFields();
