@@ -349,5 +349,14 @@
     "validation": "docs/acceptance-20261027/capture-docs/acceptance.md 与 delivery-v4.md；80项主干Python无失败（4跳过），真实源码/EXE必填与枚举/类型/JSON/切换/重开，179构建输入和276安装文件，安装升级卸载保留账号资料通过",
     "remaining": "未新增付费业务验证；文档对齐不等于平台实测成功；其余接口未宣称审核完成；安装包未签名",
     "completion": "已合主干并实际复验；桌面2026.10.27.4与验收哈希一致，工作树及分支干净后安全注销，旧程序和快捷方式保留"
+  },
+  {
+    "branch": "fix/large-response-collection",
+    "goal": "完整大响应收录与页面预览分离，独立10MiB边界及不重试预算保护",
+    "head": "88dec8c",
+    "main_merge": "98c16e8a419215f55547428d39f1b5d7fcfb9fe1",
+    "validation": "docs/acceptance-20261028/large-response/acceptance.md 与 delivery.md；88项主干Python无失败（4跳过），真实本地HTTP/Chrome完整响应收录与超限/重启、冻结EXE回归；179输入/276安装文件；独立目录安装升级卸载复测通过",
+    "remaining": "首轮卸载残留UninstallICE.exe，复测未复现，原因未确认且安装器未改；安装包未签名；没有新增TikHub实测，旧截断原文不可恢复",
+    "completion": "已实现、验证、合入本地主干并复验；桌面交付2026.10.28.1，原快捷方式校验恢复；工作树及分支无未保存工作后安全注销"
   }
 ]
