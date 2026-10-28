@@ -65,7 +65,11 @@ async function openDetail(id){
   if(detail.path==='/api/v1/douyin/app/v3/fetch_one_video_by_share_url'&&new URLSearchParams(location.search).get('collect')==='1'){const query=JSON.parse($('queryInput').value);query.share_url='';$('queryInput').value=JSON.stringify(query,null,2);}
   $('legacyNotice').hidden=!detail.legacy_documentation;
   $('legacyNotice').textContent=detail.availability==='unavailable'?detail.execution_reason:'此接口参数来自官方历史SDK，当前服务可用性尚未验证。';
-  $('collectionOptions').hidden=!['douyin','xiaohongshu'].includes(detail.platform);
+  $('collectionOptions').hidden=!['douyin','xiaohongshu'].includes(detail.platform)||detail.collection_supported===false||detail.availability==='unavailable';
+  $('captureHelp').hidden=detail.platform!=='douyin'||!(detail.capture_help||detail.availability==='unavailable');
+  $('capturePurpose').textContent=detail.capture_help||detail.execution_reason||'';
+  $('captureInputHelp').textContent=detail.input_help||'请手动选择用途对应的当前接口；这里只切换表单，不发起抓取。';
+  $('captureRoutes').innerHTML=[['POST /api/v1/douyin/search/fetch_video_search_v2','视频搜索 V2'],['POST /api/v1/douyin/search/fetch_challenge_search_v2','话题搜索 V2'],['GET /api/v1/douyin/app/v3/fetch_one_video_by_share_url','分享链接收录']].map(([id,label])=>`<button type="button" class="secondary compact" data-capture-target="${esc(id)}" ${id===detail.id?'disabled':''}>${label}</button>`).join('');
   $('collectResult').checked=new URLSearchParams(location.search).get('collect')==='1'&&!$('collectionOptions').hidden;
   $('collectionKeyword').value=keyword||'TikHub采集';$('collectionStatus').textContent='';$('viewCollected').hidden=true;renderParameterFields();
   $('toolResponse').textContent=detail.last_result||'尚未执行这个接口，没有测试结果。';
@@ -81,6 +85,7 @@ document.addEventListener('click',async event=>{
     if(button.hasAttribute('data-platform')){platform=button.dataset.platform;page=1;render();}
     if(button.hasAttribute('data-feature')){feature=button.dataset.feature;page=1;render();}
     if(button.dataset.detail)await openDetail(button.dataset.detail);
+    if(button.dataset.captureTarget)await openDetail(button.dataset.captureTarget);
     if(button.dataset.add)await manage(button.dataset.add,'add');
     if(button.dataset.remove)await manage(button.dataset.remove,'remove');
     if(button.dataset.toggle)await manage(button.dataset.toggle,model.tools[button.dataset.toggle].enabled?'disable':'enable');
@@ -91,7 +96,7 @@ $('runTool').onclick=async()=>{
   if(busy||!detail)return;
   if(isLegacyDouyinSearch(detail)){$('runStatus').textContent='历史搜索接口已暂停，未发出请求。请使用当前接口文档中的地址。';refreshDetail();return;}
   const id=detail.id;let params,body;
-  for(const field of document.querySelectorAll('#parameterFields input'))if(!field.checkValidity()){field.reportValidity();return;}
+  for(const field of document.querySelectorAll('#parameterFields input,#parameterFields select'))if(!field.checkValidity()){field.reportValidity();return;}
   try{params=JSON.parse($('queryInput').value);body=detail.method==='POST'?JSON.parse($('bodyInput').value):null;if(!params||Array.isArray(params)||typeof params!=='object')throw new Error('查询参数必须是 JSON 对象');}catch(error){toast('请检查参数 JSON：'+error.message);return;}
   if(detail.path==='/api/v1/douyin/app/v3/fetch_one_video_by_share_url'&&!String(params.share_url||'').trim()){$('runStatus').textContent='请先在 share_url 中粘贴你的视频分享链接；未发送请求。';return;}
   busy=true;refreshDetail();$('runStatus').textContent='正在核实实时价格并执行一次…';
@@ -117,8 +122,17 @@ function renderParameterFields(){
   let query,body;try{query=JSON.parse($('queryInput').value);body=JSON.parse($('bodyInput').value);}catch{return;}
   const fields=detail.parameters.filter(p=>p.in==='query').map(p=>({...p,scope:'query'}));
   for(const [name,schema] of Object.entries(detail.body_schema?.properties||{}))fields.push({name,schema,scope:'body',required:detail.body_schema.required?.includes(name),description:schema.description});
-  $('parameterFields').innerHTML=fields.map((p,index)=>{const schema=p.schema?.anyOf?.find(s=>s.type!=='null')||p.schema||{},value=(p.scope==='query'?query:body)?.[p.name],text=value===undefined||value===null?'':typeof value==='object'?JSON.stringify(value):String(value);return `<label>${esc(p.name)} ${p.required?'<b>必填</b>':'<small>选填</small>'}<input data-param-index="${index}" value="${esc(text)}" aria-label="参数 ${esc(p.name)}" placeholder="${esc(schema.enum?'选项：'+schema.enum.join(' / '):schema.type||'值')}"><small>${esc((p.description||'').slice(0,500))}</small></label>`;}).join('');
-  $('parameterFields').oninput=event=>{const index=event.target.dataset.paramIndex;if(index===undefined)return;const p=fields[Number(index)],schema=p.schema?.anyOf?.find(s=>s.type!=='null')||p.schema||{},input=event.target.value,target=p.scope==='query'?'queryInput':'bodyInput';try{const data=JSON.parse($(target).value);if(input==='')delete data[p.name];else data[p.name]=['integer','number','boolean','array','object'].includes(schema.type)?JSON.parse(input):input;$(target).value=JSON.stringify(data,null,2);event.target.setCustomValidity('');}catch{event.target.setCustomValidity('请填写正确的数字、布尔值或JSON');}};
+  const common=[],advanced=[];
+  fields.forEach((p,index)=>{
+    const schema=p.schema?.anyOf?.find(s=>s.type!=='null')||p.schema||{},value=(p.scope==='query'?query:body)?.[p.name],text=value===undefined||value===null?'':typeof value==='object'?JSON.stringify(value):String(value);
+    const attrs=`data-param-index="${index}" aria-label="参数 ${esc(p.name)}" ${p.required?'required':''}`;
+    const control=schema.enum?`<select ${attrs}>${value===undefined?'<option value="">请选择</option>':''}${schema.enum.map((v,i)=>`<option value="${esc(v)}" ${String(v)===text?'selected':''}>${esc(schema['x-enum-labels']?.[i]||v)}</option>`).join('')}</select>`:`<input ${attrs} value="${esc(text)}" type="${['integer','number'].includes(schema.type)?'number':'text'}" ${schema.minimum!==undefined?`min="${esc(schema.minimum)}"`:''} ${schema.type==='number'?'step="any"':''} placeholder="${esc(p.name==='keyword'?'输入你要搜索的关键词':p.example||schema.type||'值')}">`;
+    const markup=`<label>${esc(schema['x-ui-label']||p.name)} ${p.required?'<b>必填</b>':'<small>选填</small>'}${control}<small>${esc((schema['x-ui-help']||p.description||'').slice(0,500))}</small></label>`;
+    (schema['x-ui-advanced']?advanced:common).push(markup);
+  });
+  $('parameterFields').innerHTML=common.join('')+(advanced.length?`<details class="parameter-advanced"><summary>更多筛选与分页（选填）</summary><div class="parameter-fields">${advanced.join('')}</div></details>`:'');
+  const update=event=>{const index=event.target.dataset.paramIndex;if(index===undefined)return;const p=fields[Number(index)],schema=p.schema?.anyOf?.find(s=>s.type!=='null')||p.schema||{},input=event.target.value,target=p.scope==='query'?'queryInput':'bodyInput';try{const data=JSON.parse($(target).value);if(input===''&&(schema.type!=='string'||schema.enum)&&!p.required)delete data[p.name];else data[p.name]=['integer','number','boolean','array','object'].includes(schema.type)?JSON.parse(input):input;$(target).value=JSON.stringify(data,null,2);event.target.setCustomValidity(p.required&&!input.trim()?'请填写'+(schema['x-ui-label']||p.name):'');}catch{event.target.setCustomValidity('请填写正确的数字、布尔值或JSON');}};
+  $('parameterFields').oninput=update;$('parameterFields').onchange=update;
 }
 $('queryInput').oninput=renderParameterFields;$('bodyInput').oninput=renderParameterFields;
 $('refreshCredit').onclick=async()=>{const button=$('refreshCredit');button.disabled=true;try{await api('/api/credit',{});await load();toast('已更新账户余额；未调用内容接口');}catch(error){toast(error.message);}finally{button.disabled=false;}};

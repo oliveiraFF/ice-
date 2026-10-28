@@ -4674,6 +4674,8 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                     if not scan_lock.acquire(False):
                         raise ValueError('已有请求正在运行，请等待完成')
                     try:
+                        if body.get('collect') is True and catalog.get(str(body.get('id', ''))).get('collection_supported') is False:
+                            raise ValueError('此接口只返回话题，不能收录为视频；请取消收录或选择视频接口。未发出供应商请求。')
                         result = catalog.run(str(body.get('id', '')), api_key[0],
                                              body.get('params', {}), body.get('body'), tikhub_json)
                         if body.get('collect') is True:

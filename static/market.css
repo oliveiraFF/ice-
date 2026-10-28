@@ -33,6 +33,11 @@
 #accessForm input[type=checkbox],.collection-options input[type=checkbox]{display:inline-block;width:auto;margin:0 7px 0 0;vertical-align:middle}
 
 /* Interface availability uses the existing theme in both modes. */
-html[data-theme] body.site-app.owner-workspace .api-dialog .api-dialog-head{background:var(--glass-strong);color:var(--text-ink)}
+html[data-theme] body.site-app.owner-workspace .api-dialog .api-dialog-head{background:var(--bg-page);color:var(--text-ink)}
 .market-app .run-heading h3{flex-shrink:0;white-space:nowrap}
 @media(max-width:700px){.market-app .run-heading{flex-direction:column;align-items:flex-start}}
+
+/* finesse · component: documented capture form · tokens: inherited */
+.capture-help{padding:14px 0;color:var(--text-body)}.capture-help p{line-height:1.65}.capture-routes{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.parameter-advanced{grid-column:1/-1;min-width:0}.parameter-advanced summary{min-height:44px;line-height:44px;cursor:pointer}
+.parameter-fields select{width:100%;min-height:44px;box-sizing:border-box;padding:10px;border:1px solid var(--theme-line);border-radius:var(--radius-sm);background:var(--bg-input);color:var(--text-ink)}
