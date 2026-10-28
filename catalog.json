@@ -10037,7 +10037,7 @@
       "requires_key": true,
       "category": "app",
       "query": {
-        "share_url": "https://v.douyin.com/e3x2fjE/"
+        "share_url": ""
       },
       "body": null,
       "parameters": [
@@ -10048,14 +10048,21 @@
           "schema": {
             "type": "string",
             "description": "分享链接/Share link",
-            "title": "Share Url"
+            "title": "Share Url",
+            "minLength": 1,
+            "x-ui-label": "视频分享链接",
+            "x-ui-help": "填写你要处理的公开作品分享链接。"
           },
           "description": "分享链接/Share link",
           "example": "https://v.douyin.com/e3x2fjE/"
         }
       ],
       "body_schema": null,
-      "docs_url": "https://api.tikhub.io/#/Douyin-App-V3-API/fetch_one_video_by_share_url_api_v1_douyin_app_v3_fetch_one_video_by_share_url_get"
+      "docs_url": "https://docs.tikhub.io/186826220e0",
+      "collection_supported": true,
+      "capture_help": "获取一条公开视频的作品资料。响应成功也可能没有可用作品；不会自动切换其他接口重试。",
+      "input_help": "粘贴你要处理的视频分享链接。文档样例仅作格式提示，不会代替你的输入发起请求。",
+      "documentation_checked_at": "2026-10-27"
     },
     {
       "id": "GET /api/v1/douyin/app/v3/fetch_one_video_v2",
@@ -19842,7 +19849,7 @@
       "category": "other",
       "query": {},
       "body": {
-        "keyword": "猫咪",
+        "keyword": "",
         "cursor": 0,
         "sort_type": "0",
         "publish_time": "0",
@@ -19858,55 +19865,131 @@
             "type": "string",
             "title": "Keyword",
             "description": "关键词 / Keyword",
-            "default": "猫咪"
+            "default": "",
+            "minLength": 1,
+            "x-ui-label": "搜索关键词",
+            "x-ui-help": "填写你要搜索的内容，不会自动使用文档示例。"
           },
           "cursor": {
             "type": "integer",
             "title": "Cursor",
             "description": "偏移游标，用于翻页，从上一次请求返回的响应中获取 / Offset cursor for pagination, obtained from the last response",
-            "default": 0
+            "default": 0,
+            "x-ui-label": "分页游标",
+            "x-ui-advanced": true,
+            "minimum": 0,
+            "x-ui-help": "首次为0；翻页时使用上次响应的cursor。"
           },
           "sort_type": {
             "type": "string",
             "title": "Sort Type",
             "description": "排序方式：0=综合排序 1=最多点赞 2=最新发布 / Sort type: 0=Comprehensive, 1=Most Likes, 2=Latest",
-            "default": "0"
+            "default": "0",
+            "x-ui-label": "排序方式",
+            "enum": [
+              "0",
+              "1",
+              "2"
+            ],
+            "x-enum-labels": [
+              "综合排序",
+              "最多点赞",
+              "最新发布"
+            ],
+            "x-ui-help": "默认综合排序。"
           },
           "publish_time": {
             "type": "string",
             "title": "Publish Time",
             "description": "发布时间筛选：0=不限 1=最近一天 7=最近一周 180=最近半年 / Publish time filter: 0=Unlimited, 1=Last day, 7=Last week, 180=Last half year",
-            "default": "0"
+            "default": "0",
+            "x-ui-label": "发布时间",
+            "enum": [
+              "0",
+              "1",
+              "7",
+              "180"
+            ],
+            "x-enum-labels": [
+              "不限",
+              "最近一天",
+              "最近一周",
+              "最近半年"
+            ],
+            "x-ui-help": "默认不限。"
           },
           "filter_duration": {
             "type": "string",
             "title": "Filter Duration",
             "description": "视频时长过滤：0=不限 0-1=一分钟以内 1-5=一到五分钟 5-10000=五分钟以上 / Video duration filter: 0=Unlimited, 0-1=Within 1 minute, 1-5=1 to 5 minutes, 5-10000=More than 5 minutes",
-            "default": "0"
+            "default": "0",
+            "x-ui-label": "时长筛选",
+            "enum": [
+              "0",
+              "0-1",
+              "1-5",
+              "5-10000"
+            ],
+            "x-enum-labels": [
+              "不限",
+              "1分钟以内",
+              "1至5分钟",
+              "5分钟以上"
+            ],
+            "x-ui-advanced": true,
+            "x-ui-help": "默认不限。"
           },
           "content_type": {
             "type": "string",
             "title": "Content Type",
             "description": "内容类型：0=不限 1=视频 2=图片 3=文章 / Content type: 0=All, 1=Video, 2=Picture, 3=Article",
-            "default": "0"
+            "default": "0",
+            "x-ui-label": "内容类型",
+            "enum": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "x-enum-labels": [
+              "不限",
+              "视频",
+              "图片",
+              "文章"
+            ],
+            "x-ui-advanced": true,
+            "x-ui-help": "按需要筛选；话题接口仍只返回话题。"
           },
           "search_id": {
             "type": "string",
             "title": "Search Id",
             "description": "搜索ID，用于翻页，从上一次请求返回的响应中获取 / Search ID for pagination, obtained from the last response",
-            "default": ""
+            "default": "",
+            "x-ui-label": "上次响应的 search_id",
+            "x-ui-advanced": true,
+            "x-ui-help": "首次留空；翻页时使用上次响应的search_id。"
           },
           "backtrace": {
             "type": "string",
             "title": "Backtrace",
             "description": "翻页回溯标识，用于翻页，从上一次请求返回的响应中获取 / Backtrace for pagination, obtained from the last response",
-            "default": ""
+            "default": "",
+            "x-ui-label": "上次响应的 backtrace",
+            "x-ui-advanced": true,
+            "x-ui-help": "首次留空；翻页时使用上次响应的backtrace。"
           }
         },
         "type": "object",
-        "title": "ChallengeSearchV1Request"
+        "title": "ChallengeSearchV1Request",
+        "required": [
+          "keyword"
+        ]
       },
-      "docs_url": "https://api.tikhub.io/#/Douyin-Search-API/fetch_challenge_search_v1_api_v1_douyin_search_fetch_challenge_search_v1_post"
+      "docs_url": "https://docs.tikhub.io/370212793e0",
+      "collection_supported": false,
+      "capture_help": "按关键词查找话题名称和热度；此接口不返回视频，不能把话题收录为作品。",
+      "input_help": "填写你的关键词。首次请求分页游标为0，搜索ID和回溯值留空；不会自动翻页。",
+      "documentation_checked_at": "2026-10-27"
     },
     {
       "id": "POST /api/v1/douyin/search/fetch_challenge_search_v2",
@@ -19926,7 +20009,7 @@
       "category": "other",
       "query": {},
       "body": {
-        "keyword": "猫咪",
+        "keyword": "",
         "cursor": 0,
         "sort_type": "0",
         "publish_time": "0",
@@ -19942,55 +20025,131 @@
             "type": "string",
             "title": "Keyword",
             "description": "关键词 / Keyword",
-            "default": "猫咪"
+            "default": "",
+            "minLength": 1,
+            "x-ui-label": "搜索关键词",
+            "x-ui-help": "填写你要搜索的内容，不会自动使用文档示例。"
           },
           "cursor": {
             "type": "integer",
             "title": "Cursor",
             "description": "偏移游标，用于翻页，从上一次请求返回的响应中获取 / Offset cursor for pagination, obtained from the last response",
-            "default": 0
+            "default": 0,
+            "x-ui-label": "分页游标",
+            "x-ui-advanced": true,
+            "minimum": 0,
+            "x-ui-help": "首次为0；翻页时使用上次响应的cursor。"
           },
           "sort_type": {
             "type": "string",
             "title": "Sort Type",
             "description": "排序方式：0=综合排序 1=最多点赞 2=最新发布 / Sort type: 0=Comprehensive, 1=Most Likes, 2=Latest",
-            "default": "0"
+            "default": "0",
+            "x-ui-label": "排序方式",
+            "enum": [
+              "0",
+              "1",
+              "2"
+            ],
+            "x-enum-labels": [
+              "综合排序",
+              "最多点赞",
+              "最新发布"
+            ],
+            "x-ui-help": "默认综合排序。"
           },
           "publish_time": {
             "type": "string",
             "title": "Publish Time",
             "description": "发布时间筛选：0=不限 1=最近一天 7=最近一周 180=最近半年 / Publish time filter: 0=Unlimited, 1=Last day, 7=Last week, 180=Last half year",
-            "default": "0"
+            "default": "0",
+            "x-ui-label": "发布时间",
+            "enum": [
+              "0",
+              "1",
+              "7",
+              "180"
+            ],
+            "x-enum-labels": [
+              "不限",
+              "最近一天",
+              "最近一周",
+              "最近半年"
+            ],
+            "x-ui-help": "默认不限。"
           },
           "filter_duration": {
             "type": "string",
             "title": "Filter Duration",
             "description": "视频时长过滤：0=不限 0-1=一分钟以内 1-5=一到五分钟 5-10000=五分钟以上 / Video duration filter: 0=Unlimited, 0-1=Within 1 minute, 1-5=1 to 5 minutes, 5-10000=More than 5 minutes",
-            "default": "0"
+            "default": "0",
+            "x-ui-label": "时长筛选",
+            "enum": [
+              "0",
+              "0-1",
+              "1-5",
+              "5-10000"
+            ],
+            "x-enum-labels": [
+              "不限",
+              "1分钟以内",
+              "1至5分钟",
+              "5分钟以上"
+            ],
+            "x-ui-advanced": true,
+            "x-ui-help": "默认不限。"
           },
           "content_type": {
             "type": "string",
             "title": "Content Type",
             "description": "内容类型：0=不限 1=视频 2=图片 3=文章 / Content type: 0=All, 1=Video, 2=Picture, 3=Article",
-            "default": "0"
+            "default": "0",
+            "x-ui-label": "内容类型",
+            "enum": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "x-enum-labels": [
+              "不限",
+              "视频",
+              "图片",
+              "文章"
+            ],
+            "x-ui-advanced": true,
+            "x-ui-help": "按需要筛选；话题接口仍只返回话题。"
           },
           "search_id": {
             "type": "string",
             "title": "Search Id",
             "description": "搜索ID，用于翻页，从上一次请求返回的响应中获取 / Search ID for pagination, obtained from the last response",
-            "default": ""
+            "default": "",
+            "x-ui-label": "上次响应的 search_id",
+            "x-ui-advanced": true,
+            "x-ui-help": "首次留空；翻页时使用上次响应的search_id。"
           },
           "backtrace": {
             "type": "string",
             "title": "Backtrace",
             "description": "翻页回溯标识，用于翻页，从上一次请求返回的响应中获取 / Backtrace for pagination, obtained from the last response",
-            "default": ""
+            "default": "",
+            "x-ui-label": "上次响应的 backtrace",
+            "x-ui-advanced": true,
+            "x-ui-help": "首次留空；翻页时使用上次响应的backtrace。"
           }
         },
         "type": "object",
-        "title": "ChallengeSearchV2Request"
+        "title": "ChallengeSearchV2Request",
+        "required": [
+          "keyword"
+        ]
       },
-      "docs_url": "https://api.tikhub.io/#/Douyin-Search-API/fetch_challenge_search_v2_api_v1_douyin_search_fetch_challenge_search_v2_post"
+      "docs_url": "https://docs.tikhub.io/370212794e0",
+      "collection_supported": false,
+      "capture_help": "按关键词查找话题名称和热度；此接口不返回视频，不能把话题收录为作品。",
+      "input_help": "填写你的关键词。首次请求分页游标为0，搜索ID和回溯值留空；不会自动翻页。",
+      "documentation_checked_at": "2026-10-27"
     },
     {
       "id": "POST /api/v1/douyin/search/fetch_challenge_suggest",
@@ -21116,7 +21275,7 @@
       "category": "other",
       "query": {},
       "body": {
-        "keyword": "猫咪",
+        "keyword": "",
         "cursor": 0,
         "sort_type": "0",
         "publish_time": "0",
@@ -21132,55 +21291,131 @@
             "type": "string",
             "title": "Keyword",
             "description": "关键词 / Keyword",
-            "default": "猫咪"
+            "default": "",
+            "minLength": 1,
+            "x-ui-label": "搜索关键词",
+            "x-ui-help": "填写你要搜索的内容，不会自动使用文档示例。"
           },
           "cursor": {
             "type": "integer",
             "title": "Cursor",
             "description": "偏移游标，用于翻页，从上一次请求返回的响应中获取 / Offset cursor for pagination, obtained from the last response",
-            "default": 0
+            "default": 0,
+            "x-ui-label": "分页游标",
+            "x-ui-advanced": true,
+            "minimum": 0,
+            "x-ui-help": "首次为0；翻页时使用上次响应的cursor。"
           },
           "sort_type": {
             "type": "string",
             "title": "Sort Type",
             "description": "排序方式：0=综合排序 1=最多点赞 2=最新发布 / Sort type: 0=Comprehensive, 1=Most Likes, 2=Latest",
-            "default": "0"
+            "default": "0",
+            "x-ui-label": "排序方式",
+            "enum": [
+              "0",
+              "1",
+              "2"
+            ],
+            "x-enum-labels": [
+              "综合排序",
+              "最多点赞",
+              "最新发布"
+            ],
+            "x-ui-help": "默认综合排序。"
           },
           "publish_time": {
             "type": "string",
             "title": "Publish Time",
             "description": "发布时间筛选：0=不限 1=最近一天 7=最近一周 180=最近半年 / Publish time filter: 0=Unlimited, 1=Last day, 7=Last week, 180=Last half year",
-            "default": "0"
+            "default": "0",
+            "x-ui-label": "发布时间",
+            "enum": [
+              "0",
+              "1",
+              "7",
+              "180"
+            ],
+            "x-enum-labels": [
+              "不限",
+              "最近一天",
+              "最近一周",
+              "最近半年"
+            ],
+            "x-ui-help": "默认不限。"
           },
           "filter_duration": {
             "type": "string",
             "title": "Filter Duration",
             "description": "视频时长过滤：0=不限 0-1=一分钟以内 1-5=一到五分钟 5-10000=五分钟以上 / Video duration filter: 0=Unlimited, 0-1=Within 1 minute, 1-5=1 to 5 minutes, 5-10000=More than 5 minutes",
-            "default": "0"
+            "default": "0",
+            "x-ui-label": "时长筛选",
+            "enum": [
+              "0",
+              "0-1",
+              "1-5",
+              "5-10000"
+            ],
+            "x-enum-labels": [
+              "不限",
+              "1分钟以内",
+              "1至5分钟",
+              "5分钟以上"
+            ],
+            "x-ui-advanced": true,
+            "x-ui-help": "默认不限。"
           },
           "content_type": {
             "type": "string",
             "title": "Content Type",
             "description": "内容类型：0=不限 1=视频 2=图片 3=文章 / Content type: 0=All, 1=Video, 2=Picture, 3=Article",
-            "default": "0"
+            "default": "0",
+            "x-ui-label": "内容类型",
+            "enum": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "x-enum-labels": [
+              "不限",
+              "视频",
+              "图片",
+              "文章"
+            ],
+            "x-ui-advanced": true,
+            "x-ui-help": "按需要筛选；话题接口仍只返回话题。"
           },
           "search_id": {
             "type": "string",
             "title": "Search Id",
             "description": "搜索ID，用于翻页，从上一次请求返回的响应中获取 / Search ID for pagination, obtained from the last response",
-            "default": ""
+            "default": "",
+            "x-ui-label": "上次响应的 search_id",
+            "x-ui-advanced": true,
+            "x-ui-help": "首次留空；翻页时使用上次响应的search_id。"
           },
           "backtrace": {
             "type": "string",
             "title": "Backtrace",
             "description": "翻页回溯标识，用于翻页，从上一次请求返回的响应中获取 / Backtrace for pagination, obtained from the last response",
-            "default": ""
+            "default": "",
+            "x-ui-label": "上次响应的 backtrace",
+            "x-ui-advanced": true,
+            "x-ui-help": "首次留空；翻页时使用上次响应的backtrace。"
           }
         },
         "type": "object",
-        "title": "VideoSearchV1Request"
+        "title": "VideoSearchV1Request",
+        "required": [
+          "keyword"
+        ]
       },
-      "docs_url": "https://api.tikhub.io/#/Douyin-Search-API/fetch_video_search_v1_api_v1_douyin_search_fetch_video_search_v1_post"
+      "docs_url": "https://docs.tikhub.io/370212779e0",
+      "collection_supported": true,
+      "capture_help": "按关键词查找视频作品；返回中有可识别作品时才收录，播放量缺失保留未知。",
+      "input_help": "填写你的关键词。首次请求分页游标为0，搜索ID和回溯值留空；不会自动翻页。",
+      "documentation_checked_at": "2026-10-27"
     },
     {
       "id": "POST /api/v1/douyin/search/fetch_video_search_v2",
@@ -21200,7 +21435,7 @@
       "category": "other",
       "query": {},
       "body": {
-        "keyword": "猫咪",
+        "keyword": "",
         "cursor": 0,
         "sort_type": "0",
         "publish_time": "0",
@@ -21216,55 +21451,131 @@
             "type": "string",
             "title": "Keyword",
             "description": "关键词 / Keyword",
-            "default": "猫咪"
+            "default": "",
+            "minLength": 1,
+            "x-ui-label": "搜索关键词",
+            "x-ui-help": "填写你要搜索的内容，不会自动使用文档示例。"
           },
           "cursor": {
             "type": "integer",
             "title": "Cursor",
             "description": "偏移游标，用于翻页，从上一次请求返回的响应中获取 / Offset cursor for pagination, obtained from the last response",
-            "default": 0
+            "default": 0,
+            "x-ui-label": "分页游标",
+            "x-ui-advanced": true,
+            "minimum": 0,
+            "x-ui-help": "首次为0；翻页时使用上次响应的cursor。"
           },
           "sort_type": {
             "type": "string",
             "title": "Sort Type",
             "description": "排序方式：0=综合排序 1=最多点赞 2=最新发布 / Sort type: 0=Comprehensive, 1=Most Likes, 2=Latest",
-            "default": "0"
+            "default": "0",
+            "x-ui-label": "排序方式",
+            "enum": [
+              "0",
+              "1",
+              "2"
+            ],
+            "x-enum-labels": [
+              "综合排序",
+              "最多点赞",
+              "最新发布"
+            ],
+            "x-ui-help": "默认综合排序。"
           },
           "publish_time": {
             "type": "string",
             "title": "Publish Time",
             "description": "发布时间筛选：0=不限 1=最近一天 7=最近一周 180=最近半年 / Publish time filter: 0=Unlimited, 1=Last day, 7=Last week, 180=Last half year",
-            "default": "0"
+            "default": "0",
+            "x-ui-label": "发布时间",
+            "enum": [
+              "0",
+              "1",
+              "7",
+              "180"
+            ],
+            "x-enum-labels": [
+              "不限",
+              "最近一天",
+              "最近一周",
+              "最近半年"
+            ],
+            "x-ui-help": "默认不限。"
           },
           "filter_duration": {
             "type": "string",
             "title": "Filter Duration",
             "description": "视频时长过滤：0=不限 0-1=一分钟以内 1-5=一到五分钟 5-10000=五分钟以上 / Video duration filter: 0=Unlimited, 0-1=Within 1 minute, 1-5=1 to 5 minutes, 5-10000=More than 5 minutes",
-            "default": "0"
+            "default": "0",
+            "x-ui-label": "时长筛选",
+            "enum": [
+              "0",
+              "0-1",
+              "1-5",
+              "5-10000"
+            ],
+            "x-enum-labels": [
+              "不限",
+              "1分钟以内",
+              "1至5分钟",
+              "5分钟以上"
+            ],
+            "x-ui-advanced": true,
+            "x-ui-help": "默认不限。"
           },
           "content_type": {
             "type": "string",
             "title": "Content Type",
             "description": "内容类型：0=不限 1=视频 2=图片 3=文章 / Content type: 0=All, 1=Video, 2=Picture, 3=Article",
-            "default": "0"
+            "default": "0",
+            "x-ui-label": "内容类型",
+            "enum": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "x-enum-labels": [
+              "不限",
+              "视频",
+              "图片",
+              "文章"
+            ],
+            "x-ui-advanced": true,
+            "x-ui-help": "按需要筛选；话题接口仍只返回话题。"
           },
           "search_id": {
             "type": "string",
             "title": "Search Id",
             "description": "搜索ID，用于翻页，从上一次请求返回的响应中获取 / Search ID for pagination, obtained from the last response",
-            "default": ""
+            "default": "",
+            "x-ui-label": "上次响应的 search_id",
+            "x-ui-advanced": true,
+            "x-ui-help": "首次留空；翻页时使用上次响应的search_id。"
           },
           "backtrace": {
             "type": "string",
             "title": "Backtrace",
             "description": "翻页回溯标识，用于翻页，从上一次请求返回的响应中获取 / Backtrace for pagination, obtained from the last response",
-            "default": ""
+            "default": "",
+            "x-ui-label": "上次响应的 backtrace",
+            "x-ui-advanced": true,
+            "x-ui-help": "首次留空；翻页时使用上次响应的backtrace。"
           }
         },
         "type": "object",
-        "title": "VideoSearchV2Request"
+        "title": "VideoSearchV2Request",
+        "required": [
+          "keyword"
+        ]
       },
-      "docs_url": "https://api.tikhub.io/#/Douyin-Search-API/fetch_video_search_v2_api_v1_douyin_search_fetch_video_search_v2_post"
+      "docs_url": "https://docs.tikhub.io/370212780e0",
+      "collection_supported": true,
+      "capture_help": "按关键词查找视频作品；返回中有可识别作品时才收录，播放量缺失保留未知。",
+      "input_help": "填写你的关键词。首次请求分页游标为0，搜索ID和回溯值留空；不会自动翻页。",
+      "documentation_checked_at": "2026-10-27"
     },
     {
       "id": "POST /api/v1/douyin/search/fetch_video_search_v3",
@@ -22915,7 +23226,7 @@
       "requires_key": true,
       "category": "web",
       "query": {
-        "share_url": "https://v.douyin.com/e3x2fjE/"
+        "share_url": ""
       },
       "body": null,
       "parameters": [
@@ -22926,14 +23237,21 @@
           "schema": {
             "type": "string",
             "description": "分享链接/Share link",
-            "title": "Share Url"
+            "title": "Share Url",
+            "minLength": 1,
+            "x-ui-label": "视频分享链接",
+            "x-ui-help": "填写你要处理的公开作品分享链接。"
           },
           "description": "分享链接/Share link",
           "example": "https://v.douyin.com/e3x2fjE/"
         }
       ],
       "body_schema": null,
-      "docs_url": "https://api.tikhub.io/#/Douyin-Web-API/fetch_one_video_by_share_url_api_v1_douyin_web_fetch_one_video_by_share_url_get"
+      "docs_url": "https://docs.tikhub.io/257556744e0",
+      "collection_supported": true,
+      "capture_help": "获取一条公开视频的作品资料。响应成功也可能没有可用作品；不会自动切换其他接口重试。",
+      "input_help": "粘贴你要处理的视频分享链接。文档样例仅作格式提示，不会代替你的输入发起请求。",
+      "documentation_checked_at": "2026-10-27"
     },
     {
       "id": "GET /api/v1/douyin/web/fetch_one_video_danmaku",

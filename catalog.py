@@ -126,6 +126,8 @@ def validate_value(value, schema, label):
         if 'minimum' in schema and value < schema['minimum'] or 'maximum' in schema and value > schema['maximum']:
             raise ValueError(label + '超出允许范围')
     if isinstance(value, str):
+        if schema.get('minLength', 0) and not value.strip():
+            raise ValueError(label + '不能为空')
         if len(value) < schema.get('minLength', 0) or len(value) > schema.get('maxLength', 1000000):
             raise ValueError(label + '长度超出允许范围')
     if isinstance(value, dict):
