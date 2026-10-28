@@ -331,5 +331,23 @@
     "validation": "docs/acceptance-20261027/account-onboarding/acceptance.md 与 delivery-v3.md；73项主干Python无失败（4跳过），源码与真实EXE三项创建/下载备份/本地视频/确认/重开；179构建输入及276安装文件核验；实际安装升级保留同账号，卸载保留workspace全文件哈希",
     "remaining": "当前单本机账号初始化，不自动运行整条Agent；正式策略需确认，内容质量/经营效果需真实资料和人工评审；安装包未签名",
     "completion": "已实现、实际验证、合入本地主干并复验；本轮工作树和分支已安全注销；桌面交付2026.10.27.3安装包，原快捷方式逐字节恢复"
+  },
+  {
+    "branch": "fix/api-404-guard",
+    "goal": "拦截实际返回404的历史抖音话题路由，保护预算与调用历史",
+    "head": "8eaf49633809d59006b514d99bfed186c77fe6f4",
+    "main_merge": "53f413d3f0043e7417bd7c991661ac7f62f557d5",
+    "validation": "docs/acceptance-20261027/api-404-guard/acceptance.md；供应商调用前拒绝、禁止重启用，真实源码/EXE UI与直接HTTP、历史预算及重启验证；随2026.10.27.4安装包交付",
+    "remaining": "仅指定实际404路由永久暂停，其他未测接口不冒充可用；供应商实际扣费以账单为准",
+    "completion": "已实现、验证、合入本地主干，主干80项Python无失败（4跳过）及真实UI复验；无未保存源码，工作树与分支安全注销"
+  },
+  {
+    "branch": "fix/capture-docs-alignment",
+    "goal": "按TikHub官方文档对齐6个抓取表单及话题/视频用途",
+    "head": "0bb0829",
+    "main_merge": "0d84c2a40abda4b852edae7156a8404aaf0c76a8",
+    "validation": "docs/acceptance-20261027/capture-docs/acceptance.md 与 delivery-v4.md；80项主干Python无失败（4跳过），真实源码/EXE必填与枚举/类型/JSON/切换/重开，179构建输入和276安装文件，安装升级卸载保留账号资料通过",
+    "remaining": "未新增付费业务验证；文档对齐不等于平台实测成功；其余接口未宣称审核完成；安装包未签名",
+    "completion": "已合主干并实际复验；桌面2026.10.27.4与验收哈希一致，工作树及分支干净后安全注销，旧程序和快捷方式保留"
   }
 ]
