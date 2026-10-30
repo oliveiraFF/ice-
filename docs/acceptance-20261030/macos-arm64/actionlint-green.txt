@@ -1,0 +1,1 @@
+actionlint v1.7.12: exit 0, no findings. Official release archive SHA256 matched upstream checksum.

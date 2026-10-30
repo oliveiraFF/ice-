@@ -35,7 +35,7 @@ jobs:
     env:
       PYTHONUTF8: '1'
       PACKAGE_VERSION: ${{ inputs.version || '2026.10.30.1' }}
-      MAC_RELEASE: ${{ runner.temp }}/ice-macos-release
+      MAC_RELEASE: ../ice-macos-release
       TIKHUB_API_KEY: ''
       LLM_ALLOW_PAID: '0'
     steps:
