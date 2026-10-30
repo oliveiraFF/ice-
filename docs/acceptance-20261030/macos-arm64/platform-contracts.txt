@@ -1,0 +1,16 @@
+test_keychain_denial_does_not_echo_error_or_leave_claimed_saved_key (test_macos.MacCredentialContracts.test_keychain_denial_does_not_echo_error_or_leave_claimed_saved_key) ... ok
+test_keychain_restart_isolated_identity_and_forget_without_plaintext (test_macos.MacCredentialContracts.test_keychain_restart_isolated_identity_and_forget_without_plaintext) ... ok
+test_marker_failure_cleans_new_keychain_item (test_macos.MacCredentialContracts.test_marker_failure_cleans_new_keychain_item) ... ok
+test_missing_keychain_item_and_migrated_windows_blob_need_reentry (test_macos.MacCredentialContracts.test_missing_keychain_item_and_migrated_windows_blob_need_reentry) ... ok
+test_data_stays_outside_app_bundle_and_windows_default_is_preserved (test_macos.MacPlatformTests.test_data_stays_outside_app_bundle_and_windows_default_is_preserved) ... ok
+test_mac_build_inputs_include_the_packager_and_exclude_user_data (test_macos.MacPlatformTests.test_mac_build_inputs_include_the_packager_and_exclude_user_data) ... ok
+test_macos_asr_accepts_native_executables_and_rejects_windows_binaries (test_macos.MacPlatformTests.test_macos_asr_accepts_native_executables_and_rejects_windows_binaries) ... ok
+test_native_renderer_and_frozen_workflow_resources (test_macos.MacPlatformTests.test_native_renderer_and_frozen_workflow_resources) ... ok
+test_open_workspace_passes_path_as_one_argument (test_macos.MacPlatformTests.test_open_workspace_passes_path_as_one_argument) ... ok
+test_windows_cannot_emit_a_fake_mac_bundle (test_macos.MacPlatformTests.test_windows_cannot_emit_a_fake_mac_bundle) ... ok
+test_second_process_cannot_lock_until_first_closes (test_macos.NativeLockTests.test_second_process_cannot_lock_until_first_closes) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.708s
+
+OK
