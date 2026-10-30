@@ -362,9 +362,9 @@
   {
     "branch": "feat/macos-arm64",
     "goal": "Apple Silicon 原生桌面适配、只用免费额度的受控云构建及DMG交付",
-    "head": "本地准备提交待记录",
+    "head": "02b547b (功能准备；后续提交记录离线验收)",
     "main_merge": null,
-    "validation": "docs/acceptance-20261030/macos-arm64/prepare.md；本地平台11项通过、Windows源码UI真实回归通过；Mac原生验证未执行",
+    "validation": "docs/acceptance-20261030/macos-arm64/prepare.md；最终99项无失败（4既有跳过）、平台11项通过；Windows源码及冻结EXE真实UI、179输入与275文件哈希通过；Mac原生验证未执行",
     "remaining": "需核实GitHub Actions付费预算US$0及停止用量保护；原生构建、Mac验收、合main及主干复验待做",
     "completion": "进行中，未闭环；保留独立工作树，不提前合main，不触发云构建"
   }

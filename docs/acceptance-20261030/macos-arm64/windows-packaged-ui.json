@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "account_uid": "3a51b5ffa4e848c3ad57f2698e23ae01",
+  "workspace": "E:\\leida-build\\macos-arm64-20261030\\windows-packaged-ui\\app-data\\workspaces\\3a51b5ffa4e848c3ad57f2698e23ae01",
+  "three_required": true,
+  "source_or_exe": "E:/leida-build/macos-arm64-20261030/windows-regression-build/20261030-132003/ice运营台/ice运营台.exe",
+  "backup": true,
+  "restart": true,
+  "video_import": true,
+  "explicit_strategy_confirmation": true,
+  "original_identity_preserved": true,
+  "errors": [],
+  "external": [],
+  "writes": [
+    "/api/ai/cache",
+    "/api/agent/onboarding/create",
+    "/api/agent/onboarding/backup",
+    "/api/strategy/confirm",
+    "/api/strategy/save",
+    "/api/strategy/confirm"
+  ],
+  "paid_calls": 0
+}

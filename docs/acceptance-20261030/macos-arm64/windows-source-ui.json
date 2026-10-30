@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "account_uid": "92602fde8dd04ac087bd31c5a805c190",
+  "workspace": "E:\\leida-build\\macos-arm64-20261030\\windows-source-ui-r2\\app-data\\workspaces\\92602fde8dd04ac087bd31c5a805c190",
+  "three_required": true,
+  "source_or_exe": "source",
+  "backup": true,
+  "restart": true,
+  "video_import": true,
+  "explicit_strategy_confirmation": true,
+  "original_identity_preserved": true,
+  "errors": [],
+  "external": [],
+  "writes": [
+    "/api/ai/cache",
+    "/api/agent/onboarding/create",
+    "/api/agent/onboarding/backup",
+    "/api/strategy/confirm",
+    "/api/strategy/save",
+    "/api/strategy/confirm"
+  ],
+  "paid_calls": 0
+}

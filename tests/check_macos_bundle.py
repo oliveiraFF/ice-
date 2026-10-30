@@ -145,8 +145,6 @@ def main():
                           keychain_save_reopen_forget=True, workspace_backup_and_reopen=True,
                           original_bundle_unchanged=True, synthetic_key_only=True, provider_calls=0,
                           visual_review='pending', asr_inference='not_run', real_model_analysis='not_run')
-            (release / 'native-smoke.json').write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding='utf-8')
-            print(json.dumps(result))
         finally:
             if process is not None and process.poll() is None:
                 try:
@@ -158,6 +156,10 @@ def main():
                 subprocess.run(['/usr/bin/hdiutil', 'detach', str(mounted)], check=True, timeout=30)
             # Remove only this run's synthetic Keychain item, even if a check failed.
             CredentialVault(data / 'owner-tikhub').forget()
+    receipt['native_acceptance'] = 'native-smoke-passed; visual and real-provider acceptance pending'
+    (release / 'receipt.json').write_text(json.dumps(receipt, ensure_ascii=False, indent=2), encoding='utf-8')
+    (release / 'native-smoke.json').write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding='utf-8')
+    print(json.dumps(result))
 
 
 if __name__ == '__main__':

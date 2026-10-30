@@ -1,0 +1,9 @@
+{
+  "source_commit": "02b547b1b2e2a621977b070c5849b1ec9bf77f2d",
+  "source_dirty": false,
+  "inputs": 179,
+  "manifest_files": 275,
+  "runtime_inputs_match_worktree": true,
+  "data_empty": true,
+  "scope": "Windows regression only; not a Mac build"
+}
