@@ -6,6 +6,7 @@ from pathlib import Path
 import re
 import shutil
 import subprocess
+import sys
 import tempfile
 import time
 import uuid
@@ -45,7 +46,8 @@ class LocalASR:
 
     def paths(self, value):
         result = {}
-        for key, basename in [('ffmpeg', 'ffmpeg.exe'), ('whisper', 'whisper-cli.exe'), ('model', None)]:
+        suffix = '' if sys.platform == 'darwin' else '.exe'
+        for key, basename in [('ffmpeg', 'ffmpeg' + suffix), ('whisper', 'whisper-cli' + suffix), ('model', None)]:
             raw = value.get(key)
             if not isinstance(raw, str) or not raw or len(raw) > 2000 or any(ord(c) < 32 for c in raw):
                 raise ValueError('请填写本机音视频程序、语音识别程序和模型的完整路径')
@@ -53,7 +55,9 @@ class LocalASR:
             if not path.is_absolute() or not path.is_file() or not path.stat().st_size:
                 raise ValueError('本地字幕配置文件不存在或不可用，请重新选择')
             if basename and path.name.lower() != basename or not basename and path.suffix.lower() != '.bin':
-                raise ValueError('请选择 ffmpeg.exe、whisper-cli.exe 和 Whisper .bin 模型')
+                raise ValueError('请选择适用于本机的 ffmpeg、whisper-cli 和 Whisper .bin 模型')
+            if sys.platform == 'darwin' and basename and not os.access(path, os.X_OK):
+                raise ValueError('本地字幕程序没有执行权限，请选择已安装的 Mac 程序')
             result[key] = str(path.resolve())
         return result
 

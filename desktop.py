@@ -1,4 +1,4 @@
-"""Portable Windows desktop entry point. Build dependencies stay outside the app."""
+"""Windows and macOS desktop entry point. Build dependencies stay outside the app."""
 import argparse
 import ctypes
 import json
@@ -17,8 +17,50 @@ def portable_home():
     return Path(sys.executable).resolve().parent if getattr(sys, 'frozen', False) else Path(__file__).resolve().parent
 
 
+def default_data_dir():
+    if sys.platform == 'darwin':
+        return Path.home() / 'Library' / 'Application Support' / 'ICEOps' / 'data'
+    return portable_home() / 'data'
+
+
+def renderer_options():
+    if sys.platform == 'darwin':
+        return {'gui': 'cocoa'}
+    return dict(gui='edgechromium', icon=str(Path(__file__).resolve().parent / 'radar.ico'))
+
+
+def acquire_lock(data_dir):
+    lock = (data_dir / 'desktop.lock').open('a+b')
+    try:
+        if sys.platform == 'darwin':
+            import fcntl
+            fcntl.flock(lock.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+        else:
+            import msvcrt
+            lock.seek(0)
+            if not lock.read(1):
+                lock.write(b'0'); lock.flush()
+            lock.seek(0)
+            msvcrt.locking(lock.fileno(), msvcrt.LK_NBLCK, 1)
+        return lock
+    except Exception:
+        lock.close()
+        raise
+
+
 def message(text):
-    ctypes.windll.user32.MessageBoxW(None, text, 'ice运营台', 0x10)
+    if sys.platform == 'darwin':
+        try:
+            from AppKit import NSAlert
+            alert = NSAlert.alloc().init()
+            alert.setMessageText_('ice运营台')
+            alert.setInformativeText_(text)
+            alert.runModal()
+        except Exception:
+            if sys.stderr is not None:
+                print(text, file=sys.stderr)
+    else:
+        ctypes.windll.user32.MessageBoxW(None, text, 'ice运营台', 0x10)
 
 
 class DesktopBridge:
@@ -35,21 +77,15 @@ class DesktopBridge:
 
 def main(edition='owner'):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--data-dir', type=Path, default=portable_home() / 'data')
+    parser.add_argument('--data-dir', type=Path, default=default_data_dir())
     args = parser.parse_args()
     data_dir = args.data_dir.resolve()
     server, thread, lock = None, None, None
     session = data_dir / 'desktop-session.json'
     try:
         data_dir.mkdir(parents=True, exist_ok=True)
-        import msvcrt
-        lock = (data_dir / 'desktop.lock').open('a+b')
-        lock.seek(0)
-        if not lock.read(1):
-            lock.write(b'0'); lock.flush()
-        lock.seek(0)
         try:
-            msvcrt.locking(lock.fileno(), msvcrt.LK_NBLCK, 1)
+            lock = acquire_lock(data_dir)
         except OSError:
             message('这份ice运营台已经在运行，请切回已打开的窗口。')
             return
@@ -80,14 +116,15 @@ def main(edition='owner'):
                               min_size=(900, 600), text_select=True, background_color='#e9eded',
                               js_api=desktop_bridge)
         desktop_bridge._window = window
-        webview.start(gui='edgechromium', private_mode=False, storage_path=str(data_dir / 'webview'),
-                      icon=str(Path(__file__).resolve().parent / 'radar.ico'))
+        webview.start(private_mode=False, storage_path=str(data_dir / 'webview'), **renderer_options())
     except Exception:
         try:
             (data_dir / 'desktop-error.log').write_text(traceback.format_exc(), encoding='utf-8')
         except OSError:
             pass
-        message('软件启动失败。请将整个文件夹解压到可写目录，并确认Windows已安装Microsoft Edge WebView2运行时。\n\n错误详情：' + str(data_dir / 'desktop-error.log'))
+        guidance = ('请将应用拖入“应用程序”，并检查当前用户资料目录的写入权限。' if sys.platform == 'darwin'
+                    else '请将整个文件夹解压到可写目录，并确认Windows已安装Microsoft Edge WebView2运行时。')
+        message('软件启动失败。' + guidance + '\n\n错误详情：' + str(data_dir / 'desktop-error.log'))
     finally:
         if server:
             if thread and thread.is_alive():

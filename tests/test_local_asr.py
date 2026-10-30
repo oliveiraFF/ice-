@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 import tempfile
+import sys
 import unittest
 from unittest.mock import patch
 import wave
@@ -17,9 +18,12 @@ class LocalASRTests(unittest.TestCase):
         self.tools = self.root / '中文工具'
         self.tools.mkdir()
         self.paths = {}
-        for key, name in [('ffmpeg', 'ffmpeg.exe'), ('whisper', 'whisper-cli.exe'), ('model', 'model.bin')]:
+        suffix = '' if sys.platform == 'darwin' else '.exe'
+        for key, name in [('ffmpeg', 'ffmpeg' + suffix), ('whisper', 'whisper-cli' + suffix), ('model', 'model.bin')]:
             path = self.tools / name
             path.write_bytes(b'test-only-not-executable')
+            if sys.platform == 'darwin' and key != 'model':
+                path.chmod(0o700)
             self.paths[key] = str(path)
 
     def test_timestamps_are_parsed_and_invalid_or_missing_output_is_not_success(self):
@@ -42,7 +46,7 @@ class LocalASRTests(unittest.TestCase):
         self.calls.append((args, kwargs))
         folder = Path(kwargs['cwd'])
         self.assertTrue(str(folder).isascii())
-        if args[0].endswith('ffmpeg.exe'):
+        if Path(args[0]).name in ('ffmpeg', 'ffmpeg.exe'):
             with wave.open(str(folder / 'audio.wav'), 'wb') as f:
                 f.setparams((1, 2, 16000, 0, 'NONE', 'not compressed'))
                 f.writeframes((b'\x10\x00' if not self.silent else b'\x00\x00') * 32000)

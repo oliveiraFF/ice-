@@ -28,8 +28,8 @@
         <div class="local-asr-actions"><button type="button" class="secondary" id="extractLocalAsr" disabled>提取本地字幕</button><button type="button" class="secondary" id="downloadLocalSrt" disabled>下载 SRT</button></div>
         <p id="localAsrStatus" role="status" aria-live="polite">尚未配置本地字幕引擎。</p><pre id="localAsrPreview" hidden></pre>
         <details id="localAsrSettings"><summary>本地字幕引擎设置</summary><p>选择本机已有的程序和模型。保存设置不会运行转写；模型不会打入安装包。</p>
-          <label>音视频处理程序<input id="localAsrFfmpeg" maxlength="2000" placeholder="ffmpeg.exe 的完整路径"></label>
-          <label>语音识别程序<input id="localAsrWhisper" maxlength="2000" placeholder="whisper-cli.exe 的完整路径"></label>
+          <label>音视频处理程序<input id="localAsrFfmpeg" maxlength="2000" placeholder="本机 ffmpeg 程序的完整路径（Windows 为 .exe）"></label>
+          <label>语音识别程序<input id="localAsrWhisper" maxlength="2000" placeholder="本机 whisper-cli 程序的完整路径（Windows 为 .exe）"></label>
           <label>语音模型<input id="localAsrModel" maxlength="2000" placeholder="Whisper .bin 模型的完整路径"></label>
           <button type="button" class="secondary" id="saveLocalAsrConfig">保存本地设置</button>
         </details>

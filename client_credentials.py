@@ -1,10 +1,24 @@
-"""Windows current-user protection for a single installation's individual credential."""
+"""Current-user credentials: Windows DPAPI or the native macOS Keychain only."""
 import ctypes
 from ctypes import wintypes
 import json
 import os
 from pathlib import Path
 import tempfile
+import sys
+import uuid
+
+
+MAC_SERVICE = 'io.iceops.desktop.credentials'
+MAC_MARKER = b'ICE-KC1\0'
+
+
+def macos_keyring():
+    # Select the native backend explicitly: never fall back to a plaintext backend.
+    from keyring.backends.macOS import Keyring
+    backend = Keyring()
+    backend.priority
+    return backend
 
 
 def windows_protect(raw, decrypt=False):
@@ -39,7 +53,12 @@ class CredentialVault:
 
     def save(self, customer, key):
         raw = json.dumps(dict(customer=customer, key=key), ensure_ascii=False).encode('utf-8')
+        if sys.platform == 'darwin':
+            return self._save_macos(raw.decode('utf-8'))
         protected = b'RADAR-C1\0' + windows_protect(raw)
+        self._write(protected)
+
+    def _write(self, protected):
         self.path.parent.mkdir(parents=True, exist_ok=True)
         temporary = None
         try:
@@ -54,14 +73,65 @@ class CredentialVault:
         if not self.path.exists(): return '', ''
         try:
             if self.path.stat().st_size > 16384: raise ValueError()
-            raw = self.path.read_bytes()
-            if not raw.startswith(b'RADAR-C1\0'): raise ValueError()
-            value = json.loads(windows_protect(raw[9:], decrypt=True).decode('utf-8'))
+            if sys.platform == 'darwin':
+                try:
+                    raw = macos_keyring().get_password(MAC_SERVICE, self._mac_account())
+                    if raw is None: raise ValueError()
+                except Exception:
+                    raise ValueError() from None
+            else:
+                raw = self.path.read_bytes()
+                if not raw.startswith(b'RADAR-C1\0'): raise ValueError()
+                raw = windows_protect(raw[9:], decrypt=True).decode('utf-8')
+            value = json.loads(raw)
             customer, key = value['customer'], value['key']
             if not isinstance(customer, str) or not isinstance(key, str) or not customer or not key: raise ValueError()
             return customer, key
         except (ValueError, KeyError, TypeError, OSError, UnicodeError):
-            raise ValueError('加密凭据不可用，请在当前 Windows 账户重新配置') from None
+            raise ValueError('加密凭据不可用，请在当前系统账户重新配置') from None
 
     def forget(self):
+        if sys.platform == 'darwin' and self.path.exists():
+            try:
+                account = self._mac_account()
+            except ValueError:
+                account = None
+            if account is not None:
+                try:
+                    backend = macos_keyring()
+                    if backend.get_password(MAC_SERVICE, account) is not None:
+                        backend.delete_password(MAC_SERVICE, account)
+                except Exception:
+                    raise ValueError('无法清除系统钥匙串凭据，请解锁后再试') from None
         if self.path.exists(): self.path.unlink()
+
+    def _mac_account(self):
+        if self.path.stat().st_size > 16384:
+            raise ValueError('钥匙串标识无效')
+        raw = self.path.read_bytes()
+        account = raw[len(MAC_MARKER):].decode('ascii') if raw.startswith(MAC_MARKER) else ''
+        if len(account) != 32 or any(c not in '0123456789abcdef' for c in account):
+            raise ValueError('钥匙串标识无效')
+        return account
+
+    def _save_macos(self, raw):
+        fresh, backend, account = True, None, None
+        try:
+            if self.path.exists():
+                try:
+                    account = self._mac_account()
+                    fresh = False
+                except (ValueError, UnicodeError):
+                    pass
+            account = account or uuid.uuid4().hex
+            backend = macos_keyring()
+            backend.set_password(MAC_SERVICE, account, raw)
+            if fresh:
+                self._write(MAC_MARKER + account.encode('ascii'))
+        except Exception:
+            if fresh and backend is not None and account is not None:
+                try:
+                    backend.delete_password(MAC_SERVICE, account)
+                except Exception:
+                    pass
+            raise ValueError('无法安全保存系统钥匙串凭据，请解锁后再试；未改为明文保存') from None

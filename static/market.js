@@ -21,7 +21,7 @@ function render(){
   $('totalCount').textContent=count.toLocaleString();$('freeCount').textContent=zero;$('managedCount').textContent=managed;
   $('importTime').textContent='目录快照 · '+timeText(model.imported_at);
   const access=model.access||{};
-  $('iceKeyState').textContent=model.credential_error?'本机密钥恢复失败，请重新配置':model.connected?(model.credential_remembered?'已配置 · Windows 当前账户加密保存':'已配置 · 本次运行可用'):'未配置 · 可手动添加';
+  $('iceKeyState').textContent=model.credential_error?'本机密钥恢复失败，请重新配置':model.connected?(model.credential_remembered?'已配置 · 当前系统账户加密保存':'已配置 · 本次运行可用'):'未配置 · 可手动添加';
   $('accessStatus').textContent=access.active?(access.allow_balance?'接口调用已开启 · 允许充值余额':'接口调用已开启 · 仅赠送额度'):access.enabled?'接口调用已停止 · 预算不足或已到期':'接口调用已关闭';
   $('creditTotals').textContent=`赠送余额 ${moneyText(access.free_credit)} · 充值余额 ${moneyText(access.balance)} · 查询于 ${timeText(access.checked_at)}`;
   $('budgetTotals').textContent=`累计预算 ${moneyText(access.limit)} · 已预留 ${moneyText(access.spent)} · 剩余 ${moneyText(access.remaining)} · ${access.expires_at?'到期 '+timeText(access.expires_at):'未设置到期时间'}`;

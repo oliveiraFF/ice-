@@ -41,6 +41,8 @@ from agent_bridge import (build_view_model, clear_workspace_config, empty_view_m
 # 复用 OPS 脚本工作流：发布包默认从包内 _ops 加载；开发模式保留 OPS_PROJECT_ROOT / D 盘默认。
 def _executable_dir():
     if getattr(sys, 'frozen', False):
+        if sys.platform == 'darwin':
+            return Path(sys._MEIPASS)
         return Path(sys.executable).resolve().parent
     return Path(__file__).resolve().parent
 
@@ -3950,7 +3952,7 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                 api_key[0] = saved_key
                 credential_remembered[0] = True
         except (ValueError, OSError):
-            credential_error[0] = '本机加密凭据不可用，请重新填写或清除；换电脑或 Windows 账户需重填'
+            credential_error[0] = '本机加密凭据不可用，请重新填写或清除；换电脑或系统账户需重填'
     token = secrets.token_urlsafe(24)
     scan_lock = threading.Lock()
     download_lock = threading.Lock()

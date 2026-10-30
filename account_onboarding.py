@@ -5,6 +5,8 @@ import hashlib
 from io import BytesIO
 import json
 import os
+import subprocess
+import sys
 from pathlib import Path
 import re
 import threading
@@ -240,4 +242,7 @@ class AccountOnboarding:
     def open_folder(self):
         root=self.bound()
         if not self.managed(root):raise ValueError('没有软件管理的账号资料目录')
-        os.startfile(str(root))
+        if sys.platform == 'darwin':
+            subprocess.run(['/usr/bin/open', str(root)], check=True, timeout=10)
+        else:
+            os.startfile(str(root))

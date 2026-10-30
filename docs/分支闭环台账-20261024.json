@@ -358,5 +358,14 @@
     "validation": "docs/acceptance-20261028/large-response/acceptance.md 与 delivery.md；88项主干Python无失败（4跳过），真实本地HTTP/Chrome完整响应收录与超限/重启、冻结EXE回归；179输入/276安装文件；独立目录安装升级卸载复测通过",
     "remaining": "首轮卸载残留UninstallICE.exe，复测未复现，原因未确认且安装器未改；安装包未签名；没有新增TikHub实测，旧截断原文不可恢复",
     "completion": "已实现、验证、合入本地主干并复验；桌面交付2026.10.28.1，原快捷方式校验恢复；工作树及分支无未保存工作后安全注销"
+  },
+  {
+    "branch": "feat/macos-arm64",
+    "goal": "Apple Silicon 原生桌面适配、只用免费额度的受控云构建及DMG交付",
+    "head": "本地准备提交待记录",
+    "main_merge": null,
+    "validation": "docs/acceptance-20261030/macos-arm64/prepare.md；本地平台11项通过、Windows源码UI真实回归通过；Mac原生验证未执行",
+    "remaining": "需核实GitHub Actions付费预算US$0及停止用量保护；原生构建、Mac验收、合main及主干复验待做",
+    "completion": "进行中，未闭环；保留独立工作树，不提前合main，不触发云构建"
   }
 ]
