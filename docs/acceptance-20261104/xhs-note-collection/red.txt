@@ -1,0 +1,47 @@
+.FFEFE
+======================================================================
+ERROR: test_legacy_wrapped_and_note_id_formats_remain_supported_and_deduplicate (test_xhs_note_collection.XHSNoteCollectionTests.test_legacy_wrapped_and_note_id_formats_remain_supported_and_deduplicate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\ice-worktrees\xhs-note-collection\tests\test_xhs_note_collection.py", line 63, in test_legacy_wrapped_and_note_id_formats_remain_supported_and_deduplicate
+    self.assertEqual(post['description'], note['desc'])
+                     ~~~~^^^^^^^^^^^^^^^
+KeyError: 'description'
+
+======================================================================
+ERROR: test_video_note_through_image_endpoint_is_not_labelled_image_or_given_fake_video (test_xhs_note_collection.XHSNoteCollectionTests.test_video_note_through_image_endpoint_is_not_labelled_image_or_given_fake_video)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\ice-worktrees\xhs-note-collection\tests\test_xhs_note_collection.py", line 45, in test_video_note_through_image_endpoint_is_not_labelled_image_or_given_fake_video
+    post, = app.extract_posts(note_payload('video'), 'xhs')
+    ^^^^^
+ValueError: not enough values to unpack (expected 1, got 0)
+
+======================================================================
+FAIL: test_database_reopen_and_recollection_preserve_one_post_and_saved_note (test_xhs_note_collection.XHSNoteCollectionTests.test_database_reopen_and_recollection_preserve_one_post_and_saved_note)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\ice-worktrees\xhs-note-collection\tests\test_xhs_note_collection.py", line 71, in test_database_reopen_and_recollection_preserve_one_post_and_saved_note
+    self.assertEqual(len(posts), 1)
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_http_collection_consumes_actual_note_list_shape (test_xhs_note_collection.XHSNoteCollectionTests.test_http_collection_consumes_actual_note_list_shape)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\ice-worktrees\xhs-note-collection\tests\test_xhs_note_collection.py", line 114, in test_http_collection_consumes_actual_note_list_shape
+    self.assertIn('已收录或更新 1', result['collection_message'])
+AssertionError: '已收录或更新 1' not found in '响应中没有可识别的作品，未收录。请检查原始响应。'
+
+======================================================================
+FAIL: test_note_list_image_preserves_body_images_type_and_unknown_plays (test_xhs_note_collection.XHSNoteCollectionTests.test_note_list_image_preserves_body_images_type_and_unknown_plays)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\ice-worktrees\xhs-note-collection\tests\test_xhs_note_collection.py", line 33, in test_note_list_image_preserves_body_images_type_and_unknown_plays
+    self.assertEqual(len(posts), 1)
+AssertionError: 0 != 1
+
+----------------------------------------------------------------------
+Ran 6 tests in 1.219s
+
+FAILED (failures=3, errors=2)

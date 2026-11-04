@@ -1,0 +1,13 @@
+{
+  "source_commit": "d90a16e0d4691d8193b7b9c647b001ea06700906",
+  "source_dirty": false,
+  "inputs": 181,
+  "manifest_verified_files": 278,
+  "runtime_inputs_match": true,
+  "data_empty": true,
+  "portable_zip": "C:\\Users\\25370\\Desktop\\ICE运营台-小红书图文收录修正版-20261104-免安装.zip",
+  "zip_sha256": "02260109c1a361961fc6393cc5e5c6ffba68727e2e72a4fbc102882766b19f68",
+  "verified_program": "E:\\leida-build\\xhs-note-collection-20261104\\final-builds\\20261104-013937\\ice运营台\\ice运营台.exe",
+  "original_installation_unchanged": true,
+  "provider_calls": 0
+}

@@ -376,5 +376,14 @@
     "validation": "docs/acceptance-20261104/capture-keyword/acceptance.md、main-verification.json；主干91项Python无失败（4既有跳过）、Node合同、真实主干/EXE UI与181输入/278文件通过",
     "remaining": "其他平台作品收录待接入，供应商接口未全部实测；早期目录加载超时原因未确认并保留证据",
     "completion": "目标实现、验证通过、已合本地主干并复验；无未保存源码后Git安全注销工作树与分支，桌面交付空资料ZIP及新版快捷方式"
+  },
+  {
+    "branch": "fix/xhs-note-collection",
+    "goal": "修复小红书note_list漏收录、正文封面类型和图文图片展示",
+    "head": "d90a16e0d4691d8193b7b9c647b001ea06700906",
+    "main_merge": "待合入",
+    "validation": "docs/acceptance-20261104/xhs-note-collection/acceptance.md；97项Python无失败（4既有跳过），真实源码/最终EXE UI、现存响应离线重放与实际补收通过；181输入/278文件核验",
+    "remaining": "真实响应为video资料，未额外调用供应商抓取图文/视频直链；其他平台和抖音图文仍按既有能力",
+    "completion": "功能、验证、用户数据库备份补收及桌面交付完成，待主干复验和安全收尾"
   }
 ]

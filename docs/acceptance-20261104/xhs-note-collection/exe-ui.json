@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "source_or_exe": "E:/leida-build/xhs-note-collection-20261104/final-builds/20261104-013937/ice运营台/ice运营台.exe",
+  "real_service": true,
+  "real_chrome": true,
+  "synthetic_image_note": true,
+  "retained_real_response_replayed": true,
+  "real_response_type": "video",
+  "real_cover_loaded": true,
+  "body_escaped_and_newlines_preserved": true,
+  "image_gallery": true,
+  "light_dark_390_1280": true,
+  "restart_preserves_notes": true,
+  "provider_calls": 0,
+  "api_ledger_rows": 0,
+  "errors": []
+}

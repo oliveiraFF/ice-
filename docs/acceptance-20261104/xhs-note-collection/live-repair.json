@@ -1,0 +1,18 @@
+{
+  "recovered_posts": 1,
+  "before_live_count": 9,
+  "after_live_count": 10,
+  "recovered_post_id": 19,
+  "keyword_id": 6,
+  "keyword": "TikHub补收",
+  "response_type": "video",
+  "image_count": 1,
+  "body_preserved": true,
+  "other_posts_unchanged": true,
+  "supplier_history_and_budget_unchanged": true,
+  "schema_unchanged": true,
+  "database_quick_check": "ok",
+  "provider_calls": 0,
+  "backup": "E:\\leida-build\\xhs-note-collection-20261104\\private-live-backup\\before-xhs-repair.sqlite3",
+  "response_sha256": "6d2f3b76654da438ac384da9e9985e40cd7c78c1d19b048e0692452720225874"
+}
