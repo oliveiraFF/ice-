@@ -20,6 +20,8 @@ async function stop(){
 async function open(){
   browser=await chromium.launchPersistentContext(path.join(out,'chrome-profile'),{headless:true,executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',viewport:{width:1280,height:900},javaScriptEnabled:true});
   const page=await browser.newPage();page.on('pageerror',error=>errors.push(error.message));
+  // Deliberately fail only the synthetic image assets; do not depend on DNS timing.
+  await page.route('https://example.test/**',route=>route.abort('failed'));
   page.on('request',request=>{const url=new URL(request.url());if(/(?:api\.tikhub\.io|api\.deepseek\.com)$/.test(url.hostname))providerRequests.push(url.hostname);if(request.method()==='POST')writes.push(url.pathname);});
   await page.goto(origin+'/');await page.locator('#grid .content-card').first().waitFor();return page;
 }
@@ -64,7 +66,7 @@ print(json.dumps({'real_post_id':real_id,'count':len(store.state('live')['posts'
     assert.equal(await page.locator('.note-text').textContent(),synthetic.description);assert.equal(await page.locator('.note-text script').count(),0);
     assert.equal(await page.locator('.note-images img').count(),2);assert.match(await page.locator('#detailContent .connection-info').innerText(),/图文没有视频音轨/);
     await shots(page,'synthetic-image');
-    await page.locator('.note-images').scrollIntoViewIfNeeded();
+    await page.locator('.note-images figure').first().scrollIntoViewIfNeeded();
     await page.locator('.note-images figcaption').first().waitFor({state:'visible'});assert.match(await page.locator('.note-images').innerText(),/图片加载失败/);
     await shots(page,'synthetic-gallery');
     await page.locator('#detailContent [data-close]').click();
