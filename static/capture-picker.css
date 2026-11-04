@@ -5,6 +5,10 @@
 .capture-picker #keywordSearchForm{display:block}
 .capture-picker .capture-choice:has(input:checked){background:var(--surface-2,var(--surface))}
 .capture-picker .capture-selectors label{display:flex;flex-direction:column;gap:6px;font-weight:600}
+.capture-picker .capture-content-keyword{display:grid;gap:6px;margin:14px 0}
+.capture-picker .capture-content-keyword>label{font-weight:650}
+.capture-picker .capture-content-keyword p{margin:0;color:var(--muted);line-height:1.7}
+.capture-picker .capture-picker-field>label{display:block;margin-bottom:6px;font-weight:600}
 .capture-picker :is(select,input){width:100%;min-width:0;box-sizing:border-box}
 .capture-picker .capture-picker-field{min-width:0;border:1px solid var(--line);border-radius:10px;padding:12px;margin:0}
 .capture-picker .capture-picker-field legend{padding:0 6px;font-weight:650}

@@ -2,7 +2,7 @@
 const assert=require('node:assert/strict'),fs=require('node:fs/promises'),path=require('node:path'),net=require('node:net');
 const {spawn,spawnSync}=require('node:child_process'),{chromium}=require(process.env.PLAYWRIGHT_MODULE);
 const out=path.resolve(process.env.ICE_ACCEPTANCE_DIR),data=path.join(out,'app-data'),exe=process.env.ICE_EXE;
-const SHARE='GET /api/v1/douyin/app/v3/fetch_one_video_by_share_url',YOUTUBE='GET /api/v1/youtube/web/search_video';
+const SHARE='GET /api/v1/douyin/app/v3/fetch_one_video_by_share_url',YOUTUBE='GET /api/v1/youtube/web/search_video',INSTAGRAM='GET /api/v1/instagram/v1/fetch_post_by_url';
 let child,browser,origin;const errors=[],external=[],writes=[],sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 async function start(){
   const env={...process.env,PYTHONUTF8:'1',TIKHUB_API_KEY:'',LLM_ALLOW_PAID:'0',SHORT_VIDEO_OPS_WORKSPACE:'',ICE_AGENT_LOOP_TEST:''};
@@ -71,6 +71,9 @@ function ledgerCount(){
   try{
     await start();let page=await open();
     assert.equal(await page.locator('#captureRegion').inputValue(),'domestic');
+    assert(await page.getByLabel('抓取关键词',{exact:true}).isVisible());
+    assert.equal(await page.locator('#searchKeywordInput').evaluate(node=>Boolean(node.closest('details'))),false);
+    assert(await page.getByText('筛选接口名称',{exact:true}).isVisible());
     assert.equal(await page.locator('#searchKeywordInput').getAttribute('required'),null);
     await page.locator('#captureRegion').focus();
     assert(await page.locator('#captureRegion').evaluate(node=>{const style=getComputedStyle(node);return style.outlineStyle!=='none'&&parseFloat(style.outlineWidth)>=2;}),'keyboard focus must be visible');
@@ -78,6 +81,7 @@ function ledgerCount(){
     await page.locator('#capturePlatform').selectOption('douyin');
     await page.locator('#captureQuery').fill('fetch_one_video_by_share_url');
     await page.locator(`[data-capture-id="${SHARE}"]`).check();
+    assert.match(await page.locator('#captureKeywordHint').textContent(),/链接/);
     await page.locator('#captureRegion').selectOption('overseas');
     await page.locator('#capturePlatform').selectOption('youtube');
     await page.locator('#captureQuery').fill('search_video');
@@ -100,7 +104,7 @@ function ledgerCount(){
     await page.waitForFunction(()=>document.getElementById('keywordSearchStatus').textContent.startsWith('已读取'));
     assert.equal(await page.locator('#captureSelectedList li').count(),2);
     await screenshots(page,'selected');
-    await page.locator('.capture-keyword-tools summary').click();await page.locator('#searchKeywordInput').fill('本地验收主题');
+    await page.locator('#searchKeywordInput').fill('本地验收主题');
     await page.locator('#keywordSearchSubmit').click();await page.waitForURL('**/market?**');
     await page.locator('#apiDialog').waitFor({state:'visible'});
     assert((await page.locator('#detailPath').textContent()).endsWith('/api/v1/douyin/app/v3/fetch_one_video_by_share_url'));
@@ -110,6 +114,8 @@ function ledgerCount(){
     await page.getByLabel('参数 share_url',{exact:true}).fill(link);
     await page.locator('#captureNext').click();
     await page.waitForFunction(()=>document.getElementById('detailPath').textContent.endsWith('/api/v1/youtube/web/search_video'));
+    assert.equal(await page.getByLabel('参数 search_query',{exact:true}).inputValue(),'本地验收主题');
+    assert.match(await page.locator('#captureKeywordNotice').textContent(),/已填入/);
     assert(await page.locator('#collectionOptions').isHidden());assert.equal(await page.locator('#collectResult').isChecked(),false);
     assert.match(await page.locator('#captureCapability').textContent(),/收录待接入/);
     assert(await page.locator('#runTool').isDisabled());
@@ -118,13 +124,34 @@ function ledgerCount(){
     await page.waitForFunction(()=>document.getElementById('detailPath').textContent.endsWith('/api/v1/douyin/app/v3/fetch_one_video_by_share_url'));
     assert.equal(await page.getByLabel('参数 share_url',{exact:true}).inputValue(),link);
     assert.equal(new URL(page.url()).searchParams.get('id'),SHARE);
+    await page.goto(origin+'/');await page.waitForFunction(()=>document.getElementById('keywordSearchStatus').textContent.startsWith('已读取'));
+    while(await page.locator('#captureSelectedList [data-remove]').count())await page.locator('#captureSelectedList [data-remove]').first().click();
+    await page.locator('#captureRegion').selectOption('overseas');await page.locator('#capturePlatform').selectOption('instagram');
+    await page.locator('#captureQuery').fill('fetch_post_by_url');await page.locator(`[data-capture-id="${INSTAGRAM}"]`).check();
+    await page.getByLabel('抓取关键词',{exact:true}).fill('AI工具');
+    assert.match(await page.locator('#captureKeywordHint').textContent(),/需要.*链接/);
+    await screenshots(page,'instagram-keyword-visible');
+    await page.locator('#keywordSearchSubmit').click();await page.waitForURL('**/market?**');await page.locator('#apiDialog').waitFor({state:'visible'});
+    assert.equal(await page.getByLabel('参数 post_url',{exact:true}).inputValue(),'');
+    assert.match(await page.locator('#captureKeywordNotice').textContent(),/不按关键词搜索.*链接/);
+    await page.locator('#captureKeywordNotice').scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,'instagram-link-required.png'),animations:'disabled'});
+    await page.goto(origin+'/');await page.waitForFunction(()=>document.getElementById('keywordSearchStatus').textContent.startsWith('已读取'));
+    await page.locator('#captureSelectedList [data-remove]').click();
+    await page.locator('#captureRegion').selectOption('domestic');await page.locator('#capturePlatform').selectOption('douyin');
+    await page.locator('#captureQuery').fill('search/fetch_video_search_v2');
+    await page.locator('[data-capture-id="POST /api/v1/douyin/search/fetch_video_search_v2"]').check();
+    await page.getByLabel('抓取关键词',{exact:true}).fill('AI视频');await page.locator('#keywordSearchSubmit').click();
+    await page.waitForURL('**/market?**');await page.locator('#apiDialog').waitFor({state:'visible'});
+    assert.equal(JSON.parse(await page.locator('#bodyInput').inputValue()).keyword,'AI视频');
+    assert.equal(await page.getByLabel('参数 keyword',{exact:true}).inputValue(),'AI视频');
+    assert.match(await page.locator('#captureKeywordNotice').textContent(),/已填入 keyword/);
     await browser.close();browser=null;assert.equal(ledgerCount(),0);await stop();
     // The app uses a fresh port on restart. Preferences are local to that origin;
     // reload persistence was tested above, while a new origin starts unselected.
     await start();page=await open();assert.equal(await page.locator('#captureSelectedList li').count(),0);
     assert.deepEqual(writes,[]);assert.deepEqual(external,[]);assert.deepEqual(errors,[]);assert.equal(ledgerCount(),0);
     await browser.close();browser=null;await stop();
-    const result={passed:true,source_or_exe:exe||'source',real_local_service:true,real_chrome:true,regions_and_platforms:true,cross_platform_multiselect:true,empty_filter:true,offline_recovery:true,manual_parameters_only:true,draft_preserved:true,reload_selection:true,new_origin_starts_unselected:true,application_restart:true,unsupported_collection_hidden:true,interface_executions:0,provider_calls:0,api_ledger_rows:0,errors,external,writes};
+    const result={passed:true,source_or_exe:exe||'source',real_local_service:true,real_chrome:true,regions_and_platforms:true,cross_platform_multiselect:true,empty_filter:true,offline_recovery:true,manual_parameters_only:true,draft_preserved:true,reload_selection:true,new_origin_starts_unselected:true,application_restart:true,unsupported_collection_hidden:true,keyword_always_visible:true,get_search_query_prefill:true,post_keyword_prefill:true,instagram_needs_link:true,interface_executions:0,provider_calls:0,api_ledger_rows:0,errors,external,writes};
     await fs.writeFile(path.join(out,'result.json'),JSON.stringify(result,null,2));console.log(JSON.stringify(result));
   }finally{if(browser)await browser.close();await stop();}
 })().catch(error=>{console.error(error);process.exitCode=1;});

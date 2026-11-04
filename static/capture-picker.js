@@ -12,6 +12,20 @@
   const escape = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
   const regionOf = platform => domestic.has(platform) ? 'domestic' : overseas.has(platform) ? 'overseas' : 'other';
   const platformName = item => names[item.platform] || item.platform_name || item.platform;
+  const isLinkDetail = item => /(?:by|from)_(?:share_)?(?:url|link)/i.test(item.path || '');
+  function keywordTarget(item) {
+    if (isLinkDetail(item)) return null;
+    const searching = /search|搜索/i.test((item.path || '') + ' ' + (item.title || ''));
+    const textual = schema => schema?.type === 'string' || schema?.anyOf?.some(choice => choice.type === 'string') || (!schema?.type && !schema?.anyOf);
+    for (const name of ['keyword','search_keyword','search_query','query','q']) {
+      if (['query','q'].includes(name) && !searching) continue;
+      const parameter = item.parameters?.find(field => field.in === 'query' && field.name === name);
+      if (parameter && textual(parameter.schema)) return {scope:'query',name};
+      const property = item.body_schema?.properties?.[name];
+      if (property && textual(property)) return {scope:'body',name};
+    }
+    return null;
+  }
   function filter(items, region, platform, query = '') {
     const q = query.trim().toLocaleLowerCase();
     return items.filter(item => (!region || regionOf(item.platform) === region) && (!platform || item.platform === platform) &&
@@ -54,6 +68,10 @@
     }
     function renderSelection() {
       const chosen = items();
+      const linked = chosen.filter(isLinkDetail);
+      $('captureKeywordHint').textContent = linked.length
+        ? '已选包含链接详情接口：这类接口需要帖子 / 视频链接，不能用关键词代替；请在参数页填写链接。关键词只填入支持搜索的接口。'
+        : '输入你想抓取的内容，例如“AI工具”。关键词会带到参数页，并填入接口声明的搜索字段；链接、用户 ID 等需另外填写。';
       $('captureSelected').hidden = !chosen.length;
       $('captureSelectedCount').textContent = `已选 ${chosen.length} 个接口 · 在参数页逐个切换、手动执行`;
       $('captureSelectedList').innerHTML = chosen.map((item,index) => `<li><span><strong>${escape(platformName(item))} · ${escape(item.title)}</strong><code>${escape(item.method)} ${escape(item.path)}</code></span><button type="button" class="secondary" data-open="${index}" ${ready ? '' : 'disabled'}>填写参数</button><button type="button" class="text-button" data-remove="${index}" aria-label="移除 ${escape(item.title)}">移除</button></li>`).join('');
@@ -123,5 +141,5 @@
     $('refreshKeywordEndpoints').onclick = load;
     load();
   }
-  return {filter,regionOf,validSelection,parameterURL,statusOf,mount};
+  return {filter,regionOf,validSelection,parameterURL,statusOf,isLinkDetail,keywordTarget,mount};
 });

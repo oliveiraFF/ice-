@@ -88,8 +88,15 @@ async function openDetail(id){
   $('detailDescription').textContent=detail.description||'价格目录收录了此接口，但当前公开文档没有相应的请求方法与参数说明。仅展示目录信息，不提供运行。';
   $('parameterSchema').textContent=JSON.stringify(detail.parameters,null,2);$('bodySchema').textContent=detail.body_schema?JSON.stringify(detail.body_schema,null,2):'没有 JSON 请求体';
   $('queryInput').value=JSON.stringify(detail.query||{},null,2);$('bodyInput').value=JSON.stringify(detail.body??{},null,2);$('bodyEditor').hidden=detail.method!=='POST';
-  const keyword=new URLSearchParams(location.search).get('keyword');
-  if(keyword){const query=JSON.parse($('queryInput').value),body=JSON.parse($('bodyInput').value);if(detail.parameters.some(p=>p.in==='query'&&p.name==='keyword'))query.keyword=keyword;else if(detail.body_schema?.properties?.keyword)body.keyword=keyword;else if(detail.body_schema?.properties?.query)body.query=keyword;$('queryInput').value=JSON.stringify(query,null,2);$('bodyInput').value=JSON.stringify(body,null,2);}
+  const selectionParams=new URLSearchParams(location.search),keyword=selectionParams.get('keyword');
+  const keywordField=CapturePicker.keywordTarget(detail),linked=CapturePicker.isLinkDetail(detail);
+  $('captureKeywordNotice').textContent=keyword&&keywordField?`抓取关键词已填入 ${keywordField.name} 字段，执行前可检查或修改。`:linked?'此接口按帖子 / 视频链接获取详情，不按关键词搜索；请填写你要获取的链接。':keyword?'此接口没有可自动填写的关键词搜索字段，请按接口说明填写必填参数。':'';
+  const query=JSON.parse($('queryInput').value),requestBody=JSON.parse($('bodyInput').value);
+  if(keyword&&keywordField)(keywordField.scope==='query'?query:requestBody)[keywordField.name]=keyword;
+  if(linked&&selectionParams.has('pick')){
+    for(const field of detail.parameters||[])if(field.in==='query'&&['url','post_url','share_url','video_url','note_url','link'].includes(field.name))query[field.name]='';
+  }
+  $('queryInput').value=JSON.stringify(query,null,2);$('bodyInput').value=JSON.stringify(requestBody,null,2);
   if(detail.path==='/api/v1/douyin/app/v3/fetch_one_video_by_share_url'&&new URLSearchParams(location.search).get('collect')==='1'){const query=JSON.parse($('queryInput').value);query.share_url='';$('queryInput').value=JSON.stringify(query,null,2);}
   $('legacyNotice').hidden=!detail.legacy_documentation;
   $('legacyNotice').textContent=detail.availability==='unavailable'?detail.execution_reason:'此接口参数来自官方历史SDK，当前服务可用性尚未验证。';

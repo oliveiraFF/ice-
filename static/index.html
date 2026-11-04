@@ -15,8 +15,9 @@
     <label for="captureRegion">1 · 范围<select id="captureRegion"><option value="domestic">国内平台</option><option value="overseas">国外平台</option><option value="other">通用服务 / 其他</option></select></label>
     <label for="capturePlatform">2 · 平台<select id="capturePlatform" disabled><option value="">正在读取平台…</option></select></label>
   </div>
+  <div class="capture-content-keyword"><label for="searchKeywordInput">抓取关键词</label><input id="searchKeywordInput" maxlength="40" placeholder="你想抓取什么？例如：AI工具、AI视频、厨房清洁" aria-describedby="captureKeywordHint" autocomplete="off"><p id="captureKeywordHint">关键词用于搜索接口；链接详情接口需要另外填写帖子链接。</p></div>
   <fieldset class="capture-picker-field"><legend>3 · 接口（可多选）</legend>
-    <label for="captureQuery" class="sr-only">筛选接口</label><input id="captureQuery" type="search" placeholder="筛选接口名称或路径，例如：搜索、用户作品、分享链接" autocomplete="off">
+    <label for="captureQuery">筛选接口名称</label><input id="captureQuery" type="search" placeholder="筛选接口名称或路径，例如：搜索、用户作品、分享链接" autocomplete="off">
     <p id="captureMatchCount" aria-live="polite">正在读取接口目录…</p>
     <div id="captureEndpointList" class="capture-endpoint-list" aria-label="接口列表" aria-busy="true"><p class="capture-empty">正在读取本机目录…</p></div>
   </fieldset>
@@ -25,7 +26,7 @@
 </form>
 <p id="keywordSearchStatus" role="status">选择接口后填写参数，不会自动采集。</p>
 <p>抖音、小红书沿用现有作品解析，是否可收录以真实返回为准；其他平台先查看响应，作品收录待接入。未验证不代表可用，目录标价不代表已扣费。</p>
-<details class="capture-keyword-tools"><summary>选填关键词与本地操作</summary><div><label for="searchKeywordInput">关键词 / 收录分组</label><input id="searchKeywordInput" maxlength="40" placeholder="选填；链接、用户 ID 等请在接口参数页填写" autocomplete="off"><button class="secondary" type="button" id="searchLocal">搜索本地</button><button class="secondary" type="button" data-action="add">＋ 追踪关键词</button></div></details>
+<details class="capture-keyword-tools"><summary>本地搜索与关键词管理</summary><div><button class="secondary" type="button" id="searchLocal">用上方关键词搜索本地</button><button class="secondary" type="button" data-action="add">＋ 追踪关键词</button></div></details>
 </section></section>
 <section class="heat-panel" aria-label="热度排行">
 <div class="heat-heading"><div><h2>热度排行</h2><p id="heatSortNote">按已知播放量排序，条形越长播放越高</p></div><div class="rank-sort" role="group" aria-label="排行排序"><button data-rank-sort="plays" aria-pressed="true">播放量</button><button data-rank-sort="newest" aria-pressed="false">最新发布</button></div></div>
