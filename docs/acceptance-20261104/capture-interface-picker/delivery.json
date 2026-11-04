@@ -1,0 +1,13 @@
+{
+  "source_commit": "37302ead736410fd3d33ca5496d83cfb9af2514a",
+  "source_dirty": false,
+  "inputs": 181,
+  "manifest_verified_files": 278,
+  "runtime_inputs_match": true,
+  "data_empty": true,
+  "portable_zip": "C:\\Users\\25370\\Desktop\\ICE运营台-全平台接口选择-20261104-免安装.zip",
+  "zip_sha256": "6fd16696d01fd5d30136d5f1565a02ae3b5159ba34c031420f61fdc1adb41a1e",
+  "verified_program": "E:\\leida-build\\capture-interface-picker-20261104\\final-builds\\20261104-002454\\ice运营台\\ice运营台.exe",
+  "original_installation_unchanged": true,
+  "existing_data_backup_available": true
+}

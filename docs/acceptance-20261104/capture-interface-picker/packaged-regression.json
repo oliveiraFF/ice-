@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "source_or_exe": "E:/leida-build/capture-interface-picker-20261104/final-builds/20261104-002454/ice运营台/ice运营台.exe",
+  "blocked_direct_request": true,
+  "blocked_reenable": true,
+  "disabled_button_no_post": true,
+  "ledger_and_history_unchanged": true,
+  "restart": true,
+  "share_entry_retained": true,
+  "documented_forms": true,
+  "typed_defaults": true,
+  "required_inputs": true,
+  "topics_not_collected": true,
+  "synthetic_history": true,
+  "errors": [],
+  "external": [],
+  "paid_calls": 0
+}
