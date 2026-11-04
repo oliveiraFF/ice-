@@ -1,0 +1,43 @@
+/* finesse · component=capture-picker · register=product · design-language=apple · apple-mode=app */
+.capture-picker{scroll-margin-top:130px}
+.source-tools:has(.capture-picker){scroll-margin-top:130px}
+.capture-picker .capture-selectors{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+.capture-picker #keywordSearchForm{display:block}
+.capture-picker .capture-choice:has(input:checked){background:var(--surface-2,var(--surface))}
+.capture-picker .capture-selectors label{display:flex;flex-direction:column;gap:6px;font-weight:600}
+.capture-picker :is(select,input){width:100%;min-width:0;box-sizing:border-box}
+.capture-picker .capture-picker-field{min-width:0;border:1px solid var(--line);border-radius:10px;padding:12px;margin:0}
+.capture-picker .capture-picker-field legend{padding:0 6px;font-weight:650}
+.capture-picker .capture-endpoint-list{max-height:310px;min-height:130px;overflow:auto;overscroll-behavior:contain;margin-top:10px;border:1px solid var(--line);border-radius:8px}
+.capture-picker .capture-choice{display:flex;align-items:flex-start;gap:10px;padding:12px;border-bottom:1px solid var(--line);cursor:pointer}
+.capture-picker .capture-choice:last-child{border-bottom:0}
+.capture-picker .capture-choice input{width:18px;min-width:18px;height:18px;margin:3px 0;accent-color:var(--accent)}
+#keywordSearchForm .capture-choice input{flex:0 0 18px;width:18px;min-width:18px;max-width:18px;min-height:18px;padding:0}
+.capture-picker .capture-choice-content{display:flex;flex-direction:column;gap:5px;min-width:0;flex:1}
+#captureEndpointList .capture-choice-content :is(strong,code,small,span){white-space:normal;overflow-wrap:anywhere;word-break:break-word;max-width:100%;min-width:0}
+.capture-picker code{font-size:11px;overflow-wrap:anywhere;color:var(--muted)}
+.capture-picker .capture-choice-meta{display:flex;flex-wrap:wrap;gap:5px 14px;font-size:11px;color:var(--muted);font-weight:400}
+.capture-picker .capture-choice small{font-size:11px;color:var(--muted);font-weight:400;overflow-wrap:anywhere}
+.capture-picker .capture-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.capture-picker .capture-actions button{min-height:42px}
+.capture-picker .capture-selected{margin-top:12px}
+.capture-picker .capture-selected ol{list-style:none;padding:0;margin:8px 0}
+.capture-picker .capture-selected li{display:flex;align-items:center;gap:8px;padding:10px 0;border-top:1px solid var(--line)}
+.capture-picker .capture-selected li>span{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.capture-picker .capture-selected strong{font-size:12px;overflow-wrap:anywhere}
+.capture-picker .capture-selected button{white-space:nowrap;flex-shrink:0}
+.capture-picker .capture-keyword-tools{margin-top:12px}
+.capture-picker .capture-keyword-tools summary{cursor:pointer;color:var(--muted)}
+.capture-picker .capture-keyword-tools>div{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+.capture-picker .capture-keyword-tools input{flex:1 1 200px}
+.capture-picker .capture-empty{padding:20px;color:var(--muted)}
+.capture-picker :is(button,a,input,select,summary):focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.capture-picker button:disabled{opacity:.5;cursor:not-allowed}
+.capture-picker button:active:not(:disabled){transform:translateY(1px)}
+.capture-picker .capture-endpoint-list[aria-busy="true"]{opacity:.6;pointer-events:none}
+.capture-queue{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:12px 0;border-bottom:1px solid var(--line)}
+.capture-queue[hidden]{display:none}
+.capture-queue span{flex:1;min-width:120px;color:var(--muted);font-size:12px}
+@media(hover:hover){.capture-picker .capture-choice:hover{background:var(--surface-2,var(--surface))}}
+@media(max-width:600px){.capture-picker .capture-selectors{grid-template-columns:1fr}.capture-picker .capture-selected li{flex-wrap:wrap}.capture-picker .capture-selected li>span{flex-basis:100%}.capture-picker .capture-picker-field{padding:8px}.capture-picker .capture-choice{padding:10px 8px}.capture-picker .capture-actions button{flex:1 1 150px}.capture-queue button{min-height:42px}}
+@media(prefers-reduced-motion:reduce){.capture-picker button:active:not(:disabled){transform:none}}

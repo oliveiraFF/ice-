@@ -5,11 +5,11 @@
   <title>API市场 · ice运营台</title>
   <script src="/theme.js"></script><link rel="stylesheet" href="/tokens.css"><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/icons.css"><link rel="stylesheet" href="/market.css">
   <script defer src="/icons.js"></script><script defer src="/site.js"></script>
-  <script defer src="/market-data.js"></script><script defer src="/market.js"></script>
+  <script defer src="/market-data.js"></script><script defer src="/capture-picker.js"></script><script defer src="/market.js"></script>
 
 <link rel="stylesheet" href="/site.css">
 <link rel="stylesheet" href="/ice.css"><link rel="icon" href="/favicon.ico">
-<link rel="stylesheet" href="/theme.css"><link rel="stylesheet" href="/components.css"></head>
+<link rel="stylesheet" href="/theme.css"><link rel="stylesheet" href="/components.css"><link rel="stylesheet" href="/capture-picker.css"></head>
 <body class="market-app">
   <header class="topbar">
     <a class="brand" href="/"><span class="brand-symbol" data-icon="radar"></span>ice运营台<span class="edition">LOCAL</span></a>
@@ -49,7 +49,7 @@
   </main>
   <dialog id="apiDialog" class="api-dialog">
     <div class="api-dialog-head"><div><span class="eyebrow">API DETAILS</span><h2 id="detailTitle"></h2></div><button class="icon-button" id="closeDetail" aria-label="关闭接口详情">✕</button></div>
-    <div class="api-dialog-body"><div id="detailBadges" class="api-badges"></div><code id="detailPath" class="detail-path"></code><div class="detail-links"><button class="secondary compact" id="copyEndpoint">复制接口地址</button><a id="officialDocs" class="text-button" target="_blank" rel="noopener noreferrer">官方文档 ↗</a><button class="primary compact" id="detailManage"></button><button class="secondary compact" id="detailAccess">额度设置</button></div>
+    <div class="api-dialog-body"><div id="detailBadges" class="api-badges"></div><nav id="captureQueue" class="capture-queue" aria-label="已选接口导航" hidden><button type="button" class="secondary" id="capturePrevious">上一个接口</button><span id="captureQueueStatus"></span><button type="button" class="secondary" id="captureNext">下一个接口</button><a href="/" class="text-button">返回选择接口</a></nav><p id="captureCapability" class="helper"></p><code id="detailPath" class="detail-path"></code><div class="detail-links"><button class="secondary compact" id="copyEndpoint">复制接口地址</button><a id="officialDocs" class="text-button" target="_blank" rel="noopener noreferrer">官方文档 ↗</a><button class="primary compact" id="detailManage"></button><button class="secondary compact" id="detailAccess">额度设置</button></div>
       <section class="capture-help" id="captureHelp" hidden><p id="capturePurpose"></p><p id="captureInputHelp" class="helper"></p><div class="capture-routes" id="captureRoutes"></div></section><details class="api-description"><summary>接口说明与参数</summary><pre id="detailDescription"></pre><h3>查询参数文档</h3><pre id="parameterSchema"></pre><h3 id="bodySchemaTitle">请求体文档</h3><pre id="bodySchema"></pre></details>
       <section class="api-run-section"><div class="run-heading"><h3>手动调用</h3><span id="runEligibility"></span></div><p class="helper">仅手动请求一页，不自动翻页或重试；失败也可能计费。响应最多10MiB，页面只预览前30万字符，收录使用完整响应。</p><details class="api-run-notes"><summary>调用与计费说明</summary><p class="helper">“已验证响应”仅指最近一次请求成功，不代表视频已收录或分析完成。标价不等于实际扣费，实际扣费以TikHub账单为准。目标接口最多请求一次，不自动翻页或重试；执行前的价格与额度核验可能另发请求，总请求次数上界未提供。执行前核实实时价格、可用余额、额度上限与到期时间；失败或超时也保留本地预算预留，以防重复消耗。</p></details><p id="legacyNotice" class="helper" hidden>此接口参数来自官方历史SDK，当前服务可用性尚未验证。</p><div id="parameterFields" class="parameter-fields"></div><details><summary>高级参数 JSON（与上方表单同步）</summary><div class="request-editors"><label>查询参数（JSON对象）<textarea id="queryInput" spellcheck="false" aria-label="查询参数JSON"></textarea></label><label id="bodyEditor">请求体（JSON）<textarea id="bodyInput" spellcheck="false" aria-label="请求体JSON"></textarea></label></div></details><div id="collectionOptions" class="collection-options"><label><input type="checkbox" id="collectResult"> 将响应中的作品收录到“发现内容”</label><label>归入关键词<input id="collectionKeyword" maxlength="40" value="TikHub采集" aria-label="收录关键词"></label><p class="helper">支持抖音、小红书可识别的作品。播放量缺失时保留未知，不额外请求补查。</p></div><div class="run-actions"><span id="runStatus">尚未运行</span><button class="primary" id="runTool">运行一次 · $0</button></div><p id="collectionStatus" role="status"></p><a class="text-button" id="viewCollected" href="/" hidden>查看已收录内容 ↗</a><pre id="toolResponse" class="tool-response" aria-label="接口响应">执行结果将在这里显示。</pre></section>
     </div>

@@ -92,6 +92,11 @@ def availability(item, last_ok=None):
     return dict(availability=status, availability_label=label)
 
 
+def can_collect(item):
+    """An existing parser is available; this does not verify a provider response."""
+    return item.get('platform') in ('douyin', 'xiaohongshu') and item.get('collection_supported') is not False
+
+
 def execution_reason(item, allow_balance=False):
     if item['path'] in UNAVAILABLE_ROUTES:
         return UNAVAILABLE_ROUTES[item['path']]
@@ -223,6 +228,7 @@ class Catalog:
         last_ok = {r[0]: r[3] for r in rows}
         access = self.access_state()
         compact = [dict({k: v for k, v in i.items() if k not in ('description', 'query', 'body', 'parameters', 'body_schema')},
+                        collection_supported=can_collect(i),
                         execution_reason=execution_reason(i, access['allow_balance']),
                         **availability(i, last_ok.get(i['id']))) for i in self.items]
         return dict(items=compact, imported_at=self.snapshot['imported_at'], source=self.snapshot['source'],
@@ -232,6 +238,7 @@ class Catalog:
 
     def detail(self, ident):
         item = dict(self.get(ident))
+        item['collection_supported'] = can_collect(item)
         item['execution_reason'] = execution_reason(item, self.access_state()['allow_balance'])
         with closing(sqlite3.connect(self.database, timeout=15)) as db:
             row = db.execute('SELECT last_result,last_ok FROM tools WHERE id=?', (ident,)).fetchone()

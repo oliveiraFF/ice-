@@ -1,14 +1,32 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>发现内容 · ice运营台</title>
 <script src="/theme.js"></script><link rel="stylesheet" href="/tokens.css"><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/icons.css"><link rel="stylesheet" href="/discovery.css"><link rel="stylesheet" href="/browser-import.css">
-<script defer src="/icons.js"></script><script defer src="/site.js"></script><script defer src="/radar-data.js"></script><script defer src="/app.js"></script><link rel="stylesheet" href="/site.css">
+<script defer src="/icons.js"></script><script defer src="/site.js"></script><script defer src="/radar-data.js"></script><script defer src="/capture-picker.js"></script><script defer src="/app.js"></script><link rel="stylesheet" href="/site.css">
 <link rel="stylesheet" href="/ice.css"><link rel="icon" href="/favicon.ico">
-<link rel="stylesheet" href="/theme.css"><link rel="stylesheet" href="/components.css"></head>
+<link rel="stylesheet" href="/theme.css"><link rel="stylesheet" href="/components.css"><link rel="stylesheet" href="/capture-picker.css"></head>
 <body class="discover-app"><header class="topbar"></header>
 <main class="discovery-page">
 <div class="breadcrumbs">发现内容 › 关键词监测</div>
 <div class="page-heading"><div><h1 id="pageTitle">发现内容</h1><p id="pageSubtitle">浏览本地视频样本</p></div><div class="page-heading-actions"><span class="free-status" id="fetchAccessStatus">接口调用默认关闭</span><a class="secondary" href="/creative">视频分析与改编</a><button class="primary" id="scanButton"><span data-icon="plus"></span>导入本地视频</button></div></div>
-<section class="source-tools" aria-label="抓取平台视频"><h2 class="source-tools-title">抓取平台视频</h2><section class="keyword-search-panel" aria-label="关键词获取"><form id="keywordSearchForm"><label for="searchKeywordInput">关键词</label><input id="searchKeywordInput" maxlength="40" placeholder="输入商品、场景或痛点，例如：厨房清洁" required autocomplete="off"><select id="keywordEndpoint" aria-label="已启用的抖音搜索接口" disabled><option value="">正在读取搜索接口…</option></select><button class="primary" type="submit" id="keywordSearchSubmit" disabled>TikHub 搜索</button><button class="secondary" type="button" id="refreshKeywordEndpoints">刷新接口</button><button class="secondary" type="button" id="searchLocal">搜索本地</button><button class="secondary" type="button" data-action="add">＋ 追踪关键词</button></form><p id="keywordSearchStatus" role="status">正在读取已启用的抖音搜索接口；点击搜索只进入参数页，不会自动采集。</p><a class="text-button" href="/market">全部平台与接口 / 额度设置 ↗</a><p><a id="collectByKeyword" class="text-button" href="/market?id=POST%20%2Fapi%2Fv1%2Fdouyin%2Fsearch%2Ffetch_video_search_v5&amp;collect=1">设置新版关键词搜索（使用充值余额） ↗</a></p><p><a id="collectByShareLink" class="text-button" href="/market?id=GET%20%2Fapi%2Fv1%2Fdouyin%2Fapp%2Fv3%2Ffetch_one_video_by_share_url&amp;collect=1">通过视频分享链接收录（支持赠送额度） ↗</a> · 需要你自己的抖音视频分享链接。</p></section></section>
+<section class="source-tools" aria-label="抓取平台内容"><h2 class="source-tools-title">抓取平台内容</h2>
+<section class="keyword-search-panel capture-picker" aria-label="平台与接口选择">
+<form id="keywordSearchForm">
+  <div class="capture-selectors">
+    <label for="captureRegion">1 · 范围<select id="captureRegion"><option value="domestic">国内平台</option><option value="overseas">国外平台</option><option value="other">通用服务 / 其他</option></select></label>
+    <label for="capturePlatform">2 · 平台<select id="capturePlatform" disabled><option value="">正在读取平台…</option></select></label>
+  </div>
+  <fieldset class="capture-picker-field"><legend>3 · 接口（可多选）</legend>
+    <label for="captureQuery" class="sr-only">筛选接口</label><input id="captureQuery" type="search" placeholder="筛选接口名称或路径，例如：搜索、用户作品、分享链接" autocomplete="off">
+    <p id="captureMatchCount" aria-live="polite">正在读取接口目录…</p>
+    <div id="captureEndpointList" class="capture-endpoint-list" aria-label="接口列表" aria-busy="true"><p class="capture-empty">正在读取本机目录…</p></div>
+  </fieldset>
+  <section id="captureSelected" class="capture-selected" aria-labelledby="captureSelectedCount" hidden><h3 id="captureSelectedCount">已选接口</h3><ol id="captureSelectedList"></ol></section>
+  <div class="capture-actions"><button class="primary" type="submit" id="keywordSearchSubmit" disabled>先选择接口</button><button class="secondary" type="button" id="refreshKeywordEndpoints">刷新接口</button><a class="secondary" href="/market">全部接口 / 额度设置 ↗</a></div>
+</form>
+<p id="keywordSearchStatus" role="status">选择接口后填写参数，不会自动采集。</p>
+<p>抖音、小红书沿用现有作品解析，是否可收录以真实返回为准；其他平台先查看响应，作品收录待接入。未验证不代表可用，目录标价不代表已扣费。</p>
+<details class="capture-keyword-tools"><summary>选填关键词与本地操作</summary><div><label for="searchKeywordInput">关键词 / 收录分组</label><input id="searchKeywordInput" maxlength="40" placeholder="选填；链接、用户 ID 等请在接口参数页填写" autocomplete="off"><button class="secondary" type="button" id="searchLocal">搜索本地</button><button class="secondary" type="button" data-action="add">＋ 追踪关键词</button></div></details>
+</section></section>
 <section class="heat-panel" aria-label="热度排行">
 <div class="heat-heading"><div><h2>热度排行</h2><p id="heatSortNote">按已知播放量排序，条形越长播放越高</p></div><div class="rank-sort" role="group" aria-label="排行排序"><button data-rank-sort="plays" aria-pressed="true">播放量</button><button data-rank-sort="newest" aria-pressed="false">最新发布</button></div></div>
 <div class="heat-kpis"><div><span>当前样本</span><strong id="radarCount">—</strong><small>条筛选后内容</small></div><div><span>首次上榜</span><strong>—</strong><small>缺少前一天可比榜单</small></div><div><span>低粉作品</span><strong id="radarSmall">—</strong><small id="radarSmallNote">仅按已知粉丝数</small></div><div><span>已知播放合计</span><strong id="radarPlays">—</strong><small id="radarPlaysNote">未知值不估算</small></div></div>

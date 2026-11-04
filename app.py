@@ -24,7 +24,7 @@ from socketserver import ThreadingMixIn
 from urllib.error import HTTPError, URLError
 from urllib.parse import parse_qs, urlencode, urlsplit, unquote
 from urllib.request import Request, urlopen
-from catalog import Catalog, MAX_RESPONSE_BYTES, ResponseTooLarge
+from catalog import Catalog, MAX_RESPONSE_BYTES, ResponseTooLarge, can_collect
 from free_tools import download_cached_video, imported_posts, cached_media_url, resolved_media_url, validate_media_url
 from browser_collector import browser_posts
 from ai_directions import AIDirections
@@ -4297,6 +4297,8 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                      '/icons.js': ('icons.js', 'text/javascript'), '/icons.css': ('icons.css', 'text/css'),
                      '/site.js': ('site.js', 'text/javascript'), '/site.css': ('site.css', 'text/css'),
                      '/radar-data.js': ('radar-data.js', 'text/javascript'), '/discovery.css': ('discovery.css', 'text/css'),
+                     '/capture-picker.js': ('capture-picker.js', 'text/javascript'),
+                     '/capture-picker.css': ('capture-picker.css', 'text/css'),
                      '/browser-import': ('browser-import.html', 'text/html'),
                      '/browser-import.js': ('browser-import.js', 'text/javascript'),
                      '/browser-import.css': ('browser-import.css', 'text/css'),
@@ -4681,8 +4683,8 @@ def create_server(port=8765, data_dir=None, downloads_dir=None, edition='owner',
                     if not scan_lock.acquire(False):
                         raise ValueError('已有请求正在运行，请等待完成')
                     try:
-                        if body.get('collect') is True and catalog.get(str(body.get('id', ''))).get('collection_supported') is False:
-                            raise ValueError('此接口只返回话题，不能收录为视频；请取消收录或选择视频接口。未发出供应商请求。')
+                        if body.get('collect') is True and not can_collect(catalog.get(str(body.get('id', '')))):
+                            raise ValueError('此接口不支持收录为作品；话题或未适配平台请取消收录，仅查看响应。未发出供应商请求。')
                         item = catalog.get(str(body.get('id', '')))
                         posts = []
                         consume = (lambda payload: posts.extend(extract_posts(payload, 'dy' if item['platform']=='douyin' else 'xhs'))) \

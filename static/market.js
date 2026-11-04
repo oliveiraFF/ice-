@@ -2,6 +2,8 @@ const $ = id => document.getElementById(id);
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const PAGE_SIZE = 24;
 let model={items:[],tools:{},token:'',connected:false}, page=1, type='', credit='', discount='', platform='', feature='', detail=null, busy=false, toastTimer;
+let captureSwitching=false;
+const captureDrafts=new Map();
 const platformNames = {bilibili:'Bilibili',demo:'Demo',douyin:'Douyin',hybrid:'Hybrid',instagram:'Instagram',kuaishou:'Kuaishou',lemon8:'Lemon8',linkedin:'LinkedIn',pipixia:'Pipixia',reddit:'Reddit',telegram:'Telegram',threads:'Threads',tikhub:'TikHub',tiktok:'TikTok',toutiao:'Toutiao',twitter:'X / Twitter',wechat_channels:'WeChat Channels',wechat_mp:'WeChat MP',wechat_search:'WeChat Search',weibo:'Weibo',xiaohongshu:'Xiaohongshu',xigua:'Xigua',youtube:'YouTube',zhihu:'Zhihu',captcha:'Captcha',health:'Health',ios_shortcut:'iOS Shortcut',net_ease_cloud_music:'NetEase Music',sora2:'Sora 2'};
 const featureIcons = ['comment','download','users','hash','mouse-pointer-click','heart','radio','play','file-text','search','shopping-bag','trending-up','user','file-text','wrench','ellipsis'];
 function platformBadge(id){return `<span class="api-platform-icon ${esc(id)}" aria-hidden="true">${RadarIcons.platform(id)}</span>`;}
@@ -51,7 +53,33 @@ function refreshDetail(){
   $('runTool').disabled=busy||Boolean(reason);
   $('runTool').textContent=busy?'正在运行…':detail.availability==='unavailable'?'接口不可用 · 已暂停':`手动探针 · ${moneyText(detail.price)}`;
   $('runEligibility').textContent=reason||'执行前再次检查实时价格与额度';
+  renderCaptureQueue();
 }
+function captureQueue(){
+  return CapturePicker.validSelection(new URLSearchParams(location.search).getAll('pick'),model.items);
+}
+function renderCaptureQueue(){
+  const queue=captureQueue(),index=detail?queue.indexOf(detail.id):-1;
+  $('captureQueue').hidden=queue.length<2||index<0;
+  $('captureQueueStatus').textContent=index<0?'':`已选接口 ${index+1} / ${queue.length} · 切换不执行抓取`;
+  $('capturePrevious').disabled=busy||captureSwitching||index<=0;
+  $('captureNext').disabled=busy||captureSwitching||index<0||index>=queue.length-1;
+}
+async function changeCapture(offset){
+  if(busy||captureSwitching||!detail)return;
+  const queue=captureQueue(),index=queue.indexOf(detail.id),id=queue[index+offset];
+  const item=model.items.find(row=>row.id===id);
+  if(!item)return;
+  captureDrafts.set(detail.id,{query:$('queryInput').value,body:$('bodyInput').value,collect:$('collectResult').checked,keyword:$('collectionKeyword').value});
+  const previous=location.pathname+location.search+location.hash;
+  captureSwitching=true;
+  $('capturePrevious').disabled=true;$('captureNext').disabled=true;
+  history.replaceState(null,'',CapturePicker.parameterURL(item,new URLSearchParams(location.search).get('keyword')||'',queue));
+  try{await openDetail(item.id);}catch(error){history.replaceState(null,'',previous);toast(error.message);}
+  finally{captureSwitching=false;renderCaptureQueue();}
+}
+$('capturePrevious').onclick=()=>changeCapture(-1);
+$('captureNext').onclick=()=>changeCapture(1);
 async function openDetail(id){
   detail=await api('/api/catalog/detail?id='+encodeURIComponent(id));
   $('detailTitle').textContent=detail.title;$('detailPath').textContent=detail.method+' https://api.tikhub.io'+detail.path;
@@ -68,10 +96,14 @@ async function openDetail(id){
   $('collectionOptions').hidden=!['douyin','xiaohongshu'].includes(detail.platform)||detail.collection_supported===false||detail.availability==='unavailable';
   $('captureHelp').hidden=detail.platform!=='douyin'||!(detail.capture_help||detail.availability==='unavailable');
   $('capturePurpose').textContent=detail.capture_help||detail.execution_reason||'';
+  $('captureCapability').textContent=detail.collection_supported?'已有抖音 / 小红书作品解析；能否收录以本次真实响应为准，不代表此接口已验证可用。':'此接口仅查看参数和响应，作品收录待接入。';
   $('captureInputHelp').textContent=detail.input_help||'请手动选择用途对应的当前接口；这里只切换表单，不发起抓取。';
   $('captureRoutes').innerHTML=[['POST /api/v1/douyin/search/fetch_video_search_v2','视频搜索 V2'],['POST /api/v1/douyin/search/fetch_challenge_search_v2','话题搜索 V2'],['GET /api/v1/douyin/app/v3/fetch_one_video_by_share_url','分享链接收录']].map(([id,label])=>`<button type="button" class="secondary compact" data-capture-target="${esc(id)}" ${id===detail.id?'disabled':''}>${label}</button>`).join('');
   $('collectResult').checked=new URLSearchParams(location.search).get('collect')==='1'&&!$('collectionOptions').hidden;
-  $('collectionKeyword').value=keyword||'TikHub采集';$('collectionStatus').textContent='';$('viewCollected').hidden=true;renderParameterFields();
+  $('collectionKeyword').value=keyword||'TikHub采集';$('collectionStatus').textContent='';$('viewCollected').hidden=true;
+  const draft=captureDrafts.get(id);
+  if(draft){$('queryInput').value=draft.query;$('bodyInput').value=draft.body;$('collectResult').checked=draft.collect&&!$('collectionOptions').hidden;$('collectionKeyword').value=draft.keyword;}
+  renderParameterFields();
   $('toolResponse').textContent=detail.last_result||'尚未执行这个接口，没有测试结果。';
   const tool=model.tools[id];$('runStatus').textContent=tool?.last_at?'上次运行 '+timeText(tool.last_at):'尚未运行';
   refreshDetail();$('apiDialog').showModal();

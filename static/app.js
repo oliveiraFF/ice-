@@ -100,33 +100,7 @@ $('scanButton').onclick=()=>location.href='/tools?open=import';$('emptyAction').
 for(const id of ['timeFilter','playFilter','sortOrder'])$(id).onchange=render;
 $('resetFilters').onclick=resetFilters;$('clearContentQuery').onclick=()=>{contentQuery='';$('searchKeywordInput').value='';params.delete('q');params.delete('post');history.replaceState(null,'',location.pathname);render();};
 $('searchKeywordInput').value=contentQuery;
-$('keywordSearchForm').onsubmit=event=>{event.preventDefault();const keyword=$('searchKeywordInput').value.trim(),id=$('keywordEndpoint').value;if(!keyword||!id){toast('请填写关键词并选择接口');return;}location.href='/market?id='+encodeURIComponent(id)+'&keyword='+encodeURIComponent(keyword)+'&collect=1';};
-let keywordEndpointSeq=0;
-async function loadKeywordEndpoints(){
-  const seq=++keywordEndpointSeq;
-  $('refreshKeywordEndpoints').disabled=true;
-  try{
-    const model=await api('/api/catalog');
-    if(seq!==keywordEndpointSeq)return;
-    const select=$('keywordEndpoint'),previous=select.value;
-    const rows=model.items.filter(row=>row.platform==='douyin'&&/fetch_(?:video|general)_search_result|fetch_video_search_v\d|search_video$/.test(row.path)&&model.tools?.[row.id]?.enabled&&!row.execution_reason);
-    const usable=rows.filter(row=>!row.legacy_documentation);
-    select.innerHTML=rows.length?rows.map(row=>`<option value="${esc(row.id)}" ${row.legacy_documentation?'disabled':''}>${/general/.test(row.path)?'综合搜索':'视频搜索'} · ${esc(row.path.replace('/api/v1/douyin/',''))} · ${row.legacy_documentation?'历史地址，当前文档未收录，暂停执行':'已启用'} · $${esc(row.price??'?')}</option>`).join(''):'<option value="">没有可用的已启用搜索接口</option>';
-    select.value=usable.some(row=>row.id===previous)?previous:(usable[0]?.id||rows[0]?.id||'');
-    select.disabled=!usable.length;
-    $('keywordSearchSubmit').disabled=!usable.length;
-    const access=model.access?.active?'额度调用已开启，执行前仍需检查参数与费用。':'额度调用已关闭；可先查看参数，执行前请到 API 市场设置预算与开关。';
-    $('keywordSearchStatus').textContent=usable.length?`已启用 ${usable.length} 个可用搜索接口。${access}点击 TikHub 搜索只进入参数页，不会自动采集。`:(rows.length?'已启用的搜索接口属于历史地址，当前官方文档未收录，已暂停执行，避免重复请求。':'暂无可用的已启用抖音搜索接口。')+' 点击下方“设置新版关键词搜索”，在额度设置中允许充值余额后启用新版接口；也可用分享链接收录单条视频。';
-  }catch(error){
-    if(seq!==keywordEndpointSeq)return;
-    $('keywordEndpoint').innerHTML='<option value="">接口读取失败，请刷新重试</option>';
-    $('keywordEndpoint').disabled=true;
-    $('keywordSearchSubmit').disabled=true;
-    $('keywordSearchStatus').textContent='接口读取失败：'+error.message;
-  }finally{if(seq===keywordEndpointSeq)$('refreshKeywordEndpoints').disabled=false;}
-}
-$('refreshKeywordEndpoints').onclick=loadKeywordEndpoints;
-loadKeywordEndpoints();
+window.CapturePicker.mount({api,toast});
 $('searchLocal').onclick=()=>{const keyword=$('searchKeywordInput').value.trim();if(!keyword){toast('请输入关键词');return;}resetFilters();contentQuery=keyword;$('searchKeywordInput').value=keyword;params.set('q',keyword);history.replaceState(null,'',location.pathname+'?'+params.toString());render();toast('已搜索本地内容；没有发起平台采集');};
 let clearExpectedCount=0,clearMode='live';
 function renderClearControls(){const last=data.last_clear;$('undoClear').hidden=!last;$('clearUndoNote').hidden=!last;if(last)$('undoClear').textContent=`撤销清空${last.kind==='videos'?'视频':'关键词'}（${last.count}）`;}
@@ -163,6 +137,3 @@ $('aiConfirmGenerate').onclick=async()=>{
   finally{aiBusy=false;$('aiConfirmGenerate').disabled=false;render();}
 };
 RadarIcons.fill();load().catch(error=>{$('empty').hidden=false;$('emptyMessage').textContent=error.message;$('resultCount').textContent='读取失败';});
-
-$('collectByKeyword').onclick=event=>{event.currentTarget.href='/market?id='+encodeURIComponent('POST /api/v1/douyin/search/fetch_video_search_v5')+'&collect=1&keyword='+encodeURIComponent($('searchKeywordInput').value.trim()||'宠物');};
-$('collectByShareLink').onclick=event=>{event.currentTarget.href='/market?id='+encodeURIComponent('GET /api/v1/douyin/app/v3/fetch_one_video_by_share_url')+'&collect=1&keyword='+encodeURIComponent($('searchKeywordInput').value.trim()||'分享链接收录');};
