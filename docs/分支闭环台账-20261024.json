@@ -362,10 +362,10 @@
   {
     "branch": "feat/capture-interface-picker",
     "goal": "29平台1480目录的三级多选、逐接口参数与收录能力边界",
-    "head": "2c839bc",
-    "main_merge": null,
-    "validation": "docs/acceptance-20261104/capture-interface-picker/acceptance.md；91项Python无失败（4跳过）、Node合同及真实源码/冻结EXE UI通过",
-    "remaining": "主干合入、复验及安全收尾待完成；第三方平台作品解析及供应商真实可用性不在本轮验证范围",
-    "completion": "功能与分支验证完成，等待主干闭环"
+    "head": "412b3708ef657fbdc968387f067a1a83433647fe",
+    "main_merge": "412b3708ef657fbdc968387f067a1a83433647fe",
+    "validation": "docs/acceptance-20261104/capture-interface-picker/acceptance.md、main-verification.json；91项主干Python无失败（4既有跳过）、Node合同、真实主干/EXE UI、原404与参数页回归及181输入/278文件核验通过",
+    "remaining": "未适配平台仅查看响应；1480个供应商接口未全部真实调用；Mac仍保留不构建；原本地改动恢复点单独保留",
+    "completion": "本轮目标实现、相关验证通过、合入本地主干并复验、无未保存源码；工作树与分支已安全注销"
   }
 ]

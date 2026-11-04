@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "source_or_exe": "source",
+  "real_local_service": true,
+  "real_chrome": true,
+  "regions_and_platforms": true,
+  "cross_platform_multiselect": true,
+  "empty_filter": true,
+  "offline_recovery": true,
+  "manual_parameters_only": true,
+  "draft_preserved": true,
+  "reload_selection": true,
+  "new_origin_starts_unselected": true,
+  "application_restart": true,
+  "unsupported_collection_hidden": true,
+  "interface_executions": 0,
+  "provider_calls": 0,
+  "api_ledger_rows": 0,
+  "errors": [],
+  "external": [],
+  "writes": []
+}

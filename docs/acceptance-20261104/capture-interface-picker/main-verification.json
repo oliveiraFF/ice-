@@ -1,0 +1,17 @@
+{
+  "branch": "feat/capture-interface-picker",
+  "validated_branch_head": "412b3708ef657fbdc968387f067a1a83433647fe",
+  "main_merge": "412b3708ef657fbdc968387f067a1a83433647fe",
+  "merge_kind": "fast-forward",
+  "python_tests": 91,
+  "existing_skips": 4,
+  "node_contracts_passed": true,
+  "real_main_ui": true,
+  "real_packaged_ui": true,
+  "original_local_changes_preserved": true,
+  "worktree_removed": true,
+  "branch_removed": true,
+  "runtime_build_inputs": 181,
+  "verified_files": 278,
+  "provider_calls": 0
+}
