@@ -26,4 +26,7 @@ assert.equal(picker.keywordTarget({path:'/graphql',parameters:[{in:'query',name:
 assert.equal(picker.keywordTarget({path:'/fetch_post_by_url',parameters:[{in:'query',name:'post_url',schema:{type:'string'}}]}),null);
 assert.equal(picker.isLinkDetail({path:'/fetch_video_high_quality_play_url'}),false);
 assert.equal(picker.isLinkDetail({path:'/fetch_post_by_url'}),true);
+const snapshot=require('../catalog.json');
+const shop=snapshot.items.find(item=>item.path==='/api/v1/tiktok/shop/web/fetch_search_products_list');
+assert.deepEqual(picker.keywordTarget(shop),{scope:'query',name:'search_word'});
 console.log('capture picker contracts passed');

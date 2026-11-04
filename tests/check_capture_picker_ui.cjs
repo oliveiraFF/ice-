@@ -145,6 +145,14 @@ function ledgerCount(){
     assert.equal(JSON.parse(await page.locator('#bodyInput').inputValue()).keyword,'AI视频');
     assert.equal(await page.getByLabel('参数 keyword',{exact:true}).inputValue(),'AI视频');
     assert.match(await page.locator('#captureKeywordNotice').textContent(),/已填入 keyword/);
+    await page.goto(origin+'/');await page.waitForFunction(()=>document.getElementById('keywordSearchStatus').textContent.startsWith('已读取'));
+    await page.locator('#captureSelectedList [data-remove]').click();
+    await page.locator('#captureRegion').selectOption('overseas');await page.locator('#capturePlatform').selectOption('tiktok');
+    await page.locator('#captureQuery').fill('shop/web/fetch_search_products_list');
+    await page.locator('[data-capture-id="GET /api/v1/tiktok/shop/web/fetch_search_products_list"]').check();
+    await page.getByLabel('抓取关键词',{exact:true}).fill('AI工具');await page.locator('#keywordSearchSubmit').click();
+    await page.waitForURL('**/market?**');await page.locator('#apiDialog').waitFor({state:'visible'});
+    assert.equal(await page.getByLabel('参数 search_word',{exact:true}).inputValue(),'AI工具');
     await browser.close();browser=null;assert.equal(ledgerCount(),0);await stop();
     // The app uses a fresh port on restart. Preferences are local to that origin;
     // reload persistence was tested above, while a new origin starts unselected.

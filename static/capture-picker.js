@@ -17,7 +17,7 @@
     if (isLinkDetail(item)) return null;
     const searching = /search|搜索/i.test((item.path || '') + ' ' + (item.title || ''));
     const textual = schema => schema?.type === 'string' || schema?.anyOf?.some(choice => choice.type === 'string') || (!schema?.type && !schema?.anyOf);
-    for (const name of ['keyword','search_keyword','search_query','query','q']) {
+    for (const name of ['keyword','search_keyword','search_query','search_word','query','q']) {
       if (['query','q'].includes(name) && !searching) continue;
       const parameter = item.parameters?.find(field => field.in === 'query' && field.name === name);
       if (parameter && textual(parameter.schema)) return {scope:'query',name};
