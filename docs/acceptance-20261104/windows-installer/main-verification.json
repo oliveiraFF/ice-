@@ -1,0 +1,19 @@
+{
+  "main_merge": "d99d4da825e581f151fe85df254a7cac07d5ff75",
+  "installer_version": "2026.11.4.1",
+  "installer_sha256": "b2aeab3c92ced4d76304704151d5370672f8c3eb4c33d178c7e8edc31c694c52",
+  "main_installer_tests": 4,
+  "failures": 0,
+  "main_runtime_inputs_match": 181,
+  "manifest_files_verified": 278,
+  "native_install_upgrade_uninstall_passed": true,
+  "uninstall_preserved_files": 80,
+  "test_shortcuts_and_registry_cleaned": true,
+  "original_installation_unchanged": true,
+  "provider_calls": 0,
+  "branch_ancestor_verified": true,
+  "worktree_clean_before_removal": true,
+  "worktree_path_boundary_verified": true,
+  "worktree_removed_by_git": true,
+  "branch_deleted_safely": true
+}
