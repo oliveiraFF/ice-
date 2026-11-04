@@ -385,5 +385,14 @@
     "validation": "docs/acceptance-20261104/xhs-note-collection/acceptance.md、main-verification.json；97项主干Python无失败（4既有跳过），真实主干/EXE UI、181输入/278文件、原库备份补收与服务回读通过",
     "remaining": "真实响应为video资料，未额外抓取图文/直链；旧Chrome配置下间歇本地读取失败原因未确认并保留证据；其他平台/抖音图文仍按既有能力",
     "completion": "本轮笔记漏收录修复、实际补收、相关验证、合本地主干及复验完成；无未保存源码后Git安全注销工作树和分支，旧程序与数据保留"
+  },
+  {
+    "branch": "build/windows-installer-20261104",
+    "goal": "最新main Windows当前用户安装程序2026.11.4.1与原生生命周期验收",
+    "head": "9d713bb74731dccc29785fbd335e7c931977d935",
+    "main_merge": "待合入",
+    "validation": "docs/acceptance-20261104/windows-installer/acceptance.md；4项安装器专项、原生安装/启动/升级/卸载留存通过，181输入/278文件同主干",
+    "remaining": "安装包未签名，依赖兼容WebView2/.NET；不自动迁移其他路径资料；既有浏览器间歇读取限制继续单列",
+    "completion": "安装包已生成、真实验证并交付桌面，待主干复验和工作树安全收尾"
   }
 ]

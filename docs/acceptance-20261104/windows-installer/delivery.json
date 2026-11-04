@@ -1,0 +1,19 @@
+{
+  "installer": "E:\\leida-build\\ice-installer-20261104-1\\final\\ICE-2026.11.4.1-Setup.exe",
+  "sha256": "b2aeab3c92ced4d76304704151d5370672f8c3eb4c33d178c7e8edc31c694c52",
+  "version": "2026.11.4.1",
+  "source_commit": "d90a16e0d4691d8193b7b9c647b001ea06700906",
+  "source_files": 278,
+  "compiler": "v3.13",
+  "installer_source_commit": "9d713bb74731dccc29785fbd335e7c931977d935",
+  "installer_source_dirty": false,
+  "per_user": true,
+  "uninstall_preserves_data": true,
+  "contains_user_workspace_or_test_database": false,
+  "delivered_installer": "C:\\Users\\25370\\Desktop\\ICE运营台-2026.11.4.1-安装程序.exe",
+  "delivered_bytes": 24889875,
+  "main_runtime_inputs_match": 181,
+  "native_installer_lifecycle_passed": true,
+  "original_installation_unchanged": true,
+  "paid_calls": 0
+}
