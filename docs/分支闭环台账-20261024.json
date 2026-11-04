@@ -367,5 +367,14 @@
     "validation": "docs/acceptance-20261104/capture-interface-picker/acceptance.md、main-verification.json；91项主干Python无失败（4既有跳过）、Node合同、真实主干/EXE UI、原404与参数页回归及181输入/278文件核验通过",
     "remaining": "未适配平台仅查看响应；1480个供应商接口未全部真实调用；Mac仍保留不构建；原本地改动恢复点单独保留",
     "completion": "本轮目标实现、相关验证通过、合入本地主干并复验、无未保存源码；工作树与分支已安全注销"
+  },
+  {
+    "branch": "fix/capture-keyword-input",
+    "goal": "可见抓取关键词、声明搜索字段自动带入及链接输入区分",
+    "head": "6224354b0768212f0158b8db7dd406f196995537",
+    "main_merge": "待合入",
+    "validation": "docs/acceptance-20261104/capture-keyword/acceptance.md；真实源码/EXE UI、Node字段合同与404参数页回归通过，181输入/278文件核验",
+    "remaining": "其他平台作品收录待接入，供应商接口未全部实测；早期目录加载超时原因未确认并保留证据",
+    "completion": "功能与打包验证完成，待主干复验及安全收尾"
   }
 ]

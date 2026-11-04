@@ -3,7 +3,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs/promises'),path=r
 const {spawn,spawnSync}=require('node:child_process'),{chromium}=require(process.env.PLAYWRIGHT_MODULE);
 const out=path.resolve(process.env.ICE_ACCEPTANCE_DIR),data=path.join(out,'app-data'),exe=process.env.ICE_EXE;
 const failed='GET /api/v1/douyin/app/v1/fetch_hashtag_search_result',share='GET /api/v1/douyin/app/v3/fetch_one_video_by_share_url';
-const errors=[],external=[],posts=[];let child,browser,origin;const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const errors=[],external=[],posts=[],resourceFailures=[],consoleErrors=[];let child,browser,origin;const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 function python(code){const r=spawnSync(process.env.UI_PYTHON,['-c',code,data],{encoding:'utf8',windowsHide:true});assert.equal(r.status,0,r.stderr);return r.stdout;}
 function snapshot(){return JSON.parse(python(`import sqlite3,json,sys
 with sqlite3.connect(sys.argv[1]+'/radar.sqlite3') as db:
@@ -29,9 +29,15 @@ with sqlite3.connect(db) as conn:
  const before=snapshot();await start();
  const direct=await api('/api/tools/run',{id:failed,params:{keyword:'AI'},collect:true});assert.equal(direct.status,400);assert.match(direct.value.error,/404/);
  const enable=await api('/api/tools',{id:failed,action:'enable'});assert.equal(enable.status,400);assert.match(enable.value.error,/404/);assert.deepEqual(snapshot(),before);
- browser=await chromium.launch({headless:true,executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe'});const page=await browser.newPage({viewport:{width:1280,height:900}});
+ browser=await chromium.launchPersistentContext(path.join(out,'chrome-profile'),{headless:true,executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',viewport:{width:1280,height:900},javaScriptEnabled:true});const page=await browser.newPage();
  page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(r.method()==='POST')posts.push(r.url());const u=new URL(r.url());if(/^https?:$/.test(u.protocol)&&u.hostname!=='127.0.0.1')external.push(u.hostname);});
- await page.goto(origin+'/market');await page.locator('#apiGrid .api-card').first().waitFor();await page.locator('#apiSearch').fill('/api/v1/douyin/app/v1/fetch_hashtag_search_result');
+ page.on('console',message=>{if(message.type()==='error')consoleErrors.push(message.text());});
+ page.on('requestfailed',request=>resourceFailures.push({url:request.url(),error:request.failure()?.errorText}));
+ page.on('response',response=>{if(response.status()>=400)resourceFailures.push({url:response.url(),status:response.status()});});
+ await page.goto(origin+'/market');
+ try{await page.locator('#apiGrid .api-card').first().waitFor();}
+ catch(error){await fs.writeFile(path.join(out,'market-failure.json'),JSON.stringify({errors,consoleErrors,resourceFailures,scripts:await page.locator('script').evaluateAll(nodes=>nodes.map(node=>({src:node.src,type:node.type}))),url:page.url(),cards:await page.locator('#apiGrid .api-card').count(),status:await page.locator('#apiResultCount').textContent(),body:(await page.locator('body').innerText()).slice(0,1600)},null,2));await page.screenshot({path:path.join(out,'market-failure.png')});throw error;}
+ await page.locator('#apiSearch').fill('/api/v1/douyin/app/v1/fetch_hashtag_search_result');
  const card=page.locator('#apiGrid .api-card');await card.filter({hasText:'不可用 · HTTP 404'}).waitFor();assert.equal(await card.count(),1);await card.locator('[data-detail]').click();await page.locator('#apiDialog').waitFor({state:'visible'});
  assert(await page.locator('#runTool').isDisabled());assert.match(await page.locator('#runEligibility').textContent(),/404/);assert.match(await page.locator('#toolResponse').textContent(),/合成复现记录/);
  const postCount=posts.length;await page.locator('#runTool').evaluate(b=>b.click());await page.waitForTimeout(200);assert.equal(posts.length,postCount);

@@ -1,0 +1,13 @@
+{
+  "source_commit": "6224354b0768212f0158b8db7dd406f196995537",
+  "source_dirty": false,
+  "inputs": 181,
+  "manifest_verified_files": 278,
+  "runtime_inputs_match": true,
+  "data_empty": true,
+  "portable_zip": "C:\\Users\\25370\\Desktop\\ICE运营台-抓取关键词修正版-20261104-免安装.zip",
+  "zip_sha256": "da3b532c0308fe3d98bddbbb92407404845ca30304074c1333cfbc38cb99220b",
+  "verified_program": "E:\\leida-build\\capture-keyword-20261104\\final-builds\\20261104-010231\\ice运营台\\ice运营台.exe",
+  "original_installation_unchanged": true,
+  "provider_calls": 0
+}

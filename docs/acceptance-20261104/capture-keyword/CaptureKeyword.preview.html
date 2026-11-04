@@ -1,0 +1,15 @@
+<!doctype html><html lang="zh-CN" data-theme="light"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>抓取关键词 · 八种状态</title>
+<link rel="stylesheet" href="../../../static/tokens.css"><link rel="stylesheet" href="../../../static/theme.css">
+<style>
+/* finesse · component: capture-keyword · register=product · tokens: inherited */
+body{margin:0;padding:24px;background:var(--bg);color:var(--ink);font:15px/1.6 system-ui}main{max-width:620px;margin:auto}section{margin:18px 0}label{display:grid;gap:6px}input{box-sizing:border-box;width:100%;min-height:44px;border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--paper);color:var(--ink);outline:2px solid transparent;outline-offset:2px}small{display:block;min-height:1.6em;color:var(--muted)}input:focus-visible,.is-focus{outline-color:var(--accent)}.is-hover{border-color:var(--accent)}input:active,.is-active{background:var(--bg)}input:disabled{opacity:.5;cursor:not-allowed}[aria-invalid=true]{border-color:var(--accent)}
+@media(hover:hover){input:hover:not(:disabled){border-color:var(--accent)}}
+</style><main><h1>抓取关键词 · 状态展示</h1><p>静态界面预览；搜索词与接口筛选分开，不会调用接口。</p>
+<section><label>默认<input placeholder="例如：AI工具"></label><small>关键词会带到支持搜索的参数字段。</small></section>
+<section><label>悬停<input class="is-hover" value="AI工具"></label><small>边框反馈。</small></section>
+<section><label>键盘焦点<input class="is-focus" value="AI工具"></label><small>即时可见焦点环。</small></section>
+<section><label>按下<input class="is-active" value="AI工具"></label><small>保持尺寸。</small></section>
+<section><label>禁用<input disabled value="AI工具"></label><small>当前不可编辑。</small></section>
+<section><label>加载<input disabled value="AI工具"></label><small role="status">正在加载接口，完成后填写参数。</small></section>
+<section><label>错误<input aria-invalid="true" aria-describedby="error" value=""></label><small id="error">链接详情需要帖子链接，请到参数页填写。</small></section>
+<section><label>成功<input value="AI工具" readonly></label><small>已填入 search_query；尚未执行接口。</small></section></main></html>
