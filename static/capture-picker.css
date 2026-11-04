@@ -31,7 +31,9 @@
 .capture-picker .capture-keyword-tools>div{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
 .capture-picker .capture-keyword-tools input{flex:1 1 200px}
 .capture-picker .capture-empty{padding:20px;color:var(--muted)}
-.capture-picker :is(button,a,input,select,summary):focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.capture-picker :is(button,a,input,select,summary):focus-visible,
+#keywordSearchForm :is(button,a,input,select,summary):focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+#keywordSearchForm :is(input,select):focus-visible{outline:2px solid var(--accent)!important}
 .capture-picker button:disabled{opacity:.5;cursor:not-allowed}
 .capture-picker button:active:not(:disabled){transform:translateY(1px)}
 .capture-picker .capture-endpoint-list[aria-busy="true"]{opacity:.6;pointer-events:none}

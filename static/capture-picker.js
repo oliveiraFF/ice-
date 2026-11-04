@@ -56,7 +56,7 @@
       const chosen = items();
       $('captureSelected').hidden = !chosen.length;
       $('captureSelectedCount').textContent = `已选 ${chosen.length} 个接口 · 在参数页逐个切换、手动执行`;
-      $('captureSelectedList').innerHTML = chosen.map((item,index) => `<li><span><strong>${escape(platformName(item))} · ${escape(item.title)}</strong><code>${escape(item.method)} ${escape(item.path)}</code></span><button type="button" class="secondary" data-open="${index}">填写参数</button><button type="button" class="text-button" data-remove="${index}" aria-label="移除 ${escape(item.title)}">移除</button></li>`).join('');
+      $('captureSelectedList').innerHTML = chosen.map((item,index) => `<li><span><strong>${escape(platformName(item))} · ${escape(item.title)}</strong><code>${escape(item.method)} ${escape(item.path)}</code></span><button type="button" class="secondary" data-open="${index}" ${ready ? '' : 'disabled'}>填写参数</button><button type="button" class="text-button" data-remove="${index}" aria-label="移除 ${escape(item.title)}">移除</button></li>`).join('');
       $('keywordSearchSubmit').disabled = !ready || !chosen.length;
       $('keywordSearchSubmit').textContent = chosen.length ? `填写所选接口参数（${chosen.length}）` : '先选择接口';
     }
@@ -79,6 +79,7 @@
       ready = false;
       $('refreshKeywordEndpoints').disabled = true;
       $('captureEndpointList').setAttribute('aria-busy','true');
+      $('captureEndpointList').inert = true;
       $('keywordSearchStatus').textContent = '正在读取本机接口目录，不会执行抓取…';
       renderSelection();
       try {
@@ -95,6 +96,7 @@
         if (current === sequence) {
           $('refreshKeywordEndpoints').disabled = false;
           $('captureEndpointList').setAttribute('aria-busy','false');
+          $('captureEndpointList').inert = false;
         }
       }
     }

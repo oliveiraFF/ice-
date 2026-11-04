@@ -1,0 +1,14 @@
+{
+  "original_14_files_still_match_backup": true,
+  "original_catalog_items": 1480,
+  "target_catalog_items": 1480,
+  "target_platforms": 29,
+  "no_original_catalog_id_removed": true,
+  "download_and_parameter_fixes_present_in_latest": {
+    "free_tools.py": true,
+    "app.py": true,
+    "catalog.py": true
+  },
+  "backup": "E:\\leida-build\\capture-interface-picker-20261104",
+  "main_before": "4b8aa5c1d9174a6c0ba281de43e055362bc0d3ef"
+}

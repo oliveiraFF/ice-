@@ -72,6 +72,8 @@ function ledgerCount(){
     await start();let page=await open();
     assert.equal(await page.locator('#captureRegion').inputValue(),'domestic');
     assert.equal(await page.locator('#searchKeywordInput').getAttribute('required'),null);
+    await page.locator('#captureRegion').focus();
+    assert(await page.locator('#captureRegion').evaluate(node=>{const style=getComputedStyle(node);return style.outlineStyle!=='none'&&parseFloat(style.outlineWidth)>=2;}),'keyboard focus must be visible');
     await screenshots(page,'initial');
     await page.locator('#capturePlatform').selectOption('douyin');
     await page.locator('#captureQuery').fill('fetch_one_video_by_share_url');

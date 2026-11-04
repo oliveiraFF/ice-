@@ -358,5 +358,14 @@
     "validation": "docs/acceptance-20261028/large-response/acceptance.md 与 delivery.md；88项主干Python无失败（4跳过），真实本地HTTP/Chrome完整响应收录与超限/重启、冻结EXE回归；179输入/276安装文件；独立目录安装升级卸载复测通过",
     "remaining": "首轮卸载残留UninstallICE.exe，复测未复现，原因未确认且安装器未改；安装包未签名；没有新增TikHub实测，旧截断原文不可恢复",
     "completion": "已实现、验证、合入本地主干并复验；桌面交付2026.10.28.1，原快捷方式校验恢复；工作树及分支无未保存工作后安全注销"
+  },
+  {
+    "branch": "feat/capture-interface-picker",
+    "goal": "29平台1480目录的三级多选、逐接口参数与收录能力边界",
+    "head": "2c839bc",
+    "main_merge": null,
+    "validation": "docs/acceptance-20261104/capture-interface-picker/acceptance.md；91项Python无失败（4跳过）、Node合同及真实源码/冻结EXE UI通过",
+    "remaining": "主干合入、复验及安全收尾待完成；第三方平台作品解析及供应商真实可用性不在本轮验证范围",
+    "completion": "功能与分支验证完成，等待主干闭环"
   }
 ]
