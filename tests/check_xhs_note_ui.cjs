@@ -3,7 +3,7 @@
 const assert=require('node:assert/strict'),fs=require('node:fs/promises'),path=require('node:path'),net=require('node:net');
 const {spawn,spawnSync}=require('node:child_process'),{chromium}=require(process.env.PLAYWRIGHT_MODULE);
 const out=path.resolve(process.env.ICE_ACCEPTANCE_DIR),data=path.join(out,'app-data'),exe=process.env.ICE_EXE;
-const errors=[],providerRequests=[],writes=[];let child,browser,origin;
+const errors=[],providerRequests=[],writes=[],resourceFailures=[];let child,browser,origin,browserRun=0;
 const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 function python(code,args=[]){const result=spawnSync(process.env.UI_PYTHON,['-c',code,...args],{encoding:'utf8',windowsHide:true});assert.equal(result.status,0,result.stderr);return result.stdout;}
 async function start(){
@@ -18,12 +18,18 @@ async function stop(){
   if(exe){const state=await(await fetch(origin+'/api/state?mode=live')).json();const response=await fetch(origin+'/api/desktop/exit',{method:'POST',headers:{Origin:origin,'X-Radar-Token':state.token,'Content-Type':'application/json'},body:'{"confirm":true}'});assert.equal(response.status,200);await done;assert.equal(proc.exitCode,0);}else{proc.kill();await done;}child=null;
 }
 async function open(){
-  browser=await chromium.launchPersistentContext(path.join(out,'chrome-profile'),{headless:true,executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',viewport:{width:1280,height:900},javaScriptEnabled:true});
+  // Each inspection gets a fresh browser profile; the actual application data stays unchanged.
+  browser=await chromium.launchPersistentContext(path.join(out,'chrome-profile-'+(++browserRun)),{headless:true,executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',viewport:{width:1280,height:900},javaScriptEnabled:true});
   const page=await browser.newPage();page.on('pageerror',error=>errors.push(error.message));
+  page.on('requestfailed',request=>{if(new URL(request.url()).hostname==='127.0.0.1')resourceFailures.push({url:request.url(),error:request.failure()?.errorText});});
+  page.on('response',response=>{if(response.status()>=400&&new URL(response.url()).hostname==='127.0.0.1')resourceFailures.push({url:response.url(),status:response.status()});});
   // Deliberately fail only the synthetic image assets; do not depend on DNS timing.
   await page.route('https://example.test/**',route=>route.abort('failed'));
   page.on('request',request=>{const url=new URL(request.url());if(/(?:api\.tikhub\.io|api\.deepseek\.com)$/.test(url.hostname))providerRequests.push(url.hostname);if(request.method()==='POST')writes.push(url.pathname);});
-  await page.goto(origin+'/');await page.locator('#grid .content-card').first().waitFor();return page;
+  await page.goto(origin+'/');
+  try{await page.locator('#grid .content-card').first().waitFor();}
+  catch(error){const state=await(await fetch(origin+'/api/state?mode=live')).json();await fs.writeFile(path.join(out,'open-failure.json'),JSON.stringify({url:page.url(),errors,resourceFailures,api_posts:state.posts.length,scripts:await page.locator('script').evaluateAll(nodes=>nodes.map(node=>node.src)),body:(await page.locator('body').innerText()).slice(0,1800)},null,2));await page.screenshot({path:path.join(out,'open-failure.png')});throw error;}
+  return page;
 }
 async function shots(page,name){
   for(const theme of ['light','dark'])for(const width of [1280,390]){
