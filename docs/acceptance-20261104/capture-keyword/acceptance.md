@@ -22,3 +22,7 @@
 截图为最终EXE实际页面。CaptureKeyword.preview.html仅为八种输入状态的静态展示，不是供应商调用证据。其他平台作品收录仍待接入，1480个目录接口并未全部实测；Mac构建和账号经营质量不属于本轮通过范围。
 
 主干合入、复验与安全收尾将在完成后补充main-verification.json。
+
+## 主干闭环
+
+已快速前移合main 078baf39bf289d159d4feb6eb4f4fb0e014cba5d；主干运行91项Python，0失败、4既有跳过；Node合同、真实主干UI及181输入/278分发文件复验通过。分支祖先与工作树干净核验后，验证绝对路径处于E:/ice-worktrees内，由Git安全移除工作树并以-d删除分支。旧本地改动stash保留，主干无业务源码未提交；具体证据见main-verification.json。

@@ -1,0 +1,20 @@
+{
+  "main_merge": "078baf39bf289d159d4feb6eb4f4fb0e014cba5d",
+  "functional_commit": "6224354b0768212f0158b8db7dd406f196995537",
+  "python_tests": 91,
+  "python_skipped": 4,
+  "python_failures": 0,
+  "node_contracts_passed": true,
+  "real_main_ui_passed": true,
+  "real_final_exe_ui_passed": true,
+  "exe_market_regression_passed": true,
+  "runtime_inputs_match": 181,
+  "manifest_files_verified": 278,
+  "supplier_calls": 0,
+  "branch_ancestor_verified_before_removal": true,
+  "worktree_clean_before_removal": true,
+  "worktree_path_boundary_verified": true,
+  "worktree_removed_by_git": true,
+  "branch_deleted_safely": true,
+  "original_local_changes_stash_preserved": true
+}
