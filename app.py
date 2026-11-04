@@ -185,12 +185,17 @@ def normalize_xhs(raw):
     stats = card.get('interact_info') or card
     author = card.get('user') or {}
     ident = str(first(card.get('note_id'), card.get('id'), raw.get('id')) or '')
+    images = card.get('images_list') or []
+    images = list(dict.fromkeys(url for item in images if (url := image_url(item)))) if isinstance(images, list) else []
+    content_type = {'normal': 'image', 'video': 'video'}.get(card.get('type'), 'unknown')
     return dict(external_id=ident, platform='xhs', title=first(card.get('display_title'), card.get('title'), card.get('desc')) or '无标题笔记',
+                description=card.get('desc'), content_type=content_type, images=images,
                 author=author.get('nickname') or '作者信息缺失',
                 published_at=timestamp(first(card.get('time'), card.get('publish_time'))),
                 likes=number(stats.get('liked_count')), saves=number(stats.get('collected_count')),
                 comments=number(first(stats.get('comment_count'), stats.get('comments_count'))), followers=None,
-                cover=image_url(card.get('cover')), duration=None, video_url=cached_media_url(card.get('video')),
+                cover=first(image_url(card.get('cover')), images[0] if images else None),
+                duration=None, video_url=cached_media_url(card.get('video')),
                 url='https://www.xiaohongshu.com/explore/' + ident if re.match(r'^[a-fA-F0-9]{24}$', ident) else None,
                 tags=[], artwork='storage')
 
@@ -211,10 +216,10 @@ def extract_posts(payload, platform):
     """Only recognize content objects, never treat arbitrary nested IDs as posts."""
     found = {}
 
-    def walk(node):
+    def walk(node, note_list=False):
         if isinstance(node, list):
             for child in node:
-                walk(child)
+                walk(child, note_list)
         elif isinstance(node, dict):
             if platform == 'dy' and node.get('item_id') and 'item_title' in node:
                 if node.get('media_type') == 4:
@@ -232,13 +237,14 @@ def extract_posts(payload, platform):
                 post = normalize_xhs(node)
                 found[post['external_id']] = post
                 return
-            if platform == 'xhs' and node.get('note_id') and ('title' in node or 'desc' in node):
+            if platform == 'xhs' and (node.get('note_id') or
+                    note_list and re.fullmatch(r'[a-fA-F0-9]{24}', str(node.get('id') or ''))) and ('title' in node or 'desc' in node):
                 post = normalize_xhs(node)
                 found[post['external_id']] = post
                 return
-            for child in node.values():
+            for name, child in node.items():
                 if isinstance(child, (list, dict)):
-                    walk(child)
+                    walk(child, name == 'note_list')
 
     walk(payload.get('data'))
     return list(found.values())

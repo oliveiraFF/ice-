@@ -57,3 +57,6 @@ body.site-app.owner-workspace.discover-app .open-hint>svg{width:14px!important;h
 /* R3-B: checkbox stays top-right; platform badge moves below it so rects never intersect. */
 body.site-app.owner-workspace.discover-app .card-select{top:8px!important;right:8px!important;left:auto!important}
 body.site-app.owner-workspace.discover-app .content-card .cover-labels{top:46px!important;right:8px!important;bottom:auto!important}
+
+.detail-section .note-text{white-space:pre-wrap;overflow-wrap:anywhere}
+.note-images img{display:block;width:100%;height:auto;min-height:44px;aspect-ratio:auto 3/4;object-fit:contain;background:var(--surface-2,var(--paper));margin:12px 0;border-radius:var(--radius-sm,8px)}
