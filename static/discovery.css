@@ -60,3 +60,6 @@ body.site-app.owner-workspace.discover-app .content-card .cover-labels{top:46px!
 
 .detail-section .note-text{white-space:pre-wrap;overflow-wrap:anywhere}
 .note-images img{display:block;width:100%;height:auto;min-height:44px;aspect-ratio:auto 3/4;object-fit:contain;background:var(--surface-2,var(--paper));margin:12px 0;border-radius:var(--radius-sm,8px)}
+.note-images figure{margin:12px 0}
+.note-images .is-failed{padding:16px;background:var(--surface-2,var(--paper));border-radius:var(--radius-sm,8px);color:var(--muted)}
+.note-images .is-failed img{display:none}

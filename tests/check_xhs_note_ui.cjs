@@ -63,7 +63,11 @@ print(json.dumps({'real_post_id':real_id,'count':len(store.state('live')['posts'
     await card.locator('.card-title').click();await page.locator('#detailDialog').waitFor({state:'visible'});
     assert.equal(await page.locator('.note-text').textContent(),synthetic.description);assert.equal(await page.locator('.note-text script').count(),0);
     assert.equal(await page.locator('.note-images img').count(),2);assert.match(await page.locator('#detailContent .connection-info').innerText(),/图文没有视频音轨/);
-    await shots(page,'synthetic-image');await page.locator('#detailContent [data-close]').click();
+    await shots(page,'synthetic-image');
+    await page.locator('.note-images').scrollIntoViewIfNeeded();
+    await page.locator('.note-images figcaption').first().waitFor({state:'visible'});assert.match(await page.locator('.note-images').innerText(),/图片加载失败/);
+    await shots(page,'synthetic-gallery');
+    await page.locator('#detailContent [data-close]').click();
     let realCoverLoaded=null;
     if(prepared.real_post_id){
       const real=state.posts.find(post=>post.id===prepared.real_post_id);assert.equal(real.content_type,'video');assert.equal(real.video_url,null);
@@ -77,7 +81,7 @@ print(json.dumps({'real_post_id':real_id,'count':len(store.state('live')['posts'
     await browser.close();browser=null;await stop();await start();page=await open();
     state=await(await fetch(origin+'/api/state?mode=live')).json();assert.equal(state.posts.length,prepared.count);
     const reopened=state.posts.find(post=>post.id===synthetic.id);assert.equal(reopened.description,synthetic.description);assert.deepEqual(reopened.images,synthetic.images);
-    await page.locator('#post-'+synthetic.id+' .card-title').click();await page.locator('.note-images img').first().waitFor();assert.equal(await page.locator('.note-images img').count(),2);
+    await page.locator('#post-'+synthetic.id+' .card-title').click();await page.locator('.note-images figure').first().waitFor();assert.equal(await page.locator('.note-images img').count(),2);
     if(prepared.real_post_id){await page.locator('#detailContent [data-close]').click();await page.locator('#post-'+prepared.real_post_id+' .card-title').click();assert.match(await page.locator('#detailContent .connection-info').innerText(),/尚无视频直链/);}
     await browser.close();browser=null;await stop();
     const ledger=Number(python('import sqlite3,sys; print(sqlite3.connect(sys.argv[1]).execute("SELECT COUNT(*) FROM api_requests").fetchone()[0])',[path.join(data,'radar.sqlite3')]).trim());
